@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/item_mine_claiming_enterprise_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="5dp">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv_logo"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                fresco:placeholderImage="@mipmap/companys"
+                />
+
+            <TextView
+                android:id="@+id/item_mine_claiming_enterprise_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="珠海市维佳联运国际货运代理有限公司上海分公司"
+                android:textColor="@color/color32"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/item_mine_claiming_enterprise_law"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="法人:丁诗平"
+                android:textColor="@color/color50"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/item_mine_claiming_enterprise_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="地址:上海宝山区安达路鹤岗路/张华浜外 运5号门内(吴淞大桥边近安达路)"
+                android:textColor="@color/color50"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/alpha_05_black" />
+
+</LinearLayout>

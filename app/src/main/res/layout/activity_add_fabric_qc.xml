@@ -48,7 +48,7 @@
                 android:background="@color/colorWhite">
 
                 <TextView
-                    android:id="@+id/tv_order"
+                    android:id="@+id/tv_order_title"
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -58,13 +58,13 @@
                     android:textColor="@color/color32"
                     android:textSize="@dimen/cell_text_size" />
 
-                <EditText
-                    android:id="@+id/et_order"
+                <TextView
+                    android:id="@+id/tv_order"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_toRightOf="@id/tv_order"
-                    android:background="@null"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:layout_toRightOf="@id/tv_order_title"
                     android:hint="请选择相关订单"
                     android:textSize="@dimen/cell_text_size" />
 
@@ -93,7 +93,7 @@
                 android:background="@color/colorWhite">
 
                 <TextView
-                    android:id="@+id/tv_goods"
+                    android:id="@+id/tv_goods_title"
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -103,15 +103,13 @@
                     android:textColor="@color/color32"
                     android:textSize="@dimen/cell_text_size" />
 
-                <EditText
-                    android:id="@+id/et_goods"
+                <TextView
+                    android:id="@+id/tv_goods"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:layout_toRightOf="@id/tv_goods"
-                    android:background="@null"
-                    android:clickable="false"
-                    android:focusable="false"
+                    android:layout_toRightOf="@id/tv_goods_title"
+                    android:gravity="center_vertical"
                     android:hint="请选择物品"
                     android:textSize="@dimen/cell_text_size" />
 
