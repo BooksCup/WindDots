@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="20dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <View
+            android:id="@+id/item_approvalprocess_time_radius_view"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/gray_radius_process"
+            android:layout_centerVertical="true"/>
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="14dp"
+            android:background="@color/alpha_05_black"
+            android:layout_marginLeft="5dp"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="14dp"
+            android:background="@color/alpha_05_black"
+            android:layout_marginLeft="5dp"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/item_approvalpecess_user_name_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingVertical="7dp"
+            android:text="张三"
+            android:gravity="center_vertical"
+            android:layout_toRightOf="@+id/item_approvalprocess_time_radius_view"
+            android:paddingLeft="10dp"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/alpha_05_black"
+                android:layout_marginLeft="5dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/alpha_05_black"
+                android:layout_marginLeft="15dp"
+                android:paddingHorizontal="10dp">
+
+                <ImageView
+                    android:id="@+id/item_approvalpecess_state_iv"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/fail"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/item_approvalpecess_state_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/item_approvalpecess_state_iv"
+                    android:gravity="center_vertical"
+                    android:text="已驳回"
+                    android:textColor="@color/colorStyleG"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/item_approvalpecess_time_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/item_approvalpecess_state_tv"
+                    android:gravity="end|center_vertical"
+                    android:textColor="@color/color50"
+                    android:textSize="13sp"
+                    android:text="2020-02-12 11:05:30" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/item_approvalpecess_cause_ll"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/alpha_05_black"
+                android:layout_marginLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/item_approvalpecess_cause_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:background="@color/alpha_05_black"
+                android:text="理由:不同意"
+                android:textColor="@color/color50"
+                android:textSize="13sp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

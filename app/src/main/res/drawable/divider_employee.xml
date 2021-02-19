@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--分割线的高度，横向的RecyclerView,这里设置宽度即可-->
+    <size android:height="0.5dp" />
+    <!--分割线的颜色-->
+    <solid android:color="@color/common_divider_color" />
+    <padding
+        android:left="12dp"
+        android:right="20dp" />
+</shape>

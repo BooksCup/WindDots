@@ -1,0 +1,387 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="app_name">瓦丁</string>
+
+    <string name="search">搜索</string>
+    <string name="toast_loading_error">加载失败,请稍后重试</string>
+    <string name="toast_search_empty">请先输入搜索内容</string>
+
+    <!--  登录页  -->
+    <string name="login_phone_hint">请输入手机号</string>
+    <string name="login_password_hint">请输入密码</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+
+
+    <string name="chat_change_avatar">更换群头像</string>
+
+    <!--    更新提示-->
+    <string name="upgrade_version">版本</string>
+    <string name="upgrade_title">更新的内容</string>
+    <string name="upgrade_button_cancel">暂不</string>
+    <string name="upgrade_button_upgrade">立即升级</string>
+
+    <string name="title">标题</string>
+    <string name="title_hint">请输入标题</string>
+
+    <string name="time_line_footer">流程开始</string>
+
+    <!--  会务  -->
+    <string name="discuss_title">标题</string>
+    <string name="discuss_content">内容</string>
+    <string name="discuss_content_hint">请输入内容</string>
+    <string name="discuss_start">开始</string>
+    <string name="discuss_end">结束</string>
+    <string name="discuss_confirm">已确认</string>
+    <string name="discuss_edit_button">编辑</string>
+    <string name="discuss_delete">删除问题</string>
+    <string name="discuss_status_close">关闭问题</string>
+    <string name="discuss_status_open">开启问题</string>
+    <string name="discuss_add_user_success">添加用户成功</string>
+    <string name="discuss_photos_title">相关图片</string>
+
+    <!--    名片页-->
+    <string name="friend_list_title">名片</string>
+    <string name="friend_list_new_friend">新朋友</string>
+    <string name="friend_apple_input_searchkey">输入关键字</string>
+    <string name="friend_apple_agree">同意</string>
+    <string name="friend_apple_agreed">已同意</string>
+    <string name="friend_search_title">搜索好友</string>
+
+    <!--    搜索平台用户-->
+    <string name="search_user_title">添加好友</string>
+    <string name="search_user_hint">输入手机号码/姓名/企业</string>
+
+
+    <!--    用户信息页-->
+    <string name="user_info_title">个人信息</string>
+    <string name="user_info_name">姓名</string>
+    <string name="user_info_enterprise">企业</string>
+    <string name="user_info_department">部门</string>
+    <string name="user_info_position">职位</string>
+    <string name="user_info_job_number">工号</string>
+    <string name="user_info_phone">电话</string>
+    <string name="user_info_email">邮箱</string>
+    <string name="user_info_address">地址</string>
+    <string name="user_info_call_phone">电话</string>
+    <string name="user_info_add_friend">加为好友</string>
+    <string name="user_info_apple_agree">同意</string>
+    <string name="user_info_send_message">发送消息</string>
+    <string name="user_info_share">分享</string>
+    <string name="user_info_post_friend_apply_success">发送好友请求成功</string>
+    <string name="user_info_post_friend_apply_error">发送好友请求失败</string>
+    <string name="user_info_agree_apply_success">添加好友成功</string>
+    <string name="user_info_delete_success">删除好友成功</string>
+    <string name="user_info_agree_apply_error">添加好友失败</string>
+
+    <!--币种-->
+    <string name="currency_dollar">美元</string>
+    <string name="currency_euro">欧元</string>
+    <string name="currency_pound">英镑</string>
+    <string name="currency_hkd">港币</string>
+    <string name="currency_cad">加拿大元</string>
+    <string name="currency_yen">日元</string>
+    <string name="currency_ntc">新台币</string>
+    <string name="currency_vnd">越南币</string>
+    <string name="currency_rmb">元</string>
+    <string name="currency_rmb1">人民币</string>
+
+
+    <!--筛选框-->
+    <string name="filter_hint">可输入搜索内容</string>
+
+
+    <string name="invoice_title">发票</string>
+    <string name="invoice_filter">发票筛选</string>
+    <string name="invoice_detail_title">发票详情</string>
+    <string name="invoice_detail_in_out_status">进销项:</string>
+    <string name="invoice_detail_amount">金额:</string>
+    <string name="invoice_detail_total_tax_num">税额:</string>
+    <string name="invoice_detail_total_tax_sum">价税合计:</string>
+    <string name="invoice_detail_invoice_data_code">发票代码:</string>
+    <string name="invoice_detail_invoice_number">发票号码:</string>
+    <string name="invoice_detail_billing_time">开票日期:</string>
+    <string name="invoice_detail_void_mark">是否作废:</string>
+    <string name="invoice_detail_is_bill_mark">是否为清单票:</string>
+    <string name="invoice_detail_check_code">校验码:</string>
+    <string name="invoice_detail_tax_disk_code">机器编号:</string>
+    <string name="invoice_detail_purchaser_name">购买方:</string>
+    <string name="invoice_detail_taxpayer_number">纳税人识别号:</string>
+    <string name="invoice_detail_taxpayer_address_or_id">地址及电话:</string>
+    <string name="invoice_detail_taxpayer_bank_account">开户行及账号:</string>
+    <string name="invoice_detail_sales_name">销售方:</string>
+    <string name="invoice_detail_goodservice_name">货物或应税劳务名称:</string>
+    <string name="invoice_detail_model">规格型号:</string>
+    <string name="invoice_detail_unit">单位:</string>
+    <string name="invoice_detail_numbers">数量:</string>
+    <string name="invoice_detail_price">单价:</string>
+    <string name="invoice_detail_sums">金额:</string>
+    <string name="invoice_detail_tax_rate">税率:</string>
+    <string name="invoice_detail_tax">税额:</string>
+    <string name="invoice_detail_invoiceRemarks">备注:</string>
+
+    <string name="invoice_detail_add_success">添加发票成功</string>
+    <string name="invoice_detail_add_error">添加发票失败,请稍后重试</string>
+
+    <string name="invoice_add_title">新建发票</string>
+    <string name="invoice_add_in_out_status">进销项</string>
+    <string name="invoice_add_type">类型</string>
+    <string name="invoice_add_cost_type">业务</string>
+    <string name="invoice_add_cueerncy">币种</string>
+    <string name="invoice_add_invoice_number">发票号</string>
+    <string name="invoice_add_invoice_number_hint">输入发票号</string>
+    <string name="invoice_add_amount">金额</string>
+    <string name="invoice_add_amount_hint">输入金额</string>
+    <string name="invoice_add_tax_amount">税额</string>
+    <string name="invoice_add_tax_amount_hint">输入税额</string>
+    <string name="invoice_add_sale_name">开票方</string>
+    <string name="invoice_add_sale_name_hint">选择开票方</string>
+    <string name="invoice_add_pay_name">付款方</string>
+    <string name="invoice_add_pay_name_hint">选择付款方</string>
+    <string name="invoice_add_invoice_date">开票日期</string>
+    <string name="invoice_add_invoice_date_hint">选择开票日期</string>
+    <string name="invoice_add_recevie_date">收到日期</string>
+    <string name="invoice_add_recevie_date_hint">选择收到日期</string>
+    <string name="invoice_add_remarks">备注</string>
+    <string name="invoice_add_remarks_hint">输入备注</string>
+
+    <string name="invoice_add_invoice_number_toast">请先输入发票号</string>
+    <string name="invoice_add_amount_toast">请先输入金额</string>
+    <string name="invoice_add_tax_amount_toast">请先输入税额</string>
+    <string name="invoice_add_sale_name_toast">请先选择开票方</string>
+    <string name="invoice_add_pay_name_toast">请先选择付款方</string>
+    <string name="invoice_add_invoice_date_toast">请先选择开票日期</string>
+    <string name="invoice_add_recevie_date_toast">请先选择收到日期</string>
+
+
+    <!--报价-->
+    <string name="quote_title">报价</string>
+    <string name="quote_filter">报价筛选</string>
+    <string name="quote_detail_to_enterprise">工艺</string>
+    <string name="quote_detail_material">材料</string>
+    <string name="quote_detail_cost">费用</string>
+    <string name="quote_detail_price">工艺</string>
+
+
+    <!--物品-->
+    <string name="goods_title">物品</string>
+    <string name="goods_filter">物品筛选</string>
+    <string name="goods_type_all_filter">全部</string>
+    <string name="goods_attr_spe">属性规格</string>
+    <string name="goods_quote_record">报价记录</string>
+    <string name="goods_stock_record">库存记录</string>
+    <string name="goods_remark">备注</string>
+    <string name="goods_attr">属性</string>
+    <string name="goods_spe">规格</string>
+    <string name="goods_null">暂无</string>
+    <string name="goods_quote_record_price">价格</string>
+    <string name="goods_quote_record_person">操作人</string>
+    <string name="goods_quote_record_date">日期</string>
+
+
+    <!--仓库-->
+    <string name="warehouse_title">仓库</string>
+    <string name="warehouse_filter">仓库筛选</string>
+    <string name="warehouse_contact">保管员</string>
+    <string name="warehouse_address">地址</string>
+
+    <string name="warehouse_goods_name">品名: </string>
+    <string name="warehouse_number">数量: </string>
+    <string name="warehouse_price">单价: </string>
+    <string name="warehouse_receiver_name">接收人: </string>
+    <string name="warehouse_receiver_address">接收地址: </string>
+    <string name="warehouse_remark">备注: </string>
+
+    <!--订单-->
+    <string name="order_title">订单</string>
+    <string name="order_filter">订单筛选</string>
+    <string name="order_theme">主题: </string>
+    <string name="order_number">数量: </string>
+    <string name="order_date">日期: </string>
+    <string name="order_customer">客户: </string>
+
+    <!--人员-->
+    <string name="employee_title">人员</string>
+    <string name="employee_department">部门: </string>
+    <string name="employee_position">职位: </string>
+    <string name="employee_job_no">工号: </string>
+    <string name="employee_apply">成员申请</string>
+    <string name="employee_apply_title">成员申请</string>
+    <string name="employee_apply_agree">同意</string>
+    <string name="employee_apply_refuse">拒绝</string>
+    <string name="employee_apply_agree_success">已同意</string>
+    <string name="employee_apply_refuse_success">已拒绝</string>
+    <string name="employee_apply_handle_error">操作失败,请稍后重试</string>
+
+    <!--需求-->
+    <string name="requirement_title">需求</string>
+    <string name="requirement_filter">需求筛选</string>
+
+
+    <!--合同-->
+    <string name="contract_title">合同</string>
+    <string name="contract_filter">合同筛选</string>
+
+
+    <!--企查查-->
+    <string name="enterprise_title">企业</string>
+    <string name="enterprise_search_hint">输入企业</string>
+
+    <!--商圈-->
+    <string name="materials_price_title">原材料价格</string>
+    <string name="materials_type">类型</string>
+    <string name="materials_price">价格</string>
+    <string name="materials_change">涨跌</string>
+    <string name="materials_date">报价日期</string>
+    <string name="rate_title">汇率</string>
+    <string name="rate_currency">币种</string>
+    <string name="rate_sale">现汇卖出</string>
+    <string name="rate_buy">现汇买入</string>
+    <string name="rate_middle">中间折算价</string>
+    <string name="rate_date">日期</string>
+    <string name="toast_currency_empty">请至少选择一个币种</string>
+    <string name="toast_materials_empty">请至少选择一种材料</string>
+    <string name="toast_materials_history_empty">暂无当天数据</string>
+    <string name="toast_rate_history_empty">暂无当天数据</string>
+
+    <!--注册-->
+    <string name="register_name">姓名</string>
+    <string name="register_name_hint">请输入真实姓名</string>
+    <string name="register_title">注册</string>
+    <string name="register_phone">手机号</string>
+    <string name="register_phone_hint">输入手机号</string>
+    <string name="register_password">密码</string>
+    <string name="register_password_hint">输入密码</string>
+    <string name="register_verify_code">验证码</string>
+    <string name="register_verify_code_hint">输入验证码</string>
+    <string name="register_get_verify_code">获取验证码</string>
+    <string name="register_name_empty">请先输入真实姓名</string>
+    <string name="register_phone_empty">请先输入电话号码</string>
+    <string name="register_password_empty">请先输入密码</string>
+    <string name="register_verify_code_empty">请先输入验证码</string>
+    <string name="register_enterprise_empty">请先选择企业</string>
+    <string name="user_apply_success">申请成功,等待管理员处理</string>
+    <string name="user_apply_fail">申请失败,请稍后重试</string>
+    <string name="register_company">公司名称</string>
+    <string name="register_company_search">搜索公司名称</string>
+    <string name="register_company_title">搜索公司</string>
+    <string name="register_company_search_hint">搜索公司名称</string>
+
+
+    <!--盘点-->
+    <string name="check_title">盘点</string>
+    <string name="check_filter_title">盘点筛选</string>
+    <string name="check_detail_title">盘点详情</string>
+    <string name="check_detail_remark_hint">输入备注</string>
+    <string name="check_question_title">问题库</string>
+    <string name="check_question_add_title">添加问题</string>
+    <string name="check_question_add_hint">输入问题</string>
+    <string name="check_question_add_commit">提交</string>
+    <string name="check_question_add_empty">请先输入问题内容</string>
+    <string name="check_question_add_already_exists">该问题已存在,请勿重复添加</string>
+    <string name="check_question_add_fail">添加失败,请稍后重试</string>
+    <string name="check_question_question_empty">请先选择问题</string>
+    <string name="check_question_level_empty">请先选择问题等级</string>
+    <string name="check_question_upload_image_fail">请先选择问题等级</string>
+    <string name="check_detail_length_empty">请先输入盘点后的米数</string>
+    <string name="check_detail_weight_empty">请先输入盘点后的公斤数</string>
+
+
+    <!--消息-->
+    <string name="add_group_chat_title">选择联系人</string>
+    <string name="add_group_chat_user_empty">请至少选择一个用户</string>
+    <string name="add_group_chat_error">添加群聊失败,请稍后重试</string>
+    <string name="add_group_menber_error">添加成员失败,请稍后重试</string>
+    <string name="delete_group_menber_error">删除成员失败,请稍后重试</string>
+    <string name="delete_group__error">退出失败,请稍后重试</string>
+
+    <string name="community_chat_list_remove_above_cancel_send">手指上滑，取消发送</string>
+    <string name="community_chat_list_loosen_cancel_send">松开手指，取消发送</string>
+    <string name="community_chat_list_rec_voice_short">录音时间太短</string>
+    <string name="community_chat_list_rec_voice_failure">录音失败！</string>
+    <string name="vioce">录音</string>
+
+    <string name="share">分享给好友</string>
+    <string name="share_session">微信好友</string>
+    <string name="share_timeline">微信朋友圈</string>
+    <string name="share_copyurl">复制链接</string>
+    <string name="share_noinstall_wechat">未安装微信</string>
+    <string name="share_copyurl_success">复制成功</string>
+    <string name="share_position">职位: </string>
+    <string name="share_email">邮箱: </string>
+    <string name="share_enterprise">企业: </string>
+
+
+    <!--扫码-->
+    <string name="msg_bulk_mode_scanned">Bulk mode: barcode scanned and saved</string>
+    <string name="msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>
+    <string name="msg_default_format">Format</string>
+    <string name="msg_default_meta">Metadata</string>
+    <string name="msg_default_mms_subject">Hi</string>
+    <string name="msg_default_status">Place a barcode inside the viewfinder rectangle to scan it.</string>
+    <string name="msg_default_time">Time</string>
+    <string name="msg_default_type">Type</string>
+    <string name="msg_encode_contents_failed">Could not encode a barcode from the data provided.</string>
+    <string name="msg_error">Error</string>
+    <string name="msg_google_books">Google</string>
+    <string name="msg_google_product">Google</string>
+    <string name="msg_intent_failed">Sorry, the requested application could not be launched. The barcode contents may be invalid.</string>
+    <string name="msg_invalid_value">Invalid value</string>
+    <string name="msg_redirect">Redirect</string>
+    <string name="msg_sbc_book_not_searchable">Sorry, this book is not searchable.</string>
+    <string name="msg_sbc_failed">Sorry, the search encountered a problem.</string>
+    <string name="msg_sbc_no_page_returned">No page returned</string>
+    <string name="msg_sbc_page">Page</string>
+    <string name="msg_sbc_results">Results</string>
+    <string name="msg_sbc_searching_book">Searching book\u2026</string>
+    <string name="msg_sbc_snippet_unavailable">Snippet not available</string>
+    <string name="msg_share_explanation">You can share data by displaying a barcode on your screen and scanning it with another phone.</string>
+    <string name="msg_share_text">Or type some text and press Enter</string>
+    <string name="msg_sure">Are you sure?</string>
+    <string name="msg_unmount_usb">Sorry, the SD card is not accessible.</string>
+    <string name="preferences_actions_title">When a barcode is found\u2026</string>
+    <string name="preferences_auto_focus_title">Use auto focus</string>
+    <string name="preferences_auto_open_web_title">Open web pages automatically</string>
+    <string name="preferences_bulk_mode_summary">Scan and save many barcodes continuously</string>
+    <string name="preferences_bulk_mode_title">Bulk scan mode</string>
+    <string name="preferences_copy_to_clipboard_title">Copy to clipboard</string>
+    <string name="preferences_custom_product_search_summary" formatted="false">Substitutions: %s = contents, %f = format, %t = type</string>
+    <string name="preferences_custom_product_search_title">Custom search URL</string>
+    <string name="preferences_decode_1D_industrial_title">1D Industrial</string>
+    <string name="preferences_decode_1D_product_title">1D Product</string>
+    <string name="preferences_decode_Aztec_title">Aztec</string>
+    <string name="preferences_decode_Data_Matrix_title">Data Matrix</string>
+    <string name="preferences_decode_PDF417_title">PDF417 (β)</string>
+    <string name="preferences_decode_QR_title">QR Codes</string>
+    <string name="preferences_device_bug_workarounds_title">Device Bug Workarounds</string>
+    <string name="preferences_disable_barcode_scene_mode_title">No barcode scene mode</string>
+    <string name="preferences_disable_continuous_focus_summary">Use only standard focus mode</string>
+    <string name="preferences_disable_continuous_focus_title">No continuous focus</string>
+    <string name="preferences_disable_exposure_title">No exposure</string>
+    <string name="preferences_disable_metering_title">No metering</string>
+    <string name="preferences_front_light_summary">Improves scanning in low light on some phones, but may cause glare. Does not work on all phones.</string>
+    <string name="preferences_front_light_title">Use front light</string>
+    <string name="preferences_front_light_auto">Automatic</string>
+    <string name="preferences_front_light_off">Off</string>
+    <string name="preferences_front_light_on">On</string>
+    <string name="preferences_general_title">General settings</string>
+    <string name="preferences_history_summary">Store your scans in History</string>
+    <string name="preferences_history_title">Add to History</string>
+    <string name="preferences_invert_scan_title">Invert scan</string>
+    <string name="preferences_invert_scan_summary">Scan for white barcodes on black background. Not available on some devices.</string>
+    <string name="preferences_name">Settings</string>
+    <string name="preferences_orientation_title">No automatic rotation</string>
+    <string name="preferences_play_beep_title">Beep</string>
+    <string name="preferences_remember_duplicates_summary">Store multiple scans of the same barcode in History</string>
+    <string name="preferences_remember_duplicates_title">Remember duplicates</string>
+    <string name="preferences_result_title">Result settings</string>
+    <string name="preferences_scanning_title">When scanning for barcodes, decode\u2026</string>
+    <string name="preferences_search_country">Search country</string>
+    <string name="preferences_supplemental_summary">Try to retrieve more information about the barcode contents</string>
+    <string name="preferences_supplemental_title">Retrieve more info</string>
+    <string name="preferences_vibrate_title">Vibrate</string>
+
+    <string name="network_unavailable">网络连接不可用，请检查网络</string>
+    <string name="network_time_out">网络超时，请重试</string>
+
+</resources>

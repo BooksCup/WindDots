@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/activity_schedule_body"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorF0"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:background="@color/colorWhite"
+                android:layout_width="match_parent"
+                android:paddingHorizontal="10dp"
+                android:layout_height="50dp">
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="标题"
+                    android:textSize="15sp"
+                    android:textColor="@color/color32" />
+                <EditText
+                    android:id="@+id/activity_schedule_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="输入标题"
+                    android:background="@null"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="15sp"
+                    />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+
+            <LinearLayout
+                android:id="@+id/activity_schedule_datepick"
+                android:layout_width="match_parent"
+                android:paddingHorizontal="10dp"
+                android:layout_height="50dp"
+                android:background="@color/colorWhite">
+                <TextView
+                    android:id="@+id/activity_schedule_dateText"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="日期"
+                    android:textSize="15sp"
+                    android:textColor="@color/color32" />
+                <TextView
+                    android:id="@+id/activity_schedule__datepicktext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="选择日期"
+                    android:textSize="13sp"
+                    android:lines="1"
+                    android:textColor="@color/colorB2"  />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+
+            <LinearLayout
+                android:id="@+id/activity_schedule_user"
+                android:background="@color/colorWhite"
+                android:layout_width="match_parent"
+                android:paddingHorizontal="10dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="人员"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/color32" />
+
+              <androidx.recyclerview.widget.RecyclerView
+                  android:id="@+id/activity_schedule_userList"
+                  android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:layout_height="wrap_content"/>
+
+
+                <ImageView
+                    android:id="@+id/view_claimingmoney_icon"
+                    android:layout_width="10dp"
+                    android:layout_height="17dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/icon_right"
+                    android:scaleType="centerCrop"
+                    />
+            </LinearLayout>
+            <EditText
+                android:id="@+id/activity_schedule_content"
+                android:hint="输入内容"
+                android:background="@color/colorWhite"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="5dp"
+                android:textSize="14sp"
+                android:maxLines="3"
+                android:padding="10dp"
+                />
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:id="@+id/activity_schedule_bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/activity_schedule_delete"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="17sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="删除"
+            />
+
+        <TextView
+            android:id="@+id/activity_schedule_commit"
+            android:background="@color/colorBlue"
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="17sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="提交"
+            />
+    </LinearLayout>
+</LinearLayout>

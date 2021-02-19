@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/item_discuss_chat_title_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_chat_time_bg"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="3dp"
+        android:text="2020-02-15 15:23:03"
+        android:textColor="@color/colorWhite"
+        android:textSize="10sp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--        me-->
+        <RelativeLayout
+            android:id="@+id/item_discuss_chat_me_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/item_discuss_chat_me_header_iv"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/item_discuss_chat_me_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张三"
+                android:visibility="gone"
+                android:textSize="12sp"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/color32"
+                android:layout_toLeftOf="@+id/item_discuss_chat_me_header_iv"/>
+
+            <!--            气泡模式 text 和 chat-->
+            <RelativeLayout
+                android:id="@+id/item_discuss_chat_me_text_chat_mode_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/item_discuss_chat_me_name_tv"
+                android:layout_toLeftOf="@+id/item_discuss_chat_me_header_iv">
+
+                <ImageView
+                    android:id="@+id/item_discuss_chat_me_msg_iv"
+                    android:layout_width="8dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="7dp"
+                    android:src="@mipmap/msg_me" />
+
+
+                <!--            chat模式-->
+                <LinearLayout
+                    android:id="@+id/item_discuss_chat_me_content_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/item_discuss_chat_me_msg_iv"
+                    android:background="@drawable/shape_chat_bg"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/item_discuss_chat_me_content_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:textColor="@color/color32"
+                       />
+
+
+                    <ImageView
+                        android:id="@+id/item_discuss_chat_me_content_img_iv"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="10dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_launcher"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+        <!--        else-->
+        <RelativeLayout
+            android:id="@+id/item_discuss_chat_else_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/item_discuss_chat_else_header_iv"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher" />
+
+
+            <TextView
+                android:id="@+id/item_discuss_chat_else_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="张三"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/color32"
+                android:layout_toRightOf="@+id/item_discuss_chat_else_header_iv"/>
+
+
+            <!--            气泡模式 text 和 chat-->
+            <RelativeLayout
+                android:id="@+id/item_discuss_chat_else_text_chat_mode_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="40dp"
+                android:layout_toRightOf="@+id/item_discuss_chat_else_header_iv"
+                android:layout_below="@+id/item_discuss_chat_else_name_tv">
+
+                <ImageView
+                    android:id="@+id/item_discuss_chat_else_msg_iv"
+                    android:layout_width="8dp"
+                    android:layout_height="16dp"
+                    android:layout_marginTop="7dp"
+                    android:src="@mipmap/msg_else" />
+
+
+                <!--            chat模式-->
+                <LinearLayout
+                    android:id="@+id/item_discuss_chat_else_content_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/item_discuss_chat_else_msg_iv"
+                    android:background="@drawable/shape_chat_bg"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+
+                    <TextView
+                        android:id="@+id/item_discuss_chat_else_content_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color32"/>
+
+                    <ImageView
+                        android:id="@+id/item_discuss_chat_else_content_img_iv"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@mipmap/ic_launcher"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </FrameLayout>
+</LinearLayout>

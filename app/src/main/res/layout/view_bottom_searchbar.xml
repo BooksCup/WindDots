@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@color/colorF0"
+    android:orientation="horizontal"
+    >
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+    
+    <ImageView
+        android:id="@+id/bottom_search_search"
+        android:layout_alignParentRight="true"
+        android:paddingVertical="13dp"
+        android:layout_width="60dp"
+        android:layout_height="45dp"
+        android:src="@mipmap/bottom_search"
+        android:visibility="gone"
+        />
+
+    <ImageView
+        android:id="@+id/bottom_search_add"
+       android:layout_toLeftOf="@id/bottom_search_search"
+        android:paddingVertical="13dp"
+        android:layout_width="60dp"
+        android:layout_height="45dp"
+        android:src="@mipmap/bottom_searchadd"
+        />
+
+</LinearLayout>

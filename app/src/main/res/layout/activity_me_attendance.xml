@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/activity_mine_attendance_mapview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#F0F1F2"
+            android:paddingHorizontal="15dp">
+
+            <TextView
+                android:id="@+id/activity_mine_attendance_day"
+                android:layout_width="80dp"
+                android:layout_height="25dp"
+                android:gravity="bottom"
+                android:text="5月26日"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/activity_mine_attendance_week"
+                android:layout_width="80dp"
+                android:layout_height="25dp"
+                android:layout_alignParentBottom="true"
+                android:gravity="top"
+                android:text="星期一"
+                android:textAlignment="gravity"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/activity_mine_attendance_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:text=""
+                android:textColor="@color/colorBlack"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:elevation="4dp"
+            android:orientation="vertical">
+
+            <!--            <com.google.android.material.appbar.AppBarLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                app:elevation="0dp">-->
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/activity_mine_attendance_TabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/colorTransparent"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/colorAccent"
+                app:tabTextColor="@color/colorTextGray" />
+
+            <!--            </com.google.android.material.appbar.AppBarLayout>-->
+
+
+        </LinearLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/activity_mine_attendance_ViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

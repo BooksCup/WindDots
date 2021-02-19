@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    >
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdv_avatar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        fresco:actualImageScaleType="centerCrop"
+        fresco:placeholderImage="@mipmap/default_user_avatar"
+        fresco:placeholderImageScaleType="centerCrop"
+        fresco:roundedCornerRadius="5dp"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/sdv_avatar">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="鞠建"
+            android:textColor="@color/color32"
+            android:textSize="17sp" />
+
+        <!--    <ImageView-->
+        <!--        android:id="@+id/iv_gender"-->
+        <!--        android:layout_width="15dp"-->
+        <!--        android:layout_height="15dp"-->
+        <!--        android:layout_marginLeft="5dp"-->
+        <!--        android:layout_marginTop="8dp"-->
+        <!--        android:layout_toRightOf="@+id/tv_name"-->
+        <!--        android:src="@mipmap/emoji" />-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/tv_department"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_toRightOf="@id/tv_name"-->
+        <!--                android:layout_marginLeft="3dp"-->
+        <!--                android:layout_marginTop="2dp"-->
+        <!--                android:background="@drawable/shape_select_border_green"-->
+        <!--                android:paddingHorizontal="3dp"-->
+        <!--                android:paddingVertical="1dp"-->
+        <!--                android:text="研发部"-->
+        <!--                android:textColor="@color/enterprise_status_tag_green"-->
+        <!--                android:textSize="12sp" />-->
+
+        <TextView
+            android:id="@+id/tv_job_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:text="产品经理"
+            android:textSize="13sp" />
+
+        <!--    <TextView-->
+        <!--        android:id="@+id/tv_jobnumber"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_below="@+id/tv_position"-->
+        <!--        android:layout_marginBottom="5dp"-->
+        <!--        android:layout_toRightOf="@+id/iv_avatar"-->
+        <!--        android:text="name"-->
+        <!--        android:textColor="@color/color50"-->
+        <!--        android:textSize="13sp" />-->
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_department"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/shape_select_border_green"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="3dp"
+        android:text="研发部"
+        android:textColor="@color/enterprise_status_tag_green"
+        android:textSize="13sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="20dp"
+        android:background="#d9d9d9"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+    <LinearLayout
+        android:id="@+id/ll_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_popshort_corner"
+        android:orientation="vertical"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginHorizontal="10dp"
+            android:background="@color/color32" />
+        <TextView
+            android:id="@+id/tv_add"
+            android:layout_width="110dp"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:paddingHorizontal="25dp"
+            android:paddingVertical="4dp"
+            android:textSize="13sp"
+            android:text="添加快捷" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginHorizontal="10dp"
+            android:background="@color/color32" />
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="110dp"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:paddingHorizontal="25dp"
+            android:paddingVertical="4dp"
+            android:textSize="13sp"
+            android:text="删除应用" />
+    </LinearLayout>
+    <View
+        android:id="@+id/view_arrow"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:padding="3dp"
+        android:background="@drawable/shape_popshort_arrow_corner"
+        android:rotation="45.0"
+        android:layout_below="@+id/ll_body"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-7dp"/>
+
+</RelativeLayout>

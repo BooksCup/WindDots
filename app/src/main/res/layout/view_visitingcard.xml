@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="170dp"
+    android:background="@mipmap/visiting_card_background"
+    android:padding="15dp">
+
+    <ImageView
+        android:id="@+id/visiting_card_icon"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/visiting_card_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/visiting_card_icon"
+        android:text=""
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/me_card_text_size" />
+
+    <TextView
+        android:id="@+id/visiting_card_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/visiting_card_name"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/visiting_card_name"
+        android:text=""
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/me_card_text_size" />
+
+    <TextView
+        android:id="@+id/visiting_card_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/visiting_card_name"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/visiting_card_icon"
+        android:text=""
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/me_card_text_size" />
+
+    <ImageView
+        android:id="@+id/iv_share"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/share" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/visiting_card_icon"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/visiting_card_enterprise"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:drawableLeft="@mipmap/enterprise"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/me_card_text_size" />
+
+        <TextView
+            android:id="@+id/visiting_card_email"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:drawableLeft="@mipmap/email"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/me_card_text_size" />
+
+        <TextView
+            android:id="@+id/visiting_card_address"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:drawableLeft="@mipmap/address"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/me_card_text_size" />
+
+    </LinearLayout>
+</RelativeLayout>

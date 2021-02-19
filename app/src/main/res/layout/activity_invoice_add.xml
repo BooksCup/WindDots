@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.wd.winddots.view.selector.Selector
+                android:id="@+id/selector_in_out_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+            <com.wd.winddots.view.selector.Selector
+                android:id="@+id/selector_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+            <com.wd.winddots.view.selector.Selector
+                android:id="@+id/selector_const_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+            <com.wd.winddots.view.selector.Selector
+                android:id="@+id/selector_currency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+            <com.wd.winddots.view.EditCell
+                android:id="@+id/et_invoice_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+            <com.wd.winddots.view.EditCell
+                android:id="@+id/et_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+            <com.wd.winddots.view.EditCell
+                android:id="@+id/et_tax_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+            <com.wd.winddots.view.TitleTextView
+                android:id="@+id/et_sales_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+            <com.wd.winddots.view.TitleTextView
+                android:id="@+id/et_purchaser_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+
+            <com.wd.winddots.view.TitleTextView
+                android:id="@+id/view_open_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+            <com.wd.winddots.view.TitleTextView
+                android:id="@+id/view_receive_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+            <com.wd.winddots.view.EditCell
+                android:id="@+id/et_remarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/imagelist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:background="@color/colorWhite"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_save"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#33B3EA">
+
+        <TextView
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="提交"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

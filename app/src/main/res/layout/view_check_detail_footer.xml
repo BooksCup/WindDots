@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorF0"
+    android:paddingTop="10dp">
+
+    <EditText
+        android:id="@+id/et_footer"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:padding="10dp"
+        android:background="@color/colorWhite"
+        android:hint="@string/check_detail_remark_hint"
+        android:textSize="13sp"
+        android:maxLines="3"/>
+
+</LinearLayout>

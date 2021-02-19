@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:id="@+id/item_mine_attendance_delete"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:background="@color/colorF0"
+        android:paddingHorizontal="10dp"
+        >
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/delete1"
+            android:layout_gravity="center_vertical"
+
+            />
+        <TextView
+            android:id="@+id/item_mine_attendance_addtime_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="时间"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@color/colorWhite"
+        android:id="@+id/item_mine_attendance_addtime_cell"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="10dp"
+        android:layout_height="50dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="时间"
+            android:textSize="15sp"
+            android:textColor="@color/color32" />
+
+
+        <TextView
+            android:id="@+id/item_mine_attendance_addtime_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:text=""
+            android:textSize="14sp"
+            android:lines="1"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textColor="@color/colorB2"
+            android:ellipsize="end"
+            />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="17dp"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/icon_right"
+            android:scaleType="centerCrop"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

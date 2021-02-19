@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:paddingHorizontal="15dp"
+    android:paddingVertical="5dp"
+    android:orientation="vertical"
+    android:layout_marginTop="1dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/item_privatechat_username_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="张三"
+            android:textColor="@color/color32"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <!--        公司和部门名称-->
+        <TextView
+            android:id="@+id/item_privatechat_short_and_department_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:textColor="@color/color50"
+            android:textSize="13sp"
+            android:text="裁缝铺" />
+
+        <!--        职位名称-->
+        <TextView
+            android:id="@+id/item_privatechat_singlejobname_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_toRightOf="@+id/item_privatechat_username_tv"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            android:text="软件工程师"
+            android:textSize="14sp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/color32" />
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        >
+
+        <ImageView
+            android:id="@+id/item_privatechat_userAvatar_iv"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop" />
+
+
+        <TextView
+            android:id="@+id/tv_unread"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@+id/item_privatechat_userAvatar_iv"
+            android:layout_marginLeft="-5dp"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/shape_unread"
+            />
+        <TextView
+            android:id="@+id/item_privatechat_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="13sp"
+            android:textColor="@color/color50"
+            android:text="2020-04-8" />
+
+        <TextView
+            android:id="@+id/item_privatechat_title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/item_privatechat_time_tv"
+            android:layout_toRightOf="@+id/item_privatechat_userAvatar_iv"
+            android:singleLine="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:textSize="13sp"
+            android:textColor="@color/color50"
+            android:text="这个是title" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,2 @@
+include ':app', ':baserecyclerviewadapterhelper'
+rootProject.name='WindDots'

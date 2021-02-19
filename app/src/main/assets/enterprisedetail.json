@@ -1,0 +1,100 @@
+{
+  "tycCompany": {
+    "companyId": "2349566267",
+    "regNumber": "320121000128894",
+    "regStatus": "存续",
+    "creditCode": "9132011567903066XG",
+    "estiblishTime": 1224777600000,
+    "regCapital": "501万人民币",
+    "companyType": null,
+    "name": "南京泽冠制衣有限公司",
+    "id": "ab8f3b6f2cd246d79e8ea30126d06389",
+    "orgNumber": "67903066X",
+    "type": 1,
+    "base": "js",
+    "legalPersonName": "季玮",
+    "staffNumRange": "小于50人",
+    "fromTime": 1224777600000,
+    "bondName": null,
+    "isMicroEnt": 1,
+    "usedBondName": null,
+    "percentileScore": 6718,
+    "regInstitute": "南京市江宁区市场监督管理局",
+    "regLocation": "南京市江宁区秣陵街道西旺社区爱陵路40号",
+    "industry": "纺织服装、服饰业",
+    "approvedTime": 1475078400000,
+    "socialStaffNum": 15,
+    "tags": null,
+    "taxNumber": "9132011567903066XG",
+    "businessScope": "服装生产、加工、销售；服装面辅料销售；房屋租赁；自营和代理各类商品和技术的进出口业务（国家限定企业经营或禁止进出口的商品和技术除外）。（依法须经批准的项目，经相关部门批准后方可开展经营活动）",
+    "property3": "Nanjing Zeguan Garment Co.,Ltd.",
+    "alias": "泽冠制衣",
+    "updateTimes": 1608208882000,
+    "bondType": null,
+    "toTime": 2170512000000,
+    "actualCapital": "501万人民币",
+    "companyOrgType": "有限责任公司(自然人投资或控股)",
+    "bondNum": null,
+    "regCapitalCurrency": "人民币",
+    "actualCapitalCurrency": "人民币",
+    "revokeDate": null,
+    "revokeReason": null,
+    "cancelDate": null,
+    "cancelReason": null,
+    "city": "南京市",
+    "district": "江宁区",
+    "historyNames": "南京韵贝制衣有限公司\t"
+  },
+  "tycCompanyHolder": [
+    {
+      "holderId": "1885580866",
+      "companyId": "2349566267",
+      "name": "季玮",
+      "alias": null,
+      "id": "1885580866",
+      "logo": null,
+      "type": 2,
+      "capital": [
+        {
+          "amomon": "490.98万人民币",
+          "time": "",
+          "percent": "98.00%",
+          "paymet": ""
+        }
+      ],
+      "capitalActl": [
+        {
+          "amomon": "490.98万人民币",
+          "time": "2011-09-05",
+          "percent": null,
+          "paymet": "货币"
+        }
+      ]
+    },
+    {
+      "holderId": "2349566268",
+      "companyId": "2349566267",
+      "name": "冬艳君",
+      "alias": null,
+      "id": "2349566268",
+      "logo": null,
+      "type": 2,
+      "capital": [
+        {
+          "amomon": "10.02万人民币",
+          "time": "",
+          "percent": "2.00%",
+          "paymet": ""
+        }
+      ],
+      "capitalActl": [
+        {
+          "amomon": "10.02万人民币",
+          "time": "2011-09-05",
+          "percent": null,
+          "paymet": "货币"
+        }
+      ]
+    }
+  ]
+}

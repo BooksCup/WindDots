@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:paddingVertical="10dp"
+    android:id="@+id/ll_body">
+
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:text="40S 精梳"
+        android:textColor="#5FBFEF"/>
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="111"/>
+    <TextView
+        android:id="@+id/tv_change"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="111"/>
+    <TextView
+        android:id="@+id/tv_unit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="111"/>
+
+
+
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/item_business_title_tv"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingLeft="10dp"-->
+<!--        android:paddingRight="10dp"-->
+<!--        android:paddingTop="10dp"-->
+<!--        android:paddingBottom="5dp"-->
+<!--        android:text="加急定制加工 2018 宝宝防蚊裤"-->
+<!--        android:textSize="16sp"-->
+<!--        android:textColor="@color/colorBlack" />-->
+
+<!--&lt;!&ndash;    <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/item_business_content_tv"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:paddingLeft="10dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:paddingRight="10dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:paddingTop="5dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:paddingBottom="5dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:text="加急定制加工 2018 宝宝防蚊裤,夏季新款童裤,韩版三条杠冰丝棉儿童防蚊裤,2-6岁,500条,交期为 2019-07-30之前,加工报价10000元"/>&ndash;&gt;-->
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/item_business_img_rv"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="10dp"-->
+<!--        android:layout_marginRight="10dp" />-->
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="40dp"-->
+<!--        >-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/item_business_userAvatar_iv"-->
+<!--            android:layout_width="20dp"-->
+<!--            android:layout_height="20dp"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_margin="5dp"-->
+<!--            android:scaleType="fitXY" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/item_business_target_tv"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:text="加急定制 裤子 需求"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="10dp"-->
+<!--            android:textColor="#FF9016"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/item_business_username_tv"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:layout_toRightOf="@+id/item_business_userAvatar_iv"-->
+<!--            android:text="吴经理"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/item_business_time_tv"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:text="2019-05-28 15:30"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:layout_toRightOf="@+id/item_business_username_tv"-->
+<!--            android:layout_toLeftOf="@+id/item_business_target_tv"/>-->
+
+<!--    </RelativeLayout>-->
+
+</LinearLayout>

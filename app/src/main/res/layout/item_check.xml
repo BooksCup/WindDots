@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_number"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:paddingVertical="10dp"
+        android:text=""
+        android:textSize="13sp" />
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_before_length"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:layout_weight="1"-->
+    <!--        android:paddingVertical="8dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:textSize="13sp"-->
+    <!--        android:text="" />-->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_after_length"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="输入米数"
+            android:inputType="numberDecimal"
+            android:textSize="13sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="5dp"
+            android:background="@color/alpha_50_black" />
+    </LinearLayout>
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_before_weight"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:layout_weight="1"-->
+    <!--        android:paddingVertical="8dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:textSize="13sp"-->
+    <!--        android:text="" />-->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_after_weight"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="输入公斤"
+            android:inputType="numberDecimal"
+            android:textSize="13sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="5dp"
+            android:background="@color/alpha_50_black" />
+    </LinearLayout>
+</LinearLayout>

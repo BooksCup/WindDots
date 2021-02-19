@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:divider="@drawable/shape_bottom_line"
+    android:orientation="vertical"
+    android:showDividers="end">
+
+    <!--    title-->
+    <TextView
+        android:id="@+id/item_approvalprocess_fee_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/alpha_05_black"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:text="机票" />
+
+    <!--    金额-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="金额"
+            android:textColor="@color/color32"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/item_approvalprocess_fee_money_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="13sp"
+            android:textColor="@color/colorB2"
+            android:gravity="center_vertical"
+            android:paddingVertical="10dp"
+            android:text="110人民币" />
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_line"/>
+
+    <!--    时间-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="时间"
+            android:textColor="@color/color32"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/item_approvalprocess_fee_time_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="13sp"
+            android:textColor="@color/colorB2"
+            android:gravity="center_vertical"
+            android:paddingVertical="10dp"
+            android:text="2020-04-14" />
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_line"/>
+
+    <RelativeLayout
+        android:id="@+id/item_approvalprocess_fee_invoice_type_view"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:visibility="gone">
+
+        <!--    发票类型-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/_line_1_dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/item_approvalprocess_fee_invoice_select_view"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="发票类型"
+                android:textColor="@color/color32"
+                android:textSize="15sp" />
+
+            <RelativeLayout
+                android:id="@+id/item_approvalprocess_fee_invoice_select_view"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/shape_select_invoice">
+
+                <ImageView
+                    android:id="@+id/item_approvalprocess_fee_invoice_selece_iv"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/select_up_down" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@+id/item_approvalprocess_fee_invoice_selece_iv"
+                    android:gravity="center_vertical"
+                    android:text="开票未到"
+                    android:textColor="@color/color32" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <include layout="@layout/layout_line"/>
+
+    </RelativeLayout>
+
+
+    <!--    是否开票-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingVertical="10dp"
+            android:paddingLeft="10dp"
+            android:text="是否开票"
+            android:textColor="@color/color32"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/item_approvalprocess_fee_is_invoice_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textSize="13sp"
+            android:textColor="@color/colorB2"
+            android:paddingVertical="10dp"
+            android:text="不开票" />
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_line"/>
+
+    <!--    相关发票-->
+    <LinearLayout
+        android:id="@+id/item_approvalprocess_fee_invoice_list_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="相关发票"
+            android:textColor="@color/color32"
+            android:textSize="15sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/item_approvalprocess_fee_invoice_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

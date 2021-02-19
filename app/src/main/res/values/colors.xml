@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#FFFFFF</color>
+    <color name="colorAccent">#D22B34</color>
+
+    <color name="colorStyle">#D22B34</color>
+    <color name="colorStyleG">#2C992D</color>
+
+    <color name="colorTextYellow">#FB9637</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+
+    <!--    全透明色-->
+    <color name="colorTransparent">#00000000</color>
+
+    <color name="colorTextGray">#A9A9A9</color>
+
+    <color name="colorLoginEdtBg">#34131A</color>
+
+    <color name="colorLoginBtnUnPressedBg">#D5282E</color>
+
+    <color name="colorLoginBtnPressedBg">#D6622E</color>
+
+    <color name="colorBlue">#33B3EA</color>
+
+    <color name="color50">#505050</color>
+    <color name="color32">#323232</color>
+    <color name="colorB2">#b2b2b2</color>
+    <color name="colorB8">#b8b8b8</color>
+    <color name="colorF0">#f0f0f0</color>
+    <color name="color99">#999999</color>
+
+    <!--透明度颜色-->
+    <color name="alpha_15_white">#26FFFFFF</color>
+    <color name="alpha_05_black">#0D000000</color>
+    <color name="alpha_10_black">#1A000000</color>
+    <color name="alpha_15_black">#26000000</color>
+    <color name="alpha_20_black">#33000000</color>
+    <color name="alpha_25_black">#40000000</color>
+    <color name="alpha_30_black">#4D000000</color>
+    <color name="alpha_35_black">#59000000</color>
+    <color name="alpha_40_black">#66000000</color>
+    <color name="alpha_45_black">#73000000</color>
+    <color name="alpha_50_black">#80000000</color>
+    <color name="alpha_55_black">#8C000000</color>
+    <color name="alpha_60_black">#99000000</color>
+    <color name="alpha_65_black">#A6000000</color>
+    <color name="alpha_70_black">#B3000000</color>
+    <color name="alpha_75_black">#BF000000</color>
+    <color name="alpha_80_black">#CC000000</color>
+    <color name="alpha_85_black">#D9000000</color>
+    <color name="alpha_90_black">#E6000000</color>
+    <color name="alpha_95_black">#F2000000</color>
+
+    <color name="tab_text_color">#353535</color>
+
+    <color name="contents_text">#ff000000</color>
+    <color name="encode_view">#ffffffff</color>
+    <color name="possible_result_points">#c0ffbd21</color> <!-- Android standard ICS color -->
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="result_points">#c099cc00</color> <!-- Android standard ICS color -->
+    <color name="result_text">#ffffffff</color>
+    <color name="result_view">#b0000000</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="viewfinder_laser">#ffcc0000</color> <!-- Android standard ICS color -->
+    <color name="viewfinder_mask">#60000000</color>
+
+    <color name="enterprise_status_tag_green">#3A9064</color>
+    <color name="enterprise_status_tag_red">#DB6054</color>
+
+    <color name="operate_agree">#3A9064</color>
+    <color name="operate_refuse">#DB6054</color>
+
+    <color name="high_light_red">#FF5656</color>
+    <color name="name_black">#333333</color>
+    <color name="phone_blue">#77b8f5</color>
+    <color name="wd_common_bg">#EDEDED</color>
+    <color name="common_divider_color">#cccccc</color>
+
+</resources>

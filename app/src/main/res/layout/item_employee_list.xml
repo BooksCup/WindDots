@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    
+    <ImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@mipmap/emoji"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_avatar"
+        android:layout_marginTop="5dp"
+        android:text="name"
+        android:textColor="@color/color32"
+        />
+
+    <ImageView
+        android:id="@+id/iv_gender"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@mipmap/emoji"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/tv_name"
+        android:layout_marginTop="8dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_department"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_avatar"
+        android:layout_below="@+id/tv_name"
+        android:textSize="13sp"
+        android:textColor="@color/color50"
+        android:text="name"
+        />
+    <TextView
+        android:id="@+id/tv_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_avatar"
+        android:layout_below="@+id/tv_department"
+        android:textSize="13sp"
+        android:textColor="@color/color50"
+        android:text="position"
+        />
+    <TextView
+        android:id="@+id/tv_jobnumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_toRightOf="@+id/iv_avatar"
+        android:layout_below="@+id/tv_position"
+        android:textSize="13sp"
+        android:textColor="@color/color50"
+        android:text="name"
+        />
+
+
+
+
+</RelativeLayout>

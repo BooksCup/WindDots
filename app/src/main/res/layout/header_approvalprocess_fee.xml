@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="金额"
+            android:textSize="15sp"
+            android:textColor="@color/color32"
+            android:paddingHorizontal="10dp"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:paddingVertical="10dp"/>
+
+        <TextView
+            android:id="@+id/header_approvalprocess_fee_money_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorB2"
+            android:textSize="13sp"
+            android:layout_gravity="center"
+            android:paddingVertical="10dp"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/alpha_05_black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="备注"
+            android:textSize="15sp"
+            android:textColor="@color/color32"
+            android:paddingHorizontal="10dp"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:paddingVertical="10dp"/>
+
+        <TextView
+            android:id="@+id/header_approvalprocess_fee_note_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:textColor="@color/colorB2"
+            android:textSize="13sp"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/alpha_05_black"/>
+</LinearLayout>

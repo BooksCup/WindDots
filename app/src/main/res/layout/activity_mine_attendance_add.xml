@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorF0"
+    android:orientation="vertical"
+    android:id="@+id/activity_mine_attendance_add_body"
+    >
+
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_weight="1"
+       >
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical"
+           android:paddingBottom="50dp"
+           >
+           <com.wd.winddots.view.selector.Selector
+               android:id="@+id/activity_mine_attendance_add_selector"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"/>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:background="@color/alpha_05_black" />
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/activity_mine_attendance_add_timelist"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"/>
+           
+           <LinearLayout
+               android:id="@+id/activity_mine_attendance_add_icon"
+               android:layout_width="match_parent"
+               android:layout_height="45dp"
+               android:orientation="horizontal"
+               android:paddingHorizontal="10dp"
+               android:layout_marginBottom="30dp"
+               android:layout_marginTop="1dp"
+               android:background="@color/colorWhite">
+
+               <ImageView
+                   android:layout_width="20dp"
+                   android:layout_height="20dp"
+                   android:src="@mipmap/add1"
+                   android:layout_gravity="center_vertical"
+                   />
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="添加时间"
+                   android:layout_gravity="center_vertical"
+                   android:layout_marginLeft="15dp"/>
+
+           </LinearLayout>
+
+           <LinearLayout
+               android:background="@color/colorWhite"
+               android:layout_width="match_parent"
+               android:paddingHorizontal="10dp"
+               android:layout_height="50dp"
+               android:layout_marginBottom="30dp">
+
+               <TextView
+                   android:id="@+id/activity_mine_attendance_add_title"
+                   android:layout_width="110dp"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center_vertical"
+                   android:text="请假天数"
+                   android:textSize="@dimen/cell_text_size"
+                   android:textColor="@color/color32" />
+
+               <EditText
+                   android:id="@+id/activity_mine_attendance_add_countEdit"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:hint="输入请假天数"
+                   android:background="@null"
+                   android:layout_gravity="center_vertical"
+                   android:textSize="@dimen/cell_text_size"
+                   android:inputType="numberDecimal"
+                   />
+           </LinearLayout>
+
+           <EditText
+               android:id="@+id/activity_mine_attendance_add_cause"
+               android:hint="输入事由"
+               android:background="@color/colorWhite"
+               android:layout_width="match_parent"
+               android:layout_height="80dp"
+               android:textSize="14sp"
+               android:maxLines="3"
+               android:padding="10dp"
+               android:layout_marginBottom="30dp"
+               />
+
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/activity_mine_attendance_add_imagelist"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:nestedScrollingEnabled="false"
+               android:background="@color/colorWhite"/>
+
+           <LinearLayout
+               android:background="@color/colorWhite"
+               android:id="@+id/activity_mine_attendance_add_copycell"
+               android:layout_width="match_parent"
+               android:paddingHorizontal="10dp"
+               android:layout_height="50dp"
+               android:layout_marginTop="30dp">
+
+               <TextView
+                   android:layout_width="110dp"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center_vertical"
+                   android:text="抄送人"
+                   android:textSize="@dimen/cell_text_size"
+                   android:textColor="@color/color32" />
+
+               <TextView
+                   android:id="@+id/activity_mine_attendance_add_copy"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center_vertical"
+                   android:layout_marginLeft="10dp"
+                   android:layout_marginRight="20dp"
+                   android:text=""
+                   android:textSize="@dimen/cell_text_size"
+                   android:lines="1"
+                   android:layout_weight="1"
+                   android:gravity="right"
+                   android:textColor="@color/colorB2"
+                   android:ellipsize="end"
+                   />
+
+               <ImageView
+                   android:layout_width="10dp"
+                   android:layout_height="17dp"
+                   android:layout_gravity="center_vertical"
+                   android:src="@mipmap/icon_right"
+                   android:scaleType="centerCrop" />
+           </LinearLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:background="@color/alpha_05_black" />
+
+           <LinearLayout
+               android:background="@color/colorWhite"
+               android:id="@+id/activity_mine_attendance_add_reviewercell"
+               android:layout_width="match_parent"
+               android:paddingHorizontal="10dp"
+               android:layout_height="50dp">
+
+               <TextView
+                   android:layout_width="110dp"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center_vertical"
+                   android:text="审批人"
+                   android:textSize="@dimen/cell_text_size"
+                   android:layout_weight="1"
+                   android:textColor="@color/color32" />
+
+               <TextView
+                   android:id="@+id/activity_mine_attendance_add_reviewer"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center_vertical"
+                   android:layout_marginLeft="10dp"
+                   android:layout_marginRight="20dp"
+                   android:text=""
+                   android:textSize="@dimen/cell_text_size"
+                   android:lines="1"
+                   android:textColor="@color/colorB2"  />
+
+               <ImageView
+                   android:id="@+id/view_claimingmoney_icon"
+                   android:layout_width="10dp"
+                   android:layout_height="17dp"
+                   android:layout_gravity="center_vertical"
+                   android:src="@mipmap/icon_right"
+                   android:scaleType="centerCrop"
+                   />
+           </LinearLayout>
+       </LinearLayout>
+   </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/activity_mine_attendance_add_save"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#33B3EA">
+
+        <TextView
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="提交"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

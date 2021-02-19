@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:background="#f0f0f0"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:id="@+id/item_claimingadd_delete"
+            android:paddingVertical="15dp"
+            android:paddingHorizontal="10dp"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/delete1"
+            />
+
+        <EditText
+            android:id="@+id/item_claimingadd_titleEdittext"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            android:hint="输入费用描述"
+            android:background="@color/colorWhite"
+            android:layout_gravity="center_vertical"
+            android:textSize="15sp"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            />
+
+        <TextView
+            android:id="@+id/item_claimingadd_amountext"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="0"
+            android:gravity="center"
+            android:paddingHorizontal="15dp"
+            />
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="10dp"
+        android:layout_height="50dp">
+
+
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="金额"
+            android:textSize="@dimen/cell_text_size"
+            android:textColor="@color/color32" />
+
+
+        <EditText
+            android:id="@+id/item_claimingadd_amountedit"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="输入金额(必填)"
+            android:background="@null"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/cell_text_size"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/alpha_05_black" />
+
+    <LinearLayout
+        android:background="@color/colorWhite"
+        android:id="@+id/item_claimingadd_datepick"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="10dp"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="日期"
+            android:textSize="@dimen/cell_text_size"
+            android:textColor="@color/color32" />
+        <TextView
+            android:id="@+id/item_claimingadd_datepicktext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20dp"
+            android:text="选择日期"
+            android:textSize="@dimen/cell_text_size"
+            android:lines="1"
+            android:textColor="@color/colorB2"  />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/alpha_05_black" />
+
+    <LinearLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="10dp"
+        android:layout_height="50dp">
+
+
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="是否开票"
+            android:textSize="@dimen/cell_text_size"
+            android:layout_weight="1"
+            android:textColor="@color/color32" />
+
+
+        <com.wd.winddots.view.selector.SelectView
+            android:id="@+id/item_claimingadd_invoicetype"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/alpha_05_black" />
+
+    <LinearLayout
+        android:background="@color/colorWhite"
+        android:id="@+id/item_claimingadd_invoiceDatepick"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="10dp"
+        android:layout_height="50dp">
+
+
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="预计到票日期"
+            android:textSize="@dimen/cell_text_size"
+            android:textColor="@color/color32" />
+
+
+        <TextView
+            android:id="@+id/item_claimingadd_invoiceDatepicktext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:text="选择日期"
+            android:textSize="@dimen/cell_text_size"
+            android:lines="1"
+            android:textColor="@color/colorB2"  />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/alpha_05_black" />
+
+    <TextView
+        android:id="@+id/item_claimingadd_invoicetext"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="发票"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:background="@color/colorWhite"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/item_claimingadd_imagePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        />
+
+</LinearLayout>

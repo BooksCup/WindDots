@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#80000000"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:id="@+id/view_calendae_range_modal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal" />
+
+    <ScrollView
+        android:focusable="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/view_calendae_range_yearText"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="20"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:textSize="16dp"
+                android:background="#f0f0f0"
+                android:textStyle="bold"
+                />
+
+            <com.haibin.calendarview.CalendarView
+                android:id="@+id/view_calendae_range_CalendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:min_year="2018"
+                app:week_start_with="mon"
+                app:month_view="com.wd.winddots.components.calendar.range.CustomRangeMonthView"
+                app:week_view="com.wd.winddots.components.calendar.range.CustomRangeWeekView"
+                android:background="#fff"
+                app:calendar_height="46dp"
+                app:calendar_padding="10dp"
+                app:current_month_lunar_text_color="#CFCFCF"
+                app:current_month_text_color="#4f4f4f"
+                app:day_text_size="18sp"
+                app:max_select_range="-1"
+                app:min_select_range="-1"
+                app:month_view_show_mode="mode_only_current"
+                app:other_month_text_color="#e1e1e1"
+                app:scheme_text="假"
+                app:scheme_text_color="#333"
+                app:scheme_theme_color="#333"
+                app:select_mode="range_mode"
+                app:selected_text_color="#fff"
+                app:selected_theme_color="#EE7621"
+                app:week_background="#fff"
+                app:week_text_color="#111"
+                app:year_view_day_text_color="#333333"
+                app:year_view_day_text_size="9sp"
+                app:year_view_month_text_color="#ff0000"
+                app:year_view_month_text_size="20sp"
+                app:year_view_scheme_color="#f17706"
+                />
+
+
+   <LinearLayout
+       android:background="@color/colorWhite"
+       android:layout_width="match_parent"
+       android:layout_height="200dp"
+       android:orientation="vertical"
+       >
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:orientation="horizontal"
+           android:paddingHorizontal="15dp"
+           android:background="@color/colorF0"
+           >
+           <TextView
+               android:id="@+id/view_calendae_range_cancel"
+               android:layout_width="80dp"
+               android:layout_height="match_parent"
+               android:text="取消"
+               android:gravity="center_vertical"
+               />
+
+           <TextView
+               android:id="@+id/tv_status"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_toLeftOf="@+id/view_switch"
+               android:text="日期"
+               android:layout_marginLeft="5dp"
+               android:layout_centerVertical="true"
+               />
+
+           <Switch
+               android:id="@+id/view_switch"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_toLeftOf="@+id/view_calendae_range_confirm"
+               android:layout_centerVertical="true"
+               android:layout_marginRight="10dp"
+               />
+
+           <TextView
+               android:id="@+id/view_calendae_range_confirm"
+               android:layout_width="60dp"
+               android:layout_height="wrap_content"
+               android:text="完成"
+               android:layout_centerVertical="true"
+               android:gravity="end"
+               android:layout_alignParentRight="true"
+               />
+
+
+       </RelativeLayout>
+       <LinearLayout
+           android:id="@+id/ll_start"
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:orientation="horizontal"
+           android:paddingHorizontal="15dp"
+           >
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="match_parent"
+               android:gravity="center_vertical"
+               android:text="开始时间"
+               android:layout_weight="1"
+               />
+
+
+           <TextView
+               android:id="@+id/start_date"
+               android:layout_width="wrap_content"
+               android:layout_height="40dp"
+               android:paddingHorizontal="3dp"
+               android:hint=""
+               android:maxLength="2"
+               android:layout_gravity="center_vertical"
+               android:textSize="15sp"
+               android:gravity="center"
+               />
+
+           <TextView
+               android:id="@+id/start_hour"
+               android:layout_width="wrap_content"
+               android:layout_height="40dp"
+               android:paddingHorizontal="3dp"
+               android:hint=""
+               android:maxLength="2"
+               android:layout_gravity="center_vertical"
+               android:textSize="15sp"
+               android:gravity="center"
+               />
+
+           <TextView
+               android:id="@+id/tv_start"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text=":"
+               android:visibility="gone"
+               />
+
+           <TextView
+               android:id="@+id/start_min"
+               android:layout_width="wrap_content"
+               android:layout_height="40dp"
+               android:paddingLeft="3dp"
+               android:hint=""
+               android:maxLength="2"
+               android:layout_gravity="center_vertical"
+               android:gravity="center"
+               android:textSize="15sp"
+               android:layout_marginRight="10dp"
+               />
+
+           <ImageView
+               android:layout_width="20dp"
+               android:layout_height="30dp"
+               android:src="@mipmap/right"
+               android:layout_gravity="center_vertical"/>
+
+       </LinearLayout>
+
+       <View
+           android:layout_width="match_parent"
+           android:layout_height="1dp"
+           android:background="@color/alpha_05_black" />
+
+       <LinearLayout
+           android:id="@+id/ll_end"
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:orientation="horizontal"
+           android:paddingHorizontal="15dp"
+           >
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="match_parent"
+               android:gravity="center_vertical"
+               android:text="结束时间"
+               android:layout_weight="1"
+               />
+
+           <TextView
+               android:id="@+id/end_date"
+               android:layout_width="wrap_content"
+               android:layout_height="40dp"
+               android:paddingHorizontal="10dp"
+               android:hint=""
+               android:maxLength="2"
+               android:layout_gravity="center_vertical"
+               android:textSize="15sp"
+               android:gravity="center"
+               />
+
+           <TextView
+               android:id="@+id/end_hour"
+               android:layout_width="wrap_content"
+               android:layout_height="40dp"
+               android:paddingHorizontal="3dp"
+               android:hint=""
+               android:maxLength="2"
+               android:layout_gravity="center_vertical"
+               android:textSize="15sp"
+               android:gravity="center"
+               />
+
+           <TextView
+               android:id="@+id/tv_end"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text=":"
+               android:visibility="gone"
+               />
+
+           <TextView
+               android:id="@+id/end_min"
+               android:layout_width="wrap_content"
+               android:layout_height="40dp"
+               android:paddingLeft="3dp"
+               android:hint=""
+               android:maxLength="2"
+               android:layout_gravity="center_vertical"
+               android:gravity="center"
+               android:textSize="15sp"
+               android:layout_marginRight="10dp"
+               />
+
+           <ImageView
+               android:layout_width="20dp"
+               android:layout_height="30dp"
+               android:src="@mipmap/right"
+               android:layout_gravity="center_vertical"/>
+
+       </LinearLayout>
+
+       <View
+           android:layout_width="match_parent"
+           android:layout_height="1dp"
+           android:background="@color/alpha_05_black" />
+   </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

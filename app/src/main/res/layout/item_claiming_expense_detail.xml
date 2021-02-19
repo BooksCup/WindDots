@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:id="@+id/item_claiming_expense_detail_title"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#EFEFF4"
+        android:text="111"
+        android:paddingLeft="10dp"
+        android:gravity="center_vertical"
+        />
+
+    <com.wd.winddots.view.TitleTextView
+        android:id="@+id/item_claiming_expense_anount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/alpha_05_black" />
+
+
+    <com.wd.winddots.view.TitleTextView
+        android:id="@+id/item_claiming_expense_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/alpha_05_black" />
+
+
+    <com.wd.winddots.view.TitleTextView
+        android:id="@+id/item_claiming_expense_invoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.wd.winddots.view.selector.Selector
+        android:id="@+id/item_claiming_expense_invoic_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/alpha_05_black" />
+
+    <TextView
+        android:id="@+id/item_claiming_expense_invoicetext"
+        android:text="相关发票"
+        android:paddingLeft="10dp"
+        android:paddingVertical="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/item_claiming_expense_rlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+</LinearLayout>

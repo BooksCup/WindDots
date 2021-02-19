@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    android:paddingLeft="10dp"
+    >
+
+    <ImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@mipmap/emoji"
+        android:layout_centerVertical="true"
+        />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/iv_avatar"
+        android:layout_toRightOf="@+id/iv_avatar"
+        android:layout_marginLeft="10dp"
+        android:text="name"
+        android:textColor="@color/color32"/>
+
+    <ImageView
+        android:id="@+id/iv_icon_phone"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_toRightOf="@+id/tv_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:src="@mipmap/phone"
+        />
+
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_name"
+        android:layout_toRightOf="@+id/iv_icon_phone"
+        android:layout_marginLeft="10dp"
+        android:text="phone"
+        android:textColor="@color/colorB2"
+        android:textSize="12sp"
+        />
+
+    <ImageView
+        android:id="@+id/iv_icon_company"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignBottom="@+id/iv_avatar"
+        android:layout_toRightOf="@+id/iv_avatar"
+        android:layout_marginLeft="10dp"
+        android:src="@mipmap/companys"
+        />
+
+    <TextView
+        android:id="@+id/tv_company"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/iv_avatar"
+        android:layout_toRightOf="@+id/iv_icon_company"
+        android:layout_marginLeft="10dp"
+        android:text="phone"
+        android:textColor="@color/colorB2"
+        android:textSize="12sp"
+        />
+
+</RelativeLayout>

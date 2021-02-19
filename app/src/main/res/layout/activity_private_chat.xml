@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_root"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorWhite"
+        android:elevation="4dp"
+        app:elevation="5dp">
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/iv_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="15dp"
+            android:src="@mipmap/icon_back" />
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="8dp"
+            android:src="@mipmap/emoji"
+            android:scaleType="centerCrop"
+            android:layout_toRightOf="@id/iv_back"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/iv_icon"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:text="审批流程"
+            android:textColor="@color/colorStyle"
+            android:textSize="@dimen/title_text_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/activity_common_right_text"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_toRightOf="@+id/tv_title"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/colorStyle"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="5dp"/>
+
+        <ImageView
+            android:id="@+id/activity_common_right_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:padding="15dp"
+            android:src="@mipmap/back"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_private_chat_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/alpha_05_black"
+        android:layout_below="@+id/rl_title"
+        android:layout_above="@+id/activity_chat_input_layout"/>
+    <include layout="@layout/layout_line"/>
+    <RelativeLayout
+        android:id="@+id/activity_chat_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ecedf1"
+        android:layout_alignParentBottom="true">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/alpha_05_black"
+            />
+        <ImageView
+            android:id="@+id/activity_chat_keyboard_iv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:src="@mipmap/keyboard"/>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/activity_chat_keyboard_iv"
+            android:background="@color/alpha_05_black"
+            />
+
+        <RelativeLayout
+            android:id="@+id/activity_chat_send_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/activity_chat_keyboard_iv"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/activity_chat_send_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:text="发送"
+                android:background="@color/colorTextYellow"
+                android:layout_alignParentRight="true"/>
+
+            <EditText
+                android:id="@+id/activity_chat_send_edt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorWhite"
+                android:layout_toLeftOf="@+id/activity_chat_send_tv"/>
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/bottom_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/activity_chat_keyboard_iv"
+            />
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/voice_record"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_toRightOf="@+id/activity_chat_keyboard_iv"-->
+<!--            android:paddingHorizontal="10dp"-->
+<!--            android:paddingVertical="5dp"-->
+<!--            android:visibility="gone"-->
+<!--            >-->
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:text="按住 说话"-->
+<!--                android:background="@drawable/shape_white_corner"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:gravity="center"-->
+<!--                />-->
+<!--        </LinearLayout>-->
+
+
+        <com.wd.winddots.message.record.RecordAudioButton
+            android:id="@+id/voice_record"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@+id/activity_chat_keyboard_iv"
+            android:background="@drawable/community_btn_chat_press_normal"
+            android:text="按住 说话"
+            android:textColor="#7e7e7e"
+            android:visibility="gone"/>
+
+
+        <LinearLayout
+            android:id="@+id/activity_chat_select_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/activity_chat_keyboard_iv"
+            android:padding="10dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/activity_chat_back"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/back_gray"/>
+
+            <ImageView
+                android:id="@+id/activity_chat_select_photo_iv"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/selectphoto"/>
+
+            <ImageView
+                android:id="@+id/iv_visiting_card"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/visiting_card"/>
+
+            <ImageView
+                android:id="@+id/iv_camare"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/camera"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/file"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/emoji"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/addicon"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.drawee.view.SimpleDraweeView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sdv_avatar"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:padding="7dp"
+    android:scaleType="centerCrop"
+    fresco:actualImageScaleType="centerCrop"
+    fresco:placeholderImage="@mipmap/default_user_avatar"
+    fresco:placeholderImageScaleType="centerCrop"
+    fresco:roundedCornerRadius="5dp" />

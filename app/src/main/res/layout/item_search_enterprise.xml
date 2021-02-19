@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdv_logo"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        fresco:placeholderImage="@mipmap/companys"
+         />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/tv_reg_status"
+        android:layout_toRightOf="@+id/sdv_logo"
+        android:singleLine="false"
+        android:text="南京泽冠制衣有限公司"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_reg_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/shape_select_border_green"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="3dp"
+        android:text="存续"
+        android:textColor="@color/enterprise_status_tag_green"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_alignLeft="@+id/tv_name"
+        android:layout_marginTop="10dp"
+        android:text="小微企业"
+        android:textColor="#6BA7CD"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_type"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="30dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="法定代表人"
+                android:textColor="#505050"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_legal_person_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:text="张三"
+                android:textColor="#0080F4"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="注册资本"
+                android:textColor="#505050"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_reg_capital"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:text="5000万人民币"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="成立日期"
+                android:textColor="#505050"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_estiblish_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:text="2019-12-30"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/ll_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/alpha_05_black" />
+
+    <ImageView
+        android:id="@+id/iv_enterprise_sort"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/ll_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="18dp"
+        android:src="@mipmap/enterprise_sort" />
+
+    <TextView
+        android:id="@+id/tv_short_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/iv_enterprise_sort"
+        android:text="公司简称: 泽冠制衣" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@+id/tv_short_name"
+        android:layout_marginTop="10dp"
+        android:background="@color/alpha_05_black" />
+
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:text="电话"
+        android:textColor="#3DA4D4" />
+
+    <ImageView
+        android:id="@+id/iv_enterprise_phone"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_below="@+id/ll_content"
+        android:layout_alignTop="@+id/tv_phone"
+        android:layout_marginTop="3dp"
+        android:layout_toLeftOf="@+id/tv_phone"
+        android:src="@mipmap/enterprise_phone" />
+
+</RelativeLayout>

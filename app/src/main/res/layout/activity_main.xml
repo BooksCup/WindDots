@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    >
+
+    <RelativeLayout
+        android:id="@+id/rl_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/activity_main_tab_bottom_bar" />
+
+    <View
+        android:id="@+id/view_temp"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_above="@+id/activity_main_tab_bottom_bar"
+        android:background="@color/colorBlack" />
+
+    <LinearLayout
+        android:id="@+id/activity_main_tab_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+
+        <RelativeLayout
+            android:id="@+id/rl_message"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onTabClicked"
+            android:padding="3dp">
+
+            <ImageView
+                android:id="@+id/iv_message"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_centerHorizontal="true"
+                android:background="#ffffff"
+                android:focusable="false"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_tab_message" />
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_message"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="消息"
+                android:textColor="#353535"
+                android:textSize="11sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_desktop"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onTabClicked"
+            android:padding="3dp">
+
+            <ImageView
+                android:id="@+id/iv_desktop"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_centerHorizontal="true"
+                android:background="#ffffff"
+                android:focusable="false"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_tab_desktop" />
+
+            <TextView
+                android:id="@+id/tv_desktop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_desktop"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="桌面"
+                android:textColor="#353535"
+                android:textSize="11sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_business"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onTabClicked"
+            android:padding="3dp">
+
+            <ImageView
+                android:id="@+id/iv_business"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_centerHorizontal="true"
+                android:background="#ffffff"
+                android:focusable="false"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_tab_business" />
+
+            <TextView
+                android:id="@+id/tv_business"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_business"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="发现"
+                android:textColor="#353535"
+                android:textSize="11sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_schedule"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onTabClicked"
+            android:padding="3dp">
+
+            <ImageView
+                android:id="@+id/iv_schedule"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_centerHorizontal="true"
+                android:background="#ffffff"
+                android:focusable="false"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_tab_schedule" />
+
+            <TextView
+                android:id="@+id/tv_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_schedule"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="日历"
+                android:textColor="#353535"
+                android:textSize="11sp" />
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/rl_shortcut"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:onClick="onTabClicked"
+            android:layout_weight="1"
+            android:padding="3dp">
+
+            <ImageView
+                android:id="@+id/iv_shortcut"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_centerHorizontal="true"
+                android:background="#ffffff"
+                android:focusable="false"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_tab_mine" />
+
+            <TextView
+                android:id="@+id/tv_shortcut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_shortcut"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="我"
+                android:textColor="#353535"
+                android:textSize="11sp" />
+        </RelativeLayout>
+
+        <!--        <RadioGroup-->
+        <!--            android:id="@+id/activity_main_tab_bottom_bar_rg"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_alignParentBottom="true"-->
+        <!--            android:layout_weight="4"-->
+        <!--            android:background="@color/colorWhite"-->
+        <!--            android:gravity="center"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            android:paddingTop="6dp"-->
+        <!--            android:paddingBottom="6dp">-->
+
+        <!--            <RadioButton-->
+        <!--                android:id="@+id/activity_main_tab_businessarea"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:background="@null"-->
+
+        <!--                android:button="@null"-->
+        <!--                android:drawableTop="@drawable/selector_tab_businessarea"-->
+        <!--                android:gravity="center"-->
+        <!--                android:text="商圈"-->
+        <!--                android:textColor="@drawable/selector_tab_color" />-->
+
+        <!--            <RadioButton-->
+        <!--                android:id="@+id/activity_main_tab_desktop"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:background="@null"-->
+        <!--                android:button="@null"-->
+        <!--                android:drawableTop="@drawable/selector_tab_work"-->
+        <!--                android:gravity="center"-->
+        <!--                android:text="桌面"-->
+        <!--                android:textColor="@drawable/selector_tab_color" />-->
+
+        <!--            <RadioButton-->
+        <!--                android:id="@+id/activity_main_tab_message"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:background="@null"-->
+        <!--                android:button="@null"-->
+        <!--                android:checked="true"-->
+        <!--                android:drawableTop="@drawable/selector_tab_mine"-->
+        <!--                android:gravity="center"-->
+        <!--                android:text="消息"-->
+        <!--                android:textColor="@drawable/selector_tab_color" />-->
+
+        <!--            <RadioButton-->
+        <!--                android:id="@+id/activity_main_tab_schedule"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:background="@null"-->
+        <!--                android:button="@null"-->
+        <!--                android:drawableTop="@drawable/selector_tab_schedule"-->
+        <!--                android:gravity="center"-->
+        <!--                android:text="日程"-->
+        <!--                android:textColor="@drawable/selector_tab_color" />-->
+
+        <!--        </RadioGroup>-->
+
+        <!--        <RelativeLayout-->
+        <!--            android:id="@+id/activity_main_tab_bottom_bar_shortcut"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:background="@color/colorWhite">-->
+
+        <!--            <ImageView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_centerHorizontal="true"-->
+        <!--                android:layout_marginTop="6dp"-->
+        <!--                android:src="@mipmap/fast" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_alignParentBottom="true"-->
+        <!--                android:layout_centerHorizontal="true"-->
+        <!--                android:layout_marginBottom="6dp"-->
+        <!--                android:text="快捷" />-->
+
+        <!--        </RelativeLayout>-->
+
+    </LinearLayout>
+</RelativeLayout>

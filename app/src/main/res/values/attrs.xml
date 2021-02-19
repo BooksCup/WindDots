@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CountDownView">
+        <!--view半径-->
+        <attr name="cd_circle_radius" format="dimension" />
+        <!--画笔宽度-->
+        <attr name="cd_arc_width" format="dimension" />
+        <!--画笔颜色-->
+        <attr name="cd_arc_color" format="color" />
+        <!--背景颜色-->
+        <attr name="cd_bg_color" format="color" />
+        <!--字体颜色-->
+        <attr name="cd_text_color" format="color" />
+        <!--字体尺寸-->
+        <attr name="cd_text_size" format="dimension" />
+        <!--动画执行时长-->
+        <attr name="cd_animator_time" format="integer" />
+        <!--时间单位-->
+        <attr name="cd_animator_time_unit" format="string" />
+        <!--动画进退方式-->
+        <attr name="cd_retreat_type" format="enum">
+            <!--外层的圆弧逐渐变长-->
+            <enum name="forward" value="1" />
+            <!--外层的圆弧逐渐减短-->
+            <enum name="back" value="2" />
+        </attr>
+        <!--加载进度的开始位置-->
+        <attr name="cd_location" format="enum">
+            <enum name="left" value="1" />
+            <enum name="top" value="2" />
+            <enum name="right" value="3" />
+            <enum name="bottom" value="4" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="ShowMoreTextView">
+        <!-- 显示更多的文字 -->
+        <attr name="showMoreText" format="reference|string"/>
+        <!-- 显示收回的文字 -->
+        <attr name="showLessText" format="reference|string"/>
+        <attr name="showMoreTextColor" format="reference|color"/>
+        <attr name="showLessTextColor" format="reference|color"/>
+
+    </declare-styleable>
+    <declare-styleable name="ShapedImageView">
+        <attr name="shape_mode" format="enum">
+            <enum name="round_rect" value="1" />
+            <enum name="circle" value="2" />
+        </attr>
+        <attr name="round_radius" format="dimension" />
+    </declare-styleable>
+
+
+    <declare-styleable name="TitleTextView">
+        <attr name="view_title" format="reference|string"/>
+        <attr name="view_content" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="EditCell">
+        <attr name="edite_cell_title" format="reference"/>
+<!--        <attr name="view_content" format="string"/>-->
+        <attr name="edite_cell_hint" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+    </declare-styleable>
+
+
+
+</resources>

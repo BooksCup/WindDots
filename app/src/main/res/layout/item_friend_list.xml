@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dp">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:src="@mipmap/emoji"
+        android:scaleType="centerCrop"
+        />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_icon"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="111111"
+        android:textColor="@color/color32"
+        android:textSize="13sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/tv_name"
+        android:layout_alignBottom="@+id/tv_name"
+        android:layout_marginLeft="10dp"
+        android:text="111111"
+        android:textColor="@color/color50"
+        android:textSize="11sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_icon"
+        android:layout_alignBottom="@+id/iv_icon"
+        android:layout_marginLeft="10dp"
+        android:text="111111"
+        android:textColor="@color/color50"
+        android:textSize="11sp"
+        android:lines="1"
+        />
+
+    <TextView
+        android:id="@+id/tv_status_agree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:text="@string/friend_apple_agree"
+        android:textColor="@color/colorWhite"
+        android:textSize="11sp"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:background="#1FAB14"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/tv_status_agreed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:text="@string/friend_apple_agreed"
+        android:textColor="@color/colorB2"
+        android:textSize="11sp"
+        android:visibility="gone"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/alpha_05_black"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

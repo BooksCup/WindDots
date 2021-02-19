@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="1dp"
+    android:background="@color/colorWhite"
+    android:paddingHorizontal="15dp"
+    android:paddingVertical="5dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <!--        title-->
+                <TextView
+                    android:id="@+id/item_groupchat_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="企业社区"
+                    android:lines="1"
+                    android:textColor="@color/color32"
+                    android:textSize="14sp"
+                    android:ellipsize="end"
+                    android:textStyle="bold" />
+
+        <!--        群人数-->
+        <TextView
+            android:id="@+id/item_groupchat_personsum_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="5人"
+            android:gravity="right"
+            android:textSize="13sp"
+            android:lines="1"
+            android:textColor="@color/color50" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <!--        最近一个发言人的头像-->
+        <ImageView
+            android:id="@+id/item_groupchat_userAvatar_iv"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/tv_unread"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@+id/item_groupchat_userAvatar_iv"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="-5dp"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/shape_unread"
+            />
+
+
+        <!--        时间-->
+        <TextView
+            android:id="@+id/item_groupchat_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="2020-04-8"
+            android:textSize="13sp"
+            android:textColor="@color/color50" />
+
+
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:id="@+id/item_groupchat_at_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/item_groupchat_userAvatar_iv"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="[有人@我]"
+            android:textColor="#F13838"
+            android:textSize="13sp" />
+
+        <!--        内容-->
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:id="@+id/item_groupchat_content_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/item_groupchat_at_tv"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="这个是内容啊"
+            android:textColor="@color/color50"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#f0f0f0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+<!--            <com.wd.winddots.view.EditCell-->
+<!--                android:id="@+id/ed_title"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content" />-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorWhite"
+                android:paddingHorizontal="10dp"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="标题"
+                    android:textSize="@dimen/cell_text_size"
+                    android:textColor="@color/color32" />
+                <EditText
+                    android:id="@+id/et_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="请输入标题"
+                    android:background="@null"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/cell_text_size"
+                    />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorWhite"
+                android:paddingHorizontal="10dp">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="报销类型"
+                    android:textColor="@color/color32"
+                    android:textSize="@dimen/cell_text_size" />
+
+                <com.wd.winddots.view.selector.SelectView
+                    android:id="@+id/activity_calmingadd_typeselector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+
+            <com.wd.winddots.view.TitleTextView
+                android:id="@+id/view_enterprise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:view_content="选择往来单位"
+                app:view_title="往来单位" />
+
+            <View
+                android:id="@+id/activity_calmingadd_line1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+
+            <LinearLayout
+                android:id="@+id/activity_calmingadd_paytypecell"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorWhite"
+                android:paddingHorizontal="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="借款类型"
+                    android:textColor="@color/color32"
+                    android:textSize="15sp" />
+
+                <com.wd.winddots.view.selector.SelectView
+                    android:id="@+id/activity_calmingadd_paytypeselector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/activity_calmingadd_line2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+
+            <com.wd.winddots.view.TitleTextView
+                android:id="@+id/view_copyUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:view_content="选择抄送人"
+                app:view_title="抄送人" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+
+            <com.wd.winddots.view.TitleTextView
+                android:id="@+id/view_reviewer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:view_content="选择审批人"
+                app:view_title="审批人" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorWhite"
+                android:paddingHorizontal="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="币种"
+                    android:textColor="@color/color32"
+                    android:textSize="@dimen/cell_text_size" />
+
+                <com.wd.winddots.view.selector.SelectView
+                    android:id="@+id/activity_calmingadd_currencyselector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+
+            <com.wd.winddots.view.TitleTextView
+                android:id="@+id/view_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:view_content=""
+                app:view_title="金额" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/alpha_05_black" />
+
+            <LinearLayout
+                android:id="@+id/ll_add_detail"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#FB9637"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/activity_calmingadd_detailicon"
+                    android:layout_width="40dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_vertical"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="7dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/unselect" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="报销明细"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorWhite" />
+
+                <ImageView
+                    android:id="@+id/activity_calmingadd_adddetialicon"
+                    android:layout_width="50dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_vertical"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="7dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/add_white" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activity_calmingadd_rlist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/activity_calmingadd_remark"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/colorWhite"
+                android:hint="输入备注"
+                android:maxLines="3"
+                android:padding="10dp"
+                android:textSize="14sp"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/activity_calmingadd_saveBtn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#33B3EA">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="@color/colorWhite"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+
+</LinearLayout>
