@@ -85,7 +85,7 @@ public class SearchEnterpriseAdapter extends BaseQuickAdapter<Enterprise, BaseVi
         if (!TextUtils.isEmpty(item.getLogo())) {
             logoSdv.setImageURI(Uri.parse(item.getLogo()));
         } else {
-            logoSdv.setImageResource(R.mipmap.companys);
+            logoSdv.setImageResource(R.mipmap.icon_company);
         }
     }
 

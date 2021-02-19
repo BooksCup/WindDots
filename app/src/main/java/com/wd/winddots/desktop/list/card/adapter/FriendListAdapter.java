@@ -1,7 +1,6 @@
 package com.wd.winddots.desktop.list.card.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,7 +110,7 @@ public class FriendListAdapter extends RecyclerExpandBaseAdapter<FriendListBean.
             if (StringUtils.isNullOrEmpty(enterprise.getId())){
                 itemHolder.icon.setImageResource(R.mipmap.new_friends);
             }else {
-                itemHolder.icon.setImageResource(R.mipmap.companys);
+                itemHolder.icon.setImageResource(R.mipmap.icon_company);
             }
 
         } else {

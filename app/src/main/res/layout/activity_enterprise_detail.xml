@@ -19,7 +19,7 @@
 <!--            android:id="@+id/iv_header_icon"-->
 <!--            android:layout_width="65dp"-->
 <!--            android:layout_height="65dp"-->
-<!--            android:src="@mipmap/companys"-->
+<!--            android:src="@mipmap/icon_company"-->
 <!--            android:layout_gravity="center_vertical"-->
 <!--            android:layout_marginRight="10dp"-->
 <!--            android:scaleType="centerCrop"/>-->

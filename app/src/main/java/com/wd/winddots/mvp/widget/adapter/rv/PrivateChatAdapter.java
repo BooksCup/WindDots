@@ -20,7 +20,7 @@ import com.wd.winddots.R;
 import com.wd.winddots.bean.PrivateChatMsgModeBean;
 import com.wd.winddots.bean.resp.PrivateChatHistoryBean;
 import com.wd.winddots.net.msg.MsgDataManager;
-import com.wd.winddots.utils.CommonUtils;
+import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.glide.CornerTransform;
 
@@ -62,7 +62,7 @@ public class PrivateChatAdapter extends BaseQuickAdapter<PrivateChatHistoryBean.
 
     public PrivateChatAdapter(Context context, int layoutResId, @Nullable List<PrivateChatHistoryBean.MessageListBean> data) {
         super(layoutResId, data);
-        mTransformation = new CornerTransform(context, CommonUtils.dip2px(context, 5));
+        mTransformation = new CornerTransform(context, CommonUtil.dip2px(context, 5));
         //只是绘制左上角和右上角圆角
         mTransformation.setExceptCorner(false, false, false, false);
 

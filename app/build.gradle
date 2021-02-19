@@ -30,6 +30,9 @@ android {
         ]
     }
 
+    packagingOptions {
+        exclude "lib/arm64-v8a/librealm-jni.so"
+    }
 
     buildTypes {
         release {

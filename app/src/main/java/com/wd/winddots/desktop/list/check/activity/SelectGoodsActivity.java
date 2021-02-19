@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.wd.winddots.R;
-import com.wd.winddots.activity.qc.fabric.AddFabricQcActivity;
+import com.wd.winddots.activity.select.SelectOrderActivity;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.desktop.list.check.adapter.CheckGoodsListAdapter;
 import com.wd.winddots.desktop.list.check.bean.CheckGoodsBean;
@@ -196,7 +196,7 @@ public class SelectGoodsActivity extends FragmentActivity implements View.OnScro
      * */
     @Override
     public void onAddIconDidClick() {
-        Intent intent = new Intent(this, AddFabricQcActivity.class);
+        Intent intent = new Intent(this, SelectOrderActivity.class);
         startActivity(intent);
     }
 

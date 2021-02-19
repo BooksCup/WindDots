@@ -2,19 +2,20 @@ package com.wd.winddots.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Point;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
-import java.text.ParseException;
+import com.alibaba.fastjson.JSON;
+import com.wd.winddots.cons.Constant;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
-public class CommonUtils {
+public class CommonUtil {
 
     //dp转px
     public static int dip2px(Context context, float dpValue) {
@@ -121,5 +122,22 @@ public class CommonUtils {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         String tel = tm.getLine1Number();
         return tel;
+    }
+
+    public static String getFirstPhotoFromJsonList(String photoListJson) {
+        String photo = "";
+        try {
+            List<String> goodsPhotoList = JSON.parseArray(photoListJson, String.class);
+            if (null != goodsPhotoList && goodsPhotoList.size() > 0) {
+                photo = goodsPhotoList.get(0);
+                if (!photo.startsWith(Constant.HTTP_PROTOCOL_PREFIX) ||
+                        !photo.startsWith(Constant.HTTPS_PROTOCOL_PREFIX)) {
+                    photo = Constant.HTTP_PROTOCOL_PREFIX + photo;
+                }
+            }
+        } catch (Exception e) {
+            photo = "";
+        }
+        return photo;
     }
 }

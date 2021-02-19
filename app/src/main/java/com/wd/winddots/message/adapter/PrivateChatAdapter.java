@@ -23,12 +23,11 @@ import com.wd.winddots.R;
 import com.wd.winddots.components.users.UserInfoActivity;
 import com.wd.winddots.message.bean.PrivateChatMsgModeBean;
 import com.wd.winddots.message.bean.PrivateChatHistoryBean;
-import com.wd.winddots.message.record.Player;
 import com.wd.winddots.message.record.VoiceImageView;
 import com.wd.winddots.message.record.audio.AudioPlayManager;
 import com.wd.winddots.message.record.audio.IAudioPlayListener;
 import com.wd.winddots.net.msg.MsgDataManager;
-import com.wd.winddots.utils.CommonUtils;
+import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.Utils;
 import com.wd.winddots.utils.glide.CornerTransform;
@@ -117,7 +116,7 @@ public class PrivateChatAdapter extends BaseQuickAdapter<PrivateChatHistoryBean.
     public PrivateChatAdapter(Context context, int layoutResId, @Nullable List<PrivateChatHistoryBean.MessageListBean> data,String userId1) {
         super(layoutResId, data);
         userId = userId1;
-        mTransformation = new CornerTransform(context, CommonUtils.dip2px(context, 3));
+        mTransformation = new CornerTransform(context, CommonUtil.dip2px(context, 3));
         //只是绘制左上角和右上角圆角
         mTransformation.setExceptCorner(false, false, false, false);
 

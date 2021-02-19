@@ -5,7 +5,7 @@ package com.wd.winddots.cons;
  */
 public class Constant {
     public static final String APP_BASE_URL = "http://115.159.201.120:8085/";
-//    public static final String APP_BASE_URL = "http://172.168.0.145:8085/";
+    //    public static final String APP_BASE_URL = "http://172.168.0.145:8085/";
     public static final String APP_BASE_URL_ELSE = "http://42.192.134.170/";
 
     //测试
@@ -35,5 +35,8 @@ public class Constant {
      * 操作状态-拒绝
      */
     public static final String OPERATE_STATUS_REFUSE = "2";
+
+    public static final String HTTP_PROTOCOL_PREFIX = "http:";
+    public static final String HTTPS_PROTOCOL_PREFIX = "https:";
 
 }

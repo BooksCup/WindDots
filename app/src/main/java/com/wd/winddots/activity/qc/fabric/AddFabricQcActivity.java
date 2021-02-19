@@ -2,16 +2,13 @@ package com.wd.winddots.activity.qc.fabric;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
 
 import com.wd.winddots.R;
-import com.wd.winddots.activity.select.SelectRelatedCompany;
+import com.wd.winddots.activity.select.SelectOrderActivity;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -36,7 +33,7 @@ public class AddFabricQcActivity extends FragmentActivity {
                 finish();
                 break;
             case R.id.rl_related_company:
-                Intent intent = new Intent(AddFabricQcActivity.this, SelectRelatedCompany.class);
+                Intent intent = new Intent(AddFabricQcActivity.this, SelectOrderActivity.class);
                 startActivity(intent);
                 break;
         }

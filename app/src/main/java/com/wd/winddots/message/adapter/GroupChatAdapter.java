@@ -24,13 +24,12 @@ import com.wd.winddots.R;
 import com.wd.winddots.components.users.UserInfoActivity;
 import com.wd.winddots.message.bean.GroupChatMsgModeBean;
 import com.wd.winddots.message.bean.GroupChatHistoryBean;
-import com.wd.winddots.message.bean.PrivateChatHistoryBean;
 import com.wd.winddots.message.bean.PrivateChatMsgModeBean;
 import com.wd.winddots.message.record.VoiceImageView;
 import com.wd.winddots.message.record.audio.AudioPlayManager;
 import com.wd.winddots.message.record.audio.IAudioPlayListener;
 import com.wd.winddots.net.msg.MsgDataManager;
-import com.wd.winddots.utils.CommonUtils;
+import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.Utils;
 import com.wd.winddots.utils.glide.CornerTransform;
@@ -63,7 +62,7 @@ public class GroupChatAdapter extends BaseQuickAdapter<GroupChatHistoryBean.Mess
     public GroupChatAdapter(Context context, int layoutResId, @Nullable List<GroupChatHistoryBean.MessageListBean> data,String userId1) {
         super(layoutResId, data);
         userId = userId1;
-        mTransformation = new CornerTransform(context, CommonUtils.dip2px(context, 3));
+        mTransformation = new CornerTransform(context, CommonUtil.dip2px(context, 3));
         //只是绘制左上角和右上角圆角
         mTransformation.setExceptCorner(false, false, false, false);
         dataManager = new MsgDataManager();
@@ -175,7 +174,7 @@ public class GroupChatAdapter extends BaseQuickAdapter<GroupChatHistoryBean.Mess
                 GroupChatMsgModeBean.CustomMessageBean customMessageBean = gson.fromJson(body, GroupChatMsgModeBean.CustomMessageBean.class);
                 if (customMessageBean != null){
                     customTvTitle.setText(customMessageBean.getText());
-                    customTvTime.setText(CommonUtils.descriptiveData(item.getJCreateTime()));
+                    customTvTime.setText(CommonUtil.descriptiveData(item.getJCreateTime()));
                     GlideApp.with(mContext)
                             .load(customMessageBean.getExtras().getImage())
                             .into(customIvImg);

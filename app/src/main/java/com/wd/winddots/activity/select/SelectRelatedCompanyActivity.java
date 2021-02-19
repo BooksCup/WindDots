@@ -7,12 +7,13 @@ import android.widget.TextView;
 import com.wd.winddots.R;
 import com.wd.winddots.adapter.select.RelatedCompanyAdapter;
 import com.wd.winddots.entity.RelatedCompany;
-import com.wd.winddots.fast.adapter.RelationEnterpriseAdapter;
 
 import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +23,7 @@ import butterknife.ButterKnife;
  *
  * @author zhou
  */
-public class SelectRelatedCompany extends FragmentActivity {
+public class SelectRelatedCompanyActivity extends FragmentActivity {
 
     @BindView(R.id.et_related_company)
     EditText mRelatedCompanyEt;
@@ -45,6 +46,9 @@ public class SelectRelatedCompany extends FragmentActivity {
     }
 
     private void initView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mRelatedCompanyRv.setLayoutManager(layoutManager);
+        mRelatedCompanyRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mAdapter = new RelatedCompanyAdapter(R.layout.item_mine_claiming_relationenterpirse, mRelatedCompanyList);
         mRelatedCompanyRv.setAdapter(mAdapter);
     }

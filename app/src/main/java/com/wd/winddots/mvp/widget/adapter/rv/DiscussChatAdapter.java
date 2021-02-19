@@ -20,7 +20,7 @@ import com.wd.winddots.GlideApp;
 import com.wd.winddots.R;
 import com.wd.winddots.bean.resp.DiscussChatBean;
 import com.wd.winddots.components.users.UserInfoActivity;
-import com.wd.winddots.utils.CommonUtils;
+import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.Logg;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.glide.CornerTransform;
@@ -35,7 +35,7 @@ public class DiscussChatAdapter extends BaseQuickAdapter<DiscussChatBean.DataBea
 
     public DiscussChatAdapter(Context context, int layoutResId, @Nullable List<DiscussChatBean.DataBean.CommentsBean> data) {
         super(layoutResId, data);
-        mTransformation = new CornerTransform(context, CommonUtils.dip2px(context, 5));
+        mTransformation = new CornerTransform(context, CommonUtil.dip2px(context, 5));
         //只是绘制左上角和右上角圆角
         mTransformation.setExceptCorner(false, false, false, false);
     }
@@ -106,7 +106,7 @@ public class DiscussChatAdapter extends BaseQuickAdapter<DiscussChatBean.DataBea
 
        if (!StringUtils.isNullOrEmpty(createTime)){
            tvTime.setVisibility(View.VISIBLE);
-           tvTime.setText(CommonUtils.subTime2Min(createTime));
+           tvTime.setText(CommonUtil.subTime2Min(createTime));
        }else {
            tvTime.setVisibility(View.GONE);
        }

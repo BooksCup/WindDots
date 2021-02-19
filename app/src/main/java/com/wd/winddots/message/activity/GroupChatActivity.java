@@ -57,7 +57,6 @@ import com.wd.winddots.message.bean.ChatBottomBean;
 import com.wd.winddots.message.bean.GroupChatHistoryBean;
 import com.wd.winddots.listener.SoftKeyBoardListener;
 import com.wd.winddots.message.bean.GroupChatMsgModeBean;
-import com.wd.winddots.message.bean.PrivateChatHistoryBean;
 import com.wd.winddots.message.presenter.impl.GroupChatPresenterImpl;
 import com.wd.winddots.message.presenter.view.GroupChatView;
 import com.wd.winddots.message.adapter.GroupChatAdapter;
@@ -67,7 +66,7 @@ import com.wd.winddots.message.record.audio.AudioPlayManager;
 import com.wd.winddots.message.record.audio.AudioRecordManager;
 import com.wd.winddots.message.record.audio.IAudioRecordListener;
 import com.wd.winddots.mvp.widget.WebViewActivity;
-import com.wd.winddots.utils.CommonUtils;
+import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.Utils;
 import com.wd.winddots.view.dialog.ConfirmDialog;
@@ -610,7 +609,7 @@ public class GroupChatActivity extends CommonActivity<GroupChatView, GroupChatPr
             GroupChatHistoryBean.MessageListBean messageListBean = messageList.get(i);
             long jCreateTime = messageListBean.getJCreateTime();
             if (Math.abs(jCreateTime - beforeJCreateTime) > 3 * 60 * 1000) {
-                messageListBean.setShowTime(CommonUtils.descriptiveData(messageListBean.getjCreateTime()));
+                messageListBean.setShowTime(CommonUtil.descriptiveData(messageListBean.getjCreateTime()));
             }
             beforeJCreateTime = jCreateTime;
         }
@@ -685,7 +684,7 @@ public class GroupChatActivity extends CommonActivity<GroupChatView, GroupChatPr
             GroupChatHistoryBean.MessageListBean messageListBean = messageList.get(i);
             long jCreateTime = messageListBean.getJCreateTime();
             if (Math.abs(jCreateTime - beforeJCreateTime) > 3 * 60 * 1000) {
-                messageListBean.setShowTime(CommonUtils.descriptiveData(messageListBean.getjCreateTime()));
+                messageListBean.setShowTime(CommonUtil.descriptiveData(messageListBean.getjCreateTime()));
             }
             beforeJCreateTime = jCreateTime;
         }
@@ -776,7 +775,7 @@ public class GroupChatActivity extends CommonActivity<GroupChatView, GroupChatPr
             if (dataSize > 0) {
                 long jCreateTime = data.get(dataSize - 1).getJCreateTime();
                 if (messageListBean.getjCreateTime() - jCreateTime > 3 * 60 * 1000) {
-                    messageListBean.setShowTime(CommonUtils.descriptiveData(messageListBean.getjCreateTime()));
+                    messageListBean.setShowTime(CommonUtil.descriptiveData(messageListBean.getjCreateTime()));
                 }
             }
 
@@ -1087,7 +1086,7 @@ public class GroupChatActivity extends CommonActivity<GroupChatView, GroupChatPr
         if (dataSize > 0) {
             long jCreateTime = data.get(dataSize - 1).getJCreateTime();
             if (newJCreateTime - jCreateTime > 3 * 60 * 1000) {
-                newMessageListBean.setShowTime(CommonUtils.descriptiveData(newJCreateTime));
+                newMessageListBean.setShowTime(CommonUtil.descriptiveData(newJCreateTime));
             }
         }
 

@@ -16,9 +16,8 @@ import com.wd.winddots.GlideApp;
 import com.wd.winddots.R;
 import com.wd.winddots.bean.resp.ApprovalProcessBean;
 import com.wd.winddots.mvp.widget.ApprovalProcessFeeActivity;
-import com.wd.winddots.utils.CommonUtils;
+import com.wd.winddots.utils.CommonUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ApprovalProcessFeeAdapter extends BaseQuickAdapter<ApprovalProcessBean.MoneyData.DetailListBean.AddressesBean, BaseViewHolder> {
@@ -36,7 +35,7 @@ public class ApprovalProcessFeeAdapter extends BaseQuickAdapter<ApprovalProcessB
         mActivity = activity;
         mCurrency = mActivity.getCurrency();
         //屏幕宽度
-        mScreenWidthPixls = CommonUtils.getScreenWidthPixls(mActivity);
+        mScreenWidthPixls = CommonUtil.getScreenWidthPixls(mActivity);
     }
 
     @Override

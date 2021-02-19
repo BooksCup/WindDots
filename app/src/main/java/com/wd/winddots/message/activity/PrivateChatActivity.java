@@ -42,14 +42,6 @@ import cn.jmessage.support.qiniu.android.utils.StringUtils;
 import okhttp3.RequestBody;
 import rx.subscriptions.CompositeSubscription;
 
-import com.alibaba.sdk.android.oss.ClientConfiguration;
-import com.alibaba.sdk.android.oss.ClientException;
-import com.alibaba.sdk.android.oss.OSSClient;
-import com.alibaba.sdk.android.oss.ServiceException;
-import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
-import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
-import com.alibaba.sdk.android.oss.model.PutObjectRequest;
-import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -65,7 +57,6 @@ import com.wd.winddots.listener.SoftKeyBoardListener;
 import com.wd.winddots.message.presenter.impl.PrivateChatPresenterImpl;
 import com.wd.winddots.message.presenter.view.PrivateChatView;
 import com.wd.winddots.message.adapter.PrivateChatAdapter;
-import com.wd.winddots.message.record.Player;
 import com.wd.winddots.message.record.RecordAudioButton;
 import com.wd.winddots.message.record.RecordVoicePopWindow;
 import com.wd.winddots.message.record.audio.AudioPlayManager;
@@ -74,7 +65,7 @@ import com.wd.winddots.message.record.audio.IAudioPlayListener;
 import com.wd.winddots.message.record.audio.IAudioRecordListener;
 import com.wd.winddots.net.ElseDataManager;
 
-import com.wd.winddots.utils.CommonUtils;
+import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.Logg;
 import com.wd.winddots.utils.OSSUploadHelper;
 import com.wd.winddots.utils.SpHelper;
@@ -573,7 +564,7 @@ public class PrivateChatActivity extends CommonEmptyActivity<PrivateChatView, Pr
             PrivateChatHistoryBean.MessageListBean messageListBean = messageList.get(i);
             long jCreateTime = messageListBean.getJCreateTime();
             if (Math.abs(jCreateTime - beforeJCreateTime) > 3 * 60 * 1000) {
-                messageListBean.setShowTime(CommonUtils.descriptiveData(messageListBean.getjCreateTime()));
+                messageListBean.setShowTime(CommonUtil.descriptiveData(messageListBean.getjCreateTime()));
             }
             beforeJCreateTime = jCreateTime;
         }
@@ -628,7 +619,7 @@ public class PrivateChatActivity extends CommonEmptyActivity<PrivateChatView, Pr
             PrivateChatHistoryBean.MessageListBean messageListBean = messageList.get(i);
             long jCreateTime = messageListBean.getJCreateTime();
             if (Math.abs(jCreateTime - beforeJCreateTime) > 3 * 60 * 1000) {
-                messageListBean.setShowTime(CommonUtils.descriptiveData(messageListBean.getjCreateTime()));
+                messageListBean.setShowTime(CommonUtil.descriptiveData(messageListBean.getjCreateTime()));
             }
             beforeJCreateTime = jCreateTime;
         }
@@ -826,7 +817,7 @@ public class PrivateChatActivity extends CommonEmptyActivity<PrivateChatView, Pr
             if (dataSize > 0) {
                 long jCreateTime = data.get(dataSize - 1).getJCreateTime();
                 if (messageListBean.getjCreateTime() - jCreateTime > 3 * 60 * 1000) {
-                    messageListBean.setShowTime(CommonUtils.descriptiveData(messageListBean.getjCreateTime()));
+                    messageListBean.setShowTime(CommonUtil.descriptiveData(messageListBean.getjCreateTime()));
                 }
             }
 
@@ -1036,7 +1027,7 @@ public class PrivateChatActivity extends CommonEmptyActivity<PrivateChatView, Pr
         if (dataSize > 0) {
             long jCreateTime = data.get(dataSize - 1).getJCreateTime();
             if (newJCreateTime - jCreateTime > 3 * 60 * 1000) {
-                newMessageListBean.setShowTime(CommonUtils.descriptiveData(newJCreateTime));
+                newMessageListBean.setShowTime(CommonUtil.descriptiveData(newJCreateTime));
             }
         }
 
