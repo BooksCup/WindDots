@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wd.winddots.R;
+import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.adapter.select.OrderAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Order;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,7 +34,7 @@ import butterknife.OnClick;
  *
  * @author zhou
  */
-public class SelectOrderActivity extends FragmentActivity
+public class SelectOrderActivity extends BaseActivity
         implements SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.RequestLoadMoreListener {
 
@@ -82,8 +82,10 @@ public class SelectOrderActivity extends FragmentActivity
                 finish();
                 break;
             case R.id.tv_search:
+                showLoadingDialog();
                 mKeyword = mSearchEt.getText().toString();
                 page = 1;
+                hideKeyboard();
                 getData();
                 break;
         }
@@ -105,6 +107,7 @@ public class SelectOrderActivity extends FragmentActivity
         }
 
         mVolleyUtil.httpGetRequest(url, response -> {
+            hideLoadingDialog();
             mOrderSrl.setRefreshing(false);
             PageInfo<Order> orderPageInfo = JSON.parseObject(response, new TypeReference<PageInfo<Order>>() {
             });
@@ -122,6 +125,7 @@ public class SelectOrderActivity extends FragmentActivity
             }
 
         }, volleyError -> {
+            hideLoadingDialog();
             mOrderSrl.setRefreshing(false);
             mOrderAdapter.loadMoreComplete();
             mVolleyUtil.handleCommonErrorResponse(SelectOrderActivity.this, volleyError);

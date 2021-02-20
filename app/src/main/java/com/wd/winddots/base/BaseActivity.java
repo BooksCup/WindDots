@@ -21,6 +21,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import butterknife.ButterKnife;
+
 public abstract class BaseActivity extends AppCompatActivity {
 
     public Context mContext;
@@ -32,7 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         StatusBarUtil.setStatusBarLightMode(this, Color.WHITE);
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
-//        ButterKnife.bind(this);
+        ButterKnife.bind(this);
         //避免切换横竖屏
 //        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mContext = this;

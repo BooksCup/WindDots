@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.wd.winddots.R;
+import com.wd.winddots.activity.work.DeliveryActivity;
 import com.wd.winddots.base.BaseFragment;
 
 import com.wd.winddots.confifg.Const;
@@ -608,6 +609,10 @@ public class WorkFragment extends BaseFragment<WorkView, WorkPresenterImpl>
                 break;
             case "WorkExamine"://盘点
                 intent = new Intent(mContext, SelectGoodsActivity.class);
+                startActivity(intent);
+                break;
+            case "11":
+                intent = new Intent(mContext, DeliveryActivity.class);
                 startActivity(intent);
                 break;
 //            default:
