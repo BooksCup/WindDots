@@ -40,7 +40,6 @@ public class OrderAdapter extends BaseQuickAdapter<Order, BaseViewHolder> {
             keywords[i] = String.valueOf(mKeyword.charAt(i));
         }
 
-
         if (!TextUtils.isEmpty(item.getRelatedCompanyShortName())) {
             SpannableStringBuilder nameBuilder = TextHighLight.
                     matcherSearchContent(mContext, item.getRelatedCompanyShortName(), keywords);

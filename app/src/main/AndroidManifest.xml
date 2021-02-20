@@ -400,6 +400,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
 
+        <activity
+            android:name=".activity.check.fabric.FabricCheckTaskActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <service
             android:name=".service.JMessageService"
             android:process=":pushcore">
