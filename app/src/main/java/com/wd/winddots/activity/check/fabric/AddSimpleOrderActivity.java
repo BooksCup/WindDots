@@ -1,5 +1,6 @@
 package com.wd.winddots.activity.check.fabric;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +10,10 @@ import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.select.SelectRelatedCompanyActivity;
 
+import java.util.Calendar;
+
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,7 +28,11 @@ public class AddSimpleOrderActivity extends BaseActivity {
     private static final int REQUEST_CODE_RELATED_COMPANY = 1;
 
     @BindView(R.id.tv_related_company)
-    TextView mRelatedCompany;
+    TextView mRelatedCompanyTv;
+
+    @BindView(R.id.tv_delivery_date)
+    TextView mDeliveryDateTv;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +42,7 @@ public class AddSimpleOrderActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.iv_back, R.id.ll_related_company})
+    @OnClick({R.id.iv_back, R.id.ll_related_company, R.id.ll_delivery_date})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -45,6 +53,39 @@ public class AddSimpleOrderActivity extends BaseActivity {
                 // 往来单位
                 intent = new Intent(AddSimpleOrderActivity.this, SelectRelatedCompanyActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_RELATED_COMPANY);
+                break;
+            case R.id.ll_delivery_date:
+                // 交货日期
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dp = new DatePickerDialog(AddSimpleOrderActivity.this, (datePicker, i, i1, i2) -> {
+                    int year1 = datePicker.getYear();
+                    int month1 = datePicker.getMonth() + 1;
+                    int day1 = datePicker.getDayOfMonth();
+
+                    String monthS;
+                    String dayS;
+                    if (month1 < 10) {
+                        monthS = "0" + month1;
+                    } else {
+                        monthS = "" + month1;
+                    }
+
+                    if (day1 < 10) {
+                        dayS = "0" + day1;
+                    } else {
+                        dayS = "" + day1;
+                    }
+                    String date = year1 + "-" + monthS + '-' + dayS;
+                    mDeliveryDateTv.setText(date);
+                    mDeliveryDateTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
+//                        mData.setTime(date);
+                }, year, month, day);
+
+                dp.show();
                 break;
         }
     }
@@ -57,7 +98,8 @@ public class AddSimpleOrderActivity extends BaseActivity {
                 case REQUEST_CODE_RELATED_COMPANY:
                     if (null != data) {
                         String relatedCompanyName = data.getStringExtra("relatedCompanyName");
-                        mRelatedCompany.setText(relatedCompanyName);
+                        mRelatedCompanyTv.setText(relatedCompanyName);
+                        mRelatedCompanyTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
                     }
                     break;
             }
