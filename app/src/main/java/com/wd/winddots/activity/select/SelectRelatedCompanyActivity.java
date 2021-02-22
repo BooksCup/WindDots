@@ -1,6 +1,9 @@
 package com.wd.winddots.activity.select;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -26,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 选择-往来单位
@@ -33,10 +37,14 @@ import butterknife.ButterKnife;
  * @author zhou
  */
 public class SelectRelatedCompanyActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,
+        BaseQuickAdapter.OnItemClickListener,
         BaseQuickAdapter.RequestLoadMoreListener {
 
     @BindView(R.id.tv_search)
     TextView mSearchTv;
+
+    @BindView(R.id.et_search)
+    EditText mSearchEt;
 
     @BindView(R.id.rv_related_company)
     RecyclerView mRelatedCompanyRv;
@@ -70,9 +78,26 @@ public class SelectRelatedCompanyActivity extends BaseActivity implements SwipeR
         getData();
     }
 
+    @OnClick({R.id.iv_back, R.id.tv_search})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.tv_search:
+                showLoadingDialog();
+                mKeyword = mSearchEt.getText().toString();
+                mPage = 1;
+                hideKeyboard();
+                getData();
+                break;
+        }
+    }
+
     public void initListener() {
         mRelatedCompanySrl.setOnRefreshListener(this);
         mRelatedCompanyAdapter.setOnLoadMoreListener(this, mRelatedCompanyRv);
+        mRelatedCompanyAdapter.setOnItemClickListener(this);
     }
 
     private void getData() {
@@ -128,4 +153,12 @@ public class SelectRelatedCompanyActivity extends BaseActivity implements SwipeR
         getData();
     }
 
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        RelatedCompany relatedCompany = mRelatedCompanyList.get(position);
+        Intent intent = new Intent();
+        intent.putExtra("relatedCompanyName", relatedCompany.getName());
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 }

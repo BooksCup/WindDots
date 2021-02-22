@@ -53,8 +53,8 @@ public class SelectOrderActivity extends BaseActivity
     VolleyUtil mVolleyUtil;
     List<Order> mOrderList = new ArrayList<>();
 
-    private int page = 1;
-    private int pageSize = 10;
+    int mPage = 1;
+    int mPageSize = 10;
     String mKeyword = "";
 
     @Override
@@ -86,7 +86,7 @@ public class SelectOrderActivity extends BaseActivity
             case R.id.tv_search:
                 showLoadingDialog();
                 mKeyword = mSearchEt.getText().toString();
-                page = 1;
+                mPage = 1;
                 hideKeyboard();
                 getData();
                 break;
@@ -105,10 +105,10 @@ public class SelectOrderActivity extends BaseActivity
     private void getData() {
         String url;
         try {
-            url = Constant.APP_BASE_URL + "order/search?enterpriseId=" + "1" + "&pageNum=" + page + "&pageSize=" + pageSize +
+            url = Constant.APP_BASE_URL + "order/search?enterpriseId=" + "1" + "&pageNum=" + mPage + "&pageSize=" + mPageSize +
                     "&keyword=" + URLEncoder.encode(mKeyword, "utf-8");
         } catch (UnsupportedEncodingException e) {
-            url = Constant.APP_BASE_URL + "order/search?enterpriseId=" + "1" + "&pageNum=" + page + "&pageSize=" + pageSize +
+            url = Constant.APP_BASE_URL + "order/search?enterpriseId=" + "1" + "&pageNum=" + mPage + "&pageSize=" + mPageSize +
                     "&keyword=" + mKeyword;
         }
 
@@ -119,7 +119,7 @@ public class SelectOrderActivity extends BaseActivity
             });
             List<Order> orderList = orderPageInfo.getList();
 
-            if (page == 1) {
+            if (mPage == 1) {
                 mOrderList.clear();
             }
             mOrderList.addAll(orderList);
@@ -142,7 +142,7 @@ public class SelectOrderActivity extends BaseActivity
     public void onRefresh() {
         mOrderSrl.setRefreshing(true);
         mOrderAdapter.setEnableLoadMore(true);
-        page = 1;
+        mPage = 1;
         getData();
     }
 
@@ -151,7 +151,7 @@ public class SelectOrderActivity extends BaseActivity
         if (mOrderSrl.isRefreshing()) {
             return;
         }
-        page += 1;
+        mPage += 1;
         getData();
     }
 
