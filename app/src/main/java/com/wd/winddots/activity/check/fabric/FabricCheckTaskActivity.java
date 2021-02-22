@@ -42,7 +42,8 @@ import butterknife.OnClick;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class FabricCheckTaskActivity extends FragmentActivity
-        implements View.OnScrollChangeListener, SwipeRefreshLayout.OnRefreshListener, ListBottomBar.ListBottomBarActionListener, FabricCheckTaskAdapter.OnSubItemClickListener, CheckFilter.CheckFilterOnCommitClickListener {
+        implements View.OnScrollChangeListener, SwipeRefreshLayout.OnRefreshListener,
+        ListBottomBar.ListBottomBarActionListener, FabricCheckTaskAdapter.OnSubItemClickListener, CheckFilter.CheckFilterOnCommitClickListener {
 
     private VolleyUtil mVolleyUtil;
 
@@ -94,7 +95,7 @@ public class FabricCheckTaskActivity extends FragmentActivity
         mFilterView.setOnCommitClickListener(this);
         mGoodsRv.setLayoutManager(mLayoutManager = new LinearLayoutManager(this));
         mGoodsRv.addItemDecoration(new PinnedHeaderItemDecoration());
-        mAdapter = new FabricCheckTaskAdapter();
+        mAdapter = new FabricCheckTaskAdapter(this);
         mAdapter.setOnSubItemClickListener(this);
         mGoodsRv.setAdapter(mAdapter);
         mGoodsRv.setOnScrollChangeListener(this);

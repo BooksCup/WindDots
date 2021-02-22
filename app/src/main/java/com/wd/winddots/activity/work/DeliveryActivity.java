@@ -1,5 +1,7 @@
 package com.wd.winddots.activity.work;
 
+import android.content.Intent;
+
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,7 +18,7 @@ import butterknife.BindView;
 
 public class DeliveryActivity extends BaseActivity
         implements SwipeRefreshLayout.OnRefreshListener,
-        BaseQuickAdapter.RequestLoadMoreListener {
+        BaseQuickAdapter.RequestLoadMoreListener ,OnRecyclerItemClickListener{
 
     @BindView(R.id.filterView)
     FilterView mFilterView;
@@ -61,11 +63,17 @@ public class DeliveryActivity extends BaseActivity
 
     @Override
     public void initListener() {
-
+        mAdapter.setOnRecyclerItemClickListener(this);
     }
 
     @Override
     public void initData() {
 
+    }
+
+    @Override
+    public void onItemClick(int Position) {
+        Intent intent = new Intent(DeliveryActivity.this,AddDeliveryActivity.class);
+        startActivity(intent);
     }
 }

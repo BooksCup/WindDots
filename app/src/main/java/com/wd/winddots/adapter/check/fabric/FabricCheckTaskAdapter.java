@@ -1,5 +1,6 @@
 package com.wd.winddots.adapter.check.fabric;
 
+import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -20,7 +21,11 @@ import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.Utils;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 面料盘点任务
@@ -30,6 +35,13 @@ import androidx.recyclerview.widget.RecyclerView;
 public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricCheckTask, FabricCheckLotInfo, RecyclerView.ViewHolder> {
 
     private OnSubItemClickListener onSubItemClickListener;
+
+    private Context mContext;
+
+    public FabricCheckTaskAdapter(Context context){
+        this.mContext = context;
+    }
+
 
     public void setOnSubItemClickListener(OnSubItemClickListener onSubItemClickListener) {
         this.onSubItemClickListener = onSubItemClickListener;
@@ -48,26 +60,21 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == VIEW_TYPE_ITEM_TIME) {
+      /*  if (viewType == VIEW_TYPE_ITEM_TIME) {*/
             TitleItemHolder holder = new TitleItemHolder(
                     LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fabric_check_task, parent, false));
-            holder.itemView.setOnClickListener(v -> {
-                ExpandGroupItemEntity entity = (ExpandGroupItemEntity) v.getTag();
-                entity.setExpand(!entity.isExpand());
-                notifyDataSetChanged();
-            });
             return holder;
-        } else {
+/*        } else {
             SubItemHolder itemHolder = new SubItemHolder(
                     LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fabric_check_lot_info, parent, false));
 
             return itemHolder;
-        }
+        }*/
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (getItemViewType(position) == VIEW_TYPE_ITEM_TIME) {
+      //  if (getItemViewType(position) == VIEW_TYPE_ITEM_TIME) {
             int groupIndex = mIndexMap.get(position).getGroupIndex();
             TitleItemHolder itemHolder = (TitleItemHolder) holder;
             itemHolder.itemView.setTag(mDataList.get(groupIndex));
@@ -85,7 +92,34 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
                 itemHolder.mGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
             }
 
-        } else {
+        holder.itemView.setOnClickListener(v -> {
+            if ((((TitleItemHolder) holder).llInfo).getVisibility() == View.VISIBLE){
+                (((TitleItemHolder) holder).llInfo).setVisibility(View.GONE);
+            }else {
+                (((TitleItemHolder) holder).llInfo).setVisibility(View.VISIBLE);
+                ((TitleItemHolder) holder).updateUI(position,fabricCheckTask.getFabricCheckLotInfoList());
+            }
+
+            ((TitleItemHolder) holder).llInfoHeader.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    List<FabricCheckLotInfo> lotInfoList = ((TitleItemHolder) holder).checkInfoAdapter.getLotInfos();
+                    FabricCheckLotInfo fabricCheckLotInfo = new FabricCheckLotInfo(true);
+                    if (null == lotInfoList){
+                        lotInfoList = new ArrayList<>();
+                    }
+                    lotInfoList.add(fabricCheckLotInfo);
+                    fabricCheckTask.setFabricCheckLotInfoList(lotInfoList);
+                    ((TitleItemHolder) holder).checkInfoAdapter.notifyDataSetChanged();
+                }
+            });
+
+          /*  ExpandGroupItemEntity entity = (ExpandGroupItemEntity) v.getTag();
+            entity.setExpand(!entity.isExpand());
+            notifyDataSetChanged();*/
+        });
+
+/*        } else {
             SubItemHolder subHolder = (SubItemHolder) holder;
             int groupIndex = mIndexMap.get(position).getGroupIndex();
             int childIndex = mIndexMap.get(position).getChildIndex();
@@ -122,17 +156,22 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
                     notifyDataSetChanged();
                 }
             });
-        }
+        }*/
 
     }
 
-    static class TitleItemHolder extends RecyclerView.ViewHolder {
+     class TitleItemHolder extends RecyclerView.ViewHolder {
 
         SimpleDraweeView mGoodsPhotoSdv;
         TextView mGoodsInfoTv;
         TextView mRelatedCompanyTv;
         TextView mOrderNoTv;
         TextView mThemeTv;
+        LinearLayout llInfo;
+        RecyclerView infoRecycler;
+        LinearLayout llInfoHeader;
+
+        CheckInfoAdapter checkInfoAdapter;
 
         TitleItemHolder(View itemView) {
             super(itemView);
@@ -141,6 +180,19 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
             mRelatedCompanyTv = itemView.findViewById(R.id.tv_related_company);
             mOrderNoTv = itemView.findViewById(R.id.tv_order_no);
             mThemeTv = itemView.findViewById(R.id.tv_theme);
+            llInfo = itemView.findViewById(R.id.ll_info);
+            infoRecycler = itemView.findViewById(R.id.body_recycler);
+
+            checkInfoAdapter = new CheckInfoAdapter();
+            LinearLayoutManager layoutManager = new  LinearLayoutManager(mContext);
+            infoRecycler.setLayoutManager(layoutManager);
+            infoRecycler.setAdapter(checkInfoAdapter);
+
+            llInfoHeader = itemView.findViewById(R.id.ll_header);
+        }
+
+        private void  updateUI(int position, List<FabricCheckLotInfo> lotInfoList){
+            checkInfoAdapter.setLotInfos(lotInfoList);
         }
 
     }

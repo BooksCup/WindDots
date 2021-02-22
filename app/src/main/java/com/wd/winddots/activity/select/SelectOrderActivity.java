@@ -1,5 +1,6 @@
 package com.wd.winddots.activity.select;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
+import com.wd.winddots.activity.check.fabric.AddSimpleOrderActivity;
 import com.wd.winddots.adapter.select.OrderAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Order;
@@ -75,7 +77,7 @@ public class SelectOrderActivity extends BaseActivity
         getData();
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_search})
+    @OnClick({R.id.iv_back, R.id.tv_search, R.id.iv_add})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
@@ -87,6 +89,10 @@ public class SelectOrderActivity extends BaseActivity
                 page = 1;
                 hideKeyboard();
                 getData();
+                break;
+            case R.id.iv_add:
+                Intent intent = new Intent(SelectOrderActivity.this, AddSimpleOrderActivity.class);
+                startActivity(intent);
                 break;
         }
     }
