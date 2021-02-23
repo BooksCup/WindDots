@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
+import com.wd.winddots.activity.select.SelectGoodsActivity;
 import com.wd.winddots.activity.select.SelectRelatedCompanyActivity;
 
 import java.util.Calendar;
@@ -26,6 +27,7 @@ import butterknife.OnClick;
 public class AddSimpleOrderActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_RELATED_COMPANY = 1;
+    private static final int REQUEST_CODE_GOODS = 2;
 
     @BindView(R.id.tv_related_company)
     TextView mRelatedCompanyTv;
@@ -42,7 +44,7 @@ public class AddSimpleOrderActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.iv_back, R.id.ll_related_company, R.id.ll_delivery_date})
+    @OnClick({R.id.iv_back, R.id.ll_related_company, R.id.ll_goods, R.id.ll_delivery_date})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -53,6 +55,11 @@ public class AddSimpleOrderActivity extends BaseActivity {
                 // 往来单位
                 intent = new Intent(AddSimpleOrderActivity.this, SelectRelatedCompanyActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_RELATED_COMPANY);
+                break;
+            case R.id.ll_goods:
+                // 物品
+                intent = new Intent(AddSimpleOrderActivity.this, SelectGoodsActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_GOODS);
                 break;
             case R.id.ll_delivery_date:
                 // 交货日期

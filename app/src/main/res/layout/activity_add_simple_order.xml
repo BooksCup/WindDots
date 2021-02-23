@@ -86,6 +86,7 @@
                 android:background="@color/alpha_05_black" />
 
             <LinearLayout
+                android:id="@+id/ll_goods"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:background="@color/colorWhite"

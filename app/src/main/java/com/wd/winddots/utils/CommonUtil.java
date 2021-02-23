@@ -8,12 +8,17 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.wd.winddots.cons.Constant;
+import com.wd.winddots.entity.Attr;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class CommonUtil {
 
@@ -139,5 +144,25 @@ public class CommonUtil {
             photo = "";
         }
         return photo;
+    }
+
+    public static List<String> attrJsonToAttrStrList(String attrJson) {
+        List<String> attrList = new ArrayList<>();
+        try {
+            LinkedHashMap<String, JSONArray> attrMap = JSON.parseObject(attrJson, LinkedHashMap.class);
+            for (Map.Entry<String, JSONArray> entry : attrMap.entrySet()) {
+                Attr attr = new Attr();
+                attr.setKey(entry.getKey());
+                JSONArray valueJson = entry.getValue();
+                Object value = new Object();
+                if (null != valueJson && valueJson.size() > 0) {
+                    value = valueJson.getJSONObject(0).get("name");
+                }
+                attrList.add(entry.getKey() + ":" + value);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return attrList;
     }
 }
