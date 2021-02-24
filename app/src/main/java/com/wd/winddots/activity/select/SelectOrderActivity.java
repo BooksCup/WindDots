@@ -197,4 +197,12 @@ public class SelectOrderActivity extends BaseActivity
             mVolleyUtil.handleCommonErrorResponse(SelectOrderActivity.this, volleyError);
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPage = 1;
+        getData();
+    }
+
 }

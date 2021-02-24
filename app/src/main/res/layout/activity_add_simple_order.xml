@@ -146,7 +146,7 @@
                     android:textSize="@dimen/form_text_size" />
 
                 <EditText
-                    android:id="@+id/et_title"
+                    android:id="@+id/et_theme_title"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
@@ -267,7 +267,7 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/activity_calmingadd_saveBtn"
+        android:id="@+id/ll_save"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#33B3EA">

@@ -388,4 +388,7 @@
     <!-- 盘点 -->
     <string name="add_fabric_check_task_success">面料盘点任务发布成功</string>
 
+    <!-- 订单 -->
+    <string name="add_order_success">订单新增成功</string>
+
 </resources>

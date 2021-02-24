@@ -160,6 +160,7 @@ public class SelectRelatedCompanyActivity extends BaseActivity implements SwipeR
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         RelatedCompany relatedCompany = mRelatedCompanyList.get(position);
         Intent intent = new Intent();
+        intent.putExtra("relatedCompanyId", relatedCompany.getId());
         intent.putExtra("relatedCompanyName", relatedCompany.getName());
         setResult(RESULT_OK, intent);
         finish();

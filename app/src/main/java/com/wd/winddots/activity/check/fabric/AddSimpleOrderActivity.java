@@ -3,16 +3,22 @@ package com.wd.winddots.activity.check.fabric;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.select.SelectGoodsActivity;
 import com.wd.winddots.activity.select.SelectRelatedCompanyActivity;
-import com.wd.winddots.entity.Goods;
+import com.wd.winddots.cons.Constant;
+import com.wd.winddots.utils.SpHelper;
+import com.wd.winddots.utils.VolleyUtil;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -39,16 +45,30 @@ public class AddSimpleOrderActivity extends BaseActivity {
     @BindView(R.id.tv_delivery_date)
     TextView mDeliveryDateTv;
 
+    @BindView(R.id.et_theme_title)
+    EditText mThemeTitleEt;
+
+    @BindView(R.id.et_num)
+    EditText mNumEt;
+
+    @BindView(R.id.et_remark)
+    EditText mRemarkEt;
+
+
+    VolleyUtil mVolleyUtil;
+    String mRelatedCompanyId;
+    String mGoodsId;
+    String mDeliveryTime;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_simple_order);
         ButterKnife.bind(this);
-
+        mVolleyUtil = VolleyUtil.getInstance(this);
     }
 
-    @OnClick({R.id.iv_back, R.id.ll_related_company, R.id.ll_goods, R.id.ll_delivery_date})
+    @OnClick({R.id.iv_back, R.id.ll_related_company, R.id.ll_goods, R.id.ll_delivery_date, R.id.ll_save})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -93,10 +113,29 @@ public class AddSimpleOrderActivity extends BaseActivity {
                     String date = year1 + "-" + monthS + '-' + dayS;
                     mDeliveryDateTv.setText(date);
                     mDeliveryDateTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
-//                        mData.setTime(date);
+                    mDeliveryTime = date;
                 }, year, month, day);
 
                 dp.show();
+                break;
+            case R.id.ll_save:
+                if (TextUtils.isEmpty(mRelatedCompanyId)) {
+                    showToast("请选择往来单位");
+                    return;
+                }
+                if (TextUtils.isEmpty(mGoodsId)) {
+                    showToast("请选择物品");
+                    return;
+                }
+                if (TextUtils.isEmpty(mDeliveryTime)) {
+                    showToast("请选择交货日期");
+                    return;
+                }
+                String themeTitle = mThemeTitleEt.getText().toString().trim();
+                String num = mNumEt.getText().toString().trim();
+                String remark = mRemarkEt.getText().toString().trim();
+
+                addSimpleOrder(themeTitle, mDeliveryTime, num, remark);
                 break;
         }
     }
@@ -109,7 +148,9 @@ public class AddSimpleOrderActivity extends BaseActivity {
                 case REQUEST_CODE_RELATED_COMPANY:
                     // 往来单位
                     if (null != data) {
+                        String relatedCompanyId = data.getStringExtra("relatedCompanyId");
                         String relatedCompanyName = data.getStringExtra("relatedCompanyName");
+                        mRelatedCompanyId = relatedCompanyId;
                         mRelatedCompanyTv.setText(relatedCompanyName);
                         mRelatedCompanyTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
                     }
@@ -119,6 +160,7 @@ public class AddSimpleOrderActivity extends BaseActivity {
                     if (null != data) {
                         String goodsId = data.getStringExtra("goodsId");
                         String goodsName = data.getStringExtra("goodsName");
+                        mGoodsId = goodsId;
                         mGoodsNameTv.setText(goodsName);
                         mGoodsNameTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
                     }
@@ -126,4 +168,28 @@ public class AddSimpleOrderActivity extends BaseActivity {
             }
         }
     }
+
+    private void addSimpleOrder(String themeTitle, String deliveryTime, String num, String remark) {
+        String url = Constant.APP_BASE_URL + "order";
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("goodsId", mGoodsId);
+        paramMap.put("userId", SpHelper.getInstance(this).getUserId());
+        paramMap.put("enterpriseId", SpHelper.getInstance(this).getEnterpriseId());
+        paramMap.put("relatedCompanyId", mRelatedCompanyId);
+        paramMap.put("themeTitle", themeTitle);
+        paramMap.put("deliveryTime", deliveryTime);
+        paramMap.put("type", "P");
+        paramMap.put("num", num);
+        paramMap.put("remarks", remark);
+
+        mVolleyUtil.httpPostRequest(url, paramMap, response -> {
+            showToast(getString(R.string.add_order_success));
+            hideLoadingDialog();
+            finish();
+        }, volleyError -> {
+            hideLoadingDialog();
+            mVolleyUtil.handleCommonErrorResponse(AddSimpleOrderActivity.this, volleyError);
+        });
+    }
+
 }
