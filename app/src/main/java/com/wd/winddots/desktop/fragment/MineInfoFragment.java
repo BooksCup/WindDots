@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.wd.winddots.R;
+import com.wd.winddots.activity.stock.out.StockOutActivity;
 import com.wd.winddots.base.BaseFragment;
 import com.wd.winddots.base.BasePresenter;
 import com.wd.winddots.bean.UserInfoBean;
@@ -100,8 +101,10 @@ public class MineInfoFragment extends BaseFragment implements SwipeRefreshLayout
         mSettingCell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, SettingActivity.class);
-                //intent.putExtra("points",mineInfo.getPoint());
+//                Intent intent = new Intent(mContext, SettingActivity.class);
+//                //intent.putExtra("points",mineInfo.getPoint());
+//                startActivity(intent);
+                Intent intent = new Intent(mContext, StockOutActivity.class);
                 startActivity(intent);
             }
         });
