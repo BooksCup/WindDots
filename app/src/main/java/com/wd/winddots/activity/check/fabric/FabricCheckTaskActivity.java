@@ -131,7 +131,7 @@ public class FabricCheckTaskActivity extends FragmentActivity
         if (mEndLoading) {
             return;
         }
-        String url = Constant.APP_BASE_URL + "fabricCheckTask/search?keyword=1&pageNum=" + mPage + "&pageSize=10" + "&enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId();
+        String url = Constant.APP_BASE_URL + "fabricCheckTask/search?pageNum=" + mPage + "&pageSize=10" + "&enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId();
         mIsLoading = true;
         mVolleyUtil.httpGetRequest(url, response -> {
             mDialog.hide();
@@ -236,6 +236,13 @@ public class FabricCheckTaskActivity extends FragmentActivity
             mDialog.show();
             getData();
         }
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPage = 1;
+        mEndLoading = false;
+        getData();
     }
 }

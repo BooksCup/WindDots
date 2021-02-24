@@ -385,4 +385,7 @@
     <string name="network_unavailable">网络连接不可用，请检查网络</string>
     <string name="network_time_out">网络超时，请重试</string>
 
+    <!-- 盘点 -->
+    <string name="add_fabric_check_task_success">面料盘点任务发布成功</string>
+
 </resources>

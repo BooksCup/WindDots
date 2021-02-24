@@ -189,7 +189,7 @@ public class SelectOrderActivity extends BaseActivity
         paramMap.put("orderTheme", order.getOrderTheme());
 
         mVolleyUtil.httpPostRequest(url, paramMap, response -> {
-            showToast("任务发布成功");
+            showToast(getString(R.string.add_fabric_check_task_success));
             hideLoadingDialog();
             finish();
         }, volleyError -> {
