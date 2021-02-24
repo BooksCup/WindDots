@@ -1,11 +1,13 @@
 package com.wd.winddots.entity;
 
+import java.io.Serializable;
+
 /**
  * 订单
  *
  * @author zhou
  */
-public class Order {
+public class Order implements Serializable {
 
     private String goodsName;
     private String goodsNo;

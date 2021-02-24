@@ -111,11 +111,13 @@
             android:textSize="12sp" />
 
         <ImageView
+            android:id="@+id/iv_save"
             android:layout_width="15dp"
-            android:layout_height="28dp"
+            android:layout_height="15dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp" />
-        <!--            android:src="@mipmap/right" -->
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/add3" />
+
 
     </LinearLayout>
 

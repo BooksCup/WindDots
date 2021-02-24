@@ -12,5 +12,6 @@
     <dimen name="common_margin_left">12dp</dimen>
     <dimen name="common_margin_right">12dp</dimen>
 
+    <dimen name="dp_30">30dp</dimen>
     <dimen name="dp_60">60dp</dimen>
 </resources>
