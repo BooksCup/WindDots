@@ -60,7 +60,7 @@
             <include layout="@layout/layout_related_orders"/>
 
             <!--出库仓库-->
-            <include layout="@layout/layout_delivery_factory"/>
+          <!--  <include layout="@layout/layout_delivery_factory"/>-->
 
             <View
                 android:layout_width="match_parent"
@@ -75,11 +75,11 @@
                 android:layout_height="1dp"
                 android:background="@color/colorF0" />
 
-            <TextView
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_40"
                 android:gravity="center_vertical"
-                android:text="这是备注内容" />
+                android:hint="备注内容" />
 
             <View
                 android:layout_width="match_parent"
@@ -87,8 +87,11 @@
                 android:background="@color/colorF0" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/add_pic"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10"
+                />
 
             <View
                 android:layout_width="match_parent"
@@ -132,5 +135,44 @@
     </androidx.core.widget.NestedScrollView>
 
     <!--底部操作-->
-    <include layout="@layout/layout_delivery_bottom"/>
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorTextYellow"
+            android:gravity="center"
+            android:text="保存至草稿"
+            android:textColor="@color/white" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_weight="1"
+            android:background="@color/phone_blue"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/icon_scan" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_weight="1"
+            android:background="@color/colorStyleG"
+            android:gravity="center"
+            android:text="提交"
+            android:textColor="@color/white" />
+    </LinearLayout>
 </RelativeLayout>

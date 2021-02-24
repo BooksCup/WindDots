@@ -4,14 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.android.volley.NetworkError;
-import com.android.volley.Response;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
@@ -108,6 +103,7 @@ public class SelectOrderActivity extends BaseActivity
     public void initListener() {
         mOrderSrl.setOnRefreshListener(this);
         mOrderAdapter.setOnLoadMoreListener(this, mOrderRv);
+        mOrderAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -129,13 +125,11 @@ public class SelectOrderActivity extends BaseActivity
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        Order order = mOrderList.get(position);
-        Intent intent = new Intent();
-        intent.putExtra("order", order);
-        setResult(RESULT_OK, intent);
-        finish();
+        showLoadingDialog();
+        final Order order = mOrderList.get(position);
         // 拉取订单信息
         // 新增盘点任务
+        addFabricCheckTask(order);
     }
 
     private void getData() {
@@ -174,47 +168,33 @@ public class SelectOrderActivity extends BaseActivity
         });
     }
 
-//    /**
-//     * 新增盘点任务
-//     *
-//     * @param order 订单信息
-//     */
-//    private void addFabricCheckTask(final Order order) {
-//        String url = Constant.APP_BASE_URL + "fabricCheckTask";
-//        Map<String, String> paramMap = new HashMap<>();
-//        paramMap.put("goodsId", order.getGoodsName());
-//        paramMap.put("goodsName", order.getGoodsName());
-//        paramMap.put("goodsNo", order.getGoodsNo());
-//        paramMap.put("goodsPhotos", order.getGoodsPhotos());
-//        paramMap.put("relatedCompanyId", order.getRelatedCompanyName());
-//        paramMap.put("relatedCompanyName", order.getRelatedCompanyName());
-//        paramMap.put("relatedCompanyShortName", order.getRelatedCompanyShortName());
-//        paramMap.put("enterpriseId", "1");
-//
-//        mVolleyUtil.httpPostRequest(url, paramMap, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                mDialog.dismiss();
-//
-//                // 持久化
-//                Address address = new Address(addressName, addressPhone, addressProvince,
-//                        addressCity, addressDistrict, addressDetail, addressPostCode);
-//                Address.save(address);
-//
-//                finish();
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError) {
-//                mDialog.dismiss();
-//                if (volleyError instanceof NetworkError) {
-//                    Toast.makeText(AddAddressActivity.this, R.string.network_unavailable, Toast.LENGTH_SHORT).show();
-//                    return;
-//                } else if (volleyError instanceof TimeoutError) {
-//                    Toast.makeText(AddAddressActivity.this, R.string.network_time_out, Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//            }
-//        });
-//    }
+    /**
+     * 新增盘点任务
+     *
+     * @param order 订单信息
+     */
+    private void addFabricCheckTask(final Order order) {
+        String url = Constant.APP_BASE_URL + "fabricCheckTask";
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("goodsId", order.getGoodsId());
+        paramMap.put("goodsName", order.getGoodsName());
+        paramMap.put("goodsNo", order.getGoodsNo());
+        paramMap.put("goodsPhotos", order.getGoodsPhotos());
+        paramMap.put("relatedCompanyId", order.getRelatedCompanyId());
+        paramMap.put("relatedCompanyName", order.getRelatedCompanyName());
+        paramMap.put("relatedCompanyShortName", order.getRelatedCompanyShortName());
+        paramMap.put("enterpriseId", "1");
+        paramMap.put("orderId", order.getOrderId());
+        paramMap.put("orderNo", order.getOrderNo());
+        paramMap.put("orderTheme", order.getOrderTheme());
+
+        mVolleyUtil.httpPostRequest(url, paramMap, response -> {
+            showToast("任务发布成功");
+            hideLoadingDialog();
+            finish();
+        }, volleyError -> {
+            hideLoadingDialog();
+            mVolleyUtil.handleCommonErrorResponse(SelectOrderActivity.this, volleyError);
+        });
+    }
 }

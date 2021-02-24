@@ -381,6 +381,7 @@
     <string name="preferences_supplemental_title">Retrieve more info</string>
     <string name="preferences_vibrate_title">Vibrate</string>
 
+    <string name="server_error">网络繁忙</string>
     <string name="network_unavailable">网络连接不可用，请检查网络</string>
     <string name="network_time_out">网络超时，请重试</string>
 

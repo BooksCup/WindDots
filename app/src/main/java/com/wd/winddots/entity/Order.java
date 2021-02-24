@@ -9,14 +9,25 @@ import java.io.Serializable;
  */
 public class Order implements Serializable {
 
+    private String goodsId;
     private String goodsName;
     private String goodsNo;
     private String goodsPhotos;
+    private String relatedCompanyId;
     private String relatedCompanyName;
     private String relatedCompanyShortName;
     private String deliveryDates;
+    private String orderId;
     private String orderNo;
     private String orderTheme;
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
+    }
 
     public String getGoodsName() {
         return goodsName;
@@ -40,6 +51,14 @@ public class Order implements Serializable {
 
     public void setGoodsPhotos(String goodsPhotos) {
         this.goodsPhotos = goodsPhotos;
+    }
+
+    public String getRelatedCompanyId() {
+        return relatedCompanyId;
+    }
+
+    public void setRelatedCompanyId(String relatedCompanyId) {
+        this.relatedCompanyId = relatedCompanyId;
     }
 
     public String getRelatedCompanyName() {
@@ -66,6 +85,14 @@ public class Order implements Serializable {
         this.deliveryDates = deliveryDates;
     }
 
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
     public String getOrderNo() {
         return orderNo;
     }
@@ -81,5 +108,4 @@ public class Order implements Serializable {
     public void setOrderTheme(String orderTheme) {
         this.orderTheme = orderTheme;
     }
-
 }

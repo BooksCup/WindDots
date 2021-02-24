@@ -3,6 +3,7 @@ package com.wd.winddots.activity.base;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.wd.winddots.view.LoadingDialog;
 
@@ -46,6 +47,15 @@ public class BaseActivity extends FragmentActivity {
             mLoadingDialog.hide();
             mLoadingDialog = null;
         }
+    }
+
+    /**
+     * 显示toast
+     *
+     * @param msg toast信息
+     */
+    protected void showToast(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
 }

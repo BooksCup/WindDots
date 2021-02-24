@@ -10,6 +10,7 @@ import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -95,7 +96,10 @@ public class VolleyUtil {
     }
 
     public void handleCommonErrorResponse(Context context, VolleyError volleyError) {
-        if (volleyError instanceof NetworkError) {
+        if (volleyError instanceof ServerError) {
+            Toast.makeText(context, R.string.server_error, Toast.LENGTH_SHORT).show();
+            return;
+        } else if (volleyError instanceof NetworkError) {
             Toast.makeText(context, R.string.network_unavailable, Toast.LENGTH_SHORT).show();
             return;
         } else if (volleyError instanceof TimeoutError) {
