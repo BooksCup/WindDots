@@ -15,6 +15,7 @@ import com.wd.winddots.adapter.select.RelatedCompanyAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.PageInfo;
 import com.wd.winddots.entity.RelatedCompany;
+import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.VolleyUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -103,10 +104,12 @@ public class SelectRelatedCompanyActivity extends BaseActivity implements SwipeR
     private void getData() {
         String url;
         try {
-            url = Constant.APP_BASE_URL + "relatedCompany/search?enterpriseId=" + "1" + "&pageNum=" + mPage + "&pageSize=" + mPageSize +
+            url = Constant.APP_BASE_URL + "relatedCompany/search?enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId()
+                    + "&pageNum=" + mPage + "&pageSize=" + mPageSize +
                     "&keyword=" + URLEncoder.encode(mKeyword, "utf-8");
         } catch (UnsupportedEncodingException e) {
-            url = Constant.APP_BASE_URL + "relatedCompany/search?enterpriseId=" + "1" + "&pageNum=" + mPage + "&pageSize=" + mPageSize +
+            url = Constant.APP_BASE_URL + "relatedCompany/search?enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId()
+                    + "&pageNum=" + mPage + "&pageSize=" + mPageSize +
                     "&keyword=" + mKeyword;
         }
 

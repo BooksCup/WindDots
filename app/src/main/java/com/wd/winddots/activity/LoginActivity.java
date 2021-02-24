@@ -93,7 +93,7 @@ public class LoginActivity extends BaseMvpActivity<LoginView, LoginPresenterImpl
         }
     }
 
-    private void register(){
+    private void register() {
         Intent intent = new Intent(mContext, RegisterActivity.class);
         startActivity(intent);
     }
@@ -132,6 +132,7 @@ public class LoginActivity extends BaseMvpActivity<LoginView, LoginPresenterImpl
                     SpHelper.getInstance(mApplicationContext).setString("name", data.getName());
                     SpHelper.getInstance(mApplicationContext).setString("avatar", data.getAvatar());
                     SpHelper.getInstance(mApplicationContext).setInt("userIsSuperAdmin", data.getIsSuperAdmin());
+
                     MyApplication.USER_ID = data.getId();
                     MyApplication.ENTERPRISE_ID = data.getEnterpriseId();
                     startActivity(MainActivity.class);
@@ -147,20 +148,20 @@ public class LoginActivity extends BaseMvpActivity<LoginView, LoginPresenterImpl
 
     @Override
     public void onLoginFailure(String msg) {
-        Log.e("net666","onLoginFailure");
+        Log.e("net666", "onLoginFailure");
         hideLoading();
         showToast("登录失败: " + msg);
     }
 
     @Override
     public void onLoginError(String errorMsg) {
-        Log.e("net666","onLoginError");
+        Log.e("net666", "onLoginError");
         hideLoading();
         showToast(errorMsg);
     }
 
     @Override
     public void onLoginComplete() {
-        Log.e("net666","onLoginComplete");
+        Log.e("net666", "onLoginComplete");
     }
 }
