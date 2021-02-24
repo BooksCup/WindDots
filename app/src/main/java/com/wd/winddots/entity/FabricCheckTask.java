@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class FabricCheckTask {
 
+    private String id;
     private String goodsName;
     private String goodsNo;
     private String goodsPhotos;
@@ -90,5 +91,13 @@ public class FabricCheckTask {
 
     public void setFabricCheckLotInfoList(List<FabricCheckLotInfo> fabricCheckLotInfoList) {
         this.fabricCheckLotInfoList = fabricCheckLotInfoList;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

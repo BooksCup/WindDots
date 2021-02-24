@@ -134,6 +134,7 @@ public class FabricCheckTaskActivity extends FragmentActivity
         }
         String url = Constant.APP_BASE_URL + "fabricCheckTask/search?keyword=&pageNum=" + mPage + "&pageSize=10" + "&enterpriseId=" + "1";//SpHelper.getInstance(this).getEnterpriseId();
         mIsLoading = true;
+        Log.e("net666",url);
         mVolleyUtil.httpGetRequest(url, response -> {
             Log.e("net666",response);
             mDialog.hide();
@@ -154,7 +155,7 @@ public class FabricCheckTaskActivity extends FragmentActivity
                 if (null == fabricCheckLotInfoList) {
                     fabricCheckLotInfoList = new ArrayList<>();
                 }
-                fabricCheckLotInfoList.add(0, new FabricCheckLotInfo());
+                //fabricCheckLotInfoList.add(0, new FabricCheckLotInfo());
                 group.setChildList(fabricCheckLotInfoList);
                 group.setExpand(false);
                 dataList.add(group);

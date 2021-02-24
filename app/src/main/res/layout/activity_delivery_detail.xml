@@ -54,10 +54,10 @@
             android:orientation="vertical">
 
             <!--出库物品-->
-            <include layout="@layout/layout_delivery_goods"/>
+            <include layout="@layout/layout_devlivery_goods_1"/>
 
             <!--相关订单-->
-            <include layout="@layout/layout_related_orders"/>
+            <include layout="@layout/layout_related_orders_1"/>
 
             <!--出库仓库-->
             <include layout="@layout/layout_delivery_factory"/>

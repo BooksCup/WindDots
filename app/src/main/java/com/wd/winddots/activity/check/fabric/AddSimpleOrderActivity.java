@@ -10,6 +10,7 @@ import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.select.SelectGoodsActivity;
 import com.wd.winddots.activity.select.SelectRelatedCompanyActivity;
+import com.wd.winddots.entity.Goods;
 
 import java.util.Calendar;
 
@@ -31,6 +32,9 @@ public class AddSimpleOrderActivity extends BaseActivity {
 
     @BindView(R.id.tv_related_company)
     TextView mRelatedCompanyTv;
+
+    @BindView(R.id.tv_goods_name)
+    TextView mGoodsNameTv;
 
     @BindView(R.id.tv_delivery_date)
     TextView mDeliveryDateTv;
@@ -103,10 +107,20 @@ public class AddSimpleOrderActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_RELATED_COMPANY:
+                    // 往来单位
                     if (null != data) {
                         String relatedCompanyName = data.getStringExtra("relatedCompanyName");
                         mRelatedCompanyTv.setText(relatedCompanyName);
                         mRelatedCompanyTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
+                    }
+                    break;
+                case REQUEST_CODE_GOODS:
+                    // 物品
+                    if (null != data) {
+                        String goodsId = data.getStringExtra("goodsId");
+                        String goodsName = data.getStringExtra("goodsName");
+                        mGoodsNameTv.setText(goodsName);
+                        mGoodsNameTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
                     }
                     break;
             }

@@ -132,14 +132,14 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="订购数量（件）"
+                android:text="出库数量（件）"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="出库数量（件）"
+                android:text="订购数量（件）"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

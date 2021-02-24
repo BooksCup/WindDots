@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color99">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/color99"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="出库物品"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_delivery_info"
+        android:layout_width="match_parent"
         android:layout_height="90dp">
+
         <ImageView
             android:id="@+id/info_icon"
             android:layout_width="80dp"
@@ -25,6 +39,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/ll_item_1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -41,20 +56,22 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/item_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:lines="1"
-                    android:text="xxxxxxxxxxx"
+                    android:text="P/SP,92|B"
                     android:textColor="@color/color50"
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/item_company"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:lines="1"
-                    android:text="xxxxxxxx"
+                    android:text="备注内容"
                     android:textColor="@color/color50"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -66,29 +83,22 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/item_person"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:lines="1"
-                    android:text="200/300件"
+                    android:text="300件"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/item_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:lines="1"
-                    android:text="xxxxxxxxxx"
-                    android:textColor="@color/color50"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:lines="1"
-                    android:text="xxxxxxxxxx"
+                    android:text="320gsm"
                     android:textColor="@color/color50"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -110,76 +120,85 @@
         >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_30"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             android:background="@color/colorBlue"
             >
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:text="颜色"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:text="尺码"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
-                android:text="订购数量（件）"
+                android:text="出库数量（件）"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="确认数量（件）"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="出库数量（件）"
-                android:textColor="@color/black"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/order_info_recycler"
+            android:id="@+id/detail_goods_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_30"
+            android:layout_height="30dp"
             android:orientation="horizontal"
             android:background="@color/colorBlue"
             >
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:text="合计"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:text="200"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="200"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</merge>

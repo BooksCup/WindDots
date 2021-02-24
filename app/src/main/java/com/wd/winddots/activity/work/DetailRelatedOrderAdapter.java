@@ -15,16 +15,16 @@ import com.wd.winddots.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RelatedOrderAdapter extends RecyclerView.Adapter<RelatedOrderAdapter.ViewHolder>{
+public class DetailRelatedOrderAdapter extends RecyclerView.Adapter<DetailRelatedOrderAdapter.ViewHolder> {
     Context mContext;
-    public RelatedOrderAdapter(Context context){
+    public DetailRelatedOrderAdapter(Context context){
         this.mContext = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_related_order, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_related_order_1, parent, false);
         return new ViewHolder(v);
     }
 

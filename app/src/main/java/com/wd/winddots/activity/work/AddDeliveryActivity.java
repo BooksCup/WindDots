@@ -14,6 +14,7 @@ import com.wd.winddots.base.BaseActivity;
 
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class AddDeliveryActivity extends BaseActivity {
 
@@ -42,6 +43,7 @@ public class AddDeliveryActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        ButterKnife.bind(this);
         LinearLayoutManager layoutManager1 = new  LinearLayoutManager(this);
         goodsRecyclerView.setLayoutManager(layoutManager1);
         goodsRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
@@ -51,7 +53,7 @@ public class AddDeliveryActivity extends BaseActivity {
         LinearLayoutManager layoutManager2 = new  LinearLayoutManager(this);
         ordersRecyclerView.setLayoutManager(layoutManager2);
         ordersRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        relatedOrderAdapter = new RelatedOrderAdapter();
+        relatedOrderAdapter = new RelatedOrderAdapter(this);
         ordersRecyclerView.setAdapter(relatedOrderAdapter);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,4);

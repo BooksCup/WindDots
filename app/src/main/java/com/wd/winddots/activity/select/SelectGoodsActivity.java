@@ -1,5 +1,6 @@
 package com.wd.winddots.activity.select;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -118,8 +119,12 @@ public class SelectGoodsActivity extends BaseActivity
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        showLoadingDialog();
         final Goods goods = mGoodsList.get(position);
+        Intent intent = new Intent();
+        intent.putExtra("goodsId", goods.getId());
+        intent.putExtra("goodsName", goods.getGoodsName());
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     private void getData() {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
 import com.wd.winddots.R;
-import com.wd.winddots.activity.check.fabric.FabricCheckTaskLotActivity;
+import com.wd.winddots.activity.check.fabric.FabricCheckLotTaskActivity;
+import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.FabricCheckLotInfo;
+import com.wd.winddots.utils.Utils;
+import com.wd.winddots.utils.VolleyUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +36,19 @@ public class CheckInfoAdapter  extends RecyclerView.Adapter<CheckInfoAdapter.Vie
 
     private List<FabricCheckLotInfo> lotInfos;
 
+    private VolleyUtil mVolleyUtil;
+
     public Context mContext;
+
+    public String mFabricCheckTaskId;
+
+//    public CheckInfoAdapter(Context context,String fabricCheckTaskId){
+//        super();
+//        mContext = context;
+//        mFabricCheckTaskId = fabricCheckTaskId;
+//    }
+
+
 
     public void setLotInfos(List<FabricCheckLotInfo> lotInfos) {
         this.lotInfos = lotInfos;
@@ -49,6 +69,7 @@ public class CheckInfoAdapter  extends RecyclerView.Adapter<CheckInfoAdapter.Vie
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        mVolleyUtil = VolleyUtil.getInstance(mContext);
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_check_info, parent, false);
         return new ViewHolder(v);
     }
@@ -57,6 +78,7 @@ public class CheckInfoAdapter  extends RecyclerView.Adapter<CheckInfoAdapter.Vie
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.setIsRecyclable(false);
         FabricCheckLotInfo fabricCheckLotInfo = lotInfos.get(position);
+
 
         if (fabricCheckLotInfo.isEdit()){
             holder.llBody.setVisibility(View.GONE);
@@ -139,8 +161,28 @@ public class CheckInfoAdapter  extends RecyclerView.Adapter<CheckInfoAdapter.Vie
             holder.ivSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    fabricCheckLotInfo.setEdit(false);
-                    notifyDataSetChanged();
+
+
+                    Map<String,String> params = new HashMap<>();
+                    String lotNo = holder.etGh.getText().toString().trim();
+                    String num = holder.etJs.getText().toString().trim();
+                    String weight = holder.etZl.getText().toString().trim();
+                    String length = holder.etSl.getText().toString().trim();
+                    params.put("fabricCheckTaskId",mFabricCheckTaskId);
+                    params.put("length", Utils.nullOrEmpty(length));
+                    params.put("lotNo",Utils.nullOrEmpty(lotNo));
+                    params.put("num",Utils.nullOrEmpty(num));
+                    params.put("weight",Utils.nullOrEmpty(weight));
+
+                    String url = Constant.APP_BASE_URL + "fabricCheckLotInfo/addFabricCheckLotInfo";
+                    Log.e("net666", JSON.toJSONString(params));
+                    mVolleyUtil.httpPostRequest(url, params, response -> {
+                        Toast.makeText(mContext,"保存成功",Toast.LENGTH_LONG).show();
+                        fabricCheckLotInfo.setEdit(false);
+                        notifyDataSetChanged();
+                    }, volleyError -> {
+                        mVolleyUtil.handleCommonErrorResponse(mContext, volleyError);
+                    });
                 }
             });
         }else {
@@ -155,7 +197,7 @@ public class CheckInfoAdapter  extends RecyclerView.Adapter<CheckInfoAdapter.Vie
             holder.llBody.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mContext, FabricCheckTaskLotActivity.class);
+                    Intent intent = new Intent(mContext, FabricCheckLotTaskActivity.class);
                     intent.putExtra("data",fabricCheckLotInfo.getId());
                     mContext.startActivity(intent);
                 }

@@ -35,8 +35,7 @@ import cn.jmessage.support.qiniu.android.utils.StringUtils;
  * Date: 2021/2/23 11:39 AM
  * Description:
  */
-public class FabricCheckTaskLotActivity extends FragmentActivity {
-
+public class FabricCheckLotTaskActivity extends FragmentActivity {
 
     private VolleyUtil mVolleyUtil;
 
@@ -63,11 +62,8 @@ public class FabricCheckTaskLotActivity extends FragmentActivity {
     }
 
     private void initView(){
-
         Intent intent = getIntent();
-
-        mId = "12345";//intent.getStringExtra("data");
-
+        mId = intent.getStringExtra("data");
         mAdapter = new FabricCheckTaskLotAdapter(R.layout.item_fabric_check_task_number,mDataSource);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mCheckRv.setLayoutManager(layoutManager);
@@ -115,9 +111,6 @@ public class FabricCheckTaskLotActivity extends FragmentActivity {
         List<Map> paramsMaps = new ArrayList<>();
         for (int i = 0;i < list.size();i++){
             FabricCheckTaskLot lotItem = list.get(i);
-
-
-
             List<FabricCheckTaskRecord> recordList = lotItem.getFabricCheckRecords();
             if (recordList == null || recordList.size() == 0){
                 continue;

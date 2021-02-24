@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.wd.winddots.GlideApp;
 import com.wd.winddots.R;
 import com.wd.winddots.desktop.list.check.bean.CheckGoodsBean;
 import com.wd.winddots.desktop.view.PinnedHeaderRecyclerView.ExpandGroupItemEntity;
@@ -18,6 +19,7 @@ import com.wd.winddots.desktop.view.PinnedHeaderRecyclerView.RecyclerExpandBaseA
 import com.wd.winddots.entity.FabricCheckLotInfo;
 import com.wd.winddots.entity.FabricCheckTask;
 import com.wd.winddots.utils.CommonUtil;
+import com.wd.winddots.utils.Utils;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,7 +39,7 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
 
     private Context mContext;
 
-    public FabricCheckTaskAdapter(Context context){
+    public FabricCheckTaskAdapter(Context context) {
         this.mContext = context;
     }
 
@@ -59,10 +61,10 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-      /*  if (viewType == VIEW_TYPE_ITEM_TIME) {*/
-            TitleItemHolder holder = new TitleItemHolder(
-                    LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fabric_check_task, parent, false));
-            return holder;
+        /*  if (viewType == VIEW_TYPE_ITEM_TIME) {*/
+        TitleItemHolder holder = new TitleItemHolder(
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fabric_check_task, parent, false));
+        return holder;
 /*        } else {
             SubItemHolder itemHolder = new SubItemHolder(
                     LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fabric_check_lot_info, parent, false));
@@ -73,39 +75,40 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-      //  if (getItemViewType(position) == VIEW_TYPE_ITEM_TIME) {
-            int groupIndex = mIndexMap.get(position).getGroupIndex();
-            TitleItemHolder itemHolder = (TitleItemHolder) holder;
-            itemHolder.itemView.setTag(mDataList.get(groupIndex));
-            FabricCheckTask fabricCheckTask = mDataList.get(groupIndex).getParent();
+        //  if (getItemViewType(position) == VIEW_TYPE_ITEM_TIME) {
+        int groupIndex = mIndexMap.get(position).getGroupIndex();
+        TitleItemHolder itemHolder = (TitleItemHolder) holder;
+        itemHolder.itemView.setTag(mDataList.get(groupIndex));
+        FabricCheckTask fabricCheckTask = mDataList.get(groupIndex).getParent();
 
-            String goodsInfo = fabricCheckTask.getGoodsName() + "(" + fabricCheckTask.getGoodsNo() + ")";
-            itemHolder.mGoodsInfoTv.setText(goodsInfo);
-            itemHolder.mOrderNoTv.setText("#" + fabricCheckTask.getOrderNo());
-            itemHolder.mThemeTv.setText(fabricCheckTask.getOrderTheme());
+        String goodsInfo = fabricCheckTask.getGoodsName() + "(" + fabricCheckTask.getGoodsNo() + ")";
+        itemHolder.mGoodsInfoTv.setText(goodsInfo);
+        itemHolder.mOrderNoTv.setText("#" + fabricCheckTask.getOrderNo());
+        itemHolder.mThemeTv.setText(fabricCheckTask.getOrderTheme());
 
-            String goodsPhoto = CommonUtil.getFirstPhotoFromJsonList(fabricCheckTask.getGoodsPhotos());
-            if (!TextUtils.isEmpty(goodsPhoto)) {
-                itemHolder.mGoodsPhotoSdv.setImageURI(Uri.parse(goodsPhoto));
-            } else {
-                itemHolder.mGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
-            }
-            ((TitleItemHolder) holder).checkInfoAdapter.mContext = mContext;
+        String goodsPhoto = CommonUtil.getFirstPhotoFromJsonList(fabricCheckTask.getGoodsPhotos());
+        if (!TextUtils.isEmpty(goodsPhoto)) {
+           // itemHolder.mGoodsPhotoSdv.setImageURI(Uri.parse(goodsPhoto));
+            GlideApp.with(mContext).load(goodsPhoto + Utils.OSSImageSize(200)).into(itemHolder.mGoodsPhotoSdv);
+        } else {
+            itemHolder.mGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
+        }
+        ((TitleItemHolder) holder).checkInfoAdapter.mContext = mContext;
+        ((TitleItemHolder) holder).checkInfoAdapter.mFabricCheckTaskId = fabricCheckTask.getId();
 
         holder.itemView.setOnClickListener(v -> {
-            if ((((TitleItemHolder) holder).llInfo).getVisibility() == View.VISIBLE){
+            if ((((TitleItemHolder) holder).llInfo).getVisibility() == View.VISIBLE) {
                 (((TitleItemHolder) holder).llInfo).setVisibility(View.GONE);
-            }else {
+            } else {
                 (((TitleItemHolder) holder).llInfo).setVisibility(View.VISIBLE);
-                ((TitleItemHolder) holder).updateUI(position,fabricCheckTask.getFabricCheckLotInfoList());
+                ((TitleItemHolder) holder).updateUI(position, fabricCheckTask.getFabricCheckLotInfoList());
             }
-
             ((TitleItemHolder) holder).llInfoHeader.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     List<FabricCheckLotInfo> lotInfoList = ((TitleItemHolder) holder).checkInfoAdapter.getLotInfos();
                     FabricCheckLotInfo fabricCheckLotInfo = new FabricCheckLotInfo(true);
-                    if (null == lotInfoList){
+                    if (null == lotInfoList) {
                         lotInfoList = new ArrayList<>();
                     }
                     lotInfoList.add(fabricCheckLotInfo);
@@ -161,9 +164,9 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
 
     }
 
-     class TitleItemHolder extends RecyclerView.ViewHolder {
+    class TitleItemHolder extends RecyclerView.ViewHolder {
 
-        SimpleDraweeView mGoodsPhotoSdv;
+        ImageView mGoodsPhotoSdv;
         TextView mGoodsInfoTv;
         TextView mRelatedCompanyTv;
         TextView mOrderNoTv;
@@ -185,14 +188,14 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
             infoRecycler = itemView.findViewById(R.id.body_recycler);
 
             checkInfoAdapter = new CheckInfoAdapter();
-            LinearLayoutManager layoutManager = new  LinearLayoutManager(mContext);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
             infoRecycler.setLayoutManager(layoutManager);
             infoRecycler.setAdapter(checkInfoAdapter);
 
             llInfoHeader = itemView.findViewById(R.id.ll_header);
         }
 
-        private void  updateUI(int position, List<FabricCheckLotInfo> lotInfoList){
+        private void updateUI(int position, List<FabricCheckLotInfo> lotInfoList) {
             checkInfoAdapter.setLotInfos(lotInfoList);
         }
 

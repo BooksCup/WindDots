@@ -1,6 +1,8 @@
 package com.wd.winddots.activity.work;
 
 import android.content.Intent;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -15,6 +17,7 @@ import com.wd.winddots.desktop.view.ListBottomBar;
 import com.wd.winddots.desktop.view.filter.FilterView;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class DeliveryActivity extends BaseActivity
         implements SwipeRefreshLayout.OnRefreshListener,
@@ -37,6 +40,9 @@ public class DeliveryActivity extends BaseActivity
 
     DeliveryAdapter mAdapter;
 
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
+
     @Override
     public void onRefresh() {
 
@@ -52,8 +58,11 @@ public class DeliveryActivity extends BaseActivity
         return R.layout.activity_delivery;
     }
 
+
+
     @Override
     public void initView() {
+        ButterKnife.bind(this);
         LinearLayoutManager layoutManager = new  LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
@@ -64,6 +73,12 @@ public class DeliveryActivity extends BaseActivity
     @Override
     public void initListener() {
         mAdapter.setOnRecyclerItemClickListener(this);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeliveryActivity.this.finish();
+            }
+        });
     }
 
     @Override
