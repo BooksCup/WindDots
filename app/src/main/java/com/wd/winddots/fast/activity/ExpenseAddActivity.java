@@ -146,6 +146,7 @@ public class ExpenseAddActivity extends CommonActivity<MineClaimingAddView, Mine
         }
 
         mDetailImageView.setVisibility(View.GONE);
+        //mTitleEt = findViewById(R.id.et_title);
 
         mAdapter = new MineClaimingAddAdapter(R.layout.item_claiming_add, claimingModels);
         mAdapter.setMineClaimingAddAdapterSelectListener(this);

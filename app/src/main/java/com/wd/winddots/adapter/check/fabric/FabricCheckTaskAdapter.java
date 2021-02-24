@@ -18,7 +18,6 @@ import com.wd.winddots.desktop.view.PinnedHeaderRecyclerView.RecyclerExpandBaseA
 import com.wd.winddots.entity.FabricCheckLotInfo;
 import com.wd.winddots.entity.FabricCheckTask;
 import com.wd.winddots.utils.CommonUtil;
-import com.wd.winddots.utils.Utils;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -91,6 +90,7 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
             } else {
                 itemHolder.mGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
             }
+            ((TitleItemHolder) holder).checkInfoAdapter.mContext = mContext;
 
         holder.itemView.setOnClickListener(v -> {
             if ((((TitleItemHolder) holder).llInfo).getVisibility() == View.VISIBLE){
@@ -118,6 +118,7 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
             entity.setExpand(!entity.isExpand());
             notifyDataSetChanged();*/
         });
+
 
 /*        } else {
             SubItemHolder subHolder = (SubItemHolder) holder;

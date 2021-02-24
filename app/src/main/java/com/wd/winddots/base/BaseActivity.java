@@ -34,7 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         StatusBarUtil.setStatusBarLightMode(this, Color.WHITE);
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
-        ButterKnife.bind(this);
+//        ButterKnife.bind(this);
         //避免切换横竖屏
 //        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mContext = this;

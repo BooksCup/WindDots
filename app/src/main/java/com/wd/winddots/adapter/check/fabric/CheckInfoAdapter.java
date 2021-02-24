@@ -1,5 +1,7 @@
 package com.wd.winddots.adapter.check.fabric;
 
+import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wd.winddots.R;
+import com.wd.winddots.activity.check.fabric.FabricCheckTaskLotActivity;
 import com.wd.winddots.entity.FabricCheckLotInfo;
 
 import java.util.List;
@@ -24,6 +27,8 @@ import butterknife.ButterKnife;
 public class CheckInfoAdapter  extends RecyclerView.Adapter<CheckInfoAdapter.ViewHolder>{
 
     private List<FabricCheckLotInfo> lotInfos;
+
+    public Context mContext;
 
     public void setLotInfos(List<FabricCheckLotInfo> lotInfos) {
         this.lotInfos = lotInfos;
@@ -52,6 +57,7 @@ public class CheckInfoAdapter  extends RecyclerView.Adapter<CheckInfoAdapter.Vie
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.setIsRecyclable(false);
         FabricCheckLotInfo fabricCheckLotInfo = lotInfos.get(position);
+
         if (fabricCheckLotInfo.isEdit()){
             holder.llBody.setVisibility(View.GONE);
             holder.llEdit.setVisibility(View.VISIBLE);
@@ -145,6 +151,15 @@ public class CheckInfoAdapter  extends RecyclerView.Adapter<CheckInfoAdapter.Vie
             holder.tvNum.setText(fabricCheckLotInfo.getNum());
             holder.tvWeight.setText(fabricCheckLotInfo.getWeight());
             holder.tvLength.setText(fabricCheckLotInfo.getLength());
+
+            holder.llBody.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, FabricCheckTaskLotActivity.class);
+                    intent.putExtra("data",fabricCheckLotInfo.getId());
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
 

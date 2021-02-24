@@ -3,6 +3,7 @@ package com.wd.winddots.activity.check.fabric;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
@@ -131,9 +132,10 @@ public class FabricCheckTaskActivity extends FragmentActivity
         if (mEndLoading) {
             return;
         }
-        String url = Constant.APP_BASE_URL + "fabricCheckTask/search?pageNum=" + mPage + "&pageSize=10" + "&enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId();
+        String url = Constant.APP_BASE_URL + "fabricCheckTask/search?keyword=&pageNum=" + mPage + "&pageSize=10" + "&enterpriseId=" + "1";//SpHelper.getInstance(this).getEnterpriseId();
         mIsLoading = true;
         mVolleyUtil.httpGetRequest(url, response -> {
+            Log.e("net666",response);
             mDialog.hide();
             mIsLoading = false;
             mSwipeRefreshLayout.setRefreshing(false);

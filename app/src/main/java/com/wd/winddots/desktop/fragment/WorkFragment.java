@@ -211,7 +211,6 @@ public class WorkFragment extends BaseFragment<WorkView, WorkPresenterImpl>
         mFastRecyclerView.setLayoutManager(layoutManager1);
         mFastRecyclerView.setAdapter(mFastAdapter);
 
-
         //body.bringChildToFront(mFastRecyclerView);
 
 
