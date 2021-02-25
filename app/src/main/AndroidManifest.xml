@@ -85,9 +85,8 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="YXxP6E6iDGGzvdC03cHYDHwRAMW903fQ" />
 
-
         <activity
-            android:name=".mvp.widget.LoginActivity"
+            android:name=".activity.login.LoginActivity"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".mvp.widget.MainActivity"

@@ -4,13 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import me.leolin.shortcutbadger.ShortcutBadger;
 
 import com.wd.winddots.R;
+import com.wd.winddots.activity.login.LoginActivity;
 import com.wd.winddots.utils.SpHelper;
 
 public class SplashActivity extends AppCompatActivity {

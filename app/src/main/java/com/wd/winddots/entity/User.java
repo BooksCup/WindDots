@@ -10,6 +10,12 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     private String id;
+    private String enterpriseId;
+    private String imPassword;
+    /**
+     * 是否是超级管理员 0:否 1:是
+     */
+    private Integer isSuperAdmin;
     private String name;
     private String avatar;
     private String departmentName;
@@ -18,20 +24,36 @@ public class User implements Serializable {
     private boolean isDisable = false;
     private boolean select = false;
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getEnterpriseId() {
+        return enterpriseId;
+    }
+
+    public void setEnterpriseId(String enterpriseId) {
+        this.enterpriseId = enterpriseId;
+    }
+
+    public String getImPassword() {
+        return imPassword;
+    }
+
+    public void setImPassword(String imPassword) {
+        this.imPassword = imPassword;
+    }
+
+    public Integer getIsSuperAdmin() {
+        return isSuperAdmin;
+    }
+
+    public void setIsSuperAdmin(Integer isSuperAdmin) {
+        this.isSuperAdmin = isSuperAdmin;
     }
 
     public String getName() {
@@ -64,6 +86,14 @@ public class User implements Serializable {
 
     public void setJobName(String jobName) {
         this.jobName = jobName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public boolean isDisable() {

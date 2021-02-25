@@ -7,10 +7,10 @@ import android.widget.TextView;
 
 import com.wd.winddots.MyApplication;
 import com.wd.winddots.R;
+import com.wd.winddots.activity.login.LoginActivity;
 import com.wd.winddots.base.BasePresenter;
 import com.wd.winddots.base.CommonActivity;
 import com.wd.winddots.base.SysApplication;
-import com.wd.winddots.mvp.widget.LoginActivity;
 import com.wd.winddots.utils.SpHelper;
 
 import cn.jpush.android.api.JPushInterface;
