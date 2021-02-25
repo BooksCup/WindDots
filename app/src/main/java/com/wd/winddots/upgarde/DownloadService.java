@@ -126,7 +126,7 @@ public class DownloadService extends IntentService {
         //setContentInent如果不设置在4.0+上没有问题，在4.0以下会报异常
         PendingIntent pendingintent = PendingIntent.getActivity(this, 0, new Intent(), PendingIntent.FLAG_CANCEL_CURRENT);
         mBuilder.setContentIntent(pendingintent);
-        mBuilder.setSmallIcon(R.mipmap.ic_app);
+        mBuilder.setSmallIcon(R.mipmap.icon_app);
         mNotifyManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 

@@ -80,4 +80,9 @@
     <color name="wd_common_bg">#EDEDED</color>
     <color name="common_divider_color">#cccccc</color>
 
+    <color name="main_activity_btn_press">#D22B34</color>
+    <color name="main_activity_btn_default">#353535</color>
+    <color name="login_activity_edt_bg">#34131A</color>
+    <color name="login_activity_btn_press">#D6622E</color>
+    <color name="login_activity_btn_default">#D5282E</color>
 </resources>

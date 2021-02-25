@@ -6,13 +6,6 @@
     <string name="toast_loading_error">加载失败,请稍后重试</string>
     <string name="toast_search_empty">请先输入搜索内容</string>
 
-    <!--  登录页  -->
-    <string name="login_phone_hint">请输入手机号</string>
-    <string name="login_password_hint">请输入密码</string>
-    <string name="login">登录</string>
-    <string name="register">注册</string>
-
-
     <string name="chat_change_avatar">更换群头像</string>
 
     <!--    更新提示-->
@@ -390,5 +383,11 @@
 
     <!-- 订单 -->
     <string name="add_order_success">订单新增成功</string>
+
+    <!-- login -->
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="login_phone_hint">请输入手机号</string>
+    <string name="login_pwd_hint">请输入密码</string>
 
 </resources>

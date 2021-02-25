@@ -16,17 +16,16 @@
         android:paddingHorizontal="25dp">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="25dp"
-            android:src="@mipmap/ic_app" />
-
+            android:layout_marginBottom="60dp"
+            android:src="@mipmap/icon_app" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@color/colorLoginEdtBg">
+            android:layout_height="50dp"
+            android:background="@drawable/bg_login_edt">
 
             <ImageView
                 android:id="@+id/iv_phone"
@@ -34,27 +33,26 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:padding="15dp"
-                android:src="@mipmap/ic_login_user" />
+                android:src="@mipmap/icon_login_phone" />
 
             <EditText
                 android:id="@+id/et_phone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@+id/iv_phone"
+                android:layout_toEndOf="@+id/iv_phone"
                 android:background="@color/colorTransparent"
                 android:hint="@string/login_phone_hint"
                 android:inputType="number"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:textSize="15sp" />
-
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:layout_marginTop="18dp"
-            android:background="@color/colorLoginEdtBg">
+            android:background="@drawable/bg_login_edt">
 
             <ImageView
                 android:id="@+id/iv_password"
@@ -62,15 +60,15 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:padding="15dp"
-                android:src="@mipmap/ic_login_password" />
+                android:src="@mipmap/icon_login_pwd" />
 
             <EditText
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@+id/iv_password"
+                android:layout_toEndOf="@+id/iv_password"
                 android:background="@color/colorTransparent"
-                android:hint="@string/login_password_hint"
+                android:hint="@string/login_pwd_hint"
                 android:inputType="textPassword"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
@@ -82,24 +80,28 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="28dp"
-            android:background="@drawable/select_login_btn_bg"
+            android:background="@drawable/bg_login_btn"
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:text="@string/login"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/btn_text_size" />
+            android:textSize="@dimen/btn_text_size"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_register"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/select_login_btn_bg"
+            android:background="@drawable/bg_login_btn"
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:text="@string/register"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/btn_text_size" />
+            android:textSize="@dimen/btn_text_size"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </RelativeLayout>
