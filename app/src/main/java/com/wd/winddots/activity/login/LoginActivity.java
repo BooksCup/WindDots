@@ -1,4 +1,4 @@
-package com.wd.winddots.activity;
+package com.wd.winddots.activity.login;
 
 import android.content.Intent;
 import android.graphics.Color;
