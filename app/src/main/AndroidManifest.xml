@@ -440,6 +440,17 @@
             android:name=".activity.stock.out.StockOutActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
+        <activity
+            android:name=".activity.stock.in.StockInApplyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
+        <activity
+            android:name=".activity.stock.in.AddStockInApplyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
     </application>
     <permission
         android:name="com.cfp.wading.permission.JPUSH_MESSAGE"
