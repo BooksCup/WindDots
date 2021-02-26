@@ -22,7 +22,6 @@ import com.wd.winddots.desktop.view.PinnedHeaderRecyclerView.PinnedHeaderRecycle
 import com.wd.winddots.entity.FabricCheckLotInfo;
 import com.wd.winddots.entity.FabricCheckTask;
 import com.wd.winddots.entity.PageInfo;
-import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.VolleyUtil;
 import com.wd.winddots.view.LoadingDialog;
 
@@ -39,6 +38,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.wd.winddots.activity.select.SelectOrderActivity.REQUEST_FABRIC_CHECK_TASK;
 
 
 @RequiresApi(api = Build.VERSION_CODES.M)
@@ -74,7 +75,6 @@ public class FabricCheckTaskActivity extends FragmentActivity
     private int mPage = 1;
 
     private String mSearchKey = "";
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -134,9 +134,9 @@ public class FabricCheckTaskActivity extends FragmentActivity
         }
         String url = Constant.APP_BASE_URL + "fabricCheckTask/search?keyword=&pageNum=" + mPage + "&pageSize=10" + "&enterpriseId=" + "1";//SpHelper.getInstance(this).getEnterpriseId();
         mIsLoading = true;
-        Log.e("net666",url);
+        Log.e("net666", url);
         mVolleyUtil.httpGetRequest(url, response -> {
-            Log.e("net666",response);
+            Log.e("net666", response);
             mDialog.hide();
             mIsLoading = false;
             mSwipeRefreshLayout.setRefreshing(false);
@@ -180,26 +180,29 @@ public class FabricCheckTaskActivity extends FragmentActivity
     }
 
 
-    /*
+    /**
      * 点击底部加号
-     * */
+     */
     @Override
     public void onAddIconDidClick() {
         Intent intent = new Intent(this, SelectOrderActivity.class);
+        intent.putExtra("request", REQUEST_FABRIC_CHECK_TASK);
         startActivity(intent);
     }
 
-    /*
+    /**
      * 点击底部搜索
-     * */
+     */
     @Override
     public void onSearchIconDidClick() {
         mDrawerLayout.openDrawer(Gravity.RIGHT);
     }
 
-    /*
+    /**
      * 点击子控件
-     * */
+     *
+     * @param item
+     */
     @Override
     public void onItemClick(CheckGoodsBean.CheckGang item) {
 //        Intent intent = new Intent(this, CheckActivity.class);

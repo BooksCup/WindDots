@@ -43,6 +43,9 @@ public class SelectOrderActivity extends BaseActivity
         BaseQuickAdapter.OnItemClickListener,
         BaseQuickAdapter.RequestLoadMoreListener {
 
+    public static final int REQUEST_ADD_STOCK_IN_APPLY = 0;
+    public static final int REQUEST_FABRIC_CHECK_TASK = 1;
+
     @BindView(R.id.rv_order)
     RecyclerView mOrderRv;
 
@@ -59,6 +62,7 @@ public class SelectOrderActivity extends BaseActivity
     int mPage = 1;
     int mPageSize = 10;
     String mKeyword = "";
+    int request;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +70,7 @@ public class SelectOrderActivity extends BaseActivity
         setContentView(R.layout.activity_select_order);
         ButterKnife.bind(this);
         mVolleyUtil = VolleyUtil.getInstance(this);
+        request = getIntent().getIntExtra("request", 0);
         initView();
         initListener();
     }
@@ -125,11 +130,26 @@ public class SelectOrderActivity extends BaseActivity
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        showLoadingDialog();
         final Order order = mOrderList.get(position);
-        // 拉取订单信息
-        // 新增盘点任务
-        addFabricCheckTask(order);
+        if (REQUEST_ADD_STOCK_IN_APPLY == request) {
+            Intent intent = new Intent();
+            intent.putExtra("orderId", order.getOrderId());
+            intent.putExtra("orderNo", order.getOrderNo());
+            setResult(RESULT_OK, intent);
+            finish();
+        } else if (REQUEST_FABRIC_CHECK_TASK == request) {
+            showLoadingDialog();
+            // 拉取订单信息
+            // 新增盘点任务
+            addFabricCheckTask(order);
+        } else {
+            Intent intent = new Intent();
+            intent.putExtra("orderId", order.getOrderId());
+            intent.putExtra("orderNo", order.getOrderNo());
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+
     }
 
     private void getData() {
