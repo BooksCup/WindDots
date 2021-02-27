@@ -68,7 +68,7 @@ public class StockOutActivity extends BaseActivity
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mAdapter = new DeliveryAdapter();
+//        mAdapter = new DeliveryAdapter();
         mRecyclerView.setAdapter(mAdapter);
     }
 

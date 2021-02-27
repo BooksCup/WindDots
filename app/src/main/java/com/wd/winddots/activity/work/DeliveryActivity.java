@@ -16,6 +16,9 @@ import com.wd.winddots.base.BaseActivity;
 import com.wd.winddots.desktop.view.ListBottomBar;
 import com.wd.winddots.desktop.view.filter.FilterView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -43,6 +46,8 @@ public class DeliveryActivity extends BaseActivity
     @BindView(R.id.iv_back)
     ImageView ivBack;
 
+    private List<DeliveryBean> deliveryBeanList;
+
     @Override
     public void onRefresh() {
 
@@ -66,13 +71,11 @@ public class DeliveryActivity extends BaseActivity
         LinearLayoutManager layoutManager = new  LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mAdapter = new DeliveryAdapter();
-        mRecyclerView.setAdapter(mAdapter);
+
     }
 
     @Override
     public void initListener() {
-        mAdapter.setOnRecyclerItemClickListener(this);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,12 +86,45 @@ public class DeliveryActivity extends BaseActivity
 
     @Override
     public void initData() {
+        deliveryBeanList = new ArrayList<>();
+        DeliveryBean deliveryBean1 = new DeliveryBean();
+        deliveryBean1.deliveryId = "111";
+        deliveryBean1.deliveryName = "定制上衣（200）";
+        deliveryBean1.iconUrl = "";
+        deliveryBean1.deliveryType = "销售出库";
+        deliveryBean1.applicant = "周楠";
+        deliveryBean1.company = "自营服装部";
+        deliveryBean1.applyDate = "2021-02-25";
+        deliveryBean1.isCheck = true;
 
+        deliveryBeanList.add(deliveryBean1);
+
+        DeliveryBean deliveryBean2 = new DeliveryBean();
+        deliveryBean2.deliveryId = "222";
+        deliveryBean2.deliveryName = "定制裤子（20）";
+        deliveryBean2.iconUrl = "";
+        deliveryBean2.deliveryType = "销售出库";
+        deliveryBean2.applicant = "老王";
+        deliveryBean2.company = "GC自营服装部";
+        deliveryBean2.applyDate = "2021-02-26";
+        deliveryBean2.isCheck = false;
+
+        deliveryBeanList.add(deliveryBean2);
+
+        mAdapter = new DeliveryAdapter(this,deliveryBeanList);
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnRecyclerItemClickListener(this);
     }
 
     @Override
-    public void onItemClick(int Position) {
-        Intent intent = new Intent(DeliveryActivity.this,AddDeliveryActivity.class);
+    public void onItemClick(int position) {
+        DeliveryBean bean = deliveryBeanList.get(position);
+        Intent intent;
+        if (bean.isCheck){
+            intent = new Intent(DeliveryActivity.this,DeliveryDetailActivity.class);
+        }else {
+            intent = new Intent(DeliveryActivity.this,AddDeliveryActivity.class);
+        }
         startActivity(intent);
     }
 }

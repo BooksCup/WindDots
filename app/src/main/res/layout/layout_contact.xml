@@ -20,7 +20,7 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:text="xxxxxxxxxxx" />
         <ImageView
-            android:id="@+id/iv_add"
+            android:id="@+id/iv_contact_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

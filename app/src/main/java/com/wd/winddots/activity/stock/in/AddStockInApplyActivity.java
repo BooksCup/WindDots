@@ -10,6 +10,7 @@ import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.select.SelectGoodsActivity;
 import com.wd.winddots.activity.select.SelectOrderActivity;
 import com.wd.winddots.activity.select.SelectRelatedCompanyActivity;
+import com.wd.winddots.activity.select.SelectSingleUserActivity;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -28,6 +29,7 @@ public class AddStockInApplyActivity extends BaseActivity {
     private static final int REQUEST_CODE_RELATED_COMPANY = 1;
     private static final int REQUEST_CODE_GOODS = 2;
     private static final int REQUEST_CODE_ORDER = 3;
+    private static final int REQUEST_CODE_AUDITOR = 4;
 
     @BindView(R.id.tv_goods_name)
     TextView mGoodsNameTv;
@@ -49,7 +51,7 @@ public class AddStockInApplyActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.iv_back, R.id.ll_goods, R.id.ll_order, R.id.ll_related_company})
+    @OnClick({R.id.iv_back, R.id.ll_goods, R.id.ll_order, R.id.ll_related_company, R.id.ll_auditor})
     public void onClick(View v) {
         Intent intent;
         switch (v.getId()) {
@@ -74,6 +76,8 @@ public class AddStockInApplyActivity extends BaseActivity {
                 break;
             case R.id.ll_auditor:
                 // 审核人
+                intent = new Intent(AddStockInApplyActivity.this, SelectSingleUserActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_AUDITOR);
                 break;
             case R.id.ll_copy:
                 // 抄送人

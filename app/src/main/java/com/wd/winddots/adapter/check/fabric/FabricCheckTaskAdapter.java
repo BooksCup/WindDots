@@ -89,7 +89,7 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
         String goodsPhoto = CommonUtil.getFirstPhotoFromJsonList(fabricCheckTask.getGoodsPhotos());
         if (!TextUtils.isEmpty(goodsPhoto)) {
            // itemHolder.mGoodsPhotoSdv.setImageURI(Uri.parse(goodsPhoto));
-            GlideApp.with(mContext).load(goodsPhoto + Utils.OSSImageSize(200)).into(itemHolder.mGoodsPhotoSdv);
+//            GlideApp.with(mContext).load(goodsPhoto + Utils.OSSImageSize(200)).into(itemHolder.mGoodsPhotoSdv);
         } else {
             itemHolder.mGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
         }

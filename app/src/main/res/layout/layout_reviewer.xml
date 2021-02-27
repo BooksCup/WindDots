@@ -30,7 +30,7 @@
             android:text="2021-2-20 13:30" />
 
         <ImageView
-            android:id="@+id/iv_add"
+            android:id="@+id/iv_reviewer_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

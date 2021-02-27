@@ -2,9 +2,9 @@ package com.wd.winddots.activity.work;
 
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,11 +34,19 @@ public class DeliveryDetailActivity extends BaseActivity {
 
     FactoryAdapter factoryAdapter;
 
+    @BindView(R.id.iv_contact_add)
+    ImageView ivContactAdd;
 
-   /* @BindView(R.id.add_pic)
-    RecyclerView addRecyclerView;
 
-    PicsAdapter picsAdapter;*/
+    @BindView(R.id.iv_reviewer_add)
+    ImageView ivReviewerAdd;
+
+
+
+    @BindView(R.id.detail_pics)
+    RecyclerView picsRecyclerView;
+
+    PicsAdapter picsAdapter;
 
     @Override
     public int getContentView() {
@@ -61,6 +69,21 @@ public class DeliveryDetailActivity extends BaseActivity {
         detailOrdersRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         detailRelatedOrderAdapter = new DetailRelatedOrderAdapter(this);
         detailOrdersRecyclerView.setAdapter(detailRelatedOrderAdapter);
+
+        LinearLayoutManager layoutManager3 = new  LinearLayoutManager(this);
+        factoryRecyclerView.setLayoutManager(layoutManager3);
+        factoryRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        factoryAdapter = new FactoryAdapter(this);
+        factoryRecyclerView.setAdapter(factoryAdapter);
+
+        ivContactAdd.setVisibility(View.GONE);
+        ivReviewerAdd.setVisibility(View.GONE);
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,4);
+        picsRecyclerView.setLayoutManager(gridLayoutManager);
+        picsRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
+        picsAdapter = new PicsAdapter();
+        picsRecyclerView.setAdapter(picsAdapter);
     }
 
     @Override
