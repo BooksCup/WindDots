@@ -110,7 +110,7 @@ final class BeepManager implements MediaPlayer.OnErrorListener, Closeable {
   @Override
   public synchronized boolean onError(MediaPlayer mp, int what, int extra) {
     if (what == MediaPlayer.MEDIA_ERROR_SERVER_DIED) {
-      // we are finished, so put up an appropriate error toast if required and finish
+      // we are finished, so put icon_up an appropriate error toast if required and finish
       activity.finish();
     } else {
       // possibly media player error, so release and recreate

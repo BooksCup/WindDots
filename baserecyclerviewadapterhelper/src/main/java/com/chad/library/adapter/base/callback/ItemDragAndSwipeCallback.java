@@ -139,7 +139,7 @@ public class ItemDragAndSwipeCallback extends ItemTouchHelper.Callback {
     /**
      * <p>Set the drag movement direction.</p>
      * <p>The value should be ItemTouchHelper.UP, ItemTouchHelper.DOWN, ItemTouchHelper.LEFT, ItemTouchHelper.RIGHT or their combination.</p>
-     * You can combine them like ItemTouchHelper.UP | ItemTouchHelper.DOWN, it means that the item could only move up and down when dragged.
+     * You can combine them like ItemTouchHelper.UP | ItemTouchHelper.DOWN, it means that the item could only move icon_up and icon_down when dragged.
      *
      * @param dragMoveFlags the drag movement direction. Default value is ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT.
      */

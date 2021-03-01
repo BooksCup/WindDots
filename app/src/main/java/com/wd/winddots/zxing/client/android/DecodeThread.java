@@ -60,7 +60,7 @@ final class DecodeThread extends Thread {
       hints.putAll(baseHints);
     }
 
-    // The prefs can't change while the thread is running, so pick them up once here.
+    // The prefs can't change while the thread is running, so pick them icon_up once here.
     if (decodeFormats == null || decodeFormats.isEmpty()) {
       SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
       decodeFormats = EnumSet.noneOf(BarcodeFormat.class);

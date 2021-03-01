@@ -258,7 +258,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
     }
 
     /**
-     * up fetch start
+     * icon_up fetch start
      */
     private boolean mUpFetchEnable;
     private boolean mUpFetching;
@@ -273,7 +273,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
     }
 
     /**
-     * start up fetch position, default is 1.
+     * start icon_up fetch position, default is 1.
      */
     private int mStartUpFetchPosition = 1;
 
@@ -307,7 +307,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
     }
 
     /**
-     * up fetch end
+     * icon_up fetch end
      */
     public void setNotDoAnimationCount(int count) {
         mLastPosition = count;
@@ -481,7 +481,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
     }
 
     /**
-     * setting up a new instance to data;
+     * setting icon_up a new instance to data;
      *
      * @param data
      */
@@ -929,7 +929,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
      */
     @Override
     public void onBindViewHolder(K holder, int position) {
-        //Add up fetch logic, almost like load more, but simpler.
+        //Add icon_up fetch logic, almost like load more, but simpler.
         autoUpFetch(position);
         //Do not move position, need to change before LoadMoreView binding
         try {

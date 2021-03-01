@@ -323,7 +323,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       case KeyEvent.KEYCODE_CAMERA:
         // Handle these events so they don't launch the Camera app
         return true;
-      // Use volume up/down to turn on light
+      // Use volume icon_up/icon_down to turn on light
       case KeyEvent.KEYCODE_VOLUME_DOWN:
         cameraManager.setTorch(false);
         return true;

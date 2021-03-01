@@ -19,25 +19,25 @@ import com.wd.winddots.entity.FabricCheckTask;
 import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * 面料盘点任务
+ * 面料盘点任务处理
  *
  * @author zhou
  */
-public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricCheckTask, FabricCheckLotInfo, RecyclerView.ViewHolder> {
+public class FabricCheckProcessAdapter extends RecyclerExpandBaseAdapter<FabricCheckTask, FabricCheckLotInfo, RecyclerView.ViewHolder> {
 
     private OnSubItemClickListener onSubItemClickListener;
 
     private Context mContext;
 
-    public FabricCheckTaskAdapter(Context context) {
+    public FabricCheckProcessAdapter(Context context) {
         this.mContext = context;
     }
 
@@ -83,11 +83,12 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
         itemHolder.mGoodsInfoTv.setText(goodsInfo);
         itemHolder.mOrderNoTv.setText("#" + fabricCheckTask.getOrderNo());
         itemHolder.mThemeTv.setText(fabricCheckTask.getOrderTheme());
+        itemHolder.addIv.setVisibility(View.INVISIBLE);
 
         String goodsPhoto = CommonUtil.getFirstPhotoFromJsonList(fabricCheckTask.getGoodsPhotos());
         if (!TextUtils.isEmpty(goodsPhoto)) {
            // itemHolder.mGoodsPhotoSdv.setImageURI(Uri.parse(goodsPhoto));
-//            GlideApp.with(mContext).load(goodsPhoto + Utils.OSSImageSize(200)).into(itemHolder.mGoodsPhotoSdv);
+            GlideApp.with(mContext).load(goodsPhoto + Utils.OSSImageSize(200)).into(itemHolder.mGoodsPhotoSdv);
         } else {
             itemHolder.mGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
         }
@@ -95,6 +96,12 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
         ((TitleItemHolder) holder).checkInfoAdapter.mFabricCheckTaskId = fabricCheckTask.getId();
 
         holder.itemView.setOnClickListener(v -> {
+
+            List<FabricCheckLotInfo> lotInfoList = fabricCheckTask.getFabricCheckLotInfoList();
+            if (lotInfoList == null || lotInfoList.size() == 0){
+                return;
+            }
+
             if ((((TitleItemHolder) holder).llInfo).getVisibility() == View.VISIBLE) {
                 (((TitleItemHolder) holder).llInfo).setVisibility(View.GONE);
             } else {
@@ -104,14 +111,14 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
             ((TitleItemHolder) holder).llInfoHeader.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    List<FabricCheckLotInfo> lotInfoList = ((TitleItemHolder) holder).checkInfoAdapter.getLotInfos();
-                    FabricCheckLotInfo fabricCheckLotInfo = new FabricCheckLotInfo(true);
-                    if (null == lotInfoList) {
-                        lotInfoList = new ArrayList<>();
-                    }
-                    lotInfoList.add(fabricCheckLotInfo);
-                    fabricCheckTask.setFabricCheckLotInfoList(lotInfoList);
-                    ((TitleItemHolder) holder).checkInfoAdapter.notifyDataSetChanged();
+//                    List<FabricCheckLotInfo> lotInfoList = ((TitleItemHolder) holder).checkInfoAdapter.getLotInfos();
+//                    FabricCheckLotInfo fabricCheckLotInfo = new FabricCheckLotInfo(true);
+//                    if (null == lotInfoList) {
+//                        lotInfoList = new ArrayList<>();
+//                    }
+//                    lotInfoList.add(fabricCheckLotInfo);
+//                    fabricCheckTask.setFabricCheckLotInfoList(lotInfoList);
+//                    ((TitleItemHolder) holder).checkInfoAdapter.notifyDataSetChanged();
                 }
             });
 
@@ -172,6 +179,7 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
         LinearLayout llInfo;
         RecyclerView infoRecycler;
         LinearLayout llInfoHeader;
+        ImageView addIv;
 
         CheckInfoAdapter checkInfoAdapter;
 
@@ -191,6 +199,8 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
             infoRecycler.setAdapter(checkInfoAdapter);
 
             llInfoHeader = itemView.findViewById(R.id.ll_header);
+
+            addIv = itemView.findViewById(R.id.iv_add);
         }
 
         private void updateUI(int position, List<FabricCheckLotInfo> lotInfoList) {

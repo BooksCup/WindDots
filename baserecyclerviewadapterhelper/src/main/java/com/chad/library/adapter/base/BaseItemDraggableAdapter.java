@@ -141,7 +141,7 @@ public abstract class BaseItemDraggableAdapter<T, K extends BaseViewHolder> exte
      *
      * @param itemTouchHelper {@link ItemTouchHelper}
      * @param toggleViewId    The toggle view's id.
-     * @param dragOnLongPress If true the drag event will be trigger on long press, otherwise on touch down.
+     * @param dragOnLongPress If true the drag event will be trigger on long press, otherwise on touch icon_down.
      */
     public void enableDragItem(@NonNull ItemTouchHelper itemTouchHelper, int toggleViewId, boolean dragOnLongPress) {
         itemDragEnabled = true;

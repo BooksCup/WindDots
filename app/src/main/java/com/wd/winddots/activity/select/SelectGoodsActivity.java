@@ -123,6 +123,7 @@ public class SelectGoodsActivity extends BaseActivity
         Intent intent = new Intent();
         intent.putExtra("goodsId", goods.getId());
         intent.putExtra("goodsName", goods.getGoodsName());
+        intent.putExtra("goods", goods);
         setResult(RESULT_OK, intent);
         finish();
     }

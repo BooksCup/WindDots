@@ -79,7 +79,7 @@ public abstract class MultipleItemRvAdapter<T,V extends BaseViewHolder> extends 
 
         if (clickListener != null && longClickListener != null){
             //如果已经设置了子条目点击监听和子条目长按监听
-            // If you have set up a sub-entry click monitor and sub-entries long press listen
+            // If you have set icon_up a sub-entry click monitor and sub-entries long press listen
             return;
         }
 

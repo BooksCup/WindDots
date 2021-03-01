@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.wd.winddots.R;
+import com.wd.winddots.activity.check.fabric.FabricCheckLotProcessActivity;
 import com.wd.winddots.activity.check.fabric.FabricCheckLotTaskActivity;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.FabricCheckLotInfo;
@@ -197,7 +198,7 @@ public class CheckInfoAdapter  extends RecyclerView.Adapter<CheckInfoAdapter.Vie
             holder.llBody.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mContext, FabricCheckLotTaskActivity.class);
+                    Intent intent = new Intent(mContext, FabricCheckLotProcessActivity.class);
                     intent.putExtra("data",fabricCheckLotInfo.getId());
                     mContext.startActivity(intent);
                 }
