@@ -6,6 +6,7 @@
     android:background="@color/colorBlue"
     >
     <TextView
+        android:id="@+id/item_color"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:gravity="center"
@@ -13,6 +14,7 @@
         android:textColor="@color/black"
         android:layout_height="match_parent"/>
     <TextView
+        android:id="@+id/item_size"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:gravity="center"
@@ -20,6 +22,7 @@
         android:textColor="@color/black"
         android:layout_height="match_parent"/>
     <TextView
+        android:id="@+id/item_order_num"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:gravity="center"
@@ -27,6 +30,7 @@
         android:textColor="@color/black"
         android:layout_height="match_parent"/>
     <TextView
+        android:id="@+id/item_delivery_num"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:gravity="center"

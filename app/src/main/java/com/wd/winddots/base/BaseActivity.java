@@ -42,8 +42,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
         initBar();
         initView();
-        initListener();
         initData();
+        initListener();
+
         SysApplication.getInstance().addActivity(this);
     }
 

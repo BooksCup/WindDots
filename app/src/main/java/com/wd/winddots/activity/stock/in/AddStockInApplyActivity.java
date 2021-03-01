@@ -30,6 +30,7 @@ public class AddStockInApplyActivity extends BaseActivity {
     private static final int REQUEST_CODE_GOODS = 2;
     private static final int REQUEST_CODE_ORDER = 3;
     private static final int REQUEST_CODE_AUDITOR = 4;
+    private static final int REQUEST_CODE_COPY = 5;
 
     @BindView(R.id.tv_goods_name)
     TextView mGoodsNameTv;
@@ -40,9 +41,19 @@ public class AddStockInApplyActivity extends BaseActivity {
     @BindView(R.id.tv_order)
     TextView mOrderTv;
 
+    @BindView(R.id.tv_auditor)
+    TextView mAuditorTv;
+
+    @BindView(R.id.tv_copy)
+    TextView mCopyTv;
+
     String mGoodsId;
     String mOrderId;
     String mRelatedCompanyId;
+    // 审核人用户ID
+    String mAuditorId;
+    // 抄送人
+    String mCopyId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,7 +62,7 @@ public class AddStockInApplyActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.iv_back, R.id.ll_goods, R.id.ll_order, R.id.ll_related_company, R.id.ll_auditor})
+    @OnClick({R.id.iv_back, R.id.ll_goods, R.id.ll_order, R.id.ll_related_company, R.id.ll_auditor, R.id.ll_copy})
     public void onClick(View v) {
         Intent intent;
         switch (v.getId()) {
@@ -81,6 +92,8 @@ public class AddStockInApplyActivity extends BaseActivity {
                 break;
             case R.id.ll_copy:
                 // 抄送人
+                intent = new Intent(AddStockInApplyActivity.this, SelectSingleUserActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_COPY);
                 break;
         }
     }
@@ -118,6 +131,26 @@ public class AddStockInApplyActivity extends BaseActivity {
                         mRelatedCompanyId = relatedCompanyId;
                         mRelatedCompanyTv.setText(relatedCompanyName);
                         mRelatedCompanyTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
+                    }
+                    break;
+                case REQUEST_CODE_AUDITOR:
+                    // 审核人
+                    if (null != data) {
+                        String userId = data.getStringExtra("userId");
+                        String userName = data.getStringExtra("userName");
+                        mAuditorId = userId;
+                        mAuditorTv.setText(userName);
+                        mAuditorTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
+                    }
+                    break;
+                case REQUEST_CODE_COPY:
+                    // 抄送人
+                    if (null != data) {
+                        String userId = data.getStringExtra("userId");
+                        String userName = data.getStringExtra("userName");
+                        mCopyId = userId;
+                        mCopyTv.setText(userName);
+                        mCopyTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
                     }
                     break;
             }

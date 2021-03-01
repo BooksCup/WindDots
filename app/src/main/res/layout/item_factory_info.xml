@@ -10,6 +10,7 @@
         android:background="@color/colorBlue"
         >
         <TextView
+            android:id="@+id/item_color"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -17,6 +18,7 @@
             android:textColor="@color/black"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/item_size"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -24,6 +26,7 @@
             android:textColor="@color/black"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/item_factory_num"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -31,6 +34,7 @@
             android:textColor="@color/black"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/item_delivery_num"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -38,6 +42,7 @@
             android:textColor="@color/black"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/item_allocation_num"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"

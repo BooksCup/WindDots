@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="90dp">
         <ImageView
-            android:id="@+id/info_icon"
+            android:id="@+id/item_icon"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerVertical="true"
@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="40dp"
-            android:layout_toRightOf="@id/info_icon"
+            android:layout_toRightOf="@id/item_icon"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -31,7 +31,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/info_title"
+                    android:id="@+id/item_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
@@ -41,15 +41,17 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/item_company"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:lines="1"
                     android:text="xxxxxxxxxxx"
                     android:textColor="@color/color50"
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/item_order_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -66,6 +68,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/item_order_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -75,6 +78,7 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/item_order_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -84,6 +88,7 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/item_order_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -113,6 +118,8 @@
             android:layout_height="@dimen/dp_30"
             android:orientation="horizontal"
             android:background="@color/colorBlue"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="2dp"
             >
             <TextView
                 android:layout_width="0dp"
@@ -153,6 +160,7 @@
             android:layout_height="@dimen/dp_30"
             android:orientation="horizontal"
             android:background="@color/colorBlue"
+            android:gravity="center_vertical"
             >
             <TextView
                 android:layout_width="0dp"
