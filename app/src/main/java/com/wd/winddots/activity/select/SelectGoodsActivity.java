@@ -2,6 +2,7 @@ package com.wd.winddots.activity.select;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
@@ -14,6 +15,7 @@ import com.wd.winddots.adapter.select.GoodsAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Goods;
 import com.wd.winddots.entity.PageInfo;
+import com.wd.winddots.utils.CollectionUtil;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.VolleyUtil;
 
@@ -120,12 +122,17 @@ public class SelectGoodsActivity extends BaseActivity
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         final Goods goods = mGoodsList.get(position);
-        Intent intent = new Intent();
-        intent.putExtra("goodsId", goods.getId());
-        intent.putExtra("goodsName", goods.getGoodsName());
-        intent.putExtra("goods", goods);
-        setResult(RESULT_OK, intent);
-        finish();
+        if ((TextUtils.isEmpty(goods.getX()) && TextUtils.isEmpty(goods.getY()))
+                || CollectionUtil.isEmpty(goods.getGoodsSpecList())) {
+            showToast("请选择有规格的物品!");
+        } else {
+            Intent intent = new Intent();
+            intent.putExtra("goodsId", goods.getId());
+            intent.putExtra("goodsName", goods.getGoodsName());
+            intent.putExtra("goods", goods);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 
     private void getData() {

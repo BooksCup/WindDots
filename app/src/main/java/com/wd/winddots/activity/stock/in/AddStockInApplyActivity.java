@@ -19,7 +19,6 @@ import com.wd.winddots.activity.select.SelectOrderActivity;
 import com.wd.winddots.activity.select.SelectRelatedCompanyActivity;
 import com.wd.winddots.activity.select.SelectSingleUserActivity;
 import com.wd.winddots.activity.work.GlideEngine;
-import com.wd.winddots.activity.work.GoodsInfoAdapter;
 import com.wd.winddots.adapter.image.ImagePickerAdapter;
 import com.wd.winddots.adapter.stock.in.GoodsSpecAdapter;
 import com.wd.winddots.entity.Goods;
@@ -107,6 +106,15 @@ public class AddStockInApplyActivity extends BaseActivity {
 
     @BindView(R.id.rv_goods_spec)
     RecyclerView mGoodsSpecRv;
+
+    @BindView(R.id.tv_goods_spec_x)
+    TextView mGoodsSpecXTv;
+
+    @BindView(R.id.tv_goods_spec_y)
+    TextView mGoodsSpecYTv;
+
+    @BindView(R.id.tv_place_holder)
+    TextView mPlaceHolderTv;
 
     ImagePickerAdapter mImagePickerAdapter;
     GoodsSpecAdapter mGoodsSpecAdapter;
@@ -205,7 +213,7 @@ public class AddStockInApplyActivity extends BaseActivity {
         mImagePickerAdapter = new ImagePickerAdapter(this);
         mImageRv.setAdapter(mImagePickerAdapter);
 
-        LinearLayoutManager goodsSpecLinearLayoutManager = new  LinearLayoutManager(this);
+        LinearLayoutManager goodsSpecLinearLayoutManager = new LinearLayoutManager(this);
         mGoodsSpecRv.setLayoutManager(goodsSpecLinearLayoutManager);
         mGoodsSpecRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mGoodsSpecAdapter = new GoodsSpecAdapter(this);
@@ -353,6 +361,21 @@ public class AddStockInApplyActivity extends BaseActivity {
         } else {
             mGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
         }
+
+        List<GoodsSpec> goodsSpecList = goods.getGoodsSpecList();
+        mGoodsSpecAdapter.setList(goodsSpecList);
+
+        if (TextUtils.isEmpty(goods.getY())) {
+            mGoodsSpecYTv.setVisibility(View.GONE);
+            mPlaceHolderTv.setVisibility(View.GONE);
+            mGoodsSpecXTv.setText(goods.getX());
+        } else {
+            mGoodsSpecYTv.setVisibility(View.VISIBLE);
+            mPlaceHolderTv.setVisibility(View.VISIBLE);
+            mGoodsSpecXTv.setText(goods.getX());
+            mGoodsSpecYTv.setText(goods.getY());
+        }
+
     }
 
 }

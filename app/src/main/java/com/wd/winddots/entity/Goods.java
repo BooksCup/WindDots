@@ -2,6 +2,7 @@ package com.wd.winddots.entity;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 物品
@@ -31,6 +32,18 @@ public class Goods implements Serializable {
     private String attrList;
     private String stockNum;
     private String goodsUnit;
+
+    /**
+     * 规格x
+     */
+    private String x;
+
+    /**
+     * 规格y
+     */
+    private String y;
+
+    private List<GoodsSpec> goodsSpecList;
 
     public String getId() {
         return id;
@@ -88,4 +101,27 @@ public class Goods implements Serializable {
         this.goodsUnit = goodsUnit;
     }
 
+    public String getX() {
+        return x;
+    }
+
+    public void setX(String x) {
+        this.x = x;
+    }
+
+    public String getY() {
+        return y;
+    }
+
+    public void setY(String y) {
+        this.y = y;
+    }
+
+    public List<GoodsSpec> getGoodsSpecList() {
+        return goodsSpecList;
+    }
+
+    public void setGoodsSpecList(List<GoodsSpec> goodsSpecList) {
+        this.goodsSpecList = goodsSpecList;
+    }
 }
