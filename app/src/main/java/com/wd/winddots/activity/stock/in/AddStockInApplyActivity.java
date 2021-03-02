@@ -21,14 +21,16 @@ import com.wd.winddots.activity.select.SelectSingleUserActivity;
 import com.wd.winddots.activity.work.GlideEngine;
 import com.wd.winddots.adapter.image.ImagePickerAdapter;
 import com.wd.winddots.adapter.stock.in.GoodsSpecAdapter;
-import com.wd.winddots.adapter.stock.in.OrderSpecAdapter;
+import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Goods;
 import com.wd.winddots.entity.GoodsSpec;
 import com.wd.winddots.entity.ImageEntity;
 import com.wd.winddots.entity.Order;
-import com.wd.winddots.entity.OrderSpec;
 import com.wd.winddots.utils.CommonUtil;
+import com.wd.winddots.utils.Utils;
+import com.wd.winddots.view.dialog.ConfirmDialog;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +51,7 @@ import static com.wd.winddots.activity.select.SelectOrderActivity.REQUEST_ADD_ST
  *
  * @author zhou
  */
-public class AddStockInApplyActivity extends BaseActivity {
+public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAdapter.TextChangeListener {
 
     private static final int REQUEST_CODE_RELATED_COMPANY = 1;
     private static final int REQUEST_CODE_GOODS = 2;
@@ -150,6 +152,9 @@ public class AddStockInApplyActivity extends BaseActivity {
     @BindView(R.id.iv_order_expand)
     ImageView mOrderExpandIv;
 
+    @BindView(R.id.tv_total_num)
+    TextView mTotalNumTv;
+
     ImagePickerAdapter mImagePickerAdapter;
     GoodsSpecAdapter mGoodsSpecAdapter;
 
@@ -178,6 +183,7 @@ public class AddStockInApplyActivity extends BaseActivity {
             R.id.ll_order_content, R.id.iv_delete_order})
     public void onClick(View v) {
         Intent intent;
+        final ConfirmDialog mConfirmDialog;
         switch (v.getId()) {
             case R.id.iv_back:
                 finish();
@@ -245,20 +251,59 @@ public class AddStockInApplyActivity extends BaseActivity {
                 }
                 break;
             case R.id.iv_delete_goods:
-                mSelectGoodsIv.setVisibility(View.VISIBLE);
-                mDeleteGoodsIv.setVisibility(View.GONE);
-                mGoodsContentLl.setVisibility(View.GONE);
-                mGoodsId = "";
-                mGoodsNameTv.setText("请选择入库物品");
-                mGoodsNameTv.setTextColor(ContextCompat.getColor(this, R.color.colorB2));
+                mConfirmDialog = new ConfirmDialog(this, "确认取消",
+                        "是否取消已选物品",
+                        "是", "否");
+                mConfirmDialog.setOnDialogClickListener(new ConfirmDialog.OnDialogClickListener() {
+                    @Override
+                    public void onOkClick() {
+                        mSelectGoodsIv.setVisibility(View.VISIBLE);
+                        mDeleteGoodsIv.setVisibility(View.GONE);
+                        mGoodsContentLl.setVisibility(View.GONE);
+                        mGoodsId = "";
+                        mGoodsNameTv.setText("请选择入库物品");
+                        mGoodsNameTv.setTextColor(ContextCompat.getColor(AddStockInApplyActivity.this, R.color.colorB2));
+
+                        // 重置
+                        mGoodsSpecRv.setAdapter(null);
+                        mGoodsSpecRv.setAdapter(mGoodsSpecAdapter);
+                        mTotalNumTv.setText("0");
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+                        mConfirmDialog.dismiss();
+                    }
+                });
+                // 点击空白处消失
+                mConfirmDialog.setCancelable(false);
+                mConfirmDialog.show();
+
                 break;
             case R.id.iv_delete_order:
-                mSelectOrderIv.setVisibility(View.VISIBLE);
-                mDeleteOrderIv.setVisibility(View.GONE);
-                mOrderContentLl.setVisibility(View.GONE);
-                mOrderId = "";
-                mOrderTv.setText("请选择相关订单");
-                mOrderTv.setTextColor(ContextCompat.getColor(this, R.color.colorB2));
+                mConfirmDialog = new ConfirmDialog(this, "确认取消",
+                        "是否取消已选订单",
+                        "是", "否");
+                mConfirmDialog.setOnDialogClickListener(new ConfirmDialog.OnDialogClickListener() {
+                    @Override
+                    public void onOkClick() {
+                        mSelectOrderIv.setVisibility(View.VISIBLE);
+                        mDeleteOrderIv.setVisibility(View.GONE);
+                        mOrderContentLl.setVisibility(View.GONE);
+                        mOrderId = "";
+                        mOrderTv.setText("请选择相关订单");
+                        mOrderTv.setTextColor(ContextCompat.getColor(AddStockInApplyActivity.this, R.color.colorB2));
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+                        mConfirmDialog.dismiss();
+                    }
+                });
+                // 点击空白处消失
+                mConfirmDialog.setCancelable(false);
+                mConfirmDialog.show();
+
                 break;
         }
     }
@@ -284,7 +329,6 @@ public class AddStockInApplyActivity extends BaseActivity {
 
         List<GoodsSpec> goodsSpecList = new ArrayList<>();
         mGoodsSpecAdapter.setList(goodsSpecList);
-
     }
 
     private void initListener() {
@@ -303,6 +347,8 @@ public class AddStockInApplyActivity extends BaseActivity {
                 }
             }
         });
+
+        mGoodsSpecAdapter.setTextChangeListener(this);
     }
 
     @Override
@@ -453,4 +499,16 @@ public class AddStockInApplyActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void stockInNumChange() {
+        List<GoodsSpec> goodsSpecList = mGoodsSpecAdapter.getList();
+        float total = 0;
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        for (GoodsSpec goodsSpec : goodsSpecList) {
+            nf.setMaximumFractionDigits(2);
+            float totalStockInNum = Float.parseFloat(Utils.numberNullOrEmpty(goodsSpec.getNum()));
+            total = totalStockInNum + total;
+        }
+        mTotalNumTv.setText(nf.format(total));
+    }
 }

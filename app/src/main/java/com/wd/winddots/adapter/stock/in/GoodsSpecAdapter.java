@@ -1,7 +1,9 @@
 package com.wd.winddots.adapter.stock.in;
 
 import android.content.Context;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,11 @@ public class GoodsSpecAdapter extends RecyclerView.Adapter<GoodsSpecAdapter.View
 
     private Context mContext;
     private List<GoodsSpec> mGoodsSpecList;
+    public TextChangeListener mTextChangeListener;
+
+    public void setTextChangeListener(TextChangeListener textChangeListener) {
+        this.mTextChangeListener = textChangeListener;
+    }
 
     public GoodsSpecAdapter(Context context) {
         mContext = context;
@@ -30,6 +37,10 @@ public class GoodsSpecAdapter extends RecyclerView.Adapter<GoodsSpecAdapter.View
     public void setList(List<GoodsSpec> goodsSpecList) {
         this.mGoodsSpecList = goodsSpecList;
         notifyDataSetChanged();
+    }
+
+    public List<GoodsSpec> getList() {
+        return this.mGoodsSpecList;
     }
 
     @NonNull
@@ -49,6 +60,26 @@ public class GoodsSpecAdapter extends RecyclerView.Adapter<GoodsSpecAdapter.View
             holder.mXTv.setText(goodsSpec.getX());
             holder.mYTv.setText(goodsSpec.getY());
         }
+
+        holder.mNumEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                goodsSpec.setNum(holder.mNumEt.getText().toString().trim());
+                if (null != mTextChangeListener) {
+                    mTextChangeListener.stockInNumChange();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override
@@ -72,5 +103,9 @@ public class GoodsSpecAdapter extends RecyclerView.Adapter<GoodsSpecAdapter.View
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public interface TextChangeListener {
+        void stockInNumChange();
     }
 }

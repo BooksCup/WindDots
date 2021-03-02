@@ -44,6 +44,8 @@ public class GoodsSpec implements Serializable {
      */
     private int sort;
 
+    private String num;
+
     /**
      * 创建时间
      */
@@ -108,6 +110,14 @@ public class GoodsSpec implements Serializable {
 
     public void setSort(int sort) {
         this.sort = sort;
+    }
+
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
     }
 
     public String getCreateTime() {
