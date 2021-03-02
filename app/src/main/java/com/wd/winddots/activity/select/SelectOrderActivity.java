@@ -132,9 +132,9 @@ public class SelectOrderActivity extends BaseActivity
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         final Order order = mOrderList.get(position);
         if (REQUEST_ADD_STOCK_IN_APPLY == request) {
+            // 入库申请(入库单)
             Intent intent = new Intent();
-            intent.putExtra("orderId", order.getOrderId());
-            intent.putExtra("orderNo", order.getOrderNo());
+            intent.putExtra("order", order);
             setResult(RESULT_OK, intent);
             finish();
         } else if (REQUEST_FABRIC_CHECK_TASK == request) {

@@ -21,9 +21,12 @@ import com.wd.winddots.activity.select.SelectSingleUserActivity;
 import com.wd.winddots.activity.work.GlideEngine;
 import com.wd.winddots.adapter.image.ImagePickerAdapter;
 import com.wd.winddots.adapter.stock.in.GoodsSpecAdapter;
+import com.wd.winddots.adapter.stock.in.OrderSpecAdapter;
 import com.wd.winddots.entity.Goods;
 import com.wd.winddots.entity.GoodsSpec;
 import com.wd.winddots.entity.ImageEntity;
+import com.wd.winddots.entity.Order;
+import com.wd.winddots.entity.OrderSpec;
 import com.wd.winddots.utils.CommonUtil;
 
 import java.util.ArrayList;
@@ -116,6 +119,37 @@ public class AddStockInApplyActivity extends BaseActivity {
     @BindView(R.id.tv_place_holder)
     TextView mPlaceHolderTv;
 
+    // 订单
+    @BindView(R.id.ll_order_content)
+    LinearLayout mOrderContentLl;
+
+    @BindView(R.id.iv_select_order)
+    ImageView mSelectOrderIv;
+
+    @BindView(R.id.iv_delete_order)
+    ImageView mDeleteOrderIv;
+
+    @BindView(R.id.tv_order_related_company)
+    TextView mOrderRelatedCompanyTv;
+
+    @BindView(R.id.tv_order_goods_info)
+    TextView mOrderGoodsInfoTv;
+
+    @BindView(R.id.tv_order_no)
+    TextView mOrderNoTv;
+
+    @BindView(R.id.tv_order_theme)
+    TextView mOrderThemeTv;
+
+    @BindView(R.id.sdv_order_goods_photo)
+    SimpleDraweeView mOrderGoodsPhotoSdv;
+
+    @BindView(R.id.ll_order_spec)
+    LinearLayout mOrderSpecLl;
+
+    @BindView(R.id.iv_order_expand)
+    ImageView mOrderExpandIv;
+
     ImagePickerAdapter mImagePickerAdapter;
     GoodsSpecAdapter mGoodsSpecAdapter;
 
@@ -139,8 +173,9 @@ public class AddStockInApplyActivity extends BaseActivity {
         initListener();
     }
 
-    @OnClick({R.id.iv_back, R.id.rl_goods, R.id.ll_order, R.id.ll_related_company,
-            R.id.ll_auditor, R.id.ll_copy, R.id.ll_goods_content, R.id.iv_delete_goods})
+    @OnClick({R.id.iv_back, R.id.rl_goods, R.id.rl_order, R.id.ll_related_company,
+            R.id.ll_auditor, R.id.ll_copy, R.id.ll_goods_content, R.id.iv_delete_goods,
+            R.id.ll_order_content, R.id.iv_delete_order})
     public void onClick(View v) {
         Intent intent;
         switch (v.getId()) {
@@ -164,11 +199,24 @@ public class AddStockInApplyActivity extends BaseActivity {
                     }
                 }
                 break;
-            case R.id.ll_order:
+            case R.id.rl_order:
                 // 订单
-                intent = new Intent(AddStockInApplyActivity.this, SelectOrderActivity.class);
-                intent.putExtra("request", REQUEST_ADD_STOCK_IN_APPLY);
-                startActivityForResult(intent, REQUEST_CODE_ORDER);
+                if (TextUtils.isEmpty(mOrderId)) {
+                    // 未选择订单
+                    intent = new Intent(AddStockInApplyActivity.this, SelectOrderActivity.class);
+                    intent.putExtra("request", REQUEST_ADD_STOCK_IN_APPLY);
+                    startActivityForResult(intent, REQUEST_CODE_ORDER);
+                } else {
+                    // 选择订单
+                    if (mOrderContentLl.getVisibility() == View.GONE) {
+                        mOrderContentLl.setVisibility(View.VISIBLE);
+                        mSelectOrderIv.setVisibility(View.GONE);
+                        mDeleteOrderIv.setVisibility(View.VISIBLE);
+                    } else {
+                        mOrderContentLl.setVisibility(View.GONE);
+                    }
+                }
+
                 break;
             case R.id.ll_related_company:
                 // 往来单位
@@ -204,6 +252,14 @@ public class AddStockInApplyActivity extends BaseActivity {
                 mGoodsNameTv.setText("请选择入库物品");
                 mGoodsNameTv.setTextColor(ContextCompat.getColor(this, R.color.colorB2));
                 break;
+            case R.id.iv_delete_order:
+                mSelectOrderIv.setVisibility(View.VISIBLE);
+                mDeleteOrderIv.setVisibility(View.GONE);
+                mOrderContentLl.setVisibility(View.GONE);
+                mOrderId = "";
+                mOrderTv.setText("请选择相关订单");
+                mOrderTv.setTextColor(ContextCompat.getColor(this, R.color.colorB2));
+                break;
         }
     }
 
@@ -227,9 +283,8 @@ public class AddStockInApplyActivity extends BaseActivity {
         mImagePickerAdapter.setList(mImageEntityList);
 
         List<GoodsSpec> goodsSpecList = new ArrayList<>();
-        goodsSpecList.add(new GoodsSpec());
-        goodsSpecList.add(new GoodsSpec());
         mGoodsSpecAdapter.setList(goodsSpecList);
+
     }
 
     private void initListener() {
@@ -265,11 +320,8 @@ public class AddStockInApplyActivity extends BaseActivity {
                 case REQUEST_CODE_ORDER:
                     // 订单
                     if (null != data) {
-                        String orderId = data.getStringExtra("orderId");
-                        String orderNo = data.getStringExtra("orderNo");
-                        mOrderId = orderId;
-                        mOrderTv.setText("#" + orderNo);
-                        mOrderTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
+                        Order order = (Order) data.getSerializableExtra("order");
+                        renderOrderView(order);
                     }
                     break;
                 case REQUEST_CODE_RELATED_COMPANY:
@@ -376,6 +428,29 @@ public class AddStockInApplyActivity extends BaseActivity {
             mGoodsSpecYTv.setText(goods.getY());
         }
 
+    }
+
+    private void renderOrderView(Order order) {
+        mOrderId = order.getOrderId();
+        mOrderTv.setText("#" + order.getOrderNo());
+        mOrderTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
+
+        mOrderContentLl.setVisibility(View.VISIBLE);
+        mSelectOrderIv.setVisibility(View.GONE);
+        mDeleteOrderIv.setVisibility(View.VISIBLE);
+
+        mOrderRelatedCompanyTv.setText(order.getRelatedCompanyShortName());
+
+        String goodsInfo = order.getGoodsName() + "(" + order.getGoodsNo() + ")";
+        mOrderGoodsInfoTv.setText(goodsInfo);
+        mOrderNoTv.setText(order.getOrderNo());
+        mOrderThemeTv.setText(order.getOrderTheme());
+        String goodsPhoto = CommonUtil.getFirstPhotoFromJsonList(order.getGoodsPhotos());
+        if (!TextUtils.isEmpty(goodsPhoto)) {
+            mOrderGoodsPhotoSdv.setImageURI(Uri.parse(goodsPhoto));
+        } else {
+            mOrderGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
+        }
     }
 
 }
