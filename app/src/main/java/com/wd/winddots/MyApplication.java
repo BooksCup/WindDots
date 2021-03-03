@@ -5,6 +5,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.ImageView;
 
+import androidx.room.Room;
+
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.bumptech.glide.Glide;
@@ -16,6 +18,9 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.wd.winddots.data.AppDatabase;
+import com.wd.winddots.data.DataTestBean;
+import com.wd.winddots.data.DataTestDao;
 import com.wd.winddots.message.bean.GroupChatHistoryBean;
 import com.wd.winddots.message.bean.PrivateChatHistoryBean;
 import com.wd.winddots.utils.Logg;
@@ -79,7 +84,20 @@ public class MyApplication extends Application {
         });
 
 
+    new Thread(new Runnable() {
+        @Override
+        public void run() {
+            AppDatabase db = AppDatabase.getDatabaseInstance(context);
+            DataTestDao dataTestDao = db.dataTestDao();
 
+            DataTestBean dataTestBean = new DataTestBean();
+            dataTestBean.testId = "111";
+            dataTestBean.testFirstName = "老周";
+            dataTestBean.testLastName = "老王";
+
+            dataTestDao.insertAll(dataTestBean);
+        }
+    }).start();
 
 
     }

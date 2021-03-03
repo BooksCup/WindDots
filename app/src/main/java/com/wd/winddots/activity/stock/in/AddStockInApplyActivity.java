@@ -5,10 +5,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.huantansheng.easyphotos.EasyPhotos;
 import com.huantansheng.easyphotos.models.album.entity.Photo;
@@ -27,12 +29,16 @@ import com.wd.winddots.entity.GoodsSpec;
 import com.wd.winddots.entity.ImageEntity;
 import com.wd.winddots.entity.Order;
 import com.wd.winddots.utils.CommonUtil;
+import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.Utils;
+import com.wd.winddots.utils.VolleyUtil;
 import com.wd.winddots.view.dialog.ConfirmDialog;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -68,6 +74,9 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
 
     @BindView(R.id.tv_order)
     TextView mOrderTv;
+
+    @BindView(R.id.et_remark)
+    EditText mRemarkEt;
 
     @BindView(R.id.tv_auditor)
     TextView mAuditorTv;
@@ -168,11 +177,14 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
 
     List<ImageEntity> mImageEntityList = new ArrayList<>();
 
+    VolleyUtil mVolleyUtil;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_stock_in_apply);
         ButterKnife.bind(this);
+        mVolleyUtil = VolleyUtil.getInstance(this);
         initView();
         initData();
         initListener();
@@ -180,7 +192,7 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
 
     @OnClick({R.id.iv_back, R.id.rl_goods, R.id.rl_order, R.id.ll_related_company,
             R.id.ll_auditor, R.id.ll_copy, R.id.ll_goods_content, R.id.iv_delete_goods,
-            R.id.ll_order_content, R.id.iv_delete_order})
+            R.id.ll_order_content, R.id.iv_delete_order, R.id.ll_save})
     public void onClick(View v) {
         Intent intent;
         final ConfirmDialog mConfirmDialog;
@@ -303,7 +315,34 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
                 // 点击空白处消失
                 mConfirmDialog.setCancelable(false);
                 mConfirmDialog.show();
+                break;
+            case R.id.ll_save:
+                if (TextUtils.isEmpty(mGoodsId)) {
+                    showToast("请选择入库物品");
+                    return;
+                }
 
+                if (TextUtils.isEmpty(mOrderId)) {
+                    showToast("请选择相关订单");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(mRelatedCompanyId)) {
+                    showToast("请选择往来单位");
+                }
+
+                if (TextUtils.isEmpty(mAuditorId)) {
+                    showToast("请选择审核人");
+                }
+
+                if (TextUtils.isEmpty(mCopyId)) {
+                    showToast("请选择抄送人");
+                }
+
+                List<GoodsSpec> goodsSpecList = mGoodsSpecAdapter.getList();
+                String specNums = JSON.toJSONString(goodsSpecList);
+                String remark = mRemarkEt.getText().toString().trim();
+                addStockInApply(specNums, remark);
                 break;
         }
     }
@@ -510,5 +549,31 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
             total = totalStockInNum + total;
         }
         mTotalNumTv.setText(nf.format(total));
+    }
+
+    private void addStockInApply(String specNums, String remark) {
+        String url = Constant.APP_BASE_URL + "stockInApply";
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("goodsId", mGoodsId);
+        paramMap.put("createUserId", SpHelper.getInstance(this).getUserId());
+        paramMap.put("enterpriseId", SpHelper.getInstance(this).getEnterpriseId());
+        paramMap.put("specNums", specNums);
+        paramMap.put("orderId", mOrderId);
+        paramMap.put("stockType", Constant.STOCK_TYPE_IN);
+        paramMap.put("bizType", Constant.STOCK_BIZ_TYPE_PURCHASE_IN);
+        paramMap.put("relatedCompanyId", mRelatedCompanyId);
+        paramMap.put("remark", remark);
+        paramMap.put("images", "[\"http://erp-cfpu-com.oss-cn-hangzhou.aliyuncs.com/329b0751292445df8500aa98a1180936.png\"]");
+        paramMap.put("auditorId", mAuditorId);
+        paramMap.put("copyId", mCopyId);
+
+        mVolleyUtil.httpPostRequest(url, paramMap, response -> {
+            showToast(getString(R.string.add_order_success));
+            hideLoadingDialog();
+            finish();
+        }, volleyError -> {
+            hideLoadingDialog();
+            mVolleyUtil.handleCommonErrorResponse(AddStockInApplyActivity.this, volleyError);
+        });
     }
 }

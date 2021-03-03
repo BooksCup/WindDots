@@ -28,6 +28,14 @@ android {
                 JPUSH_APPKEY : "a5d1a224d1d8ccbd283d5527", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
+
+        //指定room.schemaLocation生成的文件路径
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     packagingOptions {
@@ -50,6 +58,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+
 }
 
 dependencies {
@@ -109,5 +119,10 @@ dependencies {
     // fresco
     implementation 'com.facebook.fresco:fresco:1.13.0'
 
+    //图片选择
     implementation 'com.github.HuanTanSheng:EasyPhotos:3.0.6'
+
+    //数据持久化
+    implementation "androidx.room:room-runtime:2.2.0-rc01"
+    annotationProcessor "androidx.room:room-compiler:2.2.0-rc01"
 }

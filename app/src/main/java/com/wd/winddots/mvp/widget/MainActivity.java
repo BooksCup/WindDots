@@ -40,6 +40,7 @@ import com.wd.winddots.desktop.list.invoice.activity.InvoiceDetailActivity;
 import com.wd.winddots.desktop.list.invoice.bean.InvoiceDetailBean;
 import com.wd.winddots.fast.activity.MeAttendanceActivity;
 import com.wd.winddots.fast.activity.MineClaimingActivity;
+import com.wd.winddots.fragment.AppFragment;
 import com.wd.winddots.mvp.listener.MainActivityDispatchEventListener;
 import com.wd.winddots.mvp.presenter.MainPresenter;
 import com.wd.winddots.mvp.view.MainView;
@@ -108,7 +109,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
 
     private BusinessFragment mBusinessAreaFragment;
     //private DesktopFragment mDesktopFragment;
-    private WorkFragment mWorkFragment;
+    private AppFragment mAppFragment;
     private MessageFragment mMessageFragment;
     private ScheduleFragment mScheduleFragment;
     private MineFragment mMineFragment;
@@ -142,12 +143,12 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
         elseDataManager = new ElseDataManager();
 
         mBusinessAreaFragment = new BusinessFragment();
-        mWorkFragment = new WorkFragment();
+        mAppFragment = new AppFragment();
         mMessageFragment = new MessageFragment();
         mScheduleFragment = new ScheduleFragment();
         mMineFragment = new MineFragment();
 
-        mFragments = new Fragment[]{mMessageFragment,mScheduleFragment, mWorkFragment,mBusinessAreaFragment,mMineFragment};
+        mFragments = new Fragment[]{mMessageFragment,mScheduleFragment, mAppFragment,mBusinessAreaFragment,mMineFragment};
 
         mMainButtonIvs = new ImageView[5];
         mMainButtonIvs[0] = findViewById(R.id.iv_message);
@@ -168,11 +169,11 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
         mCurrentTabIndex = 0;
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.rl_fragment_container, mMessageFragment)
-                .add(R.id.rl_fragment_container, mWorkFragment)
+                .add(R.id.rl_fragment_container, mAppFragment)
                 .add(R.id.rl_fragment_container, mBusinessAreaFragment)
                 .add(R.id.rl_fragment_container, mScheduleFragment)
                 .add(R.id.rl_fragment_container, mMineFragment)
-                .hide(mBusinessAreaFragment).hide(mWorkFragment).hide(mScheduleFragment).hide(mMineFragment)
+                .hide(mBusinessAreaFragment).hide(mAppFragment).hide(mScheduleFragment).hide(mMineFragment)
                 .show(mMessageFragment).commit();
 
 
