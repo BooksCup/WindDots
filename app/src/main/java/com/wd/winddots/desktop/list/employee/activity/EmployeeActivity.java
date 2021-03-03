@@ -1,7 +1,6 @@
 package com.wd.winddots.desktop.list.employee.activity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 

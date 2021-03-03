@@ -49,12 +49,11 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     @BindView(R.id.rv_app)
     RecyclerView mAppRv;
 
-    @BindView(R.id.rv_fast)
+    @BindView(R.id.rv_fast_app)
     RecyclerView mFastAppRv;
 
     @BindView(R.id.srl_app)
     SwipeRefreshLayout mAppSrl;
-
 
     private AppAdapter mAppAdapter;
     private AppAdapter mFastAppAdapter;
@@ -132,7 +131,7 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     private void getAppList() {
         String userId = "40db1c5ede0311eabfad06ca1dafdbae";
-        String url = Constant.APP_BASE_URL + "app/" + userId + "/app";
+        String url = Constant.APP_BASE_URL + "user/" + userId + "/app";
 
         mVolleyUtil.httpGetRequest(url, response -> {
             final UserApp userApp = JSONArray.parseObject(response, UserApp.class);
@@ -187,7 +186,8 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 intent = new Intent(getActivity(), OrderListActivity.class);
                 startActivity(intent);
                 break;
-            case "EmployeeList"://人员
+            case "EmployeeList":
+                // 人员
                 intent = new Intent(getActivity(), EmployeeActivity.class);
                 startActivity(intent);
                 break;

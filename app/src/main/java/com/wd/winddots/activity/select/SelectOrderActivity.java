@@ -2,6 +2,7 @@ package com.wd.winddots.activity.select;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
@@ -63,6 +64,7 @@ public class SelectOrderActivity extends BaseActivity
     int mPageSize = 10;
     String mKeyword = "";
     int request;
+//    String mGoodsId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,6 +73,7 @@ public class SelectOrderActivity extends BaseActivity
         ButterKnife.bind(this);
         mVolleyUtil = VolleyUtil.getInstance(this);
         request = getIntent().getIntExtra("request", 0);
+//        mGoodsId = getIntent().getStringExtra("goodsId");
         initView();
         initListener();
     }
@@ -155,11 +158,23 @@ public class SelectOrderActivity extends BaseActivity
     private void getData() {
         String url;
         try {
-            url = Constant.APP_BASE_URL + "order/search?enterpriseId=" + "1" + "&pageNum=" + mPage + "&pageSize=" + mPageSize +
-                    "&keyword=" + URLEncoder.encode(mKeyword, "utf-8");
+//            if (TextUtils.isEmpty(mGoodsId)) {
+            url = Constant.APP_BASE_URL + "order/search?enterpriseId=" + "1" + "&pageNum=" + mPage +
+                    "&pageSize=" + mPageSize + "&keyword=" + URLEncoder.encode(mKeyword, "utf-8");
+//            } else {
+//                url = Constant.APP_BASE_URL + "order/search?enterpriseId=" + "1" + "&pageNum=" + mPage +
+//                        "&pageSize=" + mPageSize + "&goodsId=" + mGoodsId +
+//                        "&keyword=" + URLEncoder.encode(mKeyword, "utf-8");
+//            }
         } catch (UnsupportedEncodingException e) {
-            url = Constant.APP_BASE_URL + "order/search?enterpriseId=" + "1" + "&pageNum=" + mPage + "&pageSize=" + mPageSize +
-                    "&keyword=" + mKeyword;
+//            if (TextUtils.isEmpty(mGoodsId)) {
+            url = Constant.APP_BASE_URL + "order/search?enterpriseId=" + "1" + "&pageNum=" + mPage +
+                    "&pageSize=" + mPageSize + "&keyword=" + mKeyword;
+//            } else {
+//                url = Constant.APP_BASE_URL + "order/search?enterpriseId=" + "1" + "&pageNum=" + mPage +
+//                        "&pageSize=" + mPageSize + "&goodsId=" + mGoodsId +
+//                        "&keyword=" + mKeyword;
+//            }
         }
 
         mVolleyUtil.httpGetRequest(url, response -> {

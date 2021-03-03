@@ -192,7 +192,8 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
 
     @OnClick({R.id.iv_back, R.id.rl_goods, R.id.rl_order, R.id.ll_related_company,
             R.id.ll_auditor, R.id.ll_copy, R.id.ll_goods_content, R.id.iv_delete_goods,
-            R.id.ll_order_content, R.id.iv_delete_order, R.id.ll_save})
+            R.id.ll_order_content, R.id.iv_delete_order, R.id.tv_save, R.id.tv_scan,
+            R.id.tv_submit})
     public void onClick(View v) {
         Intent intent;
         final ConfirmDialog mConfirmDialog;
@@ -223,6 +224,9 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
                     // 未选择订单
                     intent = new Intent(AddStockInApplyActivity.this, SelectOrderActivity.class);
                     intent.putExtra("request", REQUEST_ADD_STOCK_IN_APPLY);
+                    if (!TextUtils.isEmpty(mGoodsId)) {
+                        intent.putExtra("goodsId", mGoodsId);
+                    }
                     startActivityForResult(intent, REQUEST_CODE_ORDER);
                 } else {
                     // 选择订单
@@ -316,7 +320,7 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
                 mConfirmDialog.setCancelable(false);
                 mConfirmDialog.show();
                 break;
-            case R.id.ll_save:
+            case R.id.tv_save:
                 if (TextUtils.isEmpty(mGoodsId)) {
                     showToast("请选择入库物品");
                     return;
@@ -563,12 +567,13 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
         paramMap.put("bizType", Constant.STOCK_BIZ_TYPE_PURCHASE_IN);
         paramMap.put("relatedCompanyId", mRelatedCompanyId);
         paramMap.put("remark", remark);
+        paramMap.put("applyStatus", "0");
         paramMap.put("images", "[\"http://erp-cfpu-com.oss-cn-hangzhou.aliyuncs.com/329b0751292445df8500aa98a1180936.png\"]");
         paramMap.put("auditorId", mAuditorId);
         paramMap.put("copyId", mCopyId);
 
         mVolleyUtil.httpPostRequest(url, paramMap, response -> {
-            showToast(getString(R.string.add_order_success));
+            showToast("提交入库单成功");
             hideLoadingDialog();
             finish();
         }, volleyError -> {

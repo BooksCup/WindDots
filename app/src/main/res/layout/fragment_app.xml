@@ -24,18 +24,6 @@
             android:textSize="@dimen/title_text_size"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_finish"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
-            android:gravity="center"
-            android:text="完成"
-            android:textColor="@color/colorAccent"
-            android:visibility="gone" />
-
     </RelativeLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -57,7 +45,7 @@
         android:background="@color/alpha_05_black" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_fast"
+        android:id="@+id/rv_fast_app"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@color/colorWhite"

@@ -84,20 +84,20 @@ public class MyApplication extends Application {
         });
 
 
-    new Thread(new Runnable() {
-        @Override
-        public void run() {
-            AppDatabase db = AppDatabase.getDatabaseInstance(context);
-            DataTestDao dataTestDao = db.dataTestDao();
-
-            DataTestBean dataTestBean = new DataTestBean();
-            dataTestBean.testId = "111";
-            dataTestBean.testFirstName = "老周";
-            dataTestBean.testLastName = "老王";
-
-            dataTestDao.insertAll(dataTestBean);
-        }
-    }).start();
+//    new Thread(new Runnable() {
+//        @Override
+//        public void run() {
+//            AppDatabase db = AppDatabase.getDatabaseInstance(context);
+//            DataTestDao dataTestDao = db.dataTestDao();
+//
+//            DataTestBean dataTestBean = new DataTestBean();
+//            dataTestBean.testId = "111";
+//            dataTestBean.testFirstName = "老周";
+//            dataTestBean.testLastName = "老王";
+//
+//            dataTestDao.insertAll(dataTestBean);
+//        }
+//    }).start();
 
 
     }

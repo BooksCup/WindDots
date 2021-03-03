@@ -12,6 +12,7 @@ import com.wd.winddots.base.BaseFragment;
 import com.wd.winddots.base.BasePresenter;
 import com.wd.winddots.bean.UserInfoBean;
 import com.wd.winddots.desktop.activity.MeActivity;
+import com.wd.winddots.desktop.activity.SettingActivity;
 import com.wd.winddots.mvp.widget.PointsActivity;
 import com.wd.winddots.net.msg.MsgDataManager;
 import com.wd.winddots.utils.SpHelper;
@@ -100,10 +101,8 @@ public class MineInfoFragment extends BaseFragment implements SwipeRefreshLayout
         mSettingCell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(mContext, SettingActivity.class);
-//                //intent.putExtra("points",mineInfo.getPoint());
-//                startActivity(intent);
-                Intent intent = new Intent(mContext, StockInApplyActivity.class);
+                Intent intent = new Intent(mContext, SettingActivity.class);
+                //intent.putExtra("points",mineInfo.getPoint());
                 startActivity(intent);
             }
         });
