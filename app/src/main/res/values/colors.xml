@@ -87,4 +87,8 @@
     <color name="login_activity_btn_default">#D5282E</color>
 
     <color name="bg_light_blue">#CEE3FB</color>
+
+    <color name="tag_grey">#999999</color>
+    <color name="tag_green">#27B148</color>
+    <color name="tag_orange">#FF9800</color>
 </resources>

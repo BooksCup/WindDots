@@ -2,12 +2,15 @@ package com.wd.winddots.adapter.stock.in;
 
 import android.net.Uri;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.winddots.R;
 import com.wd.winddots.entity.StockInApply;
+import com.wd.winddots.enums.StockApplyStatusEnum;
 import com.wd.winddots.enums.StockBizTypeEnum;
 import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.TimeUtil;
@@ -53,6 +56,39 @@ public class StockInApplyAdapter extends BaseQuickAdapter<StockInApply, BaseView
         } else {
             mGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
         }
+
+        TextView mApplyStatusTv = helper.getView(R.id.tv_apply_status);
+        // tag
+        if (StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus().equals(item.getApplyStatus())) {
+
+            // 草稿
+            mApplyStatusTv.setVisibility(View.VISIBLE);
+            mApplyStatusTv.setText("草稿单");
+            mApplyStatusTv.setTextColor(mContext.getResources().getColor(R.color.tag_grey));
+            mApplyStatusTv.setBackgroundResource(R.drawable.bg_tag_grey);
+
+        } else if (StockApplyStatusEnum.STOCK_APPLY_STATUS_UNCONFIRMED.getStatus().equals(item.getApplyStatus())) {
+
+            // 未确认
+            mApplyStatusTv.setVisibility(View.VISIBLE);
+            mApplyStatusTv.setText("未确认");
+            mApplyStatusTv.setTextColor(mContext.getResources().getColor(R.color.tag_green));
+            mApplyStatusTv.setBackgroundResource(R.drawable.bg_tag_green);
+
+        } else if (StockApplyStatusEnum.STOCK_APPLY_STATUS_CONFIRMED.getStatus().equals(item.getApplyStatus())) {
+
+            // 已确认
+            mApplyStatusTv.setVisibility(View.VISIBLE);
+            mApplyStatusTv.setText("已确认");
+            mApplyStatusTv.setTextColor(mContext.getResources().getColor(R.color.tag_orange));
+            mApplyStatusTv.setBackgroundResource(R.drawable.bg_tag_orange);
+
+        } else {
+
+            // 未知
+            mApplyStatusTv.setVisibility(View.GONE);
+        }
+
     }
 
 }

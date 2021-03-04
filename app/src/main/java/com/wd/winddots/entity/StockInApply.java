@@ -23,6 +23,7 @@ public class StockInApply implements Serializable {
     private String bizType;
     private String exchangeEnterpriseName;
     private String createTime;
+    private String applyStatus;
 
     public String getId() {
         return id;
@@ -86,5 +87,13 @@ public class StockInApply implements Serializable {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public String getApplyStatus() {
+        return applyStatus;
+    }
+
+    public void setApplyStatus(String applyStatus) {
+        this.applyStatus = applyStatus;
     }
 }
