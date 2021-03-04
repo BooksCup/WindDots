@@ -51,43 +51,6 @@
                 android:background="@color/alpha_05_black" />
 
             <include layout="@layout/layout_select_order" />
-            <!--            <LinearLayout-->
-            <!--                android:id="@+id/ll_order"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="46dp"-->
-            <!--                android:background="@color/colorWhite"-->
-            <!--                android:orientation="horizontal"-->
-            <!--                android:paddingHorizontal="12dp">-->
-
-            <!--                <TextView-->
-            <!--                    android:id="@+id/tv_order_title"-->
-            <!--                    android:layout_width="90dp"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_gravity="center_vertical"-->
-            <!--                    android:text="相关订单"-->
-            <!--                    android:textColor="@color/color32"-->
-            <!--                    android:textSize="@dimen/form_text_size" />-->
-
-            <!--                <TextView-->
-            <!--                    android:id="@+id/tv_order"-->
-            <!--                    android:layout_width="0dp"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_gravity="center_vertical"-->
-            <!--                    android:layout_marginEnd="20dp"-->
-            <!--                    android:layout_weight="1"-->
-            <!--                    android:ellipsize="end"-->
-            <!--                    android:lines="1"-->
-            <!--                    android:text="请选择相关订单"-->
-            <!--                    android:textColor="@color/colorB2"-->
-            <!--                    android:textSize="@dimen/form_text_size" />-->
-
-            <!--                <ImageView-->
-            <!--                    android:layout_width="10dp"-->
-            <!--                    android:layout_height="17dp"-->
-            <!--                    android:layout_gravity="center_vertical"-->
-            <!--                    android:scaleType="centerCrop"-->
-            <!--                    android:src="@mipmap/icon_right" />-->
-            <!--            </LinearLayout>-->
 
             <View
                 android:layout_width="match_parent"

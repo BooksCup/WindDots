@@ -322,11 +322,9 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
                 mConfirmDialog.show();
                 break;
             case R.id.tv_draft:
-                showLoadingDialog();
                 addStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus());
                 break;
             case R.id.tv_submit:
-                showLoadingDialog();
                 addStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_UNCONFIRMED.getStatus());
                 break;
         }
@@ -559,7 +557,7 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
         if (TextUtils.isEmpty(mCopyId)) {
             showToast("请选择抄送人");
         }
-
+        showLoadingDialog();
         List<GoodsSpec> goodsSpecList = mGoodsSpecAdapter.getList();
         String specNums = JSON.toJSONString(goodsSpecList);
         String remark = mRemarkEt.getText().toString().trim();
