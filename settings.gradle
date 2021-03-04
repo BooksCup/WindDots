@@ -1,2 +1,2 @@
-include ':app', ':baserecyclerviewadapterhelper'
+include ':app', ':baserecyclerviewadapterhelper', ':LibZxing'
 rootProject.name='WindDots'

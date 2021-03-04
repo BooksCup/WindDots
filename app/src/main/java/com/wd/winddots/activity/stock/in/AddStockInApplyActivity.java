@@ -9,9 +9,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.zxing.client.android.CaptureActivity2;
 import com.huantansheng.easyphotos.EasyPhotos;
 import com.huantansheng.easyphotos.models.album.entity.Photo;
 import com.wd.winddots.R;
@@ -35,6 +37,7 @@ import com.wd.winddots.utils.Utils;
 import com.wd.winddots.utils.VolleyUtil;
 import com.wd.winddots.view.dialog.ConfirmDialog;
 
+import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,6 +69,7 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
     private static final int REQUEST_CODE_AUDITOR = 4;
     private static final int REQUEST_CODE_COPY = 5;
     private static final int REQUEST_CODE_IMAGE_PICKER = 6;
+    private static final int REQUEST_CODE_SCAN = 7;
 
     @BindView(R.id.tv_goods_name)
     TextView mGoodsNameTv;
@@ -295,8 +299,8 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
                 // 点击空白处消失
                 mConfirmDialog.setCancelable(false);
                 mConfirmDialog.show();
-
                 break;
+
             case R.id.iv_delete_order:
                 mConfirmDialog = new ConfirmDialog(this, "确认取消",
                         "是否取消已选订单",
@@ -324,11 +328,21 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
             case R.id.tv_draft:
                 addStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus());
                 break;
+            case R.id.tv_scan:
+                startScanActivity();
+                break;
             case R.id.tv_submit:
                 addStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_UNCONFIRMED.getStatus());
                 break;
         }
     }
+
+    private void startScanActivity() {
+        Intent intent = new Intent(AddStockInApplyActivity.this, CaptureActivity2.class);
+        intent.putExtra(CaptureActivity2.USE_DEFUALT_ISBN_ACTIVITY, true);
+        startActivityForResult(intent, REQUEST_CODE_SCAN);
+    }
+
 
     private void initView() {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
@@ -435,6 +449,16 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
                         mImagePickerAdapter.setList(mImageEntityList);
                     }
                     break;
+                case REQUEST_CODE_SCAN:
+                    // 扫码
+                    if (null != data) {
+                        String content = data.getStringExtra("CaptureIsbn");
+                        if (content.contains(Constant.QR_CODE_CONTENT_PREFIX_GOODS)) {
+                            String goodsId = content.replaceAll(Constant.QR_CODE_CONTENT_PREFIX_GOODS, "");
+                            getGoodsById(goodsId);
+                        }
+                    }
+                    break;
             }
         }
     }
@@ -519,6 +543,11 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
         } else {
             mOrderGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
         }
+
+        // 同时渲染往来单位
+        mRelatedCompanyId = order.getRelatedCompanyId();
+        mRelatedCompanyTv.setText(order.getRelatedCompanyName());
+        mRelatedCompanyTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
     }
 
     @Override
@@ -588,6 +617,26 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
             }
             hideLoadingDialog();
             finish();
+        }, volleyError -> {
+            hideLoadingDialog();
+            mVolleyUtil.handleCommonErrorResponse(AddStockInApplyActivity.this, volleyError);
+        });
+    }
+
+    private void getGoodsById(String goodsId) {
+        showLoadingDialog();
+        String url = Constant.APP_BASE_URL + "goods/" + goodsId;
+        mVolleyUtil.httpGetRequest(url, response -> {
+            hideLoadingDialog();
+            Goods goods;
+            try {
+                goods = JSON.parseObject(response, Goods.class);
+            } catch (Exception e) {
+                goods = null;
+            }
+            if (null != goods) {
+                renderGoodsView(goods);
+            }
         }, volleyError -> {
             hideLoadingDialog();
             mVolleyUtil.handleCommonErrorResponse(AddStockInApplyActivity.this, volleyError);

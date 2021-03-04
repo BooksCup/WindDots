@@ -31,6 +31,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.zxing.client.android.CaptureActivity;
 import com.wd.winddots.R;
 import com.wd.winddots.base.BaseMvpActivity;
 import com.wd.winddots.bean.resp.UpgradeBean;
@@ -57,7 +58,6 @@ import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.view.PopShortcut;
 import com.wd.winddots.view.Upgrade;
 import com.wd.winddots.view.dialog.ConfirmDialog;
-import com.wd.winddots.zxing.client.android.CaptureActivity;
 
 import java.util.ArrayList;
 import java.util.List;

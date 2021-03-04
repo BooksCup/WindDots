@@ -8,7 +8,7 @@ android {
 
         applicationId "com.cfp.wading" //JPush上注册的包名.
 
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 179
         versionName "1.7.9"
@@ -65,6 +65,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation project(path: ':LibZxing')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
@@ -95,7 +96,6 @@ dependencies {
     implementation 'com.zhihu.android:matisse:0.5.1'
     implementation 'com.android.support:multidex:1.0.3'
     implementation files('libs/BaiduLBS-Android.jar')
-    implementation 'com.google.zxing:core:3.3.3'
     implementation "me.leolin:ShortcutBadger:1.1.22@aar"
     implementation 'cn.jiguang.sdk:jpush:3.7.0'  // 此处以JPush 3.7.0 版本为例。
     implementation 'cn.jiguang.sdk:jcore:2.4.2'

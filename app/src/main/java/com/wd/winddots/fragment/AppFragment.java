@@ -1,14 +1,20 @@
 package com.wd.winddots.fragment;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSONArray;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.zxing.client.android.CaptureActivity;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.check.fabric.FabricCheckProcessActivity;
 import com.wd.winddots.activity.stock.in.StockInApplyActivity;
@@ -26,14 +32,20 @@ import com.wd.winddots.desktop.list.requirement.activity.RequirementActivity;
 import com.wd.winddots.desktop.list.warehouse.activity.WarehouseListActivity;
 import com.wd.winddots.entity.App;
 import com.wd.winddots.entity.UserApp;
+import com.wd.winddots.fast.activity.MeAttendanceActivity;
 import com.wd.winddots.fast.activity.MineClaimingActivity;
 import com.wd.winddots.utils.VolleyUtil;
+import com.wd.winddots.view.dialog.ConfirmDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,9 +54,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.jmessage.support.qiniu.android.utils.StringUtils;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.OnItemClickListener, View.OnClickListener, BaseQuickAdapter.OnItemLongClickListener {
+
+    private static final int REQUEST_CODE_LOCATION = 1;
+    private static final int REQUEST_CODE_CAMERA = 2;
+    private static final int REQUEST_CODE_SCAN = 3;
 
     @BindView(R.id.rv_app)
     RecyclerView mAppRv;
@@ -176,11 +195,11 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 break;
             case "Signin"://个人考勤
                 String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
-//                requestPermissions(getActivity(), permissions, REQUEST_CODE_LOCATION);
+                requestPermissions(getActivity(), permissions, REQUEST_CODE_LOCATION);
                 break;
             case "QrCodePage"://扫描
                 String[] cameraPermissions = new String[]{Manifest.permission.CAMERA};
-//                requestPermissions(getActivity(), cameraPermissions, REQUEST_CODE_CAMERA);
+                requestPermissions(getActivity(), cameraPermissions, REQUEST_CODE_CAMERA);
                 break;
             case "OrderList"://订单
                 intent = new Intent(getActivity(), OrderListActivity.class);
@@ -216,4 +235,107 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         }
 
     }
+
+    /**
+     * 动态权限
+     */
+    public void requestPermissions(Activity activity, String[] permissions, int requestCode) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Android 6.0开始的动态权限，这里进行版本判断
+            ArrayList<String> mPermissionList = new ArrayList<>();
+            for (int i = 0; i < permissions.length; i++) {
+                if (ContextCompat.checkSelfPermission(activity, permissions[i])
+                        != PackageManager.PERMISSION_GRANTED) {
+                    mPermissionList.add(permissions[i]);
+                }
+            }
+            if (mPermissionList.isEmpty()) {
+                // 非初次进入App且已授权
+                switch (requestCode) {
+                    case REQUEST_CODE_LOCATION:
+                        startActivity(new Intent(getActivity(), MeAttendanceActivity.class));
+                        break;
+                    case REQUEST_CODE_CAMERA:
+                        Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                        Objects.requireNonNull(getActivity()).startActivityForResult(intent, REQUEST_CODE_SCAN);
+                        break;
+                }
+            } else {
+                // 请求权限方法
+                String[] requestPermissions = mPermissionList.toArray(new String[mPermissionList.size()]);
+                // 这个触发下面onRequestPermissionsResult这个回调
+                ActivityCompat.requestPermissions(activity, requestPermissions, requestCode);
+            }
+        }
+    }
+
+    /**
+     * requestPermissions的回调
+     * 一个或多个权限请求结果回调
+     */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        boolean hasAllGranted = true;
+        // 判断是否拒绝  拒绝后要怎么处理 以及取消再次提示的处理
+        for (int grantResult : grantResults) {
+            if (grantResult == PackageManager.PERMISSION_DENIED) {
+                hasAllGranted = false;
+                break;
+            }
+        }
+        if (hasAllGranted) {
+            switch (requestCode) {
+                case REQUEST_CODE_LOCATION:
+                    // 同意定位权限,进入地图选择器
+                    startActivity(new Intent(getActivity(), MeAttendanceActivity.class));
+                    break;
+                case REQUEST_CODE_CAMERA:
+                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                    Objects.requireNonNull(getActivity()).startActivityForResult(intent, REQUEST_CODE_SCAN);
+                    break;
+            }
+        } else {
+            // 拒绝授权做的处理，弹出弹框提示用户授权
+            handleRejectPermission(getActivity(), permissions[0], requestCode);
+        }
+    }
+
+    public void handleRejectPermission(final Activity context, String permission, int requestCode) {
+        if (!ActivityCompat.shouldShowRequestPermissionRationale(context, permission)) {
+            String content = "";
+            switch (requestCode) {
+                case REQUEST_CODE_LOCATION:
+                    content = "在设置-应用-瓦丁-权限中开启位置信息权限，以正常使用考勤等功能";
+                    break;
+                case REQUEST_CODE_CAMERA:
+                    content = "在设置-应用-瓦丁-权限中开启打开相机权限，以正常使用扫码等功能";
+                    break;
+            }
+            final ConfirmDialog mConfirmDialog = new ConfirmDialog(getActivity(), "权限申请",
+                    content,
+                    "确定", "取消");
+            mConfirmDialog.setOnDialogClickListener(new ConfirmDialog.OnDialogClickListener() {
+                @Override
+                public void onOkClick() {
+                    mConfirmDialog.dismiss();
+                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", context.getApplicationContext().getPackageName(), null);
+                    intent.setData(uri);
+                    context.startActivity(intent);
+                }
+
+                @Override
+                public void onCancelClick() {
+                    mConfirmDialog.dismiss();
+                }
+            });
+            // 点击空白处消失
+            mConfirmDialog.setCancelable(false);
+            mConfirmDialog.show();
+        }
+    }
+
 }

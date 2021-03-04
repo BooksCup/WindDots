@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
+import com.google.zxing.client.android.CaptureActivity;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.check.fabric.FabricCheckProcessActivity;
 import com.wd.winddots.activity.check.fabric.FabricCheckTaskActivity;
@@ -61,7 +62,6 @@ import com.wd.winddots.view.BottomSearchBarView;
 import com.wd.winddots.view.LoadingDialog;
 import com.wd.winddots.view.PopShortcut;
 import com.wd.winddots.view.dialog.ConfirmDialog;
-import com.wd.winddots.zxing.client.android.CaptureActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;

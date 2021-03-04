@@ -4,8 +4,8 @@ package com.wd.winddots.cons;
  * 常量类
  */
 public class Constant {
-//        public static final String APP_BASE_URL = "http://115.159.201.120:8085/";
-    public static final String APP_BASE_URL = "http://172.168.0.145:8085/";
+        public static final String APP_BASE_URL = "http://115.159.201.120:8085/";
+//    public static final String APP_BASE_URL = "http://172.168.0.145:8085/";
     public static final String APP_BASE_URL_ELSE = "http://42.192.134.170/";
 
     //测试
@@ -46,5 +46,10 @@ public class Constant {
      * 采购入库
      */
     public static final String STOCK_BIZ_TYPE_PURCHASE_IN = "3";
+
+    /**
+     * 二维码内容物品前缀
+     */
+    public static final String QR_CODE_CONTENT_PREFIX_GOODS = "goodsId=";
 
 }
