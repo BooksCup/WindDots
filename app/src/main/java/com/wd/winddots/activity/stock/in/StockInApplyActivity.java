@@ -143,4 +143,11 @@ public class StockInApplyActivity extends BaseActivity
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPage = 1;
+        getData();
+    }
 }

@@ -28,6 +28,7 @@ import com.wd.winddots.entity.Goods;
 import com.wd.winddots.entity.GoodsSpec;
 import com.wd.winddots.entity.ImageEntity;
 import com.wd.winddots.entity.Order;
+import com.wd.winddots.enums.StockApplyStatusEnum;
 import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.Utils;
@@ -192,7 +193,7 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
 
     @OnClick({R.id.iv_back, R.id.rl_goods, R.id.rl_order, R.id.ll_related_company,
             R.id.ll_auditor, R.id.ll_copy, R.id.ll_goods_content, R.id.iv_delete_goods,
-            R.id.ll_order_content, R.id.iv_delete_order, R.id.tv_save, R.id.tv_scan,
+            R.id.ll_order_content, R.id.iv_delete_order, R.id.tv_draft, R.id.tv_scan,
             R.id.tv_submit})
     public void onClick(View v) {
         Intent intent;
@@ -320,33 +321,13 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
                 mConfirmDialog.setCancelable(false);
                 mConfirmDialog.show();
                 break;
-            case R.id.tv_save:
-                if (TextUtils.isEmpty(mGoodsId)) {
-                    showToast("请选择入库物品");
-                    return;
-                }
-
-                if (TextUtils.isEmpty(mOrderId)) {
-                    showToast("请选择相关订单");
-                    return;
-                }
-
-                if (TextUtils.isEmpty(mRelatedCompanyId)) {
-                    showToast("请选择往来单位");
-                }
-
-                if (TextUtils.isEmpty(mAuditorId)) {
-                    showToast("请选择审核人");
-                }
-
-                if (TextUtils.isEmpty(mCopyId)) {
-                    showToast("请选择抄送人");
-                }
-
-                List<GoodsSpec> goodsSpecList = mGoodsSpecAdapter.getList();
-                String specNums = JSON.toJSONString(goodsSpecList);
-                String remark = mRemarkEt.getText().toString().trim();
-                addStockInApply(specNums, remark);
+            case R.id.tv_draft:
+                showLoadingDialog();
+                addStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus());
+                break;
+            case R.id.tv_submit:
+                showLoadingDialog();
+                addStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_UNCONFIRMED.getStatus());
                 break;
         }
     }
@@ -555,7 +536,34 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
         mTotalNumTv.setText(nf.format(total));
     }
 
-    private void addStockInApply(String specNums, String remark) {
+    private void addStockInApply(String applyStatus) {
+
+        if (TextUtils.isEmpty(mGoodsId)) {
+            showToast("请选择入库物品");
+            return;
+        }
+
+        if (TextUtils.isEmpty(mOrderId)) {
+            showToast("请选择相关订单");
+            return;
+        }
+
+        if (TextUtils.isEmpty(mRelatedCompanyId)) {
+            showToast("请选择往来单位");
+        }
+
+        if (TextUtils.isEmpty(mAuditorId)) {
+            showToast("请选择审核人");
+        }
+
+        if (TextUtils.isEmpty(mCopyId)) {
+            showToast("请选择抄送人");
+        }
+
+        List<GoodsSpec> goodsSpecList = mGoodsSpecAdapter.getList();
+        String specNums = JSON.toJSONString(goodsSpecList);
+        String remark = mRemarkEt.getText().toString().trim();
+
         String url = Constant.APP_BASE_URL + "stockInApply";
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("goodsId", mGoodsId);
@@ -567,13 +575,19 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
         paramMap.put("bizType", Constant.STOCK_BIZ_TYPE_PURCHASE_IN);
         paramMap.put("relatedCompanyId", mRelatedCompanyId);
         paramMap.put("remark", remark);
-        paramMap.put("applyStatus", "0");
+        paramMap.put("applyStatus", applyStatus);
         paramMap.put("images", "[\"http://erp-cfpu-com.oss-cn-hangzhou.aliyuncs.com/329b0751292445df8500aa98a1180936.png\"]");
         paramMap.put("auditorId", mAuditorId);
         paramMap.put("copyId", mCopyId);
 
         mVolleyUtil.httpPostRequest(url, paramMap, response -> {
-            showToast("提交入库单成功");
+            if (applyStatus.equals(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus())) {
+                // 保存至草稿
+                showToast("成功保存至草稿");
+            } else {
+                // 提交入库单
+                showToast("入库单提交成功");
+            }
             hideLoadingDialog();
             finish();
         }, volleyError -> {
