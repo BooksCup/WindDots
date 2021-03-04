@@ -1,61 +1,58 @@
 package com.wd.winddots.adapter.stock.in;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.net.Uri;
+import android.text.TextUtils;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.winddots.R;
-import com.wd.winddots.activity.work.OnRecyclerItemClickListener;
+import com.wd.winddots.entity.StockInApply;
+import com.wd.winddots.enums.StockBizTypeEnum;
+import com.wd.winddots.utils.CommonUtil;
+import com.wd.winddots.utils.TimeUtil;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.util.List;
+
+import androidx.annotation.Nullable;
 
 /**
- * 入库
+ * 入库申请
  *
  * @author zhou
  */
-public class StockInApplyAdapter extends RecyclerView.Adapter<StockInApplyAdapter.ViewHolder> {
+public class StockInApplyAdapter extends BaseQuickAdapter<StockInApply, BaseViewHolder> {
 
-    private OnRecyclerItemClickListener onRecyclerItemClickListener;
+    private String mKeyword;
 
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_stock_in_apply, parent, false);
-        return new ViewHolder(v);
+    public StockInApplyAdapter(int layoutResId, @Nullable List<StockInApply> data) {
+        super(layoutResId, data);
+    }
+
+    public void setKeyword(String keyword) {
+        this.mKeyword = keyword;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.mStockInRl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRecyclerItemClickListener.onItemClick(position);
-            }
-        });
-    }
+    protected void convert(BaseViewHolder helper, StockInApply item) {
+        String stockBizType = StockBizTypeEnum.getValue(item.getBizType());
+        if (!TextUtils.isEmpty(stockBizType)) {
+            helper.setText(R.id.tv_biz_type, stockBizType);
+        }
+        String date = TimeUtil.formatTimeToDate(item.getCreateTime());
+        String goodsInfo = item.getGoodsName() + "(" + item.getGoodsNo() + ")";
+        helper.setText(R.id.tv_goods_info, goodsInfo)
+                .setText(R.id.tv_create_user_name, item.getCreateUserName())
+                .setText(R.id.tv_related_company, item.getExchangeEnterpriseName())
+                .setText(R.id.tv_create_date, date);
 
-    @Override
-    public int getItemCount() {
-        return 10;
-    }
-
-    public void setOnRecyclerItemClickListener(OnRecyclerItemClickListener onRecyclerItemClickListener) {
-        this.onRecyclerItemClickListener = onRecyclerItemClickListener;
-    }
-
-    class ViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.rl_stock_in)
-        RelativeLayout mStockInRl;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        SimpleDraweeView mGoodsPhotoSdv = helper.getView(R.id.sdv_goods_photo);
+        String goodsPhoto = CommonUtil.getFirstPhotoFromJsonList(item.getGoodsPhotos());
+        if (!TextUtils.isEmpty(goodsPhoto)) {
+            mGoodsPhotoSdv.setImageURI(Uri.parse(goodsPhoto));
+        } else {
+            mGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
         }
     }
+
 }
