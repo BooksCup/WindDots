@@ -29,9 +29,9 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="鞠建"
+            android:text="张三"
             android:textColor="@color/color32"
-            android:textSize="17sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/tv_job_name"
@@ -39,7 +39,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_name"
             android:text="产品经理"
-            android:textSize="13sp" />
+            android:textColor="@color/alpha_50_black"
+            android:textSize="12sp" />
 
     </RelativeLayout>
 

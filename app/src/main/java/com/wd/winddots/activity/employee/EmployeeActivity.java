@@ -17,6 +17,7 @@ import com.wd.winddots.entity.PageInfo;
 import com.wd.winddots.entity.User;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.VolleyUtil;
+import com.wd.winddots.view.employee.EmployeeHeaderView;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -73,7 +74,7 @@ public class EmployeeActivity extends BaseActivity
         mEmployeeRv.setAdapter(mAdapter);
 
         if (Constant.USER_IS_SUPER_ADMIN == SpHelper.getInstance(this).getInt("userIsSuperAdmin")) {
-            View header = new EmployeeListHeader(this);
+            View header = new EmployeeHeaderView(this);
             header.setOnClickListener(view -> {
                 Intent intent = new Intent(EmployeeActivity.this, UserApplyActivity.class);
                 startActivity(intent);

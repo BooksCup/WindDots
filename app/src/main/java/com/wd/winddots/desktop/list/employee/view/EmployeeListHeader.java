@@ -34,7 +34,7 @@ public class EmployeeListHeader extends LinearLayout {
     }
 
     private void initView(){
-            View view= LayoutInflater.from(getContext()).inflate(R.layout.activity_employee_header, this, false);
+            View view= LayoutInflater.from(getContext()).inflate(R.layout.view_employee_header, this, false);
             this.addView(view);
     }
 
