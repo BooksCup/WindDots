@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -37,7 +36,6 @@ import com.wd.winddots.utils.Utils;
 import com.wd.winddots.utils.VolleyUtil;
 import com.wd.winddots.view.dialog.ConfirmDialog;
 
-import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -37,7 +37,6 @@ import com.wd.winddots.desktop.list.card.activity.FriendListActivity;
 import com.wd.winddots.desktop.list.check.activity.SelectGoodsActivity;
 import com.wd.winddots.desktop.list.contact.activity.ContactListActivity;
 import com.wd.winddots.desktop.list.disk.DiskListActivity;
-import com.wd.winddots.desktop.list.employee.activity.EmployeeActivity;
 import com.wd.winddots.desktop.list.goods.activity.GoodsListActivity;
 import com.wd.winddots.desktop.list.invoice.activity.InvoiceDetailActivity;
 import com.wd.winddots.desktop.list.invoice.activity.InvoiceListActivity;
@@ -597,8 +596,8 @@ public class WorkFragment extends BaseFragment<WorkView, WorkPresenterImpl>
                 startActivity(intent);
                 break;
             case "EmployeeList"://人员
-                intent = new Intent(mContext, EmployeeActivity.class);
-                startActivity(intent);
+//                intent = new Intent(mContext, EmployeeActivity.class);
+//                startActivity(intent);
                 break;
             case "RequirementList"://需求
                 intent = new Intent(mContext, RequirementActivity.class);

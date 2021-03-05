@@ -17,13 +17,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.zxing.client.android.CaptureActivity;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.check.fabric.FabricCheckProcessActivity;
+import com.wd.winddots.activity.employee.EmployeeActivity;
 import com.wd.winddots.activity.stock.in.StockInApplyActivity;
 import com.wd.winddots.activity.work.DeliveryActivity;
 import com.wd.winddots.adapter.work.AppAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.desktop.list.card.activity.FriendListActivity;
 import com.wd.winddots.desktop.list.contact.activity.ContactListActivity;
-import com.wd.winddots.desktop.list.employee.activity.EmployeeActivity;
 import com.wd.winddots.desktop.list.goods.activity.GoodsListActivity;
 import com.wd.winddots.desktop.list.invoice.activity.InvoiceListActivity;
 import com.wd.winddots.desktop.list.order.activity.OrderListActivity;
@@ -54,9 +54,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.jmessage.support.qiniu.android.utils.StringUtils;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.OnItemClickListener, View.OnClickListener, BaseQuickAdapter.OnItemLongClickListener {
@@ -220,6 +217,11 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 break;
             case "WorkExamine"://盘点
                 intent = new Intent(getActivity(), FabricCheckProcessActivity.class);
+                startActivity(intent);
+                break;
+            case "StockInApply":
+                // 入库单
+                intent = new Intent(getActivity(), StockInApplyActivity.class);
                 startActivity(intent);
                 break;
             case "StockIn":

@@ -52,4 +52,6 @@ public class Constant {
      */
     public static final String QR_CODE_CONTENT_PREFIX_GOODS = "goodsId=";
 
+    public static final int USER_IS_SUPER_ADMIN = 1;
+
 }
