@@ -12,7 +12,6 @@ import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.adapter.employee.EmployeeAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.desktop.list.employee.activity.UserApplyActivity;
-import com.wd.winddots.desktop.list.employee.view.EmployeeListHeader;
 import com.wd.winddots.entity.PageInfo;
 import com.wd.winddots.entity.User;
 import com.wd.winddots.utils.SpHelper;
