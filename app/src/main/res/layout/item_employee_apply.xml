@@ -1,42 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="65dp"
     android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_phone"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="phone"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:layout_marginLeft="10dp"/>
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="张三"
+            android:textColor="@color/name_black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="13888888888"
+            android:textColor="@color/phone_blue" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_agree"
-        android:layout_width="60dp"
-        android:layout_height="30dp"
-        android:background="#33B3EA"
-        android:text="@string/employee_apply_agree"
-        android:textColor="@color/colorWhite"
-        android:gravity="center"
+        android:layout_width="50dp"
+        android:layout_height="28dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
-        android:layout_gravity="center_vertical"
-        />
+        android:background="@drawable/shape_select_border_green"
+        android:gravity="center"
+        android:text="@string/employee_apply_agree"
+        android:textColor="@color/operate_agree" />
 
     <TextView
         android:id="@+id/tv_refuse"
-        android:layout_width="60dp"
-        android:layout_height="30dp"
-        android:background="@color/colorAccent"
-        android:text="@string/employee_apply_refuse"
-        android:textColor="@color/colorWhite"
-        android:gravity="center"
-        android:layout_gravity="center_vertical"
+        android:layout_width="50dp"
+        android:layout_height="28dp"
+        android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
-        />
+        android:layout_toLeftOf="@id/tv_agree"
+        android:background="@drawable/shape_select_border_red"
+        android:gravity="center"
+        android:text="@string/employee_apply_refuse"
+        android:textColor="@color/operate_refuse" />
 
-
-
-</LinearLayout>
+</RelativeLayout>

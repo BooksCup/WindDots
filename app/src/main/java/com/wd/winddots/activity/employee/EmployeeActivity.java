@@ -1,7 +1,9 @@
 package com.wd.winddots.activity.employee;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -11,7 +13,6 @@ import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.adapter.employee.EmployeeAdapter;
 import com.wd.winddots.cons.Constant;
-import com.wd.winddots.desktop.list.employee.activity.UserApplyActivity;
 import com.wd.winddots.entity.PageInfo;
 import com.wd.winddots.entity.User;
 import com.wd.winddots.utils.SpHelper;
@@ -29,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 员工
@@ -75,7 +77,7 @@ public class EmployeeActivity extends BaseActivity
         if (Constant.USER_IS_SUPER_ADMIN == SpHelper.getInstance(this).getInt("userIsSuperAdmin")) {
             View header = new EmployeeHeaderView(this);
             header.setOnClickListener(view -> {
-                Intent intent = new Intent(EmployeeActivity.this, UserApplyActivity.class);
+                Intent intent = new Intent(EmployeeActivity.this, EmployeeApplyActivity.class);
                 startActivity(intent);
             });
             mAdapter.setHeaderView(header);
@@ -89,6 +91,15 @@ public class EmployeeActivity extends BaseActivity
 
     public void initData() {
         getData();
+    }
+
+    @OnClick({R.id.iv_back})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+        }
     }
 
     @Override

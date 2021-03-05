@@ -1,9 +1,6 @@
-package com.wd.winddots.desktop.list.employee.adapter;
+package com.wd.winddots.adapter.employee;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.provider.Settings;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -26,13 +23,13 @@ import androidx.annotation.Nullable;
  *
  * @author zhou
  */
-public class UserApplyAdapter extends BaseQuickAdapter<UserApply, BaseViewHolder> {
+public class EmployeeApplyAdapter extends BaseQuickAdapter<UserApply, BaseViewHolder> {
 
     private VolleyUtil mVolleyUtil;
     private LoadingDialog mDialog;
     private Context mContext;
 
-    public UserApplyAdapter(Context context, int layoutResId, @Nullable List<UserApply> userApplyList) {
+    public EmployeeApplyAdapter(Context context, int layoutResId, @Nullable List<UserApply> userApplyList) {
         super(layoutResId, userApplyList);
         mContext = context;
         mVolleyUtil = VolleyUtil.getInstance(mContext);
@@ -83,21 +80,21 @@ public class UserApplyAdapter extends BaseQuickAdapter<UserApply, BaseViewHolder
             mDialog.dismiss();
             getData().remove(position);
             notifyDataSetChanged();
-            if (null != userApplyListener) {
-                userApplyListener.updateUserApplyNumber(getData().size());
+            if (null != employeeApplyListener) {
+                employeeApplyListener.updateUserApplyNumber(getData().size());
             }
         }, volleyError -> {
             mVolleyUtil.handleCommonErrorResponse(mContext, volleyError);
         });
     }
 
-    public interface UserApplyListener {
+    public interface EmployeeApplyListener {
         void updateUserApplyNumber(int userApplyNumber);
     }
 
-    public void setUserApplyListener(UserApplyListener userApplyListener) {
-        this.userApplyListener = userApplyListener;
+    public void setEmployeeApplyListener(EmployeeApplyListener employeeApplyListener) {
+        this.employeeApplyListener = employeeApplyListener;
     }
 
-    private UserApplyListener userApplyListener;
+    private EmployeeApplyListener employeeApplyListener;
 }
