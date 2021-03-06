@@ -84,6 +84,7 @@ public class EmployeeApplyAdapter extends BaseQuickAdapter<UserApply, BaseViewHo
                 employeeApplyListener.updateUserApplyNumber(getData().size());
             }
         }, volleyError -> {
+            mDialog.dismiss();
             mVolleyUtil.handleCommonErrorResponse(mContext, volleyError);
         });
     }

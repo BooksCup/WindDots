@@ -169,4 +169,11 @@ public class EmployeeActivity extends BaseActivity
             mVolleyUtil.handleCommonErrorResponse(EmployeeActivity.this, volleyError);
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPage = 1;
+        getData();
+    }
 }

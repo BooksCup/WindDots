@@ -1,6 +1,7 @@
 package com.wd.winddots.activity.app;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class AppStoreActivity extends BaseActivity implements
         BaseQuickAdapter.RequestLoadMoreListener,
@@ -70,6 +72,14 @@ public class AppStoreActivity extends BaseActivity implements
         mAppSrl.setRefreshing(true);
     }
 
+    @OnClick({R.id.iv_back})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+        }
+    }
 
     private void getData() {
         String url = Constant.APP_BASE_URL + "app?userId=" + SpHelper.getInstance(this).getUserId() +
