@@ -2,11 +2,14 @@ package com.wd.winddots.adapter.app;
 
 import android.net.Uri;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.winddots.R;
+import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.App;
 
 import java.util.List;
@@ -30,6 +33,20 @@ public class AppStoreAdapter extends BaseQuickAdapter<App, BaseViewHolder> {
         } else {
             mIconSdv.setImageResource(R.mipmap.default_user_avatar);
         }
+
+        TextView mInstallTv = helper.getView(R.id.tv_install);
+        TextView mInstalledTv = helper.getView(R.id.tv_installed);
+
+        if (Constant.IS_INSTALL.equals(item.getIsInstall())) {
+            // 已安装
+            mInstallTv.setVisibility(View.GONE);
+            mInstalledTv.setVisibility(View.VISIBLE);
+        } else {
+            // 未安装
+            mInstallTv.setVisibility(View.VISIBLE);
+            mInstalledTv.setVisibility(View.GONE);
+        }
+
     }
 
 }

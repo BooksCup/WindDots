@@ -20,11 +20,11 @@ import com.wd.winddots.activity.app.AppStoreActivity;
 import com.wd.winddots.activity.check.fabric.FabricCheckProcessActivity;
 import com.wd.winddots.activity.check.fabric.FabricCheckTaskActivity;
 import com.wd.winddots.activity.employee.EmployeeActivity;
+import com.wd.winddots.activity.stock.in.StockInActivity;
 import com.wd.winddots.activity.stock.in.StockInApplyActivity;
 import com.wd.winddots.activity.work.DeliveryActivity;
 import com.wd.winddots.adapter.work.AppAdapter;
 import com.wd.winddots.cons.Constant;
-import com.wd.winddots.desktop.activity.StoreActivity;
 import com.wd.winddots.desktop.list.card.activity.FriendListActivity;
 import com.wd.winddots.desktop.list.contact.activity.ContactListActivity;
 import com.wd.winddots.desktop.list.goods.activity.GoodsListActivity;
@@ -243,7 +243,7 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 break;
             case "StockIn":
                 // 入库
-                intent = new Intent(getActivity(), StockInApplyActivity.class);
+                intent = new Intent(getActivity(), StockInActivity.class);
                 startActivity(intent);
                 break;
             case "11":

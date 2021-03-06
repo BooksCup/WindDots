@@ -55,4 +55,9 @@ public class Constant {
     public static final int USER_IS_SUPER_ADMIN = 1;
     public static final String USER_IS_FABRIC_CHECK_ADMIN = "1";
 
+    /**
+     * 已安装
+     */
+    public static final String IS_INSTALL = "1";
+
 }

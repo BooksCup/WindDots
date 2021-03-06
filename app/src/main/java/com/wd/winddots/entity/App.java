@@ -14,6 +14,8 @@ public class App {
     private String describes;
     private Integer sort;
 
+    private String isInstall;
+
     public String getAppId() {
         return appId;
     }
@@ -62,4 +64,11 @@ public class App {
         this.sort = sort;
     }
 
+    public String getIsInstall() {
+        return isInstall;
+    }
+
+    public void setIsInstall(String isInstall) {
+        this.isInstall = isInstall;
+    }
 }
