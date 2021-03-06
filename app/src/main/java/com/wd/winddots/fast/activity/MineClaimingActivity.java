@@ -61,7 +61,7 @@ public class MineClaimingActivity extends CommonActivity
         addBadyView(R.layout.activity_mine_claiming);
 
         mRightIcon.setVisibility(View.VISIBLE);
-        mRightIcon.setImageResource(R.mipmap.bottom_searchadd);
+        mRightIcon.setImageResource(R.mipmap.icon_bottom_add);
 
         mSwipeRefreshLayout = findViewById(R.id.activity_mine_claiming_srl);
         mRecyclerView = findViewById(R.id.activity_mine_claiming_rlist);

@@ -10,48 +10,57 @@ import android.widget.RelativeLayout;
 import com.wd.winddots.R;
 
 import androidx.annotation.Nullable;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
+/**
+ * 底部搜索
+ *
+ * @author zhou
+ */
 public class BottomSearchBarView extends RelativeLayout {
 
-    private ImageView mAddIcon;
-    private ImageView mSeaechIcon;
-    private BottomSearchBarViewClickListener iconClickListener;
+    @BindView(R.id.iv_add)
+    ImageView mAddIv;
 
+    @BindView(R.id.iv_search)
+    ImageView mSearchIv;
+
+    private BottomSearchBarViewClickListener mBottomSearchBarViewClickListener;
 
     public BottomSearchBarView(Context context) {
         super(context);
-        setUpUI();
+        initView();
     }
 
     public BottomSearchBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setUpUI();
+        initView();
     }
 
     public BottomSearchBarView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setUpUI();
+        initView();
     }
 
 
-    private void setUpUI() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_bottom_searchbar, this, false);
-        mAddIcon = view.findViewById(R.id.bottom_search_add);
-        mSeaechIcon = view.findViewById(R.id.bottom_search_search);
-        mAddIcon.setOnClickListener(new OnClickListener() {
+    private void initView() {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_bottom_search_bar, this, false);
+        ButterKnife.bind(this, view);
+        mAddIv.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (iconClickListener != null) {
-                    iconClickListener.onAddIconDidClick();
+                if (mBottomSearchBarViewClickListener != null) {
+                    mBottomSearchBarViewClickListener.onAddIconDidClick();
                 }
             }
         });
 
-        mSeaechIcon.setOnClickListener(new OnClickListener() {
+        mSearchIv.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (iconClickListener != null) {
-                    iconClickListener.onSearchIconDidClick();
+                if (mBottomSearchBarViewClickListener != null) {
+                    mBottomSearchBarViewClickListener.onSearchIconDidClick();
                 }
             }
         });
@@ -59,17 +68,16 @@ public class BottomSearchBarView extends RelativeLayout {
     }
 
     public void setOnIconClickListener(@Nullable BottomSearchBarViewClickListener listener) {
-        iconClickListener = listener;
+        mBottomSearchBarViewClickListener = listener;
     }
 
-    public void setAddIconVisibility(int visibility){
-        mAddIcon.setVisibility(visibility);
+    public void setAddIconVisibility(int visibility) {
+        mAddIv.setVisibility(visibility);
     }
 
-    public void setSearchIconVisibility(int visibility){
-        mSeaechIcon.setVisibility(visibility);
+    public void setSearchIconVisibility(int visibility) {
+        mSearchIv.setVisibility(visibility);
     }
-
 
     public interface BottomSearchBarViewClickListener {
         /*
@@ -82,6 +90,5 @@ public class BottomSearchBarView extends RelativeLayout {
          * */
         void onSearchIconDidClick();
     }
-
 
 }

@@ -21,7 +21,7 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@mipmap/bottom_search"
+                android:src="@mipmap/icon_bottom_search"
                 android:tint="#C2C2C2"
                 android:layout_marginHorizontal="8dp"
                 android:layout_gravity="center_vertical"

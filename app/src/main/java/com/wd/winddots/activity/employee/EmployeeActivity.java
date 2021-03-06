@@ -1,18 +1,17 @@
 package com.wd.winddots.activity.employee;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.adapter.employee.EmployeeAdapter;
 import com.wd.winddots.cons.Constant;
+import com.wd.winddots.entity.EmployeeVo;
 import com.wd.winddots.entity.PageInfo;
 import com.wd.winddots.entity.User;
 import com.wd.winddots.utils.SpHelper;
@@ -32,6 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+
 /**
  * 员工
  *
@@ -46,6 +46,8 @@ public class EmployeeActivity extends BaseActivity
 
     @BindView(R.id.rv_employee)
     RecyclerView mEmployeeRv;
+
+    TextView mUserApplyNumTv;
 
     EmployeeAdapter mAdapter;
 
@@ -80,6 +82,7 @@ public class EmployeeActivity extends BaseActivity
                 Intent intent = new Intent(EmployeeActivity.this, EmployeeApplyActivity.class);
                 startActivity(intent);
             });
+            mUserApplyNumTv = header.findViewById(R.id.tv_user_apply_num);
             mAdapter.setHeaderView(header);
         }
     }
@@ -122,11 +125,11 @@ public class EmployeeActivity extends BaseActivity
     private void getData() {
         String url;
         try {
-            url = Constant.APP_BASE_URL + "user/search?enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId()
+            url = Constant.APP_BASE_URL + "employee/search?enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId()
                     + "&pageNum=" + mPage + "&pageSize=" + mPageSize +
                     "&keyword=" + URLEncoder.encode(mKeyword, "utf-8");
         } catch (UnsupportedEncodingException e) {
-            url = Constant.APP_BASE_URL + "user/search?enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId()
+            url = Constant.APP_BASE_URL + "employee/search?enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId()
                     + "&pageNum=" + mPage + "&pageSize=" + mPageSize +
                     "&keyword=" + mKeyword;
         }
@@ -134,9 +137,19 @@ public class EmployeeActivity extends BaseActivity
         mVolleyUtil.httpGetRequest(url, response -> {
             hideLoadingDialog();
             mEmployeeSrl.setRefreshing(false);
-            PageInfo<User> userPageInfo = JSON.parseObject(response, new TypeReference<PageInfo<User>>() {
-            });
+            EmployeeVo employeeVo = JSON.parseObject(response, EmployeeVo.class);
+            PageInfo<User> userPageInfo = employeeVo.getUserPageInfo();
             List<User> userList = userPageInfo.getList();
+            int userApplyNum = employeeVo.getApplyNum();
+            if (userApplyNum <= 0) {
+                mUserApplyNumTv.setVisibility(View.INVISIBLE);
+            } else if (userApplyNum > 99) {
+                mUserApplyNumTv.setVisibility(View.VISIBLE);
+                mUserApplyNumTv.setText("99+");
+            } else {
+                mUserApplyNumTv.setVisibility(View.VISIBLE);
+                mUserApplyNumTv.setText(String.valueOf(userApplyNum));
+            }
 
             if (mPage == 1) {
                 mUserList.clear();

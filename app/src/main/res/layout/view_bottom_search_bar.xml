@@ -3,31 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:background="@color/colorF0"
-    android:orientation="horizontal"
-    >
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rlist"
+    android:orientation="horizontal">
+
+    <View
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <ImageView
-        android:id="@+id/bottom_search_search"
+        android:id="@+id/iv_search"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_alignParentRight="true"
         android:paddingVertical="13dp"
-        android:layout_width="60dp"
-        android:layout_height="45dp"
         android:src="@mipmap/icon_bottom_search"
-
-        />
+        android:visibility="gone" />
 
     <ImageView
-        android:id="@+id/bottom_search_add"
-        android:layout_toLeftOf="@id/bottom_search_search"
-        android:paddingVertical="13dp"
-        android:layout_width="60dp"
+        android:id="@+id/iv_add"
+        android:layout_width="45dp"
         android:layout_height="45dp"
-        android:src="@mipmap/icon_bottom_add"
-        />
+        android:layout_toLeftOf="@id/iv_search"
+        android:paddingVertical="13dp"
+        android:src="@mipmap/icon_bottom_add" />
 
 </LinearLayout>

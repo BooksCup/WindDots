@@ -421,6 +421,7 @@
             android:name=".activity.employee.EmployeeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activity.employee.EmployeeApplyActivity"
             android:screenOrientation="portrait"
@@ -468,6 +469,11 @@
             android:name=".activity.work.QueryGoodsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
+        <activity
+            android:name=".activity.app.AppStoreActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <!-- 条形码扫描 -->
         <activity

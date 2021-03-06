@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="5dp"
+    android:paddingHorizontal="15dp"
+    >
+
+    <ImageView
+        android:id="@+id/item_store_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/emoji"
+        />
+
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/item_store_nameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="应用"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textColor="@color/color32"
+            />
+
+        <TextView
+            android:id="@+id/item_store_descText"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color50"
+            android:textSize="11sp"
+            />
+
+        <TextView
+            android:id="@+id/item_store_downloadBtn"
+            android:layout_gravity="right"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:drawableRight="@mipmap/donwload"
+            android:textColor="@color/colorBlack"
+            android:textSize="13sp"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="3dp"
+            android:text="安装"
+            android:gravity="center"
+            android:background="@color/colorF0"
+            android:layout_marginTop="5dp"
+            />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/item_store_alreadyText"
+            android:layout_gravity="right"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="13sp"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="3dp"
+            android:text="已安装"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            />
+
+        <ProgressBar
+            android:visibility="gone"
+            android:layout_gravity="right"
+            android:id="@+id/item_store_progress_bar"
+            android:indeterminateTint="@color/colorBlack"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="5dp"
+            />
+    </LinearLayout>
+
+</LinearLayout>

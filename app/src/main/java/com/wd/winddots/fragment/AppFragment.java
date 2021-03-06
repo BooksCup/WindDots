@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.zxing.client.android.CaptureActivity2;
 import com.wd.winddots.R;
+import com.wd.winddots.activity.app.AppStoreActivity;
 import com.wd.winddots.activity.check.fabric.FabricCheckProcessActivity;
 import com.wd.winddots.activity.check.fabric.FabricCheckTaskActivity;
 import com.wd.winddots.activity.employee.EmployeeActivity;
@@ -23,6 +24,7 @@ import com.wd.winddots.activity.stock.in.StockInApplyActivity;
 import com.wd.winddots.activity.work.DeliveryActivity;
 import com.wd.winddots.adapter.work.AppAdapter;
 import com.wd.winddots.cons.Constant;
+import com.wd.winddots.desktop.activity.StoreActivity;
 import com.wd.winddots.desktop.list.card.activity.FriendListActivity;
 import com.wd.winddots.desktop.list.contact.activity.ContactListActivity;
 import com.wd.winddots.desktop.list.goods.activity.GoodsListActivity;
@@ -37,6 +39,7 @@ import com.wd.winddots.fast.activity.MeAttendanceActivity;
 import com.wd.winddots.fast.activity.MineClaimingActivity;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.VolleyUtil;
+import com.wd.winddots.view.BottomSearchBarView;
 import com.wd.winddots.view.dialog.ConfirmDialog;
 
 import java.util.ArrayList;
@@ -58,7 +61,10 @@ import butterknife.ButterKnife;
 import cn.jmessage.support.qiniu.android.utils.StringUtils;
 
 public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
-        BaseQuickAdapter.OnItemClickListener, View.OnClickListener, BaseQuickAdapter.OnItemLongClickListener {
+        BaseQuickAdapter.OnItemClickListener,
+        View.OnClickListener,
+        BottomSearchBarView.BottomSearchBarViewClickListener,
+        BaseQuickAdapter.OnItemLongClickListener {
 
     private static final int REQUEST_CODE_LOCATION = 1;
     private static final int REQUEST_CODE_CAMERA = 2;
@@ -72,6 +78,9 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     @BindView(R.id.srl_app)
     SwipeRefreshLayout mAppSrl;
+
+    @BindView(R.id.view_bottom_search_bar)
+    BottomSearchBarView mBottomSearchBarView;
 
     private AppAdapter mAppAdapter;
     private AppAdapter mFastAppAdapter;
@@ -111,6 +120,7 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     private void initListener() {
         mAppAdapter.setOnItemClickListener(this);
         mFastAppAdapter.setOnItemClickListener(this);
+        mBottomSearchBarView.setOnIconClickListener(this);
     }
 
     @Override
@@ -241,6 +251,17 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 startActivity(intent);
                 break;
         }
+    }
+
+    @Override
+    public void onAddIconDidClick() {
+        Intent intent = new Intent(getActivity(), AppStoreActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onSearchIconDidClick() {
+
     }
 
     /**
