@@ -23,6 +23,7 @@ import com.wd.winddots.activity.employee.EmployeeActivity;
 import com.wd.winddots.activity.order.OrderActivity;
 import com.wd.winddots.activity.stock.in.StockInActivity;
 import com.wd.winddots.activity.stock.in.StockInApplyActivity;
+import com.wd.winddots.activity.stock.out.StockOutActivity;
 import com.wd.winddots.activity.stock.out.StockOutApplyActivity;
 import com.wd.winddots.activity.work.DeliveryActivity;
 import com.wd.winddots.adapter.work.AppAdapter;
@@ -31,7 +32,6 @@ import com.wd.winddots.desktop.list.card.activity.FriendListActivity;
 import com.wd.winddots.desktop.list.contact.activity.ContactListActivity;
 import com.wd.winddots.desktop.list.goods.activity.GoodsListActivity;
 import com.wd.winddots.desktop.list.invoice.activity.InvoiceListActivity;
-import com.wd.winddots.desktop.list.order.activity.OrderListActivity;
 import com.wd.winddots.desktop.list.quote.activity.QuoteListActivity;
 import com.wd.winddots.desktop.list.requirement.activity.RequirementActivity;
 import com.wd.winddots.desktop.list.warehouse.activity.WarehouseListActivity;
@@ -253,7 +253,11 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 // 出库单
                 intent = new Intent(getActivity(), StockOutApplyActivity.class);
                 startActivity(intent);
-                // 出库单
+                break;
+            case "StockOut":
+                // 出库
+                intent = new Intent(getActivity(), StockOutActivity.class);
+                startActivity(intent);
                 break;
             case "11":
                 intent = new Intent(getActivity(), DeliveryActivity.class);
