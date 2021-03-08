@@ -1,6 +1,5 @@
 package com.wd.winddots.activity.select;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;

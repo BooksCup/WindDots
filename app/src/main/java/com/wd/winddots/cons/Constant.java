@@ -65,4 +65,9 @@ public class Constant {
      */
     public static final String ROLE_WAREHOUSE_KEEPER = "1";
 
+    /**
+     * 内部仓库
+     */
+    public static final String WAREHOUSE_IS_OWN = "1";
+
 }

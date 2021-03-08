@@ -19,6 +19,7 @@ import com.kevin.photo_browse.callabck.ClickCallback;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.select.SelectOrderActivity;
+import com.wd.winddots.activity.select.SelectWareHouseActivity;
 import com.wd.winddots.adapter.image.ImageBrowserAdapter;
 import com.wd.winddots.adapter.stock.in.StockGoodsSpecAdapter;
 import com.wd.winddots.cons.Constant;
@@ -154,6 +155,9 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
     @BindView(R.id.tv_confirm_num_header)
     TextView mConfirmNumHeaderTv;
 
+    @BindView(R.id.ll_ware_house)
+    LinearLayout mWareHouseLl;
+
     ImageBrowserAdapter mImageBrowserAdapter;
     StockGoodsSpecAdapter mStockGoodsSpecAdapter;
 
@@ -179,7 +183,7 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
     }
 
     @OnClick({R.id.iv_back, R.id.rl_order, R.id.ll_goods_content,
-            R.id.ll_order_content, R.id.tv_draft, R.id.tv_scan,
+            R.id.ll_order_content, R.id.ll_ware_house, R.id.tv_draft, R.id.tv_scan,
             R.id.tv_submit})
     public void onClick(View v) {
         Intent intent;
@@ -220,7 +224,9 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
                     mGoodsSpecLl.setVisibility(View.GONE);
                 }
                 break;
-
+            case R.id.ll_ware_house:
+                startActivity(new Intent(StockInDetailActivity.this, SelectWareHouseActivity.class));
+                break;
             case R.id.tv_draft:
                 break;
             case R.id.tv_scan:

@@ -384,6 +384,11 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
 
         <activity
+            android:name=".activity.select.SelectWareHouseActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
+        <activity
             android:name=".activity.check.fabric.AddSimpleOrderActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
