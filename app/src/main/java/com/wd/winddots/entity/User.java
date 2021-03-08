@@ -21,6 +21,10 @@ public class User implements Serializable {
     private String departmentName;
     private String jobName;
     private String phone;
+    /*
+    * 是否仓库管理员
+    * */
+    private String isFabricCheckAdmin;
     private boolean isDisable = false;
     private boolean select = false;
 
@@ -110,6 +114,14 @@ public class User implements Serializable {
 
     public void setSelect(boolean select) {
         this.select = select;
+    }
+
+    public String getIsFabricCheckAdmin() {
+        return isFabricCheckAdmin;
+    }
+
+    public void setIsFabricCheckAdmin(String isFabricCheckAdmin) {
+        this.isFabricCheckAdmin = isFabricCheckAdmin;
     }
 
     @Override

@@ -99,6 +99,7 @@ public class LoginActivity extends BaseActivity {
                             SpHelper.getInstance(LoginActivity.this).setString("name", user.getName());
                             SpHelper.getInstance(LoginActivity.this).setString("avatar", user.getAvatar());
                             SpHelper.getInstance(LoginActivity.this).setInt("userIsSuperAdmin", user.getIsSuperAdmin());
+                            SpHelper.getInstance(LoginActivity.this).setString("isFabricCheckAdmin", user.getIsFabricCheckAdmin());
                             MyApplication.USER_ID = user.getId();
                             MyApplication.ENTERPRISE_ID = user.getEnterpriseId();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));

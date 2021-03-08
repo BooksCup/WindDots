@@ -3,8 +3,12 @@ package com.wd.winddots.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.wd.winddots.cons.Constant;
+
 /**
- * SP帮助类 本地存储
+ * sharepreference工具类
+ *
+ * @author zhou
  */
 public class SpHelper {
 
@@ -13,8 +17,6 @@ public class SpHelper {
     public static final String enterpriseIdKey = "enterpriseId";
     public static final String avatarKey = "avatar";
     public static final String nameKey = "name";
-
-
 
     protected static SpHelper mSpHelper;
     private Context mContext;
@@ -78,6 +80,15 @@ public class SpHelper {
 
     public String getName() {
         return sp.getString(nameKey, "");
+    }
+
+    public boolean isFabricCheckAdmin() {
+        String isFabricCheckAdminKey = sp.getString("isFabricCheckAdmin", "");
+        if (Constant.USER_IS_FABRIC_CHECK_ADMIN.equals(isFabricCheckAdminKey)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

@@ -10,11 +10,10 @@ android {
 
         minSdkVersion 23
         targetSdkVersion 29
+
         versionCode 179
         versionName "1.7.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-
         ndk {
             //选择要添加的对应cpu类型的.so库。
             abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
@@ -116,11 +115,14 @@ dependencies {
     // butterknife
     implementation 'com.jakewharton:butterknife:10.2.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+
+
     // fresco
     implementation 'com.facebook.fresco:fresco:1.13.0'
 
-    //图片选择
+
     implementation 'com.github.HuanTanSheng:EasyPhotos:3.0.6'
+
 
     //数据持久化
     implementation "androidx.room:room-runtime:2.2.0-rc01"

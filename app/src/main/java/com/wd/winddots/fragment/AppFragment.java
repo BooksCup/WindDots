@@ -14,9 +14,10 @@ import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSONArray;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.zxing.client.android.CaptureActivity;
+import com.google.zxing.client.android.CaptureActivity2;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.check.fabric.FabricCheckProcessActivity;
+import com.wd.winddots.activity.check.fabric.FabricCheckTaskActivity;
 import com.wd.winddots.activity.employee.EmployeeActivity;
 import com.wd.winddots.activity.stock.in.StockInApplyActivity;
 import com.wd.winddots.activity.work.DeliveryActivity;
@@ -34,6 +35,7 @@ import com.wd.winddots.entity.App;
 import com.wd.winddots.entity.UserApp;
 import com.wd.winddots.fast.activity.MeAttendanceActivity;
 import com.wd.winddots.fast.activity.MineClaimingActivity;
+import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.VolleyUtil;
 import com.wd.winddots.view.dialog.ConfirmDialog;
 
@@ -215,8 +217,13 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 intent = new Intent(getActivity(), ContactListActivity.class);
                 startActivity(intent);
                 break;
-            case "WorkExamine"://盘点
-                intent = new Intent(getActivity(), FabricCheckProcessActivity.class);
+            case "WorkExamine":
+                // 盘点
+                if (SpHelper.getInstance(getActivity()).isFabricCheckAdmin()) {
+                    intent = new Intent(getActivity(), FabricCheckTaskActivity.class);
+                } else {
+                    intent = new Intent(getActivity(), FabricCheckProcessActivity.class);
+                }
                 startActivity(intent);
                 break;
             case "StockInApply":
@@ -233,9 +240,7 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 intent = new Intent(getActivity(), DeliveryActivity.class);
                 startActivity(intent);
                 break;
-
         }
-
     }
 
     /**
@@ -258,7 +263,7 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                         startActivity(new Intent(getActivity(), MeAttendanceActivity.class));
                         break;
                     case REQUEST_CODE_CAMERA:
-                        Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                        Intent intent = new Intent(getActivity(), CaptureActivity2.class);
                         Objects.requireNonNull(getActivity()).startActivityForResult(intent, REQUEST_CODE_SCAN);
                         break;
                 }
@@ -295,7 +300,7 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                     startActivity(new Intent(getActivity(), MeAttendanceActivity.class));
                     break;
                 case REQUEST_CODE_CAMERA:
-                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                    Intent intent = new Intent(getActivity(), CaptureActivity2.class);
                     Objects.requireNonNull(getActivity()).startActivityForResult(intent, REQUEST_CODE_SCAN);
                     break;
             }
