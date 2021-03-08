@@ -84,23 +84,45 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
         itemHolder.mOrderNoTv.setText("#" + fabricCheckTask.getOrderNo());
         itemHolder.mThemeTv.setText(fabricCheckTask.getOrderTheme());
 
+//        if (fabricCheckTask.getDeliveryDates() != null && fabricCheckTask.getDeliveryDates().size() > 0){
+//            itemHolder.tvDate.setText(fabricCheckTask.getDeliveryDates().get(0).getDeliveryTime());
+//        }else {
+//            itemHolder.tvDate.setText("");
+//        }
         String goodsPhoto = CommonUtil.getFirstPhotoFromJsonList(fabricCheckTask.getGoodsPhotos());
         if (!TextUtils.isEmpty(goodsPhoto)) {
            // itemHolder.mGoodsPhotoSdv.setImageURI(Uri.parse(goodsPhoto));
-//            GlideApp.with(mContext).load(goodsPhoto + Utils.OSSImageSize(200)).into(itemHolder.mGoodsPhotoSdv);
+            GlideApp.with(mContext).load(goodsPhoto + Utils.OSSImageSize(200)).into(itemHolder.mGoodsPhotoSdv);
         } else {
             itemHolder.mGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
         }
         ((TitleItemHolder) holder).checkInfoAdapter.mContext = mContext;
         ((TitleItemHolder) holder).checkInfoAdapter.mFabricCheckTaskId = fabricCheckTask.getId();
+        ((TitleItemHolder) holder).checkInfoAdapter.goodsName = fabricCheckTask.getGoodsName();
+        ((TitleItemHolder) holder).checkInfoAdapter.goodsNo = fabricCheckTask.getGoodsNo();
+        if (fabricCheckTask.isOpen()){
+            (((TitleItemHolder) holder).llInfo).setVisibility(View.VISIBLE);
+        }else {
+            (((TitleItemHolder) holder).llInfo).setVisibility(View.GONE);
+        }
+        ((TitleItemHolder) holder).updateUI(position, fabricCheckTask.getFabricCheckLotInfoList());
 
         holder.itemView.setOnClickListener(v -> {
-            if ((((TitleItemHolder) holder).llInfo).getVisibility() == View.VISIBLE) {
-                (((TitleItemHolder) holder).llInfo).setVisibility(View.GONE);
-            } else {
+//            if ((((TitleItemHolder) holder).llInfo).getVisibility() == View.VISIBLE) {
+//                (((TitleItemHolder) holder).llInfo).setVisibility(View.GONE);
+//            } else {
+//                (((TitleItemHolder) holder).llInfo).setVisibility(View.VISIBLE);
+//                ((TitleItemHolder) hnnolder).updateUI(position, fabricCheckTask.getFabricCheckLotInfoList());
+//            }
+
+            fabricCheckTask.setOpen(!fabricCheckTask.isOpen());
+            if (fabricCheckTask.isOpen()){
                 (((TitleItemHolder) holder).llInfo).setVisibility(View.VISIBLE);
-                ((TitleItemHolder) holder).updateUI(position, fabricCheckTask.getFabricCheckLotInfoList());
+            }else {
+                (((TitleItemHolder) holder).llInfo).setVisibility(View.GONE);
             }
+            ((TitleItemHolder) holder).updateUI(position, fabricCheckTask.getFabricCheckLotInfoList());
+
             ((TitleItemHolder) holder).llInfoHeader.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -120,46 +142,6 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
             notifyDataSetChanged();*/
         });
 
-
-/*        } else {
-            SubItemHolder subHolder = (SubItemHolder) holder;
-            int groupIndex = mIndexMap.get(position).getGroupIndex();
-            int childIndex = mIndexMap.get(position).getChildIndex();
-            final FabricCheckLotInfo subItem = mDataList.get(groupIndex).getChildList().get(childIndex);
-            subHolder.itemView.setTag(subItem);
-            if (childIndex == 0) {
-                subHolder.mHeaderLl.setVisibility(View.VISIBLE);
-                subHolder.mBodyLl.setVisibility(View.GONE);
-                subHolder.mEditLl.setVisibility(View.GONE);
-            } else {
-                subHolder.mHeaderLl.setVisibility(View.GONE);
-                if (subItem.isEdit()) {
-                    subHolder.mBodyLl.setVisibility(View.GONE);
-                    subHolder.mEditLl.setVisibility(View.VISIBLE);
-                } else {
-                    subHolder.mBodyLl.setVisibility(View.VISIBLE);
-                    subHolder.mEditLl.setVisibility(View.GONE);
-                }
-            }
-            subHolder.mLotNoTv.setText(Utils.nullOrEmpty(subItem.getLotNo()));
-            subHolder.mLengthTv.setText(Utils.nullOrEmpty(subItem.getLength()));
-            subHolder.mWeightTv.setText(Utils.nullOrEmpty(subItem.getWeight()));
-//            subHolder.body.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    onSubItemClickListener.onItemClick(subItem);
-//                }
-//            });
-
-            subHolder.mAddIv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mDataList.get(groupIndex).getChildList().add(new FabricCheckLotInfo(true));
-                    notifyDataSetChanged();
-                }
-            });
-        }*/
-
     }
 
     class TitleItemHolder extends RecyclerView.ViewHolder {
@@ -172,6 +154,7 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
         LinearLayout llInfo;
         RecyclerView infoRecycler;
         LinearLayout llInfoHeader;
+        TextView tvDate;
 
         CheckInfoAdapter checkInfoAdapter;
 
@@ -183,6 +166,8 @@ public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricChec
             mOrderNoTv = itemView.findViewById(R.id.tv_order_no);
             mThemeTv = itemView.findViewById(R.id.tv_theme);
             llInfo = itemView.findViewById(R.id.ll_info);
+            tvDate = itemView.findViewById(R.id.tv_date);
+
             infoRecycler = itemView.findViewById(R.id.body_recycler);
 
             checkInfoAdapter = new CheckInfoAdapter();

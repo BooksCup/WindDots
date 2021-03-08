@@ -64,7 +64,7 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
             holder.mImageIv.setImageResource(R.mipmap.group_menber_add);
         } else {
             GlideApp.with(mContext)
-                    .load(imageEntity.getUrl())
+                    .load(imageEntity.getPath())
                     .placeholder(R.mipmap.default_img)
                     .error(R.mipmap.default_img)
                     .into(holder.mImageIv);

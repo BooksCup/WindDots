@@ -14,14 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.alibaba.fastjson.JSON;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.check.fabric.FabricCheckLotBrowseActivity;
 import com.wd.winddots.activity.check.fabric.FabricCheckLotProcessActivity;
-import com.wd.winddots.activity.check.fabric.FabricCheckLotTaskActivity;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.FabricCheckLotInfo;
 import com.wd.winddots.utils.Utils;
@@ -31,10 +27,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CheckInfoAdapter extends RecyclerView.Adapter<CheckInfoAdapter.ViewHolder> {
+public class CheckTaskInfoAdapter extends RecyclerView.Adapter<CheckTaskInfoAdapter.ViewHolder> {
 
     private List<FabricCheckLotInfo> lotInfos;
 
@@ -180,12 +178,6 @@ public class CheckInfoAdapter extends RecyclerView.Adapter<CheckInfoAdapter.View
                     String url = Constant.APP_BASE_URL + "fabricCheckLotInfo/addFabricCheckLotInfo";
                     Log.e("net666", JSON.toJSONString(params));
                     mVolleyUtil.httpPostRequest(url, params, response -> {
-                        if (null == response) {
-                            return;
-                        }
-                        Log.e("net666",response);
-                        FabricCheckLotInfo lotInfo = JSON.parseObject(response, FabricCheckLotInfo.class);
-                        fabricCheckLotInfo.setId(lotInfo.getId());
                         Toast.makeText(mContext, "保存成功", Toast.LENGTH_LONG).show();
                         fabricCheckLotInfo.setEdit(false);
                         notifyDataSetChanged();
@@ -200,32 +192,34 @@ public class CheckInfoAdapter extends RecyclerView.Adapter<CheckInfoAdapter.View
             holder.llEdit.setVisibility(View.GONE);
 
             holder.tvLotNo.setText(fabricCheckLotInfo.getLotNo());
+            holder.tvLotNo.setText(fabricCheckLotInfo.getLotNo());
             String status = "";
-            if ("1".equals(fabricCheckLotInfo.getStatus())){
+            if ("1".equals(fabricCheckLotInfo.getStatus())) {
                 status = "已完成";
-            }else {
+            } else {
                 status = "盘点中";
             }
             holder.tvStatus.setText(status);
 
             FabricCheckLotInfo.WarehouseIdVo warehouseIdVo = fabricCheckLotInfo.getGetByWarehouseIdVo();
-            if (null != warehouseIdVo){
+            if (null != warehouseIdVo) {
                 holder.tvNum.setText(Utils.nullOrEmpty(warehouseIdVo.getTotalNum()));
                 holder.tvWeight.setText(Utils.numberNullOrEmpty(warehouseIdVo.getWeightAfterTotal()) + "/" + Utils.numberNullOrEmpty(warehouseIdVo.getWeightBeforeTotal()));
                 holder.tvLength.setText(Utils.numberNullOrEmpty(warehouseIdVo.getLengthAfterTotal()) + "/" + Utils.numberNullOrEmpty(warehouseIdVo.getLengthBeforeTotal()));
-            }else {
+            } else {
                 holder.tvNum.setText("");
                 holder.tvWeight.setText("");
                 holder.tvLength.setText("");
             }
+
             holder.llBody.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View view) { //FabricCheckLotBrowseActivity  FabricCheckLotProcessActivity
                     Intent intent;
                     if ("1".equals(fabricCheckLotInfo.getStatus())) {
                         intent = new Intent(mContext, FabricCheckLotBrowseActivity.class);
                     } else {
-                        intent = new Intent(mContext, FabricCheckLotTaskActivity.class);
+                        intent = new Intent(mContext, FabricCheckLotProcessActivity.class);
 
                     }
                     intent.putExtra("data", fabricCheckLotInfo.getId());

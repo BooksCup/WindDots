@@ -20,16 +20,15 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
-        <EditText
+        <TextView
             android:id="@+id/et_weight"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:textSize="13sp"
-            android:hint="输入数量"
-            android:inputType="numberDecimal"
-            android:background="@null"/>
+            android:text="1213.56/2345.67"
+            android:singleLine="true"/>
 
     </LinearLayout>
     <LinearLayout
@@ -37,16 +36,15 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
-        <EditText
+        <TextView
             android:id="@+id/et_length"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:textSize="13sp"
-            android:hint="输入数量"
-            android:inputType="numberDecimal"
-            android:background="@null"/>
+            android:text="1213.56/2345.67"
+            android:singleLine="true"/>
     </LinearLayout>
     <TextView
         android:id="@+id/tv_count"

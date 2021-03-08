@@ -160,8 +160,9 @@ public class AddSimpleOrderActivity extends BaseActivity {
                     if (null != data) {
                         String goodsId = data.getStringExtra("goodsId");
                         String goodsName = data.getStringExtra("goodsName");
+                        String goodsNo = data.getStringExtra("goodsNo");
                         mGoodsId = goodsId;
-                        mGoodsNameTv.setText(goodsName);
+                        mGoodsNameTv.setText(goodsName + "(" + goodsNo + ")");
                         mGoodsNameTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
                     }
                     break;

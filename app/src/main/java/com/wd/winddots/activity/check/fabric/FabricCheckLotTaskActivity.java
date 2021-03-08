@@ -1,9 +1,12 @@
 package com.wd.winddots.activity.check.fabric;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -42,11 +45,18 @@ public class FabricCheckLotTaskActivity extends FragmentActivity {
     @BindView(R.id.rv_check)
     RecyclerView mCheckRv;
 
+    @BindView(R.id.tv_title)
+    TextView mTitleTv;
+
     private FabricCheckTaskLotAdapter mAdapter;
 
     private List<FabricCheckTaskLot> mDataSource = new ArrayList<>();
 
     private String mId;
+    private String mGoodsName;
+    private String mGoodsNo;
+    private String mStatus;
+    private String mFabricCheckTaskId;
 
 
     @Override
@@ -61,16 +71,21 @@ public class FabricCheckLotTaskActivity extends FragmentActivity {
 
     }
 
-    private void initView(){
+    private void initView() {
         Intent intent = getIntent();
         mId = intent.getStringExtra("data");
-        mAdapter = new FabricCheckTaskLotAdapter(R.layout.item_fabric_check_task_number,mDataSource);
+        mGoodsName = intent.getStringExtra("goodsName");
+        mGoodsNo = intent.getStringExtra("goodsNo");
+        mStatus = intent.getStringExtra("status");
+        mFabricCheckTaskId = intent.getStringExtra("fabricCheckTaskId");
+        mTitleTv.setText(Utils.nullOrEmpty(mGoodsNo) + "(" + Utils.nullOrEmpty(mGoodsName) + ")");
+        mAdapter = new FabricCheckTaskLotAdapter(R.layout.item_fabric_check_task_number, mDataSource);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mCheckRv.setLayoutManager(layoutManager);
         mCheckRv.setAdapter(mAdapter);
     }
 
-    @OnClick({R.id.iv_back,R.id.ll_save})
+    @OnClick({R.id.iv_back, R.id.ll_save,R.id.tv_delete})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -79,69 +94,117 @@ public class FabricCheckLotTaskActivity extends FragmentActivity {
             case R.id.ll_save:
                 onSaveDidClick();
                 break;
+            case R.id.tv_delete:
+                onDeleteDidClick();
+                break;
         }
     }
 
 
-    private void getData(){
+    private void getData() {
         String url = Constant.APP_BASE_URL + "fabricCheckRecord/searchAll?checkLotInfoId=" + mId;
 
-        Log.e("net666",url);
+        Log.e("net666", url);
 
         mVolleyUtil.httpGetRequest(url, response -> {
 
-           if (null == response){
-               return;
-           }
-            List<FabricCheckTaskLot> list = JSON.parseArray(response,FabricCheckTaskLot.class);
-           if (list.size() == 0){
-               list.add(new FabricCheckTaskLot());
-           }
-           mDataSource.addAll(list);
-           mAdapter.notifyDataSetChanged();
+            if (null == response) {
+                return;
+            }
+            List<FabricCheckTaskLot> list = JSON.parseArray(response, FabricCheckTaskLot.class);
+
+            if (list == null ||  list.size() == 0) {
+                list = new ArrayList<>();
+                list.add(new FabricCheckTaskLot());
+            }
+            mDataSource.addAll(list);
+            mAdapter.notifyDataSetChanged();
         }, volleyError -> {
             Log.e("net666", String.valueOf(volleyError));
             mVolleyUtil.handleCommonErrorResponse(this, volleyError);
         });
     }
 
-    private void onSaveDidClick(){
+    private void onSaveDidClick() {
+
+        if ("1".equals(mStatus)){
+            Toast.makeText(this, "该盘点已完成,不能再次更改", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         List<FabricCheckTaskLot> list = mAdapter.getData();
         List<Map> paramsMaps = new ArrayList<>();
-        for (int i = 0;i < list.size();i++){
+        for (int i = 0; i < list.size(); i++) {
             FabricCheckTaskLot lotItem = list.get(i);
             List<FabricCheckTaskRecord> recordList = lotItem.getFabricCheckRecords();
-            if (recordList == null || recordList.size() == 0){
+            if (recordList == null || recordList.size() == 0) {
                 continue;
             }
-            if (StringUtils.isNullOrEmpty(lotItem.getDeliveryDate())){
-                Toast.makeText(this,"请先选择日期",Toast.LENGTH_LONG).show();
+            if (StringUtils.isNullOrEmpty(lotItem.getDeliveryDate())) {
+                Toast.makeText(this, "请先选择日期", Toast.LENGTH_LONG).show();
                 return;
             }
-            for (int m = 0;m < recordList.size();m++){
+            for (int m = 0; m < recordList.size(); m++) {
                 FabricCheckTaskRecord fabricCheckTaskRecord = recordList.get(m);
-                Map<String,String> map = new HashMap<>();
-                map.put("deliveryDate",lotItem.getDeliveryDate());
-                map.put("sno",m + "");
+                Map<String, String> map = new HashMap<>();
+                map.put("deliveryDate", lotItem.getDeliveryDate());
+                map.put("sno", m + "");
                 map.put("weightBefore", Utils.nullOrEmpty(fabricCheckTaskRecord.getWeightBefore()));
-                map.put("lengthBefore",Utils.nullOrEmpty(fabricCheckTaskRecord.getLengthBefore()));
-                map.put("checkLotInfoId",mId);
+                map.put("lengthBefore", Utils.nullOrEmpty(fabricCheckTaskRecord.getLengthBefore()));
+                map.put("checkLotInfoId", mId);
+                map.put("modifyTime","modifyTimeApply");
+                map.put("fabricCheckTaskId",mFabricCheckTaskId);
+                if (!StringUtils.isNullOrEmpty(fabricCheckTaskRecord.getId())) {
+                    map.put("id", fabricCheckTaskRecord.getId());
+                }
                 paramsMaps.add(map);
             }
         }
 
-        String url = Constant.APP_BASE_URL + "fabricCheckRecord";
+        String url = Constant.APP_BASE_URL + "fabricCheckRecord?&modifyTime=modifyTimeApply&fabricCheckTaskId=" + mFabricCheckTaskId;
         String paramsJson = JSON.toJSONString(paramsMaps);
-        Log.e("net666",paramsJson);
-        Map<String,String> params = new HashMap<>();
-        params.put("fabricCheckRecords",paramsJson);
+        Log.e("net666", paramsJson);
+        Map<String, String> params = new HashMap<>();
+        params.put("fabricCheckRecords", paramsJson);
         mVolleyUtil.httpPostRequest(url, params, response -> {
-            Toast.makeText(this,"保存成功",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show();
+            finish();
         }, volleyError -> {
             mVolleyUtil.handleCommonErrorResponse(this, volleyError);
             Log.e("net666", String.valueOf(volleyError));
         });
 
+    }
+
+    /*
+    * 点击删除
+    * */
+    private void onDeleteDidClick(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("确定要删除该盘点吗?");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String url = Constant.APP_BASE_URL + "fabricCheckLotInfo/" + mId;
+                Map<String,String> params = new HashMap<>();
+                params.put("isDelete","1");
+                mVolleyUtil.httpPutRequest(url, params, response -> {
+                    Toast.makeText(FabricCheckLotTaskActivity.this, "删除成功", Toast.LENGTH_LONG).show();
+                    finish();
+                }, volleyError -> {
+                    mVolleyUtil.handleCommonErrorResponse(FabricCheckLotTaskActivity.this, volleyError);
+                });
+            }
+        });
+
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.show();
     }
 }

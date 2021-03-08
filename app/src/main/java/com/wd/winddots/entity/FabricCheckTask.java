@@ -15,9 +15,11 @@ public class FabricCheckTask {
     private String goodsPhotos;
     private String relatedCompanyName;
     private String relatedCompanyShortName;
-    private String deliveryDates;
     private String orderNo;
     private String orderTheme;
+    private String deliveryDate;
+    private List<DeliveryDate> deliveryDates;
+    private boolean open = false;
 
     private List<FabricCheckLotInfo> fabricCheckLotInfoList;
 
@@ -61,13 +63,6 @@ public class FabricCheckTask {
         this.relatedCompanyShortName = relatedCompanyShortName;
     }
 
-    public String getDeliveryDates() {
-        return deliveryDates;
-    }
-
-    public void setDeliveryDates(String deliveryDates) {
-        this.deliveryDates = deliveryDates;
-    }
 
     public String getOrderNo() {
         return orderNo;
@@ -99,5 +94,29 @@ public class FabricCheckTask {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
+    }
+
+    public String getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(String deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public List<DeliveryDate> getDeliveryDates() {
+        return deliveryDates;
+    }
+
+    public void setDeliveryDates(List<DeliveryDate> deliveryDates) {
+        this.deliveryDates = deliveryDates;
     }
 }

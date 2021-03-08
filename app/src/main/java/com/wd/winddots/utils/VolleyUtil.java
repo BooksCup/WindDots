@@ -16,7 +16,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.wd.winddots.R;
-import com.wd.winddots.register.activity.SearchEnterpriseActivity;
 
 import java.util.Map;
 
@@ -97,8 +96,14 @@ public class VolleyUtil {
 
     public void handleCommonErrorResponse(Context context, VolleyError volleyError) {
         if (volleyError instanceof ServerError) {
-            Toast.makeText(context, R.string.server_error, Toast.LENGTH_SHORT).show();
-            return;
+            int errorCode = volleyError.networkResponse.statusCode;
+            if (errorCode == 400) {
+                Toast.makeText(context, R.string.server_error, Toast.LENGTH_SHORT).show();
+                return;
+            } else if (errorCode == 500) {
+                Toast.makeText(context, R.string.server_error, Toast.LENGTH_SHORT).show();
+                return;
+            }
         } else if (volleyError instanceof NetworkError) {
             Toast.makeText(context, R.string.network_unavailable, Toast.LENGTH_SHORT).show();
             return;

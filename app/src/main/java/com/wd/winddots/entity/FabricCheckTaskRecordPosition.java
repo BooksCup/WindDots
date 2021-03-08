@@ -11,8 +11,8 @@ import java.util.List;
 public class FabricCheckTaskRecordPosition {
 
     private String id;
-    private String position;
-    private List<FabricCheckTaskRecordFault> recordFaultList;
+    private String problemPosition;
+    private List<FabricCheckProblem> fabricCheckRecordProblemList;
 
     public String getId() {
         return id;
@@ -22,19 +22,19 @@ public class FabricCheckTaskRecordPosition {
         this.id = id;
     }
 
-    public String getPosition() {
-        return position;
+    public String getProblemPosition() {
+        return problemPosition;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setProblemPosition(String problemPosition) {
+        this.problemPosition = problemPosition;
     }
 
-    public List<FabricCheckTaskRecordFault> getRecordFaultList() {
-        return recordFaultList;
+    public List<FabricCheckProblem> getFabricCheckRecordProblemList() {
+        return fabricCheckRecordProblemList;
     }
 
-    public void setRecordFaultList(List<FabricCheckTaskRecordFault> recordFaultList) {
-        this.recordFaultList = recordFaultList;
+    public void setFabricCheckRecordProblemList(List<FabricCheckProblem> fabricCheckRecordProblemList) {
+        this.fabricCheckRecordProblemList = fabricCheckRecordProblemList;
     }
 }

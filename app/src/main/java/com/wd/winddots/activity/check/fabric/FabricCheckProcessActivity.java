@@ -17,6 +17,7 @@ import com.wd.winddots.desktop.view.PinnedHeaderRecyclerView.PinnedHeaderRecycle
 import com.wd.winddots.entity.FabricCheckLotInfo;
 import com.wd.winddots.entity.FabricCheckTask;
 import com.wd.winddots.entity.PageInfo;
+import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.VolleyUtil;
 import com.wd.winddots.view.LoadingDialog;
 
@@ -108,7 +109,7 @@ public class FabricCheckProcessActivity  extends FragmentActivity
         if (mEndLoading) {
             return;
         }
-        String url = Constant.APP_BASE_URL + "fabricCheckTask/search?keyword=&pageNum=" + mPage + "&pageSize=10" + "&enterpriseId=" + "1";//SpHelper.getInstance(this).getEnterpriseId();
+        String url = Constant.APP_BASE_URL + "fabricCheckTask/search?keyword=&pageNum=" + mPage + "&pageSize=10" + "&enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId() + "&modifyTimeApply=&modifyTimeExamine=modifyTimeExamine";
         mIsLoading = true;
         Log.e("net666",url);
         mVolleyUtil.httpGetRequest(url, response -> {

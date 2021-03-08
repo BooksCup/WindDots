@@ -3,6 +3,7 @@ package com.wd.winddots.activity.select;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -129,6 +130,7 @@ public class SelectGoodsActivity extends BaseActivity
             Intent intent = new Intent();
             intent.putExtra("goodsId", goods.getId());
             intent.putExtra("goodsName", goods.getGoodsName());
+            intent.putExtra("goodsNo", goods.getGoodsNo());
             intent.putExtra("goods", goods);
             setResult(RESULT_OK, intent);
             finish();
@@ -148,7 +150,6 @@ public class SelectGoodsActivity extends BaseActivity
                     + "&pageSize=" + mPageSize
                     + "&keyword=" + mKeyword;
         }
-
         mVolleyUtil.httpGetRequest(url, response -> {
             hideLoadingDialog();
             mGoodsSrl.setRefreshing(false);

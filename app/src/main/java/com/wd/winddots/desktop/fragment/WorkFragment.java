@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
-import com.google.zxing.client.android.CaptureActivity;
+import com.google.zxing.client.android.CaptureActivity2;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.check.fabric.FabricCheckProcessActivity;
 import com.wd.winddots.activity.check.fabric.FabricCheckTaskActivity;
@@ -607,8 +607,8 @@ public class WorkFragment extends BaseFragment<WorkView, WorkPresenterImpl>
                 intent = new Intent(mContext, ContactListActivity.class);
                 startActivity(intent);
                 break;
-            case "WorkExamine"://盘点
-                intent = new Intent(mContext, FabricCheckProcessActivity.class);
+            case "WorkExamine"://盘点 //FabricCheckProcessActivity //FabricCheckTaskActivity
+                intent = new Intent(mContext, FabricCheckTaskActivity.class);
                 startActivity(intent);
                 break;
             case "11":
@@ -869,7 +869,7 @@ public class WorkFragment extends BaseFragment<WorkView, WorkPresenterImpl>
                         startActivity(MeAttendanceActivity.class);
                         break;
                     case REQUEST_CODE_CAMERA:
-                        Intent intent1 = new Intent(mContext, CaptureActivity.class);
+                        Intent intent1 = new Intent(mContext, CaptureActivity2.class);
                         Objects.requireNonNull(getActivity()).startActivityForResult(intent1, REQUEST_CODE_SCAN);
                         break;
                 }
@@ -906,7 +906,7 @@ public class WorkFragment extends BaseFragment<WorkView, WorkPresenterImpl>
                     startActivity(MeAttendanceActivity.class);
                     break;
                 case REQUEST_CODE_CAMERA:
-                    Intent intent1 = new Intent(mContext, CaptureActivity.class);
+                    Intent intent1 = new Intent(mContext, CaptureActivity2.class);
                     Objects.requireNonNull(getActivity()).startActivityForResult(intent1, REQUEST_CODE_SCAN);
                     break;
             }

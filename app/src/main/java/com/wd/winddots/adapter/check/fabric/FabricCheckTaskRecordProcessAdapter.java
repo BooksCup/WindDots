@@ -7,6 +7,7 @@ import android.widget.EditText;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wd.winddots.R;
+import com.wd.winddots.entity.FabricCheckProblem;
 import com.wd.winddots.entity.FabricCheckTaskRecord;
 import com.wd.winddots.utils.Utils;
 
@@ -30,10 +31,20 @@ public class FabricCheckTaskRecordProcessAdapter extends BaseQuickAdapter<Fabric
 
         EditText weightEt = helper.getView(R.id.et_weight);
         EditText lengthEt = helper.getView(R.id.et_length);
+        FabricCheckProblem problemItem = item.getFabricCheckRecordProblem();
+        String problem = "";
+        if (null != problemItem) {
+            problem = "A" + Utils.numberNullOrEmpty(problemItem.getTagATimes()) +
+                    " B" + Utils.numberNullOrEmpty(problemItem.getTagBTimes()) +
+                    " C" + Utils.numberNullOrEmpty(problemItem.getTagCTimes()) +
+                    " D" + Utils.numberNullOrEmpty(problemItem.getTagDTimes());
+        }
 
         helper.setText(R.id.tv_number, (helper.getPosition() + 1) + "")
-                .setText(R.id.et_weight, Utils.nullOrEmpty(item.getWeightBefore()))
-                .setText(R.id.et_length, Utils.nullOrEmpty(item.getLengthBefore()));
+                .setText(R.id.et_weight, Utils.nullOrEmpty(item.getWeightAfter()))
+                .setText(R.id.et_length, Utils.nullOrEmpty(item.getLengthAfter()))
+                .setText(R.id.tv_count, Utils.nullOrEmpty(item.getProblemCount()))
+                .setText(R.id.tv_problem, problem);
 
         weightEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -43,7 +54,7 @@ public class FabricCheckTaskRecordProcessAdapter extends BaseQuickAdapter<Fabric
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                item.setWeightBefore(weightEt.getText().toString().trim());
+                item.setWeightAfter(weightEt.getText().toString().trim());
             }
 
             @Override
@@ -60,7 +71,7 @@ public class FabricCheckTaskRecordProcessAdapter extends BaseQuickAdapter<Fabric
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                item.setLengthBefore(lengthEt.getText().toString().trim());
+                item.setLengthAfter(lengthEt.getText().toString().trim());
             }
 
             @Override

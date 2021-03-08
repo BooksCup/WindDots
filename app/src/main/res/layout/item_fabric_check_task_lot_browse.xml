@@ -26,51 +26,6 @@
             android:textSize="13sp"
             android:paddingLeft="10dp"
             android:layout_gravity="center_vertical"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginLeft="20dp">
-            <TextView
-                android:id="@+id/tv_lot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="卷数:"
-                android:textSize="13sp"
-                android:layout_gravity="center_vertical"
-                />
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-                <EditText
-                    android:id="@+id/et_lot_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:textSize="13sp"
-                    android:hint="输入卷数"
-                    android:inputType="number"
-                    android:background="@null"/>
-<!--                <View-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="1dp"-->
-<!--                    android:background="@color/alpha_50_black"-->
-<!--                    android:layout_marginHorizontal="10dp"/>-->
-            </LinearLayout>
-        </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
-        <ImageView
-            android:id="@+id/iv_delete"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@mipmap/delete1"
-            android:padding="10dp"
-            android:layout_marginRight="10dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -99,17 +54,34 @@
             android:paddingVertical="8dp"
             android:gravity="center"
             android:textSize="13sp"
-            android:text="重量(公斤)"
+            android:text="公斤"
             android:textStyle="bold" />
         <TextView
-            android:id="@+id/tv_content3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:paddingVertical="8dp"
             android:gravity="center"
             android:textSize="13sp"
-            android:text="数量(米)"
+            android:text="米"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingVertical="8dp"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:text="问题数量"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:paddingVertical="8dp"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:text="问题等级"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -118,5 +90,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorF0"
-        android:paddingBottom="5dp"/>
+        android:paddingBottom="1dp"/>
+    <TextView
+        android:id="@+id/tv_total"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="合计:  2345.67/2234/66   1356.56/5678.98"
+        android:textSize="13sp"
+        android:paddingHorizontal="10dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:textColor="@color/colorAccent"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/colorF0" />
 </LinearLayout>

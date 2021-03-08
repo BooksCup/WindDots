@@ -37,7 +37,7 @@ public class SpinnerView extends LinearLayout {
 
     private List<SpinnerBean> mDataSource = new ArrayList<>();
 
-    private com.wd.winddots.view.selector.SelectView.SelectViewOnselectListener listener;
+    private OnselectListener listener;
 
 
     public SpinnerView(Context context) {
@@ -68,7 +68,7 @@ public class SpinnerView extends LinearLayout {
                 mSelect = mDataSource.get(i);
                 mPosition = i;
                 if (listener != null){
-                    //listener.onselect(i, com.wd.winddots.view.selector.SelectView.this);
+                    listener.onselect(i, SpinnerView.this);
                 }
             }
 
@@ -136,12 +136,12 @@ public class SpinnerView extends LinearLayout {
 
 
 
-    public void setSelectViewOnselectListener(com.wd.winddots.view.selector.SelectView.SelectViewOnselectListener listener1){
+    public void setOnselectListener(OnselectListener listener1){
         listener = listener1;
     }
 
-    public interface SelectViewOnselectListener{
-        void onselect(int position, com.wd.winddots.view.selector.SelectView view);
+    public interface OnselectListener{
+        void onselect(int position, SpinnerView view);
     }
 
 

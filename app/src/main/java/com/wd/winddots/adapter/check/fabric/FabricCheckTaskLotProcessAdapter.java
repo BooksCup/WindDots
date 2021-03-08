@@ -25,6 +25,14 @@ import androidx.recyclerview.widget.RecyclerView;
  * Description:
  */
 public class FabricCheckTaskLotProcessAdapter extends BaseQuickAdapter<FabricCheckTaskLot, BaseViewHolder> {
+
+    private SubItemDidClickListener subItemDidClickListener;
+
+    public void setSubItemDidClickListener(SubItemDidClickListener listener1){
+        subItemDidClickListener = listener1;
+    }
+
+
     public FabricCheckTaskLotProcessAdapter(int layoutResId, @Nullable List<FabricCheckTaskLot> data) {
         super(layoutResId, data);
     }
@@ -37,22 +45,25 @@ public class FabricCheckTaskLotProcessAdapter extends BaseQuickAdapter<FabricChe
         if (lotList == null) {
             lotList = new ArrayList<>();
         }
-        FabricCheckTaskRecordProcessAdapter adapter = new FabricCheckTaskRecordProcessAdapter(R.layout.item_fabric_check_task_lot_record_process, lotList);
+        FabricCheckTaskRecordProcessAdapter recordProcessAdapter = new FabricCheckTaskRecordProcessAdapter(R.layout.item_fabric_check_task_lot_record_process, lotList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(recordProcessAdapter);
 
-        adapter.setOnItemClickListener(new OnItemClickListener() {
+        recordProcessAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(mContext, FabricCheckProblemActivity.class);
-                mContext.startActivity(intent);
+                if (subItemDidClickListener != null){
+                    subItemDidClickListener.onSubItemDidClickListener(helper.getPosition(), recordProcessAdapter.getData().get(position));
+                }
             }
         });
 
         TextView dateTv = helper.getView(R.id.tv_date);
         dateTv.setText(item.getDeliveryDate());
+    }
 
-
+    public interface SubItemDidClickListener{
+        void onSubItemDidClickListener(int position,FabricCheckTaskRecord subItem);
     }
 }

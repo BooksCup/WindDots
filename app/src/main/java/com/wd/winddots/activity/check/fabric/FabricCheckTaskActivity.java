@@ -19,9 +19,11 @@ import com.wd.winddots.desktop.view.ListBottomBar;
 import com.wd.winddots.desktop.view.PinnedHeaderRecyclerView.ExpandGroupItemEntity;
 import com.wd.winddots.desktop.view.PinnedHeaderRecyclerView.PinnedHeaderItemDecoration;
 import com.wd.winddots.desktop.view.PinnedHeaderRecyclerView.PinnedHeaderRecyclerView;
+import com.wd.winddots.entity.DeliveryDate;
 import com.wd.winddots.entity.FabricCheckLotInfo;
 import com.wd.winddots.entity.FabricCheckTask;
 import com.wd.winddots.entity.PageInfo;
+import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.VolleyUtil;
 import com.wd.winddots.view.LoadingDialog;
 
@@ -90,7 +92,6 @@ public class FabricCheckTaskActivity extends FragmentActivity
     }
 
     private void initView() {
-
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mBottomView.setListBottomBarActionListener(this);
         mFilterView.setOnCommitClickListener(this);
@@ -100,7 +101,6 @@ public class FabricCheckTaskActivity extends FragmentActivity
         mAdapter.setOnSubItemClickListener(this);
         mGoodsRv.setAdapter(mAdapter);
         mGoodsRv.setOnScrollChangeListener(this);
-
     }
 
     @OnClick({R.id.iv_back})
@@ -132,7 +132,7 @@ public class FabricCheckTaskActivity extends FragmentActivity
         if (mEndLoading) {
             return;
         }
-        String url = Constant.APP_BASE_URL + "fabricCheckTask/search?keyword=&pageNum=" + mPage + "&pageSize=10" + "&enterpriseId=" + "1";//SpHelper.getInstance(this).getEnterpriseId();
+        String url = Constant.APP_BASE_URL + "fabricCheckTask/search?keyword=&pageNum=" + mPage + "&pageSize=10" + "&enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId() + "&modifyTimeApply=modifyTimeApply&modifyTimeExamine=";
         mIsLoading = true;
         Log.e("net666", url);
         mVolleyUtil.httpGetRequest(url, response -> {
@@ -149,6 +149,16 @@ public class FabricCheckTaskActivity extends FragmentActivity
             List<ExpandGroupItemEntity<FabricCheckTask, FabricCheckLotInfo>> dataList = new ArrayList<>();
             for (int i = 0; i < fabricCheckTaskList.size(); i++) {
                 FabricCheckTask item = fabricCheckTaskList.get(i);
+
+                String deliveryDate = item.getDeliveryDate();
+                List<DeliveryDate> deliveryDates = new ArrayList<>();
+                try {
+                    List<DeliveryDate> deliveryDateList = JSON.parseArray(deliveryDate,DeliveryDate.class);
+                    deliveryDates.addAll(deliveryDateList);
+                }catch (Exception ignored){
+                }
+                item.setDeliveryDates(deliveryDates);
+
                 ExpandGroupItemEntity<FabricCheckTask, FabricCheckLotInfo> group = new ExpandGroupItemEntity<>();
                 group.setParent(item);
                 List<FabricCheckLotInfo> fabricCheckLotInfoList = item.getFabricCheckLotInfoList();

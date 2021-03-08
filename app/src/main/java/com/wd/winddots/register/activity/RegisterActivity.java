@@ -2,7 +2,6 @@ package com.wd.winddots.register.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -16,9 +15,7 @@ import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Enterprise;
 import com.wd.winddots.utils.MD5Util;
 import com.wd.winddots.utils.VolleyUtil;
-import com.wd.winddots.view.EditCell;
 import com.wd.winddots.view.LoadingDialog;
-import com.wd.winddots.view.TitleTextView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,14 +42,14 @@ public class RegisterActivity extends FragmentActivity {
 
     private VolleyUtil mVolleyUtil;
 
-    @BindView(R.id.ec_name)
-    EditCell mNameEc;
+    @BindView(R.id.et_name)
+    EditText mNameEt;
 
-    @BindView(R.id.ec_phone)
-    EditCell mPhoneEc;
+    @BindView(R.id.et_phone)
+    EditText mPhoneEt;
 
-    @BindView(R.id.ec_pwd)
-    EditCell mPwdEc;
+    @BindView(R.id.et_password)
+    EditText mPasswordEt;
 
     @BindView(R.id.tv_verify_code)
     TextView mVerifyCodeTv;
@@ -60,8 +57,8 @@ public class RegisterActivity extends FragmentActivity {
     @BindView(R.id.pb_loading)
     ProgressBar mLoadingPb;
 
-    @BindView(R.id.ttv_enterprise)
-    TitleTextView mEnterpriseTtv;
+    @BindView(R.id.tv_enterprise)
+    TextView mEnterpriseTv;
 
     @BindView(R.id.et_verify_code)
     EditText mVerifyCodeEt;
@@ -81,22 +78,9 @@ public class RegisterActivity extends FragmentActivity {
 
         mVolleyUtil = VolleyUtil.getInstance(this);
         mDialog = LoadingDialog.getInstance(this);
-        initView();
     }
 
-    public void initView() {
-//        String phone = CommonUtils.getTel(RegisterActivity.this);
-//        mPhoneEc.setText(phone);
-        mNameEc.setTitle(getString(R.string.register_name));
-        mNameEc.setHint(getString(R.string.register_name_hint));
-        mPhoneEc.setTitle(getString(R.string.register_phone));
-        mPhoneEc.setHint(getString(R.string.register_phone_hint));
-        mPwdEc.setTitle(getString(R.string.register_password));
-        mPwdEc.setHint(getString(R.string.register_password_hint));
-        mPhoneEc.mContentEt.setInputType(InputType.TYPE_CLASS_NUMBER);
-    }
-
-    @OnClick({R.id.iv_back, R.id.tv_verify_code, R.id.ttv_enterprise, R.id.ll_user_apply})
+    @OnClick({R.id.iv_back, R.id.tv_verify_code, R.id.ll_enterprise, R.id.ll_user_apply})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
@@ -105,7 +89,7 @@ public class RegisterActivity extends FragmentActivity {
             case R.id.tv_verify_code:
                 getVerifyCode();
                 break;
-            case R.id.ttv_enterprise:
+            case R.id.ll_enterprise:
                 onSearchEnterprise();
                 break;
             case R.id.ll_user_apply:
@@ -119,7 +103,7 @@ public class RegisterActivity extends FragmentActivity {
      */
     private void getVerifyCode() {
 
-        String phone = mPhoneEc.getText();
+        String phone = mPhoneEt.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
             Toast.makeText(this, getString(R.string.register_phone_empty), Toast.LENGTH_SHORT).show();
             return;
@@ -187,18 +171,18 @@ public class RegisterActivity extends FragmentActivity {
      */
     private void onUserApply() {
 
-        String name = mNameEc.getText();
+        String name = mNameEt.getText().toString().trim();
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(this, getString(R.string.register_name_empty), Toast.LENGTH_SHORT).show();
         }
 
-        String phone = mPhoneEc.getText();
+        String phone = mPhoneEt.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
             Toast.makeText(this, getString(R.string.register_phone_empty), Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String password = mPwdEc.getText();
+        String password = mPasswordEt.getText().toString().trim();
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, getString(R.string.register_password_empty), Toast.LENGTH_SHORT).show();
             return;
@@ -243,7 +227,7 @@ public class RegisterActivity extends FragmentActivity {
         if (requestCode == REQUEST_CODE_SEARCH_ENTERPRISE) {
             String json = data.getStringExtra("data");
             Enterprise enterprise = JSON.parseObject(json, Enterprise.class);
-            mEnterpriseTtv.setContent(enterprise.getName());
+            mEnterpriseTv.setText(enterprise.getName());
             mEnterprise = enterprise;
         }
     }

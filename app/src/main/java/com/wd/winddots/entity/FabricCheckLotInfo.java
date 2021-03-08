@@ -27,6 +27,12 @@ public class FabricCheckLotInfo {
      */
     private String weight;
 
+    private WarehouseIdVo getByWarehouseIdVo;
+
+    private String status;
+
+    private String fabricCheckTaskId;
+
     private String id;
 
     private boolean isEdit = false;
@@ -86,5 +92,79 @@ public class FabricCheckLotInfo {
 
     public void setEdit(boolean edit) {
         isEdit = edit;
+    }
+
+    public WarehouseIdVo getGetByWarehouseIdVo() {
+        return getByWarehouseIdVo;
+    }
+
+    public void setGetByWarehouseIdVo(WarehouseIdVo getByWarehouseIdVo) {
+        this.getByWarehouseIdVo = getByWarehouseIdVo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getFabricCheckTaskId() {
+        return fabricCheckTaskId;
+    }
+
+    public void setFabricCheckTaskId(String fabricCheckTaskId) {
+        this.fabricCheckTaskId = fabricCheckTaskId;
+    }
+
+    public class WarehouseIdVo {
+        String totalNum;
+        String lengthBeforeTotal;
+        String lengthAfterTotal;
+        String weightBeforeTotal;
+        String weightAfterTotal;
+
+        public String getTotalNum() {
+            return totalNum;
+        }
+
+        public void setTotalNum(String totalNum) {
+            this.totalNum = totalNum;
+        }
+
+        public String getLengthBeforeTotal() {
+            return lengthBeforeTotal;
+        }
+
+        public void setLengthBeforeTotal(String lengthBeforeTotal) {
+            this.lengthBeforeTotal = lengthBeforeTotal;
+        }
+
+        public String getLengthAfterTotal() {
+            return lengthAfterTotal;
+        }
+
+        public void setLengthAfterTotal(String lengthAfterTotal) {
+            this.lengthAfterTotal = lengthAfterTotal;
+        }
+
+        public String getWeightBeforeTotal() {
+            return weightBeforeTotal;
+        }
+
+        public void setWeightBeforeTotal(String weightBeforeTotal) {
+            this.weightBeforeTotal = weightBeforeTotal;
+        }
+
+        public String getWeightAfterTotal() {
+            return weightAfterTotal;
+        }
+
+        public void setWeightAfterTotal(String weightAfterTotal) {
+            this.weightAfterTotal = weightAfterTotal;
+        }
+
+
     }
 }

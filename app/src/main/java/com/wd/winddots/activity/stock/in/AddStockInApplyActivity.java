@@ -440,7 +440,7 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
                     if (null != resultPhotos) {
                         for (int i = 0; i < resultPhotos.size(); i++) {
                             ImageEntity imageEntity = new ImageEntity();
-                            imageEntity.setUrl(resultPhotos.get(i).path);
+                            imageEntity.setPath(resultPhotos.get(i).path);
                             imageEntity.setId(String.valueOf(i));
                             mImageEntityList.add(0, imageEntity);
                         }

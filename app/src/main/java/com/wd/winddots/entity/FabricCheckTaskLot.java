@@ -12,6 +12,10 @@ public class FabricCheckTaskLot {
 
    private String deliveryDate;
    private String recordNumber;
+   private String lengthBeforeTotal;
+   private String lengthAfterTotal;
+   private String weightBeforeTotal;
+   private String weightAfterTotal;
    private List<FabricCheckTaskRecord> fabricCheckRecords;
 
 
@@ -37,5 +41,37 @@ public class FabricCheckTaskLot {
 
     public void setFabricCheckRecords(List<FabricCheckTaskRecord> fabricCheckRecords) {
         this.fabricCheckRecords = fabricCheckRecords;
+    }
+
+    public String getLengthBeforeTotal() {
+        return lengthBeforeTotal;
+    }
+
+    public void setLengthBeforeTotal(String lengthBeforeTotal) {
+        this.lengthBeforeTotal = lengthBeforeTotal;
+    }
+
+    public String getLengthAfterTotal() {
+        return lengthAfterTotal;
+    }
+
+    public void setLengthAfterTotal(String lengthAfterTotal) {
+        this.lengthAfterTotal = lengthAfterTotal;
+    }
+
+    public String getWeightBeforeTotal() {
+        return weightBeforeTotal;
+    }
+
+    public void setWeightBeforeTotal(String weightBeforeTotal) {
+        this.weightBeforeTotal = weightBeforeTotal;
+    }
+
+    public String getWeightAfterTotal() {
+        return weightAfterTotal;
+    }
+
+    public void setWeightAfterTotal(String weightAfterTotal) {
+        this.weightAfterTotal = weightAfterTotal;
     }
 }

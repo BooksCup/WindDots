@@ -2,7 +2,8 @@ package com.wd.winddots.activity.select;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.util.Log;
+
 import android.view.View;
 import android.widget.EditText;
 
@@ -16,6 +17,7 @@ import com.wd.winddots.adapter.select.OrderAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Order;
 import com.wd.winddots.entity.PageInfo;
+import com.wd.winddots.utils.Utils;
 import com.wd.winddots.utils.VolleyUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -176,6 +178,7 @@ public class SelectOrderActivity extends BaseActivity
 //                        "&keyword=" + mKeyword;
 //            }
         }
+        Log.e("net666",url);
 
         mVolleyUtil.httpGetRequest(url, response -> {
             hideLoadingDialog();
@@ -222,12 +225,16 @@ public class SelectOrderActivity extends BaseActivity
         paramMap.put("orderId", order.getOrderId());
         paramMap.put("orderNo", order.getOrderNo());
         paramMap.put("orderTheme", order.getOrderTheme());
+        paramMap.put("deliveryDate", Utils.nullOrEmpty(order.getDeliveryDates()));
+
+        Log.e("net666",JSON.toJSONString(paramMap));
 
         mVolleyUtil.httpPostRequest(url, paramMap, response -> {
             showToast(getString(R.string.add_fabric_check_task_success));
             hideLoadingDialog();
             finish();
         }, volleyError -> {
+            Log.e("net666", String.valueOf(volleyError));
             hideLoadingDialog();
             mVolleyUtil.handleCommonErrorResponse(SelectOrderActivity.this, volleyError);
         });

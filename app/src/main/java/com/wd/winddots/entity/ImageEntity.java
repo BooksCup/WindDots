@@ -8,6 +8,11 @@ package com.wd.winddots.entity;
 public class ImageEntity {
 
     private String id;
+
+    ///图片本地路径
+    private String path;
+
+    ///图片网络地址
     private String url;
 
     public String getId() {
@@ -18,6 +23,14 @@ public class ImageEntity {
         this.id = id;
     }
 
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -25,5 +38,4 @@ public class ImageEntity {
     public void setUrl(String url) {
         this.url = url;
     }
-
 }

@@ -200,11 +200,25 @@ public class Utils {
     }
 
     public static String nullOrEmpty(String s) {
-        return StringUtils.isNullOrEmpty(s) ? "" : s;
+        if (StringUtils.isNullOrEmpty(s)){
+            return "";
+        }else if ("null".equals(s)){
+            return "";
+        }else {
+            return s;
+        }
+
+
     }
 
     public static String numberNullOrEmpty(String s) {
-        return StringUtils.isNullOrEmpty(s) ? "0" : s;
+        if (StringUtils.isNullOrEmpty(s)){
+            return "0";
+        }else if ("null".equals(s)){
+            return "0";
+        }else {
+            return s;
+        }
     }
 
 

@@ -403,7 +403,7 @@ public class CheckQuestionActivity extends FragmentActivity implements BaseQuick
                 break;
         }
         params.put("recordId",mRecordId);
-        String url = Constant.APP_BASE_URL + "fabricQcRecordProblem";
+        String url = Constant.APP_BASE_URL + "fabricCheckRecordProblem";
         mVolleyUtil.httpPostRequest(url,params,response -> {
             mLoadingDialog.hide();
             finish();
