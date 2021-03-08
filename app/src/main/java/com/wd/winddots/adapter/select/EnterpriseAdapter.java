@@ -1,4 +1,4 @@
-package com.wd.winddots.register.adapter;
+package com.wd.winddots.adapter.select;
 
 import android.net.Uri;
 import android.text.SpannableStringBuilder;
@@ -18,16 +18,15 @@ import java.util.List;
 import androidx.annotation.Nullable;
 
 /**
- * FileName: CompanySearchAdapter
- * Author: 郑
- * Date: 2021/1/13 11:21 AM
- * Description: 搜索企业适配器
+ * 企业选择
+ *
+ * @author zhou
  */
-public class SearchEnterpriseAdapter extends BaseQuickAdapter<Enterprise, BaseViewHolder> {
+public class EnterpriseAdapter extends BaseQuickAdapter<Enterprise, BaseViewHolder> {
 
     private String mKeyword;
 
-    public SearchEnterpriseAdapter(int layoutResId, @Nullable List<Enterprise> data) {
+    public EnterpriseAdapter(int layoutResId, @Nullable List<Enterprise> data) {
         super(layoutResId, data);
     }
 

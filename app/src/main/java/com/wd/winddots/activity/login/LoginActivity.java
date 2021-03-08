@@ -14,7 +14,6 @@ import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.User;
 import com.wd.winddots.mvp.widget.MainActivity;
-import com.wd.winddots.register.activity.RegisterActivity;
 import com.wd.winddots.utils.MD5Util;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.VolleyUtil;

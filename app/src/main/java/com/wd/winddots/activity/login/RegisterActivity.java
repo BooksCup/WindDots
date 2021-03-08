@@ -1,4 +1,4 @@
-package com.wd.winddots.register.activity;
+package com.wd.winddots.activity.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.wd.winddots.R;
+import com.wd.winddots.activity.select.SelectEnterpriseActivity;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Enterprise;
 import com.wd.winddots.utils.MD5Util;
@@ -23,6 +24,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,12 +65,12 @@ public class RegisterActivity extends FragmentActivity {
     @BindView(R.id.et_verify_code)
     EditText mVerifyCodeEt;
 
-    private LoadingDialog mDialog;
-    private Timer mTimer = new Timer();
-    private TimerTask mTask;
-    private int mCountdown = COUNTDOWN;
+    LoadingDialog mDialog;
+    Timer mTimer = new Timer();
+    TimerTask mTask;
+    int mCountdown = COUNTDOWN;
 
-    private Enterprise mEnterprise;
+    Enterprise mEnterprise;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -159,7 +161,7 @@ public class RegisterActivity extends FragmentActivity {
      * 搜索企业
      */
     private void onSearchEnterprise() {
-        Intent intent = new Intent(this, SearchEnterpriseActivity.class);
+        Intent intent = new Intent(this, SelectEnterpriseActivity.class);
         if (null != mEnterprise) {
             intent.putExtra("keyword", mEnterprise.getKeyword());
         }
@@ -228,6 +230,7 @@ public class RegisterActivity extends FragmentActivity {
             String json = data.getStringExtra("data");
             Enterprise enterprise = JSON.parseObject(json, Enterprise.class);
             mEnterpriseTv.setText(enterprise.getName());
+            mEnterpriseTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
             mEnterprise = enterprise;
         }
     }

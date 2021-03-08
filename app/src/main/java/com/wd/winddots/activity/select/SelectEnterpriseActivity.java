@@ -1,4 +1,4 @@
-package com.wd.winddots.register.activity;
+package com.wd.winddots.activity.select;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +9,11 @@ import android.widget.EditText;
 
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
 import com.wd.winddots.R;
+import com.wd.winddots.activity.base.BaseActivity;
+import com.wd.winddots.adapter.select.EnterpriseAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Enterprise;
-import com.wd.winddots.register.adapter.SearchEnterpriseAdapter;
 import com.wd.winddots.utils.VolleyUtil;
 import com.wd.winddots.view.LoadingDialog;
 
@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,14 +31,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * FileName: SearchEnterpriseActivity
- * Author: 郑
- * Date: 2021/1/13 11:03 AM
- * Description:搜索企业
+ * 企业选择
+ *
+ * @author zhou
  */
-public class SearchEnterpriseActivity extends FragmentActivity implements BaseQuickAdapter.OnItemClickListener {
+public class SelectEnterpriseActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener {
 
-    private static final String TAG = "SearchEnterprise";
+    private static final String TAG = "SelectEnterprise";
 
     @BindView(R.id.et_search)
     EditText mSearchEt;
@@ -47,7 +45,7 @@ public class SearchEnterpriseActivity extends FragmentActivity implements BaseQu
     @BindView(R.id.rv_enterprise)
     RecyclerView mEnterpriseRv;
 
-    private SearchEnterpriseAdapter mAdapter;
+    private EnterpriseAdapter mAdapter;
 
     private List<Enterprise> mEnterpriseList = new ArrayList<>();
 
@@ -67,7 +65,7 @@ public class SearchEnterpriseActivity extends FragmentActivity implements BaseQu
     }
 
     public void initView() {
-        mAdapter = new SearchEnterpriseAdapter(R.layout.item_search_enterprise, mEnterpriseList);
+        mAdapter = new EnterpriseAdapter(R.layout.item_select_enterprise, mEnterpriseList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mEnterpriseRv.setLayoutManager(layoutManager);
         mEnterpriseRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
@@ -110,7 +108,6 @@ public class SearchEnterpriseActivity extends FragmentActivity implements BaseQu
         mVolleyUtil.httpGetRequest(url, response -> {
             mLoadingDialog.hide();
             Log.d(TAG, "server response: " + response);
-            Log.e("net666",response);
             List<Enterprise> enterpriseList = JSON.parseArray(response, Enterprise.class);
             mEnterpriseList.clear();
             mEnterpriseList.addAll(enterpriseList);
@@ -119,7 +116,7 @@ public class SearchEnterpriseActivity extends FragmentActivity implements BaseQu
 
         }, volleyError -> {
             mLoadingDialog.hide();
-            mVolleyUtil.handleCommonErrorResponse(SearchEnterpriseActivity.this, volleyError);
+            mVolleyUtil.handleCommonErrorResponse(SelectEnterpriseActivity.this, volleyError);
         });
     }
 
