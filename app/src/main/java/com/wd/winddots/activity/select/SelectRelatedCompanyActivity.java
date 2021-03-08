@@ -152,7 +152,7 @@ public class SelectRelatedCompanyActivity extends BaseActivity implements SwipeR
         if (mRelatedCompanySrl.isRefreshing()) {
             return;
         }
-        mPageSize += 1;
+        mPage += 1;
         getData();
     }
 

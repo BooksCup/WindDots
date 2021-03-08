@@ -147,7 +147,7 @@ public class SelectSingleUserActivity extends BaseActivity implements SwipeRefre
         if (mUserSrl.isRefreshing()) {
             return;
         }
-        mPageSize += 1;
+        mPage += 1;
         getData();
     }
 
