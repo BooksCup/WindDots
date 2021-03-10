@@ -1,8 +1,11 @@
 package com.wd.winddots.activity.stock.in;
 
-import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -44,6 +47,9 @@ public class StockInApplyActivity extends BaseActivity
     @BindView(R.id.srl_stock_in_apply)
     SwipeRefreshLayout mStockInApplySrl;
 
+    @BindView(R.id.iv_add)
+    ImageView mAddIv;
+
     StockInApplyAdapter mAdapter;
 
     VolleyUtil mVolleyUtil;
@@ -51,6 +57,10 @@ public class StockInApplyActivity extends BaseActivity
     int mPage = 1;
     int mPageSize = 10;
     List<StockInApply> mStockInApplyList = new ArrayList<>();
+
+    // 入库类型选择框
+    private PopupWindow mPopupWindow;
+    private View mPopupView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,8 +79,15 @@ public class StockInApplyActivity extends BaseActivity
                 finish();
                 break;
             case R.id.iv_add:
-                Intent intent = new Intent(StockInApplyActivity.this, AddStockInApplyActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(StockInApplyActivity.this, AddStockInApplyActivity.class);
+//                startActivity(intent);
+                initPopupWindow();
+                if (!mPopupWindow.isShowing()) {
+                    // 以下拉方式显示popupwindow
+                    mPopupWindow.showAsDropDown(mAddIv, 0, 0);
+                } else {
+                    mPopupWindow.dismiss();
+                }
                 break;
         }
     }
@@ -149,5 +166,33 @@ public class StockInApplyActivity extends BaseActivity
         super.onResume();
         mPage = 1;
         getData();
+    }
+
+    /**
+     * 初始化首页弹出框
+     */
+    private void initPopupWindow() {
+
+        mPopupView = View.inflate(this, R.layout.popup_window_stock_in_apply, null);
+        mPopupWindow = new PopupWindow();
+        // 设置SelectPicPopupWindow的View
+        mPopupWindow.setContentView(mPopupView);
+        // 设置SelectPicPopupWindow弹出窗体的宽
+        mPopupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        // 设置SelectPicPopupWindow弹出窗体的高
+        mPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        // 设置SelectPicPopupWindow弹出窗体可点击
+        mPopupWindow.setFocusable(true);
+        mPopupWindow.setOutsideTouchable(true);
+        // 刷新状态
+        mPopupWindow.update();
+        // 实例化一个ColorDrawable颜色为半透明
+        ColorDrawable dw = new ColorDrawable(0000000000);
+        // 点back键和其他地方使其消失,设置了这个才能触发OnDismisslistener ，设置其他控件变化等操作
+        mPopupWindow.setBackgroundDrawable(dw);
+
+        // 设置SelectPicPopupWindow弹出窗体动画效果
+        mPopupWindow.setAnimationStyle(R.style.AnimationPreview);
+
     }
 }
