@@ -55,7 +55,6 @@ import static com.wd.winddots.activity.select.SelectOrderActivity.REQUEST_ADD_ST
 public class StockInDetailActivity extends BaseActivity implements StockGoodsSpecAdapter.TextChangeListener {
 
     private static final int REQUEST_CODE_ORDER = 3;
-    private static final int REQUEST_CODE_IMAGE_PICKER = 6;
     private static final int REQUEST_CODE_SCAN = 7;
 
     private static final String SPACE_SEPARATOR = "   ";
@@ -340,7 +339,6 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
             mApplyNumHeaderTv.setText("入库数量");
             mConfirmNumHeaderTv.setText("确认数量");
         }
-
 
         mGoodsInfoTv.setText(goodsInfo);
         mStockNumTv.setText(stockInfo);
