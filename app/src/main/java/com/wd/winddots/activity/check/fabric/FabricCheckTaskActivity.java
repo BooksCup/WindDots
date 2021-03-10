@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.select.SelectOrderActivity;
 import com.wd.winddots.adapter.check.fabric.FabricCheckTaskAdapter;
@@ -36,6 +37,7 @@ import androidx.annotation.RequiresApi;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,8 +48,8 @@ import static com.wd.winddots.activity.select.SelectOrderActivity.REQUEST_FABRIC
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class FabricCheckTaskActivity extends FragmentActivity
-        implements View.OnScrollChangeListener, SwipeRefreshLayout.OnRefreshListener,
-        ListBottomBar.ListBottomBarActionListener, FabricCheckTaskAdapter.OnSubItemClickListener, CheckFilter.CheckFilterOnCommitClickListener {
+        implements SwipeRefreshLayout.OnRefreshListener,
+        ListBottomBar.ListBottomBarActionListener, CheckFilter.CheckFilterOnCommitClickListener, BaseQuickAdapter.OnItemClickListener {
 
     private VolleyUtil mVolleyUtil;
 
@@ -58,7 +60,9 @@ public class FabricCheckTaskActivity extends FragmentActivity
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     @BindView(R.id.rv_goods)
-    PinnedHeaderRecyclerView mGoodsRv;
+    RecyclerView mGoodsRv;
+    private FabricCheckTaskAdapter mAdapter;
+    private List<FabricCheckTask> mDataSource = new ArrayList<>();
 
     @BindView(R.id.view_searchBar)
     ListBottomBar mBottomView;
@@ -67,7 +71,7 @@ public class FabricCheckTaskActivity extends FragmentActivity
     CheckFilter mFilterView;
 
     private LinearLayoutManager mLayoutManager;
-    private FabricCheckTaskAdapter mAdapter;
+
 
     private LoadingDialog mDialog;
 
@@ -97,10 +101,9 @@ public class FabricCheckTaskActivity extends FragmentActivity
         mFilterView.setOnCommitClickListener(this);
         mGoodsRv.setLayoutManager(mLayoutManager = new LinearLayoutManager(this));
         mGoodsRv.addItemDecoration(new PinnedHeaderItemDecoration());
-        mAdapter = new FabricCheckTaskAdapter(this);
-        mAdapter.setOnSubItemClickListener(this);
+        mAdapter = new FabricCheckTaskAdapter(R.layout.item_fabric_check_task, mDataSource);
+        mAdapter.setOnItemClickListener(this);
         mGoodsRv.setAdapter(mAdapter);
-        mGoodsRv.setOnScrollChangeListener(this);
     }
 
     @OnClick({R.id.iv_back})
@@ -146,36 +149,10 @@ public class FabricCheckTaskActivity extends FragmentActivity
             if (fabricCheckTaskList == null) {
                 return;
             }
-            List<ExpandGroupItemEntity<FabricCheckTask, FabricCheckLotInfo>> dataList = new ArrayList<>();
-            for (int i = 0; i < fabricCheckTaskList.size(); i++) {
-                FabricCheckTask item = fabricCheckTaskList.get(i);
-
-                String deliveryDate = item.getDeliveryDate();
-                List<DeliveryDate> deliveryDates = new ArrayList<>();
-                try {
-                    List<DeliveryDate> deliveryDateList = JSON.parseArray(deliveryDate,DeliveryDate.class);
-                    deliveryDates.addAll(deliveryDateList);
-                }catch (Exception ignored){
-                }
-                item.setDeliveryDates(deliveryDates);
-
-                ExpandGroupItemEntity<FabricCheckTask, FabricCheckLotInfo> group = new ExpandGroupItemEntity<>();
-                group.setParent(item);
-                List<FabricCheckLotInfo> fabricCheckLotInfoList = item.getFabricCheckLotInfoList();
-                if (null == fabricCheckLotInfoList) {
-                    fabricCheckLotInfoList = new ArrayList<>();
-                }
-                //fabricCheckLotInfoList.add(0, new FabricCheckLotInfo());
-                group.setChildList(fabricCheckLotInfoList);
-                group.setExpand(false);
-                dataList.add(group);
-            }
-            List<ExpandGroupItemEntity<FabricCheckTask, FabricCheckLotInfo>> oldData = mAdapter.getData();
             if (mPage == 1) {
-                mAdapter.setData(dataList);
+                mAdapter.setNewData(fabricCheckTaskList);
             } else {
-                oldData.addAll(dataList);
-                mAdapter.setData(oldData);
+                mAdapter.addData(fabricCheckTaskList);
             }
             if (mAdapter.getData().size() >= fabricCheckTaskPageInfo.getTotal()) {
                 mEndLoading = true;
@@ -208,22 +185,6 @@ public class FabricCheckTaskActivity extends FragmentActivity
         mDrawerLayout.openDrawer(Gravity.RIGHT);
     }
 
-    /**
-     * 点击子控件
-     *
-     * @param item
-     */
-    @Override
-    public void onItemClick(CheckGoodsBean.CheckGang item) {
-//        Intent intent = new Intent(this, CheckActivity.class);
-//        intent.putExtra("warehouseId", item.getId());
-//        intent.putExtra("goodsName", Utils.nullOrEmpty(item.getGoodsName()));
-//        intent.putExtra("goodsNo", Utils.nullOrEmpty(item.getGoodsNo()));
-//        intent.putExtra("oddTime", Utils.nullOrEmpty(item.getOddTime()));
-//        intent.putExtra("cylinderNumber", Utils.nullOrEmpty(item.getCylinderNumber()));
-//
-//        startActivity(intent);
-    }
 
     @Override
     public void onCommitBtnDidClick(Map<String, String> data) {
@@ -236,29 +197,11 @@ public class FabricCheckTaskActivity extends FragmentActivity
         onRefresh();
     }
 
-    @Override
-    public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-        if (mIsLoading || mEndLoading) {
-            return;
-        }
-        getLastVisiblePosition();
-    }
-
-    private void getLastVisiblePosition() {
-        int position;
-        position = ((LinearLayoutManager) mGoodsRv.getLayoutManager()).findLastVisibleItemPosition();
-        if (position == mAdapter.getItemCount() - 2) {
-            mPage += 1;
-            mDialog.show();
-            getData();
-        }
-    }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        mPage = 1;
-        mEndLoading = false;
-        getData();
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        Intent intent = new Intent(this, FabricCheckOrderTaskActivity.class);
+        intent.putExtra("data", JSON.toJSONString(mAdapter.getData().get(position)));
+        startActivity(intent);
     }
 }

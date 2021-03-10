@@ -16,6 +16,7 @@ import com.wd.winddots.adapter.check.fabric.FabricCheckTaskLotProcessAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.FabricCheckTaskLot;
 import com.wd.winddots.entity.FabricCheckTaskRecord;
+import com.wd.winddots.entity.ProblemImage;
 import com.wd.winddots.utils.Utils;
 import com.wd.winddots.utils.VolleyUtil;
 
@@ -103,12 +104,14 @@ public class FabricCheckLotProcessActivity extends BaseActivity implements Fabri
 
     private void getData() {
         String url = Constant.APP_BASE_URL + "fabricCheckRecord/searchAll?checkLotInfoId=" + mId;
+        Log.e("net666",url);
         mVolleyUtil.httpGetRequest(url, response -> {
             if (null == response) {
                 return;
             }
             Log.e("net666", response);
-            List<FabricCheckTaskLot> list = JSON.parseArray(response, FabricCheckTaskLot.class);
+            FabricCheckLot fabricCheckLot = JSON.parseObject(response,FabricCheckLot.class);
+            List<FabricCheckTaskLot> list = fabricCheckLot.getFabricQcRecordAllByCheckLIIdVoList();
             mDataSource.clear();
             mDataSource.addAll(list);
             mAdapter.notifyDataSetChanged();
@@ -210,6 +213,28 @@ public class FabricCheckLotProcessActivity extends BaseActivity implements Fabri
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 10001) {
             getData();
+        }
+    }
+
+
+    private static class FabricCheckLot{
+        private List<FabricCheckTaskLot> fabricQcRecordAllByCheckLIIdVoList;
+        private List<ProblemImage> problemImageClassifyList;
+
+        public List<FabricCheckTaskLot> getFabricQcRecordAllByCheckLIIdVoList() {
+            return fabricQcRecordAllByCheckLIIdVoList;
+        }
+
+        public void setFabricQcRecordAllByCheckLIIdVoList(List<FabricCheckTaskLot> fabricQcRecordAllByCheckLIIdVoList) {
+            this.fabricQcRecordAllByCheckLIIdVoList = fabricQcRecordAllByCheckLIIdVoList;
+        }
+
+        public List<ProblemImage> getProblemImageClassifyList() {
+            return problemImageClassifyList;
+        }
+
+        public void setProblemImageClassifyList(List<ProblemImage> problemImageClassifyList) {
+            this.problemImageClassifyList = problemImageClassifyList;
         }
     }
 

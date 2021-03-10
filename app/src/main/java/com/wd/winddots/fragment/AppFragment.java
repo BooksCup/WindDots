@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -160,6 +161,7 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     private void getAppList() {
         String userId = "40db1c5ede0311eabfad06ca1dafdbae";
         String url = Constant.APP_BASE_URL + "user/" + userId + "/app";
+        Log.e("net666",url);
 
         mVolleyUtil.httpGetRequest(url, response -> {
             final UserApp userApp = JSONArray.parseObject(response, UserApp.class);
@@ -228,11 +230,11 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 startActivity(intent);
                 break;
             case "WorkExamine":
-                // 盘点
+                // 盘点 FabricCheckProcessActivity  FabricCheckTaskActivity
                 if (SpHelper.getInstance(getActivity()).isFabricCheckAdmin()) {
                     intent = new Intent(getActivity(), FabricCheckTaskActivity.class);
                 } else {
-                    intent = new Intent(getActivity(), FabricCheckProcessActivity.class);
+                    intent = new Intent(getActivity(), FabricCheckTaskActivity.class);
                 }
                 startActivity(intent);
                 break;

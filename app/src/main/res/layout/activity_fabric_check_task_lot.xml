@@ -54,6 +54,17 @@
             android:textColor="@color/colorWhite"
             android:textSize="17sp"
             android:background="@color/colorAccent"/>
+        <TextView
+            android:id="@+id/tv_add"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="新增日期"
+            android:layout_marginLeft="1dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="17sp"
+            android:background="#2A992D"/>
 
         <TextView
             android:id="@+id/ll_save"

@@ -112,7 +112,7 @@ public class LoginActivity extends BaseActivity {
             }, volleyError -> {
                 hideLoadingDialog();
                 mVolleyUtil.handleCommonErrorResponse(LoginActivity.this, volleyError);
-                int errorCode = volleyError.networkResponse.statusCode;
+               // int errorCode = volleyError.networkResponse.statusCode;
             });
         }
     }

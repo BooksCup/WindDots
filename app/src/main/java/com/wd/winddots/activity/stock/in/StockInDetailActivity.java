@@ -1,5 +1,6 @@
 package com.wd.winddots.activity.stock.in;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,10 +15,14 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.zxing.client.android.CaptureActivity2;
 import com.huantansheng.easyphotos.EasyPhotos;
 import com.huantansheng.easyphotos.models.album.entity.Photo;
+import com.kevin.photo_browse.PhotoBrowse;
+import com.kevin.photo_browse.ShowType;
+import com.kevin.photo_browse.callabck.ClickCallback;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.select.SelectOrderActivity;
 import com.wd.winddots.activity.work.GlideEngine;
+import com.wd.winddots.adapter.image.ImageBrowserAdapter;
 import com.wd.winddots.adapter.image.ImagePickerAdapter;
 import com.wd.winddots.adapter.stock.in.StockGoodsSpecAdapter;
 import com.wd.winddots.cons.Constant;
@@ -25,11 +30,11 @@ import com.wd.winddots.entity.GoodsSpec;
 import com.wd.winddots.entity.ImageEntity;
 import com.wd.winddots.entity.Order;
 import com.wd.winddots.entity.StockInApply;
+import com.wd.winddots.utils.CollectionUtil;
 import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.StockUtil;
 import com.wd.winddots.utils.Utils;
 import com.wd.winddots.utils.VolleyUtil;
-import com.wd.winddots.view.dialog.ConfirmDialog;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -146,16 +151,21 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
     @BindView(R.id.tv_auditor)
     TextView mAuditorTv;
 
-    ImagePickerAdapter mImagePickerAdapter;
+    @BindView(R.id.tv_apply_num)
+    TextView mApplyNumTv;
+
+    ImageBrowserAdapter mImageBrowserAdapter;
     StockGoodsSpecAdapter mStockGoodsSpecAdapter;
 
     String mGoodsId;
     String mOrderId;
     String mRelatedCompanyId;
 
-    List<ImageEntity> mImageEntityList = new ArrayList<>();
+    List<String> mImageList = new ArrayList<>();
 
     VolleyUtil mVolleyUtil;
+    String mStockInApplyId;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -231,8 +241,8 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
     private void initView() {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         mImageRv.setLayoutManager(gridLayoutManager);
-        mImagePickerAdapter = new ImagePickerAdapter(this);
-        mImageRv.setAdapter(mImagePickerAdapter);
+        mImageBrowserAdapter = new ImageBrowserAdapter(this);
+        mImageRv.setAdapter(mImageBrowserAdapter);
 
         LinearLayoutManager goodsSpecLinearLayoutManager = new LinearLayoutManager(this);
         mGoodsSpecRv.setLayoutManager(goodsSpecLinearLayoutManager);
@@ -242,31 +252,42 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
     }
 
     private void initData() {
-        mImageEntityList = new ArrayList<>();
-        ImageEntity imageEntity = new ImageEntity();
-        mImageEntityList.add(imageEntity);
-        mImagePickerAdapter.setList(mImageEntityList);
+
+        mStockInApplyId = getIntent().getStringExtra("stockInApplyId");
+
+        mImageList = new ArrayList<>();
+        mImageBrowserAdapter.setList(mImageList);
 
         List<GoodsSpec> goodsSpecList = new ArrayList<>();
         mStockGoodsSpecAdapter.setList(goodsSpecList);
 
-        getStockInApplyById("8c60d610bdfe44d1ba54df965c663baa");
+        getStockInApplyById(mStockInApplyId);
     }
 
     private void initListener() {
-        mImagePickerAdapter.setOnRecyclerItemClickListener(position -> {
-            List<ImageEntity> imageEntityList = mImagePickerAdapter.getList();
-            if (null == imageEntityList) {
-                imageEntityList = new ArrayList<>();
+        mImageBrowserAdapter.setOnRecyclerItemClickListener(position -> {
+            List<String> imageList = mImageBrowserAdapter.getList();
+            if (null == imageList) {
+                imageList = new ArrayList<>();
             }
-            if (position == imageEntityList.size() - 1) {
-                try {
-                    EasyPhotos.createAlbum(StockInDetailActivity.this, true, GlideEngine.getInstance())
-                            .setFileProviderAuthority("com.wd.winddots.fileprovider")
-                            .start(REQUEST_CODE_IMAGE_PICKER);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            if (!CollectionUtil.isEmpty(imageList)) {
+                PhotoBrowse.with(this)
+                        .showType(ShowType.MULTIPLE_URL)
+                        .url(imageList)
+                        .title("")
+                        .position(0)
+                        .callback(new ClickCallback() {
+                            @Override
+                            public void onClick(Activity activity, String url, int position) {
+                                super.onClick(activity, url, position);
+                            }
+
+                            @Override
+                            public void onLongClick(Activity activity, String url, int position) {
+                                super.onLongClick(activity, url, position);
+                            }
+                        })
+                        .show();
             }
         });
 
@@ -283,19 +304,6 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
                     if (null != data) {
                         Order order = (Order) data.getSerializableExtra("order");
                         renderOrderView(order);
-                    }
-                    break;
-                case REQUEST_CODE_IMAGE_PICKER:
-                    // 图片选择
-                    ArrayList<Photo> resultPhotos = data.getParcelableArrayListExtra(EasyPhotos.RESULT_PHOTOS);
-                    if (null != resultPhotos) {
-                        for (int i = 0; i < resultPhotos.size(); i++) {
-                            ImageEntity imageEntity = new ImageEntity();
-                            imageEntity.setPath(resultPhotos.get(i).path);
-                            imageEntity.setId(String.valueOf(i));
-                            mImageEntityList.add(0, imageEntity);
-                        }
-                        mImagePickerAdapter.setList(mImageEntityList);
                     }
                     break;
                 case REQUEST_CODE_SCAN:
@@ -350,6 +358,12 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
 
         List<GoodsSpec> goodsSpecList = StockUtil.getGoodsSpecListFromStockRecordList(stockInApply.getStockApplicationInRecordList());
         mStockGoodsSpecAdapter.setList(goodsSpecList);
+
+        int applyNum = 0;
+        for (GoodsSpec goodsSpec : goodsSpecList) {
+            applyNum += Integer.valueOf(goodsSpec.getApplyNum());
+        }
+        mApplyNumTv.setText(String.valueOf(applyNum));
 
         if (TextUtils.isEmpty(stockInApply.getY())) {
             mGoodsSpecYTv.setVisibility(View.GONE);
@@ -422,6 +436,13 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
             mRemarkTv.setText(stockInApply.getRemark());
             mCreateUserTv.setText(stockInApply.getCreateUserName() + SPACE_SEPARATOR + stockInApply.getCreateTime());
             mAuditorTv.setText(stockInApply.getAuditUserName());
+
+            try {
+                mImageList = JSON.parseArray(stockInApply.getStockImg(), String.class);
+            } catch (Exception e) {
+                mImageList = new ArrayList<>();
+            }
+            mImageBrowserAdapter.setList(mImageList);
 
         }, volleyError -> {
             mVolleyUtil.handleCommonErrorResponse(StockInDetailActivity.this, volleyError);

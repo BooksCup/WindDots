@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.huantansheng.easyphotos.EasyPhotos;
 import com.huantansheng.easyphotos.models.album.entity.Photo;
+import com.kevin.photo_browse.PhotoBrowse;
+import com.kevin.photo_browse.ShowType;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.work.GlideEngine;
@@ -43,7 +45,7 @@ import butterknife.OnClick;
  * Date: 2021/2/26 9:35 AM
  * Description: 添加问题
  */
-public class FabricCheckProblemBrowseActivity extends BaseActivity {
+public class FabricCheckProblemBrowseActivity extends BaseActivity implements FabricCheckProblemBrowseAdapter.OnImageClickListener {
 
     private VolleyUtil mVolleyUtil;
 
@@ -99,6 +101,7 @@ public class FabricCheckProblemBrowseActivity extends BaseActivity {
         mCheckRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mCheckRv.setLayoutManager(layoutManager);
         mCheckRv.setAdapter(mAdapter);
+        mAdapter.setOnImageClickListener(this);
 
     }
 
@@ -156,6 +159,7 @@ public class FabricCheckProblemBrowseActivity extends BaseActivity {
                                 }
                                 problemItem.setImageEntities(imageEntityList);
                             }
+                            problemItem.setImages(imageList);
                         }catch (Exception ignored){
                         }
                     }
@@ -205,9 +209,12 @@ public class FabricCheckProblemBrowseActivity extends BaseActivity {
         mPositionEt.setText(mCurrentPosition.getProblemPosition());
     }
 
-
-
-
-
-
+    @Override
+    public void onImageDidClick(int position) {
+        PhotoBrowse.with(FabricCheckProblemBrowseActivity.this)
+                .showType(ShowType.MULTIPLE_URL)
+                .url(mAdapter.getData().get(position).getImages())
+                .position(0)//初始预览位置 默认0
+                .show();
+    }
 }

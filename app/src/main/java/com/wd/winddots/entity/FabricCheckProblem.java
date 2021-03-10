@@ -24,6 +24,7 @@ public class FabricCheckProblem {
     private String tagCTimes;
     private String tagDTimes;
     private String image;
+    private List<String> images;
 
     public String getImage() {
         return image;
@@ -119,5 +120,13 @@ public class FabricCheckProblem {
 
     public void setWeightBefore(String weightBefore) {
         this.weightBefore = weightBefore;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }

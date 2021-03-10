@@ -39,6 +39,13 @@ public class FabricCheckTaskLotAdapter extends BaseQuickAdapter<FabricCheckTaskL
 
         EditText numberEt = helper.getView(R.id.et_lot_number);
         ImageView deleteIv = helper.getView(R.id.iv_delete);
+        ImageView addIv = helper.getView(R.id.iv_add);
+        ImageView minusIv = helper.getView(R.id.iv_minus);
+
+
+
+
+
         if (helper.getPosition() == 0){
             deleteIv.setVisibility(View.GONE);
         }else {
@@ -102,13 +109,28 @@ public class FabricCheckTaskLotAdapter extends BaseQuickAdapter<FabricCheckTaskL
             public void afterTextChanged(Editable editable) {
             }
         });
-        numberEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+
+        addIv.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View view, boolean b) {
-                int index = helper.getPosition();
-                if (index == getData().size() -1){
-                    addData(new FabricCheckTaskLot());
+            public void onClick(View view) {
+                adapter.addData(new FabricCheckTaskRecord());
+                numberEt.setText(adapter.getData().size() + "");
+            }
+        });
+
+        minusIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (adapter.getData().size() <= 1){
+                    if (getData().size() == 1){
+                        return;
+                    }
+                    remove(helper.getPosition());
+                    return;
                 }
+                adapter.remove(adapter.getData().size()-1);
+                numberEt.setText(adapter.getData().size() + "");
             }
         });
 

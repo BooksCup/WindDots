@@ -56,7 +56,7 @@ public class StockInActivity extends BaseActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stock_in_apply);
+        setContentView(R.layout.activity_stock_in);
         ButterKnife.bind(this);
         mVolleyUtil = VolleyUtil.getInstance(this);
         initView();
@@ -139,7 +139,9 @@ public class StockInActivity extends BaseActivity
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        StockInApply stockInApply = mStockInApplyList.get(position);
         Intent intent = new Intent(StockInActivity.this, StockInDetailActivity.class);
+        intent.putExtra("stockInApplyId", stockInApply.getId());
         startActivity(intent);
     }
 

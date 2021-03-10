@@ -42,7 +42,8 @@
                 android:layout_height="50dp"
                 android:layout_alignParentRight="true"
                 android:padding="15dp"
-                android:src="@mipmap/icon_add_red" />
+                android:src="@mipmap/icon_add_red"
+                android:visibility="gone"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -111,6 +112,10 @@
                     android:layout_height="match_parent"
                     android:background="@color/colorWhite" />
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <com.wd.winddots.view.BottomSearchBarView
+                android:id="@+id/bottom_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 

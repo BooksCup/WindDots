@@ -42,6 +42,8 @@ public class StockInApply implements Serializable {
      */
     private String remark;
 
+    private String stockImg;
+
     /**
      * 出入库详细
      */
@@ -173,6 +175,14 @@ public class StockInApply implements Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getStockImg() {
+        return stockImg;
+    }
+
+    public void setStockImg(String stockImg) {
+        this.stockImg = stockImg;
     }
 
     public List<StockApplicationInRecord> getStockApplicationInRecordList() {

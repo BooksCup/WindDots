@@ -41,6 +41,8 @@ public class FabricCheckProblemAdapter extends BaseQuickAdapter<FabricCheckProbl
 
     public FabricCheckProblemAdapter(int layoutResId, @Nullable List<FabricCheckProblem> data) {
         super(layoutResId, data);
+        SpinnerView.SpinnerBean bean0 = new SpinnerView.SpinnerBean();
+        bean0.setName("");
         SpinnerView.SpinnerBean bean1 = new SpinnerView.SpinnerBean();
         bean1.setName("A");
         SpinnerView.SpinnerBean bean2 = new SpinnerView.SpinnerBean();
@@ -49,6 +51,7 @@ public class FabricCheckProblemAdapter extends BaseQuickAdapter<FabricCheckProbl
         bean3.setName("C");
         SpinnerView.SpinnerBean bean4 = new SpinnerView.SpinnerBean();
         bean4.setName("D");
+        levelList.add(bean0);
         levelList.add(bean1);
         levelList.add(bean2);
         levelList.add(bean3);
@@ -73,21 +76,26 @@ public class FabricCheckProblemAdapter extends BaseQuickAdapter<FabricCheckProbl
             public void onselect(int position, SpinnerView view) {
                 item.setLevel(levelList.get(position).getName());
                 if (position == 0){
-                    item.setTagATimes("1");
+                    item.setTagATimes(null);
                     item.setTagBTimes(null);
                     item.setTagCTimes(null);
                     item.setTagDTimes(null);
                 }else if (position == 1){
-                    item.setTagATimes(null);
-                    item.setTagBTimes("1");
+                    item.setTagATimes("1");
+                    item.setTagBTimes(null);
                     item.setTagCTimes(null);
                     item.setTagDTimes(null);
                 }else if (position == 2){
                     item.setTagATimes(null);
+                    item.setTagBTimes("1");
+                    item.setTagCTimes(null);
+                    item.setTagDTimes(null);
+                }else if (position == 3){
+                    item.setTagATimes(null);
                     item.setTagBTimes(null);
                     item.setTagCTimes("1");
                     item.setTagDTimes(null);
-                }else if (position == 3){
+                }else if (position == 4){
                     item.setTagATimes(null);
                     item.setTagBTimes(null);
                     item.setTagCTimes(null);
@@ -96,13 +104,13 @@ public class FabricCheckProblemAdapter extends BaseQuickAdapter<FabricCheckProbl
             }
         });
         if (!StringUtils.isNullOrEmpty(item.getTagATimes())){
-            levelSpinner.setDefaultPosition(0);
-        }else if (!StringUtils.isNullOrEmpty(item.getTagBTimes())){
             levelSpinner.setDefaultPosition(1);
-        }else if (!StringUtils.isNullOrEmpty(item.getTagCTimes())){
+        }else if (!StringUtils.isNullOrEmpty(item.getTagBTimes())){
             levelSpinner.setDefaultPosition(2);
-        }else if (!StringUtils.isNullOrEmpty(item.getTagDTimes())){
+        }else if (!StringUtils.isNullOrEmpty(item.getTagCTimes())){
             levelSpinner.setDefaultPosition(3);
+        }else if (!StringUtils.isNullOrEmpty(item.getTagDTimes())){
+            levelSpinner.setDefaultPosition(4);
         }else {
             levelSpinner.setDefaultPosition(0);
         }

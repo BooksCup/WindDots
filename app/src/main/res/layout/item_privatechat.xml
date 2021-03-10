@@ -68,15 +68,14 @@
 
         <TextView
             android:id="@+id/tv_unread"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_toRightOf="@+id/item_privatechat_userAvatar_iv"
+            android:layout_width="13dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="-5dp"
-            android:textSize="12sp"
+            android:layout_toRightOf="@+id/item_privatechat_userAvatar_iv"
+            android:background="@drawable/shape_unread"
             android:gravity="center"
             android:textColor="@color/colorWhite"
-            android:background="@drawable/shape_unread"
-            />
+            android:textSize="12sp" />
         <TextView
             android:id="@+id/item_privatechat_time_tv"
             android:layout_width="wrap_content"

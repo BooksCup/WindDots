@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.alibaba.fastjson.JSON;
@@ -16,17 +17,14 @@ import com.huantansheng.easyphotos.models.album.entity.Photo;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.work.GlideEngine;
-import com.wd.winddots.activity.work.PicBean;
 import com.wd.winddots.adapter.check.fabric.FabricCheckProblemAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.desktop.list.check.view.SpinnerView;
 import com.wd.winddots.entity.FabricCheckProblem;
 import com.wd.winddots.entity.FabricCheckProblemBean;
 import com.wd.winddots.entity.FabricCheckProblemSelect;
-import com.wd.winddots.entity.FabricCheckTaskLot;
 import com.wd.winddots.entity.FabricCheckTaskRecordPosition;
 import com.wd.winddots.entity.ImageEntity;
-import com.wd.winddots.fast.bean.ApplyDetailBean;
 import com.wd.winddots.utils.OSSUploadHelper;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.Utils;
@@ -34,8 +32,10 @@ import com.wd.winddots.utils.VolleyUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -128,7 +128,7 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
         mAdapter.setOnAddPhotoClickListener(this);
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_previous, R.id.tv_next, R.id.ll_delete,R.id.iv_add})
+    @OnClick({R.id.iv_back, R.id.tv_previous, R.id.tv_next, R.id.ll_delete, R.id.iv_add,R.id.tv_add})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -144,6 +144,9 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
                 onDeleteDidClick();
                 break;
             case R.id.iv_add:
+                //onAddDidClick();
+                break;
+            case R.id.tv_add:
                 onAddDidClick();
                 break;
         }
@@ -235,7 +238,6 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
      * 点击上一条
      * */
     private void onPreviousDidClick() {
-
     }
 
     /*
@@ -244,14 +246,14 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
     private void onNextDidClick() {
     }
 
-    private void onSave(int viewId){
+    private void onSave(int viewId) {
         String problemPosition = mPositionEt.getText().toString().trim();
         if (StringUtils.isNullOrEmpty(problemPosition)) {
             showToast("请先输入问题位置");
             return;
         }
 
-        Map params = new HashMap<>();
+        Map<Object, Object> params = new HashMap<>();
         params.put("recordId", mRecordId);
         params.put("problemPosition", problemPosition);
         if (!StringUtils.isNullOrEmpty(mCurrentPosition.getId())) {
@@ -277,8 +279,10 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
                 problemMap.put("tagBTimes", "1");
             } else if ("C".equals(problem.getLevel())) {
                 problemMap.put("tagCTimes", "1");
-            } else {
+            } else if ("D".equals(problem.getLevel())) {
                 problemMap.put("tagDTimes", "1");
+            } else {
+                continue;
             }
             List<String> imageList = new ArrayList<>();
             List<ImageEntity> imageEntityList = problem.getImageEntities();
@@ -291,6 +295,10 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
             fabricCheckRecordProblemList.add(problemMap);
         }
         Log.e("net666", JSON.toJSONString(fabricCheckRecordProblemList));
+        if (fabricCheckRecordProblemList.size() == 0) {
+            Toast.makeText(this, "请先添加问题", Toast.LENGTH_LONG).show();
+            return;
+        }
 
 
         String url = Constant.APP_BASE_URL + "fabricCheckRecordProblem?&problemPosition=" + problemPosition;
@@ -315,9 +323,9 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
                 return;
             }
             mCurrentPosition.setId(position.getId());
-            if (viewId == R.id.tv_next){
+            if (viewId == R.id.tv_next) {
                 toNextPosition();
-            }else {
+            } else {
                 toPreviousPosition();
             }
         }, volleyError -> {
@@ -328,8 +336,7 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
     }
 
 
-
-    private void toPreviousPosition(){
+    private void toPreviousPosition() {
         int index = mPisitionList.indexOf(mCurrentPosition);
         if (index == 0) {
             showToast("已经是第一条了");
@@ -344,11 +351,35 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
     }
 
     private void toNextPosition() {
+
+//        List<FabricCheckProblem> currentProblems = mAdapter.getData();
+//        List<String> problemStringList = new ArrayList<>();
+//        for (int i = 0;i < currentProblems.size();i++){
+//
+//        }
+//
+
+
         int index = mPisitionList.indexOf(mCurrentPosition);
         if (index == mPisitionList.size() - 1) {
             FabricCheckTaskRecordPosition position = new FabricCheckTaskRecordPosition();
             List<FabricCheckProblem> fabricCheckProblems = new ArrayList<>();
-            fabricCheckProblems.add(new FabricCheckProblem());
+            List<String> problemStringList = new ArrayList<>();
+            for (int i = 0; i < mPisitionList.size(); i++) {
+                List<FabricCheckProblem> problemList = mPisitionList.get(i).getFabricCheckRecordProblemList();
+                for (int n = 0; n < problemList.size(); n++) {
+                    problemStringList.add(problemList.get(n).getTag());
+                }
+            }
+            Set<String> set = new LinkedHashSet<>(problemStringList);
+            problemStringList.clear();
+            problemStringList.addAll(set);
+            Log.e("net666", String.valueOf(problemStringList));
+            for (int i = 0;i < problemStringList.size();i++){
+                FabricCheckProblem problem = new FabricCheckProblem();
+                problem.setTag(problemStringList.get(i));
+                fabricCheckProblems.add(problem);
+            }
             position.setFabricCheckRecordProblemList(fabricCheckProblems);
             mPisitionList.add(position);
         }
@@ -380,9 +411,9 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
     }
 
     /*
-    * 点击添加
-    * */
-    private void onAddDidClick(){
+     * 点击添加
+     * */
+    private void onAddDidClick() {
         mAdapter.addData(new FabricCheckProblem());
     }
 
@@ -395,12 +426,12 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
         mCurrentPhotoIndex = position;
         int count = 9;
         List<ImageEntity> imageEntityList = mAdapter.getData().get(position).getImageEntities();
-        if (imageEntityList == null || imageEntityList.size() == 0){
+        if (imageEntityList == null || imageEntityList.size() == 0) {
             count = 9;
-        }else {
+        } else {
             count = 9 - imageEntityList.size();
         }
-        if (count == 0){
+        if (count == 0) {
             return;
         }
         EasyPhotos.createAlbum(FabricCheckProblemActivity.this, true, GlideEngine.getInstance())//参数说明：上下文，是否显示相机按钮，[配置Glide为图片加载引擎](https://github.com/HuanTanSheng/EasyPhotos/wiki/12-%E9%85%8D%E7%BD%AEImageEngine%EF%BC%8C%E6%94%AF%E6%8C%81%E6%89%80%E6%9C%89%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E5%BA%93)

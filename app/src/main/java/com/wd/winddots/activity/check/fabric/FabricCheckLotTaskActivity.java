@@ -15,6 +15,7 @@ import com.wd.winddots.adapter.check.fabric.FabricCheckTaskLotAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.FabricCheckTaskLot;
 import com.wd.winddots.entity.FabricCheckTaskRecord;
+import com.wd.winddots.entity.ProblemImage;
 import com.wd.winddots.utils.Utils;
 import com.wd.winddots.utils.VolleyUtil;
 
@@ -85,7 +86,7 @@ public class FabricCheckLotTaskActivity extends FragmentActivity {
         mCheckRv.setAdapter(mAdapter);
     }
 
-    @OnClick({R.id.iv_back, R.id.ll_save,R.id.tv_delete})
+    @OnClick({R.id.iv_back, R.id.ll_save,R.id.tv_delete,R.id.tv_add})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -96,6 +97,9 @@ public class FabricCheckLotTaskActivity extends FragmentActivity {
                 break;
             case R.id.tv_delete:
                 onDeleteDidClick();
+                break;
+            case R.id.tv_add:
+                onAddDidClick();
                 break;
         }
     }
@@ -111,8 +115,8 @@ public class FabricCheckLotTaskActivity extends FragmentActivity {
             if (null == response) {
                 return;
             }
-            List<FabricCheckTaskLot> list = JSON.parseArray(response, FabricCheckTaskLot.class);
-
+            FabricCheckLot fabricCheckLot = JSON.parseObject(response,FabricCheckLot.class);
+            List<FabricCheckTaskLot> list = fabricCheckLot.getFabricQcRecordAllByCheckLIIdVoList();
             if (list == null ||  list.size() == 0) {
                 list = new ArrayList<>();
                 list.add(new FabricCheckTaskLot());
@@ -160,7 +164,6 @@ public class FabricCheckLotTaskActivity extends FragmentActivity {
                 paramsMaps.add(map);
             }
         }
-
         String url = Constant.APP_BASE_URL + "fabricCheckRecord?&modifyTime=modifyTimeApply&fabricCheckTaskId=" + mFabricCheckTaskId;
         String paramsJson = JSON.toJSONString(paramsMaps);
         Log.e("net666", paramsJson);
@@ -207,4 +210,35 @@ public class FabricCheckLotTaskActivity extends FragmentActivity {
         });
         builder.show();
     }
+
+
+    /*
+    * 点击添加日期
+    * */
+    private void onAddDidClick(){
+        mAdapter.addData(new FabricCheckTaskLot());
+    }
+
+
+    private static class FabricCheckLot{
+        private List<FabricCheckTaskLot> fabricQcRecordAllByCheckLIIdVoList;
+        private List<ProblemImage> problemImageClassifyList;
+
+        public List<FabricCheckTaskLot> getFabricQcRecordAllByCheckLIIdVoList() {
+            return fabricQcRecordAllByCheckLIIdVoList;
+        }
+
+        public void setFabricQcRecordAllByCheckLIIdVoList(List<FabricCheckTaskLot> fabricQcRecordAllByCheckLIIdVoList) {
+            this.fabricQcRecordAllByCheckLIIdVoList = fabricQcRecordAllByCheckLIIdVoList;
+        }
+
+        public List<ProblemImage> getProblemImageClassifyList() {
+            return problemImageClassifyList;
+        }
+
+        public void setProblemImageClassifyList(List<ProblemImage> problemImageClassifyList) {
+            this.problemImageClassifyList = problemImageClassifyList;
+        }
+    }
+
 }

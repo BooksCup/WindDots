@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.kevin.photo_browse.PhotoBrowse;
+import com.kevin.photo_browse.ShowType;
 import com.wd.winddots.GlideApp;
 import com.wd.winddots.R;
 import com.wd.winddots.desktop.list.check.view.SpinnerView;
@@ -28,6 +30,11 @@ import cn.jmessage.support.qiniu.android.utils.StringUtils;
 public class FabricCheckProblemBrowseAdapter extends BaseQuickAdapter<FabricCheckProblem, BaseViewHolder> {
 
 
+    private OnImageClickListener onImageClickListener;
+
+    public void setOnImageClickListener(OnImageClickListener onImageClickListener) {
+        this.onImageClickListener = onImageClickListener;
+    }
 
     public FabricCheckProblemBrowseAdapter(int layoutResId, @Nullable List<FabricCheckProblem> data) {
         super(layoutResId, data);
@@ -55,6 +62,26 @@ public class FabricCheckProblemBrowseAdapter extends BaseQuickAdapter<FabricChec
         }else {
             icon.setImageResource(R.mipmap.icon_default_goods);
         }
+
+
+
+
+        icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (item.getImages() == null || item.getImages().size() == 0){
+                    return;
+                }
+                if (null != onImageClickListener){
+                    onImageClickListener.onImageDidClick(helper.getPosition());
+                }
+            }
+        });
+    }
+
+    public interface OnImageClickListener{
+        void onImageDidClick(int position);
     }
 
 

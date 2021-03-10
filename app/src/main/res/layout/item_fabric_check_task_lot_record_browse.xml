@@ -70,18 +70,58 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
-        android:orientation="horizontal"
-        android:paddingLeft="20dp">
-        <TextView
-            android:id="@+id/tv_problem"
+        android:orientation="horizontal">
+        <LinearLayout
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:textSize="13sp"
-            android:text="A2 B3 C4 D5"
-            />
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_problem_a"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:textSize="13sp"
+                android:text="A2"
+                android:textColor="#E51C23"
+                />
+            <TextView
+                android:id="@+id/tv_problem_b"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:textSize="13sp"
+                android:text="B3"
+                android:textColor="#FF9800"
+                />
+            <TextView
+                android:id="@+id/tv_problem_c"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:textSize="13sp"
+                android:text="C4"
+                android:textColor="#3291F8"
+                />
+            <TextView
+                android:id="@+id/tv_problem_d"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:textSize="13sp"
+                android:text="D5"
+                android:textColor="#27B148"
+                />
+
+        </LinearLayout>
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"

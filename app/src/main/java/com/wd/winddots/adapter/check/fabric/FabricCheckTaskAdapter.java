@@ -1,6 +1,7 @@
 package com.wd.winddots.adapter.check.fabric;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.wd.winddots.GlideApp;
 import com.wd.winddots.R;
+import com.wd.winddots.activity.check.fabric.FabricCheckOrderProcessActivity;
+import com.wd.winddots.activity.check.fabric.FabricCheckOrderTaskActivity;
 import com.wd.winddots.desktop.list.check.bean.CheckGoodsBean;
 import com.wd.winddots.desktop.view.PinnedHeaderRecyclerView.ExpandGroupItemEntity;
 import com.wd.winddots.desktop.view.PinnedHeaderRecyclerView.RecyclerExpandBaseAdapter;
@@ -20,6 +26,7 @@ import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.Utils;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,186 +38,159 @@ import java.util.List;
  *
  * @author zhou
  */
-public class FabricCheckTaskAdapter extends RecyclerExpandBaseAdapter<FabricCheckTask, FabricCheckLotInfo, RecyclerView.ViewHolder> {
+public class FabricCheckTaskAdapter extends BaseQuickAdapter<FabricCheckTask, BaseViewHolder> {
 
-    private OnSubItemClickListener onSubItemClickListener;
-
-    private Context mContext;
-
-    public FabricCheckTaskAdapter(Context context) {
-        this.mContext = context;
-    }
-
-
-    public void setOnSubItemClickListener(OnSubItemClickListener onSubItemClickListener) {
-        this.onSubItemClickListener = onSubItemClickListener;
-    }
-
-    /**
-     * 悬浮标题栏被点击的时候，展开收起切换功能
-     */
-    public void switchExpand(int adapterPosition) {
-        int groupIndex = mIndexMap.get(adapterPosition).getGroupIndex();
-        ExpandGroupItemEntity entity = mDataList.get(groupIndex);
-        entity.setExpand(!entity.isExpand());
-        notifyDataSetChanged();
-    }
-
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        /*  if (viewType == VIEW_TYPE_ITEM_TIME) {*/
-        TitleItemHolder holder = new TitleItemHolder(
-                LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fabric_check_task, parent, false));
-        return holder;
-/*        } else {
-            SubItemHolder itemHolder = new SubItemHolder(
-                    LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fabric_check_lot_info, parent, false));
-
-            return itemHolder;
-        }*/
+    public FabricCheckTaskAdapter(int layoutResId, @Nullable List<FabricCheckTask> data) {
+        super(layoutResId, data);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        //  if (getItemViewType(position) == VIEW_TYPE_ITEM_TIME) {
-        int groupIndex = mIndexMap.get(position).getGroupIndex();
-        TitleItemHolder itemHolder = (TitleItemHolder) holder;
-        itemHolder.itemView.setTag(mDataList.get(groupIndex));
-        FabricCheckTask fabricCheckTask = mDataList.get(groupIndex).getParent();
+    protected void convert(BaseViewHolder helper, FabricCheckTask item) {
+        String goodsInfo = Utils.nullOrEmpty(item.getGoodsName()) + "(" + Utils.nullOrEmpty(item.getGoodsNo()) + ")";
+        helper.setText(R.id.tv_goods_info, goodsInfo)
+                .setText(R.id.tv_order_no, "#" + Utils.nullOrEmpty(item.getOrderNo()))
+                .setText(R.id.tv_theme, Utils.nullOrEmpty(item.getOrderTheme()))
+                .setText(R.id.tv_related_company, Utils.nullOrEmpty(item.getRelatedCompanyShortName()));
 
-        String goodsInfo = fabricCheckTask.getGoodsName() + "(" + fabricCheckTask.getGoodsNo() + ")";
-        itemHolder.mGoodsInfoTv.setText(goodsInfo);
-        itemHolder.mOrderNoTv.setText("#" + fabricCheckTask.getOrderNo());
-        itemHolder.mThemeTv.setText(fabricCheckTask.getOrderTheme());
-
-//        if (fabricCheckTask.getDeliveryDates() != null && fabricCheckTask.getDeliveryDates().size() > 0){
-//            itemHolder.tvDate.setText(fabricCheckTask.getDeliveryDates().get(0).getDeliveryTime());
-//        }else {
-//            itemHolder.tvDate.setText("");
-//        }
-        String goodsPhoto = CommonUtil.getFirstPhotoFromJsonList(fabricCheckTask.getGoodsPhotos());
+        ImageView icon = helper.getView(R.id.sdv_goods_photo);
+        String goodsPhoto = CommonUtil.getFirstPhotoFromJsonList(item.getGoodsPhotos());
         if (!TextUtils.isEmpty(goodsPhoto)) {
-           // itemHolder.mGoodsPhotoSdv.setImageURI(Uri.parse(goodsPhoto));
-            GlideApp.with(mContext).load(goodsPhoto + Utils.OSSImageSize(200)).into(itemHolder.mGoodsPhotoSdv);
+            GlideApp.with(mContext).load(goodsPhoto + Utils.OSSImageSize(200)).into(icon);
         } else {
-            itemHolder.mGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
-        }
-        ((TitleItemHolder) holder).checkInfoAdapter.mContext = mContext;
-        ((TitleItemHolder) holder).checkInfoAdapter.mFabricCheckTaskId = fabricCheckTask.getId();
-        ((TitleItemHolder) holder).checkInfoAdapter.goodsName = fabricCheckTask.getGoodsName();
-        ((TitleItemHolder) holder).checkInfoAdapter.goodsNo = fabricCheckTask.getGoodsNo();
-        if (fabricCheckTask.isOpen()){
-            (((TitleItemHolder) holder).llInfo).setVisibility(View.VISIBLE);
-        }else {
-            (((TitleItemHolder) holder).llInfo).setVisibility(View.GONE);
-        }
-        ((TitleItemHolder) holder).updateUI(position, fabricCheckTask.getFabricCheckLotInfoList());
-
-        holder.itemView.setOnClickListener(v -> {
-//            if ((((TitleItemHolder) holder).llInfo).getVisibility() == View.VISIBLE) {
-//                (((TitleItemHolder) holder).llInfo).setVisibility(View.GONE);
-//            } else {
-//                (((TitleItemHolder) holder).llInfo).setVisibility(View.VISIBLE);
-//                ((TitleItemHolder) hnnolder).updateUI(position, fabricCheckTask.getFabricCheckLotInfoList());
-//            }
-
-            fabricCheckTask.setOpen(!fabricCheckTask.isOpen());
-            if (fabricCheckTask.isOpen()){
-                (((TitleItemHolder) holder).llInfo).setVisibility(View.VISIBLE);
-            }else {
-                (((TitleItemHolder) holder).llInfo).setVisibility(View.GONE);
-            }
-            ((TitleItemHolder) holder).updateUI(position, fabricCheckTask.getFabricCheckLotInfoList());
-
-            ((TitleItemHolder) holder).llInfoHeader.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    List<FabricCheckLotInfo> lotInfoList = ((TitleItemHolder) holder).checkInfoAdapter.getLotInfos();
-                    FabricCheckLotInfo fabricCheckLotInfo = new FabricCheckLotInfo(true);
-                    if (null == lotInfoList) {
-                        lotInfoList = new ArrayList<>();
-                    }
-                    lotInfoList.add(fabricCheckLotInfo);
-                    fabricCheckTask.setFabricCheckLotInfoList(lotInfoList);
-                    ((TitleItemHolder) holder).checkInfoAdapter.notifyDataSetChanged();
-                }
-            });
-
-          /*  ExpandGroupItemEntity entity = (ExpandGroupItemEntity) v.getTag();
-            entity.setExpand(!entity.isExpand());
-            notifyDataSetChanged();*/
-        });
-
-    }
-
-    class TitleItemHolder extends RecyclerView.ViewHolder {
-
-        ImageView mGoodsPhotoSdv;
-        TextView mGoodsInfoTv;
-        TextView mRelatedCompanyTv;
-        TextView mOrderNoTv;
-        TextView mThemeTv;
-        LinearLayout llInfo;
-        RecyclerView infoRecycler;
-        LinearLayout llInfoHeader;
-        TextView tvDate;
-
-        CheckInfoAdapter checkInfoAdapter;
-
-        TitleItemHolder(View itemView) {
-            super(itemView);
-            mGoodsPhotoSdv = itemView.findViewById(R.id.sdv_goods_photo);
-            mGoodsInfoTv = itemView.findViewById(R.id.tv_goods_info);
-            mRelatedCompanyTv = itemView.findViewById(R.id.tv_related_company);
-            mOrderNoTv = itemView.findViewById(R.id.tv_order_no);
-            mThemeTv = itemView.findViewById(R.id.tv_theme);
-            llInfo = itemView.findViewById(R.id.ll_info);
-            tvDate = itemView.findViewById(R.id.tv_date);
-
-            infoRecycler = itemView.findViewById(R.id.body_recycler);
-
-            checkInfoAdapter = new CheckInfoAdapter();
-            LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-            infoRecycler.setLayoutManager(layoutManager);
-            infoRecycler.setAdapter(checkInfoAdapter);
-
-            llInfoHeader = itemView.findViewById(R.id.ll_header);
-        }
-
-        private void updateUI(int position, List<FabricCheckLotInfo> lotInfoList) {
-            checkInfoAdapter.setLotInfos(lotInfoList);
-        }
-
-    }
-
-    static class SubItemHolder extends RecyclerView.ViewHolder {
-
-        LinearLayout mHeaderLl;
-        LinearLayout mBodyLl;
-        LinearLayout mEditLl;
-        TextView mLotNoTv;
-        TextView mNumTv;
-        TextView mWeightTv;
-        TextView mLengthTv;
-        ImageView mAddIv;
-
-        SubItemHolder(View itemView) {
-            super(itemView);
-            mHeaderLl = itemView.findViewById(R.id.ll_header);
-            mBodyLl = itemView.findViewById(R.id.ll_body);
-            mEditLl = itemView.findViewById(R.id.ll_edit);
-            mLotNoTv = itemView.findViewById(R.id.tv_lot_no);
-            mNumTv = itemView.findViewById(R.id.tv_num);
-            mWeightTv = itemView.findViewById(R.id.tv_weight);
-            mLengthTv = itemView.findViewById(R.id.tv_length);
-            mAddIv = itemView.findViewById(R.id.iv_add);
+            icon.setImageResource(R.mipmap.icon_default_goods);
         }
     }
 
-    public interface OnSubItemClickListener {
-        void onItemClick(CheckGoodsBean.CheckGang gang);
-    }
+
+//    private OnSubItemClickListener onSubItemClickListener;
+//
+//    private Context mContext;
+//
+//    public FabricCheckTaskAdapter(Context context) {
+//        this.mContext = context;
+//    }
+//
+//
+//    public void setOnSubItemClickListener(OnSubItemClickListener onSubItemClickListener) {
+//        this.onSubItemClickListener = onSubItemClickListener;
+//    }
+//
+//    /**
+//     * 悬浮标题栏被点击的时候，展开收起切换功能
+//     */
+//    public void switchExpand(int adapterPosition) {
+//        int groupIndex = mIndexMap.get(adapterPosition).getGroupIndex();
+//        ExpandGroupItemEntity entity = mDataList.get(groupIndex);
+//        entity.setExpand(!entity.isExpand());
+//        notifyDataSetChanged();
+//    }
+//
+//    @NonNull
+//    @Override
+//    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//        /*  if (viewType == VIEW_TYPE_ITEM_TIME) {*/
+//        TitleItemHolder holder = new TitleItemHolder(
+//                LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fabric_check_task, parent, false));
+//        return holder;
+///*        } else {
+//            SubItemHolder itemHolder = new SubItemHolder(
+//                    LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fabric_check_lot_info, parent, false));
+//
+//            return itemHolder;
+//        }*/
+//    }
+//
+//    @Override
+//    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+//        //  if (getItemViewType(position) == VIEW_TYPE_ITEM_TIME) {
+//        int groupIndex = mIndexMap.get(position).getGroupIndex();
+//        TitleItemHolder itemHolder = (TitleItemHolder) holder;
+//        itemHolder.itemView.setTag(mDataList.get(groupIndex));
+//        FabricCheckTask fabricCheckTask = mDataList.get(groupIndex).getParent();
+//
+//        String goodsInfo = fabricCheckTask.getGoodsName() + "(" + fabricCheckTask.getGoodsNo() + ")";
+//        itemHolder.mGoodsInfoTv.setText(goodsInfo);
+//        itemHolder.mOrderNoTv.setText("#" + fabricCheckTask.getOrderNo());
+//        itemHolder.mThemeTv.setText(fabricCheckTask.getOrderTheme());
+//
+////        if (fabricCheckTask.getDeliveryDates() != null && fabricCheckTask.getDeliveryDates().size() > 0){
+////            itemHolder.tvDate.setText(fabricCheckTask.getDeliveryDates().get(0).getDeliveryTime());
+////        }else {
+////            itemHolder.tvDate.setText("");
+////        }
+//        String goodsPhoto = CommonUtil.getFirstPhotoFromJsonList(fabricCheckTask.getGoodsPhotos());
+//        if (!TextUtils.isEmpty(goodsPhoto)) {
+//           // itemHolder.mGoodsPhotoSdv.setImageURI(Uri.parse(goodsPhoto));
+//            GlideApp.with(mContext).load(goodsPhoto + Utils.OSSImageSize(200)).into(itemHolder.mGoodsPhotoSdv);
+//        } else {
+//            itemHolder.mGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
+//        }
+//
+//        holder.itemView.setOnClickListener(v -> {
+//            Intent intent = new Intent(mContext, FabricCheckOrderProcessActivity.class);
+//            intent.putExtra("data", JSON.toJSONString(fabricCheckTask));
+//            mContext.startActivity(intent);
+//        });
+//
+//    }
+//
+//    class TitleItemHolder extends RecyclerView.ViewHolder {
+//
+//        ImageView mGoodsPhotoSdv;
+//        TextView mGoodsInfoTv;
+//        TextView mRelatedCompanyTv;
+//        TextView mOrderNoTv;
+//        TextView mThemeTv;
+//        LinearLayout llInfo;
+//
+//        LinearLayout llInfoHeader;
+//        TextView tvDate;
+//
+//
+//        TitleItemHolder(View itemView) {
+//            super(itemView);
+//            mGoodsPhotoSdv = itemView.findViewById(R.id.sdv_goods_photo);
+//            mGoodsInfoTv = itemView.findViewById(R.id.tv_goods_info);
+//            mRelatedCompanyTv = itemView.findViewById(R.id.tv_related_company);
+//            mOrderNoTv = itemView.findViewById(R.id.tv_order_no);
+//            mThemeTv = itemView.findViewById(R.id.tv_theme);
+//            llInfo = itemView.findViewById(R.id.ll_info);
+//            tvDate = itemView.findViewById(R.id.tv_date);
+//
+//
+//            llInfoHeader = itemView.findViewById(R.id.ll_header);
+//        }
+//
+//
+//    }
+//
+//    static class SubItemHolder extends RecyclerView.ViewHolder {
+//
+//        LinearLayout mHeaderLl;
+//        LinearLayout mBodyLl;
+//        LinearLayout mEditLl;
+//        TextView mLotNoTv;
+//        TextView mNumTv;
+//        TextView mWeightTv;
+//        TextView mLengthTv;
+//        ImageView mAddIv;
+//
+//        SubItemHolder(View itemView) {
+//            super(itemView);
+//            mHeaderLl = itemView.findViewById(R.id.ll_header);
+//            mBodyLl = itemView.findViewById(R.id.ll_body);
+//            mEditLl = itemView.findViewById(R.id.ll_edit);
+//            mLotNoTv = itemView.findViewById(R.id.tv_lot_no);
+//            mNumTv = itemView.findViewById(R.id.tv_num);
+//            mWeightTv = itemView.findViewById(R.id.tv_weight);
+//            mLengthTv = itemView.findViewById(R.id.tv_length);
+//            mAddIv = itemView.findViewById(R.id.iv_add);
+//        }
+//    }
+//
+//    public interface OnSubItemClickListener {
+//        void onItemClick(CheckGoodsBean.CheckGang gang);
+//    }
 
 
 }

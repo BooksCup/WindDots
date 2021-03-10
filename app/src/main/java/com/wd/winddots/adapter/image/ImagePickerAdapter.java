@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 图片选择器
+ * 图片选择
  *
  * @author zhou
  */
@@ -75,7 +75,6 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
                 mOnRecyclerItemClickListener.onItemClick(position);
             }
         });
-
 
     }
 

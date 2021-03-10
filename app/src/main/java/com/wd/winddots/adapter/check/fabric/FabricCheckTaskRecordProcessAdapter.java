@@ -14,6 +14,7 @@ import com.wd.winddots.utils.Utils;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import cn.jmessage.support.qiniu.android.utils.StringUtils;
 
 /**
  * FileName: FabricCheckTaskNumberLotAdapter
@@ -32,19 +33,34 @@ public class FabricCheckTaskRecordProcessAdapter extends BaseQuickAdapter<Fabric
         EditText weightEt = helper.getView(R.id.et_weight);
         EditText lengthEt = helper.getView(R.id.et_length);
         FabricCheckProblem problemItem = item.getFabricCheckRecordProblem();
-        String problem = "";
+        String problemA = "";
+        String problemB = "";
+        String problemC = "";
+        String problemD = "";
         if (null != problemItem) {
-            problem = "A" + Utils.numberNullOrEmpty(problemItem.getTagATimes()) +
-                    " B" + Utils.numberNullOrEmpty(problemItem.getTagBTimes()) +
-                    " C" + Utils.numberNullOrEmpty(problemItem.getTagCTimes()) +
-                    " D" + Utils.numberNullOrEmpty(problemItem.getTagDTimes());
+            if (!StringUtils.isNullOrEmpty(problemItem.getTagATimes())){
+                problemA = "A" + Utils.numberNullOrEmpty(problemItem.getTagATimes());
+            }
+            if (!StringUtils.isNullOrEmpty(problemItem.getTagBTimes())){
+                problemB = "B" + Utils.numberNullOrEmpty(problemItem.getTagBTimes());
+            }
+            if (!StringUtils.isNullOrEmpty(problemItem.getTagCTimes())){
+                problemC = "C" + Utils.numberNullOrEmpty(problemItem.getTagCTimes());
+            }
+            if (!StringUtils.isNullOrEmpty(problemItem.getTagDTimes())){
+                problemD = "D" + Utils.numberNullOrEmpty(problemItem.getTagDTimes());
+            }
+
         }
 
         helper.setText(R.id.tv_number, (helper.getPosition() + 1) + "")
                 .setText(R.id.et_weight, Utils.nullOrEmpty(item.getWeightAfter()))
                 .setText(R.id.et_length, Utils.nullOrEmpty(item.getLengthAfter()))
                 .setText(R.id.tv_count, Utils.nullOrEmpty(item.getProblemCount()))
-                .setText(R.id.tv_problem, problem);
+                .setText(R.id.tv_problem_a, problemA)
+                .setText(R.id.tv_problem_b, problemB)
+                .setText(R.id.tv_problem_c, problemC)
+                .setText(R.id.tv_problem_d, problemD);
 
         weightEt.addTextChangedListener(new TextWatcher() {
             @Override

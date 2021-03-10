@@ -17,8 +17,10 @@ import com.wd.winddots.adapter.select.OrderAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Order;
 import com.wd.winddots.entity.PageInfo;
+import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.Utils;
 import com.wd.winddots.utils.VolleyUtil;
+import com.wd.winddots.view.BottomSearchBarView;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -44,7 +46,8 @@ import butterknife.OnClick;
 public class SelectOrderActivity extends BaseActivity
         implements SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.OnItemClickListener,
-        BaseQuickAdapter.RequestLoadMoreListener {
+        BaseQuickAdapter.RequestLoadMoreListener,
+BottomSearchBarView.BottomSearchBarViewClickListener{
 
     public static final int REQUEST_ADD_STOCK_IN_APPLY = 0;
     public static final int REQUEST_FABRIC_CHECK_TASK = 1;
@@ -57,6 +60,9 @@ public class SelectOrderActivity extends BaseActivity
 
     @BindView(R.id.et_search)
     EditText mSearchEt;
+
+    @BindView(R.id.bottom_bar)
+    BottomSearchBarView mBottomSearchBarView;
 
     OrderAdapter mOrderAdapter;
     VolleyUtil mVolleyUtil;
@@ -81,6 +87,9 @@ public class SelectOrderActivity extends BaseActivity
     }
 
     private void initView() {
+
+        mBottomSearchBarView.setOnIconClickListener(this);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mOrderRv.setLayoutManager(layoutManager);
         mOrderRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
@@ -161,7 +170,7 @@ public class SelectOrderActivity extends BaseActivity
         String url;
         try {
 //            if (TextUtils.isEmpty(mGoodsId)) {
-            url = Constant.APP_BASE_URL + "order/search?enterpriseId=" + "1" + "&pageNum=" + mPage +
+            url = Constant.APP_BASE_URL + "order/search?enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId() + "&pageNum=" + mPage +
                     "&pageSize=" + mPageSize + "&keyword=" + URLEncoder.encode(mKeyword, "utf-8");
 //            } else {
 //                url = Constant.APP_BASE_URL + "order/search?enterpriseId=" + "1" + "&pageNum=" + mPage +
@@ -170,7 +179,7 @@ public class SelectOrderActivity extends BaseActivity
 //            }
         } catch (UnsupportedEncodingException e) {
 //            if (TextUtils.isEmpty(mGoodsId)) {
-            url = Constant.APP_BASE_URL + "order/search?enterpriseId=" + "1" + "&pageNum=" + mPage +
+            url = Constant.APP_BASE_URL + "order/search?enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId() + "&pageNum=" + mPage +
                     "&pageSize=" + mPageSize + "&keyword=" + mKeyword;
 //            } else {
 //                url = Constant.APP_BASE_URL + "order/search?enterpriseId=" + "1" + "&pageNum=" + mPage +
@@ -214,22 +223,23 @@ public class SelectOrderActivity extends BaseActivity
     private void addFabricCheckTask(final Order order) {
         String url = Constant.APP_BASE_URL + "fabricCheckTask";
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("goodsId", order.getGoodsId());
-        paramMap.put("goodsName", order.getGoodsName());
-        paramMap.put("goodsNo", order.getGoodsNo());
+        paramMap.put("goodsId", Utils.nullOrEmpty(order.getGoodsId()));
+        paramMap.put("goodsName", Utils.nullOrEmpty(order.getGoodsName()));
+        paramMap.put("goodsNo", Utils.nullOrEmpty(order.getGoodsNo()));
         paramMap.put("goodsPhotos", order.getGoodsPhotos());
-        paramMap.put("relatedCompanyId", order.getRelatedCompanyId());
-        paramMap.put("relatedCompanyName", order.getRelatedCompanyName());
-        paramMap.put("relatedCompanyShortName", order.getRelatedCompanyShortName());
-        paramMap.put("enterpriseId", "1");
-        paramMap.put("orderId", order.getOrderId());
-        paramMap.put("orderNo", order.getOrderNo());
-        paramMap.put("orderTheme", order.getOrderTheme());
+        paramMap.put("relatedCompanyId", Utils.nullOrEmpty(order.getRelatedCompanyId()));
+        paramMap.put("relatedCompanyName", Utils.nullOrEmpty(order.getRelatedCompanyName()));
+        paramMap.put("relatedCompanyShortName", Utils.nullOrEmpty(order.getRelatedCompanyShortName()));
+        paramMap.put("enterpriseId", SpHelper.getInstance(this).getEnterpriseId());
+        paramMap.put("orderId", Utils.nullOrEmpty(order.getOrderId()));
+        paramMap.put("orderNo", Utils.nullOrEmpty(order.getOrderNo()));
+        paramMap.put("orderTheme", Utils.nullOrEmpty(order.getOrderTheme()));
         paramMap.put("deliveryDate", Utils.nullOrEmpty(order.getDeliveryDates()));
 
         Log.e("net666",JSON.toJSONString(paramMap));
 
         mVolleyUtil.httpPostRequest(url, paramMap, response -> {
+            Log.e("net666",response);
             showToast(getString(R.string.add_fabric_check_task_success));
             hideLoadingDialog();
             finish();
@@ -247,4 +257,14 @@ public class SelectOrderActivity extends BaseActivity
         getData();
     }
 
+    @Override
+    public void onAddIconDidClick() {
+        Intent intent = new Intent(SelectOrderActivity.this, AddSimpleOrderActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onSearchIconDidClick() {
+
+    }
 }
