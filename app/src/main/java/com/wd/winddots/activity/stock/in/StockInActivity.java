@@ -13,6 +13,7 @@ import com.wd.winddots.adapter.stock.in.StockInApplyAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.PageInfo;
 import com.wd.winddots.entity.StockInApply;
+import com.wd.winddots.enums.RoleEnum;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.VolleyUtil;
 
@@ -62,15 +63,11 @@ public class StockInActivity extends BaseActivity
         initListener();
     }
 
-    @OnClick({R.id.iv_back, R.id.iv_add})
+    @OnClick({R.id.iv_back})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
                 finish();
-                break;
-            case R.id.iv_add:
-                Intent intent = new Intent(StockInActivity.this, AddStockInApplyActivity.class);
-                startActivity(intent);
                 break;
         }
     }
@@ -111,6 +108,7 @@ public class StockInActivity extends BaseActivity
     private void getData() {
         String url = Constant.APP_BASE_URL + "stockApplication?enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId() +
                 "&stockType=" + Constant.STOCK_TYPE_IN +
+                "&role=" + RoleEnum.ROLE_WAREHOUSE_KEEPER.getCode() +
                 "&pageNum=" + mPage +
                 "&pageSize=" + mPageSize;
 
@@ -141,7 +139,8 @@ public class StockInActivity extends BaseActivity
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+        Intent intent = new Intent(StockInActivity.this, StockInDetailActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -150,4 +149,5 @@ public class StockInActivity extends BaseActivity
         mPage = 1;
         getData();
     }
+
 }

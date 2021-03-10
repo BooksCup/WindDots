@@ -20,7 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class GoodsSpecAdapter extends RecyclerView.Adapter<GoodsSpecAdapter.ViewHolder> {
+/**
+ * 商品规格(出入库操作)
+ *
+ * @author zhou
+ */
+public class StockGoodsSpecAdapter extends RecyclerView.Adapter<StockGoodsSpecAdapter.ViewHolder> {
 
     private Context mContext;
     private List<GoodsSpec> mGoodsSpecList;
@@ -30,7 +35,7 @@ public class GoodsSpecAdapter extends RecyclerView.Adapter<GoodsSpecAdapter.View
         this.mTextChangeListener = textChangeListener;
     }
 
-    public GoodsSpecAdapter(Context context) {
+    public StockGoodsSpecAdapter(Context context) {
         mContext = context;
     }
 
@@ -46,7 +51,7 @@ public class GoodsSpecAdapter extends RecyclerView.Adapter<GoodsSpecAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_goods_spec, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_stock_goods_spec, parent, false);
         return new ViewHolder(v);
     }
 
@@ -60,6 +65,8 @@ public class GoodsSpecAdapter extends RecyclerView.Adapter<GoodsSpecAdapter.View
             holder.mXTv.setText(goodsSpec.getX());
             holder.mYTv.setText(goodsSpec.getY());
         }
+
+        holder.mApplyNumTv.setText(goodsSpec.getApplyNum());
 
         holder.mNumEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -95,6 +102,9 @@ public class GoodsSpecAdapter extends RecyclerView.Adapter<GoodsSpecAdapter.View
 
         @BindView(R.id.tv_y)
         TextView mYTv;
+
+        @BindView(R.id.tv_apply_num)
+        TextView mApplyNumTv;
 
         @BindView(R.id.et_num)
         EditText mNumEt;

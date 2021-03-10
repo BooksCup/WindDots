@@ -60,4 +60,9 @@ public class Constant {
      */
     public static final String IS_INSTALL = "1";
 
+    /**
+     * 角色-仓管
+     */
+    public static final String ROLE_WAREHOUSE_KEEPER = "1";
+
 }

@@ -56,6 +56,8 @@ public class GoodsSpec implements Serializable {
      */
     private String enterpriseId;
 
+    private String applyNum;
+
     public String getId() {
         return id;
     }
@@ -134,5 +136,13 @@ public class GoodsSpec implements Serializable {
 
     public void setEnterpriseId(String enterpriseId) {
         this.enterpriseId = enterpriseId;
+    }
+
+    public String getApplyNum() {
+        return applyNum;
+    }
+
+    public void setApplyNum(String applyNum) {
+        this.applyNum = applyNum;
     }
 }

@@ -1,0 +1,431 @@
+package com.wd.winddots.activity.stock.in;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.alibaba.fastjson.JSON;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.zxing.client.android.CaptureActivity2;
+import com.huantansheng.easyphotos.EasyPhotos;
+import com.huantansheng.easyphotos.models.album.entity.Photo;
+import com.wd.winddots.R;
+import com.wd.winddots.activity.base.BaseActivity;
+import com.wd.winddots.activity.select.SelectOrderActivity;
+import com.wd.winddots.activity.work.GlideEngine;
+import com.wd.winddots.adapter.image.ImagePickerAdapter;
+import com.wd.winddots.adapter.stock.in.StockGoodsSpecAdapter;
+import com.wd.winddots.cons.Constant;
+import com.wd.winddots.entity.GoodsSpec;
+import com.wd.winddots.entity.ImageEntity;
+import com.wd.winddots.entity.Order;
+import com.wd.winddots.entity.StockInApply;
+import com.wd.winddots.utils.CommonUtil;
+import com.wd.winddots.utils.StockUtil;
+import com.wd.winddots.utils.Utils;
+import com.wd.winddots.utils.VolleyUtil;
+import com.wd.winddots.view.dialog.ConfirmDialog;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static com.wd.winddots.activity.select.SelectOrderActivity.REQUEST_ADD_STOCK_IN_APPLY;
+
+/**
+ * 入库详情
+ *
+ * @author zhou
+ */
+public class StockInDetailActivity extends BaseActivity implements StockGoodsSpecAdapter.TextChangeListener {
+
+    private static final int REQUEST_CODE_ORDER = 3;
+    private static final int REQUEST_CODE_IMAGE_PICKER = 6;
+    private static final int REQUEST_CODE_SCAN = 7;
+
+    private static final String SPACE_SEPARATOR = "   ";
+
+    @BindView(R.id.tv_related_company)
+    TextView mRelatedCompanyTv;
+
+    @BindView(R.id.tv_order)
+    TextView mOrderTv;
+
+    @BindView(R.id.tv_remark)
+    TextView mRemarkTv;
+
+    @BindView(R.id.rv_image)
+    RecyclerView mImageRv;
+
+    // 物品
+    @BindView(R.id.ll_goods_content)
+    LinearLayout mGoodsContentLl;
+
+    @BindView(R.id.tv_goods_info)
+    TextView mGoodsInfoTv;
+
+    @BindView(R.id.tv_stock_num)
+    TextView mStockNumTv;
+
+    @BindView(R.id.tv_attr1)
+    TextView mAttr1Tv;
+
+    @BindView(R.id.tv_attr2)
+    TextView mAttr2Tv;
+
+    @BindView(R.id.sdv_goods_photo)
+    SimpleDraweeView mGoodsPhotoSdv;
+
+    @BindView(R.id.ll_goods_spec)
+    LinearLayout mGoodsSpecLl;
+
+    @BindView(R.id.iv_goods_expand)
+    ImageView mGoodsExpandIv;
+
+    @BindView(R.id.rv_goods_spec)
+    RecyclerView mGoodsSpecRv;
+
+    @BindView(R.id.tv_goods_spec_x)
+    TextView mGoodsSpecXTv;
+
+    @BindView(R.id.tv_goods_spec_y)
+    TextView mGoodsSpecYTv;
+
+    @BindView(R.id.tv_place_holder)
+    TextView mPlaceHolderTv;
+
+    // 订单
+    @BindView(R.id.ll_order_content)
+    LinearLayout mOrderContentLl;
+
+    @BindView(R.id.iv_select_order)
+    ImageView mSelectOrderIv;
+
+    @BindView(R.id.iv_delete_order)
+    ImageView mDeleteOrderIv;
+
+    @BindView(R.id.tv_order_related_company)
+    TextView mOrderRelatedCompanyTv;
+
+    @BindView(R.id.tv_order_goods_info)
+    TextView mOrderGoodsInfoTv;
+
+    @BindView(R.id.tv_order_no)
+    TextView mOrderNoTv;
+
+    @BindView(R.id.tv_order_theme)
+    TextView mOrderThemeTv;
+
+    @BindView(R.id.sdv_order_goods_photo)
+    SimpleDraweeView mOrderGoodsPhotoSdv;
+
+    @BindView(R.id.ll_order_spec)
+    LinearLayout mOrderSpecLl;
+
+    @BindView(R.id.iv_order_expand)
+    ImageView mOrderExpandIv;
+
+    @BindView(R.id.tv_create_user)
+    TextView mCreateUserTv;
+
+    @BindView(R.id.tv_auditor)
+    TextView mAuditorTv;
+
+    ImagePickerAdapter mImagePickerAdapter;
+    StockGoodsSpecAdapter mStockGoodsSpecAdapter;
+
+    String mGoodsId;
+    String mOrderId;
+    String mRelatedCompanyId;
+
+    List<ImageEntity> mImageEntityList = new ArrayList<>();
+
+    VolleyUtil mVolleyUtil;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_stock_in_detail);
+        ButterKnife.bind(this);
+        mVolleyUtil = VolleyUtil.getInstance(this);
+        initView();
+        initData();
+        initListener();
+    }
+
+    @OnClick({R.id.iv_back, R.id.rl_order, R.id.ll_goods_content,
+            R.id.ll_order_content, R.id.tv_draft, R.id.tv_scan,
+            R.id.tv_submit})
+    public void onClick(View v) {
+        Intent intent;
+        switch (v.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.rl_order:
+                // 订单
+                if (TextUtils.isEmpty(mOrderId)) {
+                    // 未选择订单
+                    intent = new Intent(StockInDetailActivity.this, SelectOrderActivity.class);
+                    intent.putExtra("request", REQUEST_ADD_STOCK_IN_APPLY);
+                    if (!TextUtils.isEmpty(mGoodsId)) {
+                        intent.putExtra("goodsId", mGoodsId);
+                    }
+                    startActivityForResult(intent, REQUEST_CODE_ORDER);
+                } else {
+                    // 选择订单
+                    if (mOrderContentLl.getVisibility() == View.GONE) {
+                        mOrderContentLl.setVisibility(View.VISIBLE);
+                        mSelectOrderIv.setVisibility(View.GONE);
+                        mDeleteOrderIv.setVisibility(View.VISIBLE);
+                    } else {
+                        mOrderContentLl.setVisibility(View.GONE);
+                    }
+                }
+
+                break;
+            case R.id.ll_goods_content:
+                if (mGoodsSpecLl.getVisibility() == View.GONE) {
+                    // 展开
+                    mGoodsExpandIv.setBackgroundResource(R.mipmap.icon_up);
+                    mGoodsSpecLl.setVisibility(View.VISIBLE);
+                } else {
+                    // 关闭
+                    mGoodsExpandIv.setBackgroundResource(R.mipmap.icon_down);
+                    mGoodsSpecLl.setVisibility(View.GONE);
+                }
+                break;
+
+            case R.id.tv_draft:
+                break;
+            case R.id.tv_scan:
+                startScanActivity();
+                break;
+            case R.id.tv_submit:
+                break;
+        }
+    }
+
+    private void startScanActivity() {
+        Intent intent = new Intent(StockInDetailActivity.this, CaptureActivity2.class);
+        intent.putExtra(CaptureActivity2.USE_DEFUALT_ISBN_ACTIVITY, true);
+        startActivityForResult(intent, REQUEST_CODE_SCAN);
+    }
+
+
+    private void initView() {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
+        mImageRv.setLayoutManager(gridLayoutManager);
+        mImagePickerAdapter = new ImagePickerAdapter(this);
+        mImageRv.setAdapter(mImagePickerAdapter);
+
+        LinearLayoutManager goodsSpecLinearLayoutManager = new LinearLayoutManager(this);
+        mGoodsSpecRv.setLayoutManager(goodsSpecLinearLayoutManager);
+        mGoodsSpecRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        mStockGoodsSpecAdapter = new StockGoodsSpecAdapter(this);
+        mGoodsSpecRv.setAdapter(mStockGoodsSpecAdapter);
+    }
+
+    private void initData() {
+        mImageEntityList = new ArrayList<>();
+        ImageEntity imageEntity = new ImageEntity();
+        mImageEntityList.add(imageEntity);
+        mImagePickerAdapter.setList(mImageEntityList);
+
+        List<GoodsSpec> goodsSpecList = new ArrayList<>();
+        mStockGoodsSpecAdapter.setList(goodsSpecList);
+
+        getStockInApplyById("8c60d610bdfe44d1ba54df965c663baa");
+    }
+
+    private void initListener() {
+        mImagePickerAdapter.setOnRecyclerItemClickListener(position -> {
+            List<ImageEntity> imageEntityList = mImagePickerAdapter.getList();
+            if (null == imageEntityList) {
+                imageEntityList = new ArrayList<>();
+            }
+            if (position == imageEntityList.size() - 1) {
+                try {
+                    EasyPhotos.createAlbum(StockInDetailActivity.this, true, GlideEngine.getInstance())
+                            .setFileProviderAuthority("com.wd.winddots.fileprovider")
+                            .start(REQUEST_CODE_IMAGE_PICKER);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        mStockGoodsSpecAdapter.setTextChangeListener(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_ORDER:
+                    // 订单
+                    if (null != data) {
+                        Order order = (Order) data.getSerializableExtra("order");
+                        renderOrderView(order);
+                    }
+                    break;
+                case REQUEST_CODE_IMAGE_PICKER:
+                    // 图片选择
+                    ArrayList<Photo> resultPhotos = data.getParcelableArrayListExtra(EasyPhotos.RESULT_PHOTOS);
+                    if (null != resultPhotos) {
+                        for (int i = 0; i < resultPhotos.size(); i++) {
+                            ImageEntity imageEntity = new ImageEntity();
+                            imageEntity.setPath(resultPhotos.get(i).path);
+                            imageEntity.setId(String.valueOf(i));
+                            mImageEntityList.add(0, imageEntity);
+                        }
+                        mImagePickerAdapter.setList(mImageEntityList);
+                    }
+                    break;
+                case REQUEST_CODE_SCAN:
+                    // 扫码
+                    if (null != data) {
+                        String content = data.getStringExtra("CaptureIsbn");
+                        if (content.contains(Constant.QR_CODE_CONTENT_PREFIX_GOODS)) {
+                            String goodsId = content.replaceAll(Constant.QR_CODE_CONTENT_PREFIX_GOODS, "");
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    /**
+     * 渲染物品相关页面
+     *
+     * @param stockInApply 入库申请
+     */
+    private void renderGoodsView(StockInApply stockInApply) {
+        mGoodsContentLl.setVisibility(View.VISIBLE);
+
+        String goodsInfo = stockInApply.getGoodsName() + "(" + stockInApply.getGoodsNo() + ")";
+        String stockInfo = stockInApply.getApplyNumber() + stockInApply.getGoodsUnit();
+        mGoodsInfoTv.setText(goodsInfo);
+        mStockNumTv.setText(stockInfo);
+
+        List<String> attrList = CommonUtil.attrJsonToAttrStrList(stockInApply.getAttrList());
+        if (null != attrList) {
+            if (attrList.size() == 0) {
+                mAttr1Tv.setVisibility(View.INVISIBLE);
+                mAttr2Tv.setVisibility(View.INVISIBLE);
+            } else if (attrList.size() == 1) {
+                mAttr1Tv.setVisibility(View.VISIBLE);
+                mAttr2Tv.setVisibility(View.INVISIBLE);
+                mAttr1Tv.setText(attrList.get(0));
+            } else if (attrList.size() >= 2) {
+                mAttr1Tv.setVisibility(View.VISIBLE);
+                mAttr2Tv.setVisibility(View.VISIBLE);
+                mAttr1Tv.setText(attrList.get(0));
+                mAttr2Tv.setText(attrList.get(1));
+            }
+        }
+
+        String goodsPhoto = CommonUtil.getFirstPhotoFromJsonList(stockInApply.getGoodsPhotos());
+        if (!TextUtils.isEmpty(goodsPhoto)) {
+            mGoodsPhotoSdv.setImageURI(Uri.parse(goodsPhoto));
+        } else {
+            mGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
+        }
+
+        List<GoodsSpec> goodsSpecList = StockUtil.getGoodsSpecListFromStockRecordList(stockInApply.getStockApplicationInRecordList());
+        mStockGoodsSpecAdapter.setList(goodsSpecList);
+
+        if (TextUtils.isEmpty(stockInApply.getY())) {
+            mGoodsSpecYTv.setVisibility(View.GONE);
+            mPlaceHolderTv.setVisibility(View.GONE);
+            mGoodsSpecXTv.setText(stockInApply.getX());
+        } else {
+            mGoodsSpecYTv.setVisibility(View.VISIBLE);
+            mPlaceHolderTv.setVisibility(View.VISIBLE);
+            mGoodsSpecXTv.setText(stockInApply.getX());
+            mGoodsSpecYTv.setText(stockInApply.getY());
+        }
+
+    }
+
+    private void renderOrderView(Order order) {
+        mOrderId = order.getOrderId();
+        mOrderTv.setText("#" + order.getOrderNo());
+        mOrderTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
+
+        mOrderContentLl.setVisibility(View.VISIBLE);
+        mSelectOrderIv.setVisibility(View.GONE);
+        mDeleteOrderIv.setVisibility(View.VISIBLE);
+
+        mOrderRelatedCompanyTv.setText(order.getRelatedCompanyShortName());
+
+        String goodsInfo = order.getGoodsName() + "(" + order.getGoodsNo() + ")";
+        mOrderGoodsInfoTv.setText(goodsInfo);
+        mOrderNoTv.setText(order.getOrderNo());
+        mOrderThemeTv.setText(order.getOrderTheme());
+        String goodsPhoto = CommonUtil.getFirstPhotoFromJsonList(order.getGoodsPhotos());
+        if (!TextUtils.isEmpty(goodsPhoto)) {
+            mOrderGoodsPhotoSdv.setImageURI(Uri.parse(goodsPhoto));
+        } else {
+            mOrderGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
+        }
+
+        // 同时渲染往来单位
+        mRelatedCompanyId = order.getRelatedCompanyId();
+        mRelatedCompanyTv.setText(order.getRelatedCompanyName());
+        mRelatedCompanyTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
+    }
+
+    @Override
+    public void stockInNumChange() {
+        List<GoodsSpec> goodsSpecList = mStockGoodsSpecAdapter.getList();
+        float total = 0;
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        for (GoodsSpec goodsSpec : goodsSpecList) {
+            nf.setMaximumFractionDigits(2);
+            float totalStockInNum = Float.parseFloat(Utils.numberNullOrEmpty(goodsSpec.getNum()));
+            total = totalStockInNum + total;
+        }
+//        mTotalNumTv.setText(nf.format(total));
+    }
+
+    private void getStockInApplyById(String applyId) {
+        String url = Constant.APP_BASE_URL + "stockApplication/" + applyId;
+        mVolleyUtil.httpGetRequest(url, response -> {
+            StockInApply stockInApply;
+            try {
+                stockInApply = JSON.parseObject(response, StockInApply.class);
+            } catch (Exception e) {
+                stockInApply = null;
+            }
+            if (null != stockInApply) {
+                renderGoodsView(stockInApply);
+            }
+
+            mRelatedCompanyTv.setText(stockInApply.getExchangeEnterpriseName());
+            mRemarkTv.setText(stockInApply.getRemark());
+            mCreateUserTv.setText(stockInApply.getCreateUserName() + SPACE_SEPARATOR + stockInApply.getCreateTime());
+            mAuditorTv.setText(stockInApply.getAuditUserName());
+
+        }, volleyError -> {
+            mVolleyUtil.handleCommonErrorResponse(StockInDetailActivity.this, volleyError);
+        });
+    }
+
+}

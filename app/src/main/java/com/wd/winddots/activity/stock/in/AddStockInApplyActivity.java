@@ -23,7 +23,7 @@ import com.wd.winddots.activity.select.SelectRelatedCompanyActivity;
 import com.wd.winddots.activity.select.SelectSingleUserActivity;
 import com.wd.winddots.activity.work.GlideEngine;
 import com.wd.winddots.adapter.image.ImagePickerAdapter;
-import com.wd.winddots.adapter.stock.in.GoodsSpecAdapter;
+import com.wd.winddots.adapter.stock.in.StockApplyGoodsSpecAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Goods;
 import com.wd.winddots.entity.GoodsSpec;
@@ -59,7 +59,7 @@ import static com.wd.winddots.activity.select.SelectOrderActivity.REQUEST_ADD_ST
  *
  * @author zhou
  */
-public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAdapter.TextChangeListener {
+public class AddStockInApplyActivity extends BaseActivity implements StockApplyGoodsSpecAdapter.TextChangeListener {
 
     private static final int REQUEST_CODE_RELATED_COMPANY = 1;
     private static final int REQUEST_CODE_GOODS = 2;
@@ -168,7 +168,7 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
     TextView mTotalNumTv;
 
     ImagePickerAdapter mImagePickerAdapter;
-    GoodsSpecAdapter mGoodsSpecAdapter;
+    StockApplyGoodsSpecAdapter mStockApplyGoodsSpecAdapter;
 
     String mGoodsId;
     String mOrderId;
@@ -285,7 +285,7 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
 
                         // 重置
                         mGoodsSpecRv.setAdapter(null);
-                        mGoodsSpecRv.setAdapter(mGoodsSpecAdapter);
+                        mGoodsSpecRv.setAdapter(mStockApplyGoodsSpecAdapter);
                         mTotalNumTv.setText("0");
                     }
 
@@ -351,8 +351,8 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
         LinearLayoutManager goodsSpecLinearLayoutManager = new LinearLayoutManager(this);
         mGoodsSpecRv.setLayoutManager(goodsSpecLinearLayoutManager);
         mGoodsSpecRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mGoodsSpecAdapter = new GoodsSpecAdapter(this);
-        mGoodsSpecRv.setAdapter(mGoodsSpecAdapter);
+        mStockApplyGoodsSpecAdapter = new StockApplyGoodsSpecAdapter(this);
+        mGoodsSpecRv.setAdapter(mStockApplyGoodsSpecAdapter);
     }
 
     private void initData() {
@@ -362,7 +362,7 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
         mImagePickerAdapter.setList(mImageEntityList);
 
         List<GoodsSpec> goodsSpecList = new ArrayList<>();
-        mGoodsSpecAdapter.setList(goodsSpecList);
+        mStockApplyGoodsSpecAdapter.setList(goodsSpecList);
     }
 
     private void initListener() {
@@ -382,7 +382,7 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
             }
         });
 
-        mGoodsSpecAdapter.setTextChangeListener(this);
+        mStockApplyGoodsSpecAdapter.setTextChangeListener(this);
     }
 
     @Override
@@ -505,7 +505,7 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
         }
 
         List<GoodsSpec> goodsSpecList = goods.getGoodsSpecList();
-        mGoodsSpecAdapter.setList(goodsSpecList);
+        mStockApplyGoodsSpecAdapter.setList(goodsSpecList);
 
         if (TextUtils.isEmpty(goods.getY())) {
             mGoodsSpecYTv.setVisibility(View.GONE);
@@ -550,7 +550,7 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
 
     @Override
     public void stockInNumChange() {
-        List<GoodsSpec> goodsSpecList = mGoodsSpecAdapter.getList();
+        List<GoodsSpec> goodsSpecList = mStockApplyGoodsSpecAdapter.getList();
         float total = 0;
         NumberFormat nf = NumberFormat.getNumberInstance();
         for (GoodsSpec goodsSpec : goodsSpecList) {
@@ -585,7 +585,7 @@ public class AddStockInApplyActivity extends BaseActivity implements GoodsSpecAd
             showToast("请选择抄送人");
         }
         showLoadingDialog();
-        List<GoodsSpec> goodsSpecList = mGoodsSpecAdapter.getList();
+        List<GoodsSpec> goodsSpecList = mStockApplyGoodsSpecAdapter.getList();
         String specNums = JSON.toJSONString(goodsSpecList);
         String remark = mRemarkEt.getText().toString().trim();
 
