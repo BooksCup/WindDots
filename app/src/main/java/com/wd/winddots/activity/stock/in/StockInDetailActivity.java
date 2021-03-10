@@ -275,7 +275,7 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
                         .showType(ShowType.MULTIPLE_URL)
                         .url(imageList)
                         .title("")
-                        .position(0)
+                        .position(position)
                         .callback(new ClickCallback() {
                             @Override
                             public void onClick(Activity activity, String url, int position) {
