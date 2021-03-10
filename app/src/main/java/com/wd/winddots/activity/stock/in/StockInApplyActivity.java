@@ -1,11 +1,13 @@
 package com.wd.winddots.activity.stock.in;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -79,8 +81,6 @@ public class StockInApplyActivity extends BaseActivity
                 finish();
                 break;
             case R.id.iv_add:
-//                Intent intent = new Intent(StockInApplyActivity.this, AddStockInApplyActivity.class);
-//                startActivity(intent);
                 initPopupWindow();
                 if (!mPopupWindow.isShowing()) {
                     // 以下拉方式显示popupwindow
@@ -193,6 +193,16 @@ public class StockInApplyActivity extends BaseActivity
 
         // 设置SelectPicPopupWindow弹出窗体动画效果
         mPopupWindow.setAnimationStyle(R.style.AnimationPreview);
+
+        // 办公用品入库
+        RelativeLayout mOfficeSuppliesRl = mPopupView.findViewById(R.id.rl_office_supplies);
+        mOfficeSuppliesRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopupWindow.dismiss();
+                startActivity(new Intent(StockInApplyActivity.this, AddOfficeSuppliesInActivity.class));
+            }
+        });
 
     }
 }
