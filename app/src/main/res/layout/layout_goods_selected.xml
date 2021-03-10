@@ -12,6 +12,7 @@
             android:id="@+id/rl_goods"
             android:layout_width="match_parent"
             android:layout_height="46dp"
+            android:background="#F2F2F2"
             android:paddingHorizontal="12dp">
 
             <TextView
@@ -32,12 +33,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="visible">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginHorizontal="12dp"
-                android:background="@color/alpha_05_black" />
 
             <RelativeLayout
                 android:id="@+id/rl_goods_content"
@@ -176,6 +171,7 @@
                         android:textSize="12sp" />
 
                     <TextView
+                        android:id="@+id/tv_apply_num_header"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
@@ -185,6 +181,7 @@
                         android:textSize="12sp" />
 
                     <TextView
+                        android:id="@+id/tv_confirm_num_header"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
@@ -230,8 +227,8 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="0"
-                        android:textSize="12sp"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_confirm_num"

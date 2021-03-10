@@ -13,21 +13,16 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.zxing.client.android.CaptureActivity2;
-import com.huantansheng.easyphotos.EasyPhotos;
-import com.huantansheng.easyphotos.models.album.entity.Photo;
 import com.kevin.photo_browse.PhotoBrowse;
 import com.kevin.photo_browse.ShowType;
 import com.kevin.photo_browse.callabck.ClickCallback;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.select.SelectOrderActivity;
-import com.wd.winddots.activity.work.GlideEngine;
 import com.wd.winddots.adapter.image.ImageBrowserAdapter;
-import com.wd.winddots.adapter.image.ImagePickerAdapter;
 import com.wd.winddots.adapter.stock.in.StockGoodsSpecAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.GoodsSpec;
-import com.wd.winddots.entity.ImageEntity;
 import com.wd.winddots.entity.Order;
 import com.wd.winddots.entity.StockInApply;
 import com.wd.winddots.utils.CollectionUtil;
@@ -153,6 +148,12 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
 
     @BindView(R.id.tv_apply_num)
     TextView mApplyNumTv;
+
+    @BindView(R.id.tv_apply_num_header)
+    TextView mApplyNumHeaderTv;
+
+    @BindView(R.id.tv_confirm_num_header)
+    TextView mConfirmNumHeaderTv;
 
     ImageBrowserAdapter mImageBrowserAdapter;
     StockGoodsSpecAdapter mStockGoodsSpecAdapter;
@@ -328,7 +329,19 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
         mGoodsContentLl.setVisibility(View.VISIBLE);
 
         String goodsInfo = stockInApply.getGoodsName() + "(" + stockInApply.getGoodsNo() + ")";
-        String stockInfo = stockInApply.getApplyNumber() + stockInApply.getGoodsUnit();
+
+        String stockInfo;
+        if (!TextUtils.isEmpty(stockInApply.getGoodsUnit())) {
+            stockInfo = stockInApply.getApplyNumber() + stockInApply.getGoodsUnit();
+            mApplyNumHeaderTv.setText("入库数量(" + stockInApply.getGoodsUnit() + ")");
+            mConfirmNumHeaderTv.setText("确认数量(" + stockInApply.getGoodsUnit() + ")");
+        } else {
+            stockInfo = stockInApply.getApplyNumber();
+            mApplyNumHeaderTv.setText("入库数量");
+            mConfirmNumHeaderTv.setText("确认数量");
+        }
+
+
         mGoodsInfoTv.setText(goodsInfo);
         mStockNumTv.setText(stockInfo);
 
