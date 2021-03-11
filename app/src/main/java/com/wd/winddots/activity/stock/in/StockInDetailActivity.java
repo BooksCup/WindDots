@@ -27,12 +27,14 @@ import com.wd.winddots.entity.GoodsSpec;
 import com.wd.winddots.entity.Order;
 import com.wd.winddots.entity.StockInApply;
 import com.wd.winddots.entity.WareHouse;
+import com.wd.winddots.utils.BigDecimalUtil;
 import com.wd.winddots.utils.CollectionUtil;
 import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.StockUtil;
 import com.wd.winddots.utils.Utils;
 import com.wd.winddots.utils.VolleyUtil;
 
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -148,14 +150,17 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
     @BindView(R.id.tv_auditor)
     TextView mAuditorTv;
 
-    @BindView(R.id.tv_apply_num)
-    TextView mApplyNumTv;
-
     @BindView(R.id.tv_apply_num_header)
     TextView mApplyNumHeaderTv;
 
     @BindView(R.id.tv_confirm_num_header)
     TextView mConfirmNumHeaderTv;
+
+    @BindView(R.id.tv_apply_num)
+    TextView mApplyNumTv;
+
+    @BindView(R.id.tv_confirm_num)
+    TextView mConfirmNumTv;
 
     @BindView(R.id.ll_ware_house)
     LinearLayout mWareHouseLl;
@@ -391,11 +396,11 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
         List<GoodsSpec> goodsSpecList = StockUtil.getGoodsSpecListFromStockRecordList(stockInApply.getStockApplicationInRecordList());
         mStockGoodsSpecAdapter.setList(goodsSpecList);
 
-        int applyNum = 0;
+        BigDecimal applyNum = new BigDecimal(0);
         for (GoodsSpec goodsSpec : goodsSpecList) {
-            applyNum += Integer.valueOf(goodsSpec.getApplyNum());
+            applyNum = BigDecimalUtil.add(applyNum, goodsSpec.getApplyNum());
         }
-        mApplyNumTv.setText(String.valueOf(applyNum));
+        mApplyNumTv.setText(String.valueOf(applyNum.intValue()));
 
         if (TextUtils.isEmpty(stockInApply.getY())) {
             mGoodsSpecYTv.setVisibility(View.GONE);
@@ -448,7 +453,7 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
             float totalStockInNum = Float.parseFloat(Utils.numberNullOrEmpty(goodsSpec.getNum()));
             total = totalStockInNum + total;
         }
-//        mTotalNumTv.setText(nf.format(total));
+        mConfirmNumTv.setText(nf.format(total));
     }
 
     private void getStockInApplyById(String applyId) {
