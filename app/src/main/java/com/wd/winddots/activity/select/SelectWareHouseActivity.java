@@ -1,5 +1,6 @@
 package com.wd.winddots.activity.select;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -157,11 +158,10 @@ public class SelectWareHouseActivity extends BaseActivity implements SwipeRefres
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//        User user = mUserList.get(position);
-//        Intent intent = new Intent();
-//        intent.putExtra("userId", user.getId());
-//        intent.putExtra("userName", user.getName());
-//        setResult(RESULT_OK, intent);
-//        finish();
+        WareHouse wareHouse = mWareHouseList.get(position);
+        Intent intent = new Intent();
+        intent.putExtra("wareHouse", wareHouse);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

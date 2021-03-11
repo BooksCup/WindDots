@@ -1,11 +1,13 @@
 package com.wd.winddots.entity;
 
+import java.io.Serializable;
+
 /**
  * 仓库
  *
  * @author zhou
  */
-public class WareHouse {
+public class WareHouse implements Serializable {
 
     private String id;
     private String name;

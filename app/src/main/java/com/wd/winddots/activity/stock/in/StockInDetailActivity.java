@@ -26,6 +26,7 @@ import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.GoodsSpec;
 import com.wd.winddots.entity.Order;
 import com.wd.winddots.entity.StockInApply;
+import com.wd.winddots.entity.WareHouse;
 import com.wd.winddots.utils.CollectionUtil;
 import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.StockUtil;
@@ -56,6 +57,7 @@ import static com.wd.winddots.activity.select.SelectOrderActivity.REQUEST_ADD_ST
 public class StockInDetailActivity extends BaseActivity implements StockGoodsSpecAdapter.TextChangeListener {
 
     private static final int REQUEST_CODE_ORDER = 3;
+    private static final int REQUEST_CODE_WARE_HOUSE = 1;
     private static final int REQUEST_CODE_SCAN = 7;
 
     private static final String SPACE_SEPARATOR = "   ";
@@ -158,18 +160,21 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
     @BindView(R.id.ll_ware_house)
     LinearLayout mWareHouseLl;
 
+    @BindView(R.id.tv_ware_house)
+    TextView mWareHouseTv;
+
     ImageBrowserAdapter mImageBrowserAdapter;
     StockGoodsSpecAdapter mStockGoodsSpecAdapter;
 
     String mGoodsId;
     String mOrderId;
     String mRelatedCompanyId;
+    String mWareHouseId;
 
     List<String> mImageList = new ArrayList<>();
 
     VolleyUtil mVolleyUtil;
     String mStockInApplyId;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -225,7 +230,8 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
                 }
                 break;
             case R.id.ll_ware_house:
-                startActivity(new Intent(StockInDetailActivity.this, SelectWareHouseActivity.class));
+                intent = new Intent(StockInDetailActivity.this, SelectWareHouseActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_WARE_HOUSE);
                 break;
             case R.id.tv_draft:
                 break;
@@ -319,6 +325,15 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
                         if (content.contains(Constant.QR_CODE_CONTENT_PREFIX_GOODS)) {
                             String goodsId = content.replaceAll(Constant.QR_CODE_CONTENT_PREFIX_GOODS, "");
                         }
+                    }
+                    break;
+                case REQUEST_CODE_WARE_HOUSE:
+                    // 仓库
+                    if (null != data) {
+                        WareHouse wareHouse = (WareHouse) data.getSerializableExtra("wareHouse");
+                        mWareHouseId = wareHouse.getId();
+                        mWareHouseTv.setText(wareHouse.getName());
+                        mWareHouseTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
                     }
                     break;
             }
@@ -459,7 +474,12 @@ public class StockInDetailActivity extends BaseActivity implements StockGoodsSpe
             } catch (Exception e) {
                 mImageList = new ArrayList<>();
             }
-            mImageBrowserAdapter.setList(mImageList);
+            if (CollectionUtil.isEmpty(mImageList)) {
+                mImageRv.setVisibility(View.GONE);
+            } else {
+                mImageRv.setVisibility(View.VISIBLE);
+                mImageBrowserAdapter.setList(mImageList);
+            }
 
         }, volleyError -> {
             mVolleyUtil.handleCommonErrorResponse(StockInDetailActivity.this, volleyError);
