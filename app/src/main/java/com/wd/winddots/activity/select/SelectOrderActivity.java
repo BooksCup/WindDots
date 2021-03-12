@@ -94,7 +94,7 @@ BottomSearchBarView.BottomSearchBarViewClickListener{
         mOrderRv.setLayoutManager(layoutManager);
         mOrderRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        mOrderAdapter = new OrderAdapter(R.layout.item_order, mOrderList);
+        mOrderAdapter = new OrderAdapter(R.layout.item_select_order, mOrderList);
         mOrderRv.setAdapter(mOrderAdapter);
         getData();
     }
