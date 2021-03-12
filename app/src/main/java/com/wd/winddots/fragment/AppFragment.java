@@ -18,11 +18,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.zxing.client.android.CaptureActivity2;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.app.AppStoreActivity;
-import com.wd.winddots.activity.check.fabric.FabricCheckProcessActivity;
 import com.wd.winddots.activity.check.fabric.FabricCheckTaskActivity;
 import com.wd.winddots.activity.employee.EmployeeActivity;
+import com.wd.winddots.activity.order.OrderActivity;
 import com.wd.winddots.activity.stock.in.StockInActivity;
 import com.wd.winddots.activity.stock.in.StockInApplyActivity;
+import com.wd.winddots.activity.stock.out.StockOutApplyActivity;
 import com.wd.winddots.activity.work.DeliveryActivity;
 import com.wd.winddots.adapter.work.AppAdapter;
 import com.wd.winddots.cons.Constant;
@@ -161,7 +162,7 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     private void getAppList() {
         String userId = "40db1c5ede0311eabfad06ca1dafdbae";
         String url = Constant.APP_BASE_URL + "user/" + userId + "/app";
-        Log.e("net666",url);
+        Log.e("net666", url);
 
         mVolleyUtil.httpGetRequest(url, response -> {
             final UserApp userApp = JSONArray.parseObject(response, UserApp.class);
@@ -213,7 +214,7 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 requestPermissions(getActivity(), cameraPermissions, REQUEST_CODE_CAMERA);
                 break;
             case "OrderList"://订单
-                intent = new Intent(getActivity(), OrderListActivity.class);
+                intent = new Intent(getActivity(), OrderActivity.class);
                 startActivity(intent);
                 break;
             case "EmployeeList":
@@ -247,6 +248,12 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 // 入库
                 intent = new Intent(getActivity(), StockInActivity.class);
                 startActivity(intent);
+                break;
+            case "StockOutApply":
+                // 出库单
+                intent = new Intent(getActivity(), StockOutApplyActivity.class);
+                startActivity(intent);
+                // 出库单
                 break;
             case "11":
                 intent = new Intent(getActivity(), DeliveryActivity.class);

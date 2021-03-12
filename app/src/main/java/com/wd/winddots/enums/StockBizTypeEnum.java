@@ -8,6 +8,9 @@ package com.wd.winddots.enums;
 public enum StockBizTypeEnum {
 
     STOCK_BIZ_TYPE_PURCHASE_IN("3", "采购入库"),
+    STOCK_BIZ_TYPE_SELL_OUT("1", "销售出库"),
+    STOCK_BIZ_TYPE_OFFICE_SUPPLIES_OUT("10", "办公用品领用"),
+    STOCK_BIZ_TYPE_LOW_VALUE_CONSUMPTION_GOODS_OUT("17", "低值易耗出库"),
     ;
 
     StockBizTypeEnum(String type, String name) {

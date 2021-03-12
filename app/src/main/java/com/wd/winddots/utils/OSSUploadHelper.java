@@ -34,8 +34,8 @@ public class OSSUploadHelper {
 
     private static OSS getOSSClient() {
         OSSCredentialProvider credentialProvider =
-                new OSSPlainTextAKSKCredentialProvider("1" ,
-                        "2");
+                new OSSPlainTextAKSKCredentialProvider("LTAI4G3zzEopW62vd2Gn8QeK" ,
+                        "ETx0ifJS8x8LTO6X9bISlCqmqIezrf");
         return new OSSClient( MyApplication.getContext(), ENDPOINT, credentialProvider);
     }
 

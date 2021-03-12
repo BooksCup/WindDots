@@ -1,4 +1,4 @@
-package com.wd.winddots.activity.stock.in;
+package com.wd.winddots.activity.stock.out;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -18,8 +18,6 @@ import com.huantansheng.easyphotos.models.album.entity.Photo;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.select.SelectGoodsActivity;
-import com.wd.winddots.activity.select.SelectOrderActivity;
-import com.wd.winddots.activity.select.SelectRelatedCompanyActivity;
 import com.wd.winddots.activity.select.SelectSingleUserActivity;
 import com.wd.winddots.activity.work.GlideEngine;
 import com.wd.winddots.adapter.image.ImagePickerAdapter;
@@ -28,8 +26,8 @@ import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Goods;
 import com.wd.winddots.entity.GoodsSpec;
 import com.wd.winddots.entity.ImageEntity;
-import com.wd.winddots.entity.Order;
 import com.wd.winddots.enums.StockApplyStatusEnum;
+import com.wd.winddots.enums.StockBizTypeEnum;
 import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.Utils;
@@ -52,31 +50,24 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.wd.winddots.activity.select.SelectOrderActivity.REQUEST_ADD_STOCK_IN_APPLY;
-
 /**
- * 提交入库申请(入库单)
+ * 提交出库申请(出库单)
  *
  * @author zhou
  */
-public class AddStockInApplyActivity extends BaseActivity implements StockApplyGoodsSpecAdapter.TextChangeListener {
+public class AddStockOutApplyActivity extends BaseActivity implements StockApplyGoodsSpecAdapter.TextChangeListener {
 
-    private static final int REQUEST_CODE_RELATED_COMPANY = 1;
     private static final int REQUEST_CODE_GOODS = 2;
-    private static final int REQUEST_CODE_ORDER = 3;
     private static final int REQUEST_CODE_AUDITOR = 4;
     private static final int REQUEST_CODE_COPY = 5;
     private static final int REQUEST_CODE_IMAGE_PICKER = 6;
     private static final int REQUEST_CODE_SCAN = 7;
 
+    @BindView(R.id.tv_goods_name_title)
+    TextView mGoodsNameTitleTv;
+
     @BindView(R.id.tv_goods_name)
     TextView mGoodsNameTv;
-
-    @BindView(R.id.tv_related_company)
-    TextView mRelatedCompanyTv;
-
-    @BindView(R.id.tv_order)
-    TextView mOrderTv;
 
     @BindView(R.id.et_remark)
     EditText mRemarkEt;
@@ -133,37 +124,6 @@ public class AddStockInApplyActivity extends BaseActivity implements StockApplyG
     @BindView(R.id.tv_place_holder)
     TextView mPlaceHolderTv;
 
-    // 订单
-    @BindView(R.id.ll_order_content)
-    LinearLayout mOrderContentLl;
-
-    @BindView(R.id.iv_select_order)
-    ImageView mSelectOrderIv;
-
-    @BindView(R.id.iv_delete_order)
-    ImageView mDeleteOrderIv;
-
-    @BindView(R.id.tv_order_related_company)
-    TextView mOrderRelatedCompanyTv;
-
-    @BindView(R.id.tv_order_goods_info)
-    TextView mOrderGoodsInfoTv;
-
-    @BindView(R.id.tv_order_no)
-    TextView mOrderNoTv;
-
-    @BindView(R.id.tv_order_theme)
-    TextView mOrderThemeTv;
-
-    @BindView(R.id.sdv_order_goods_photo)
-    SimpleDraweeView mOrderGoodsPhotoSdv;
-
-    @BindView(R.id.ll_order_spec)
-    LinearLayout mOrderSpecLl;
-
-    @BindView(R.id.iv_order_expand)
-    ImageView mOrderExpandIv;
-
     @BindView(R.id.tv_total_num)
     TextView mTotalNumTv;
 
@@ -171,8 +131,6 @@ public class AddStockInApplyActivity extends BaseActivity implements StockApplyG
     StockApplyGoodsSpecAdapter mStockApplyGoodsSpecAdapter;
 
     String mGoodsId;
-    String mOrderId;
-    String mRelatedCompanyId;
     // 审核人用户ID
     String mAuditorId;
     // 抄送人
@@ -185,7 +143,7 @@ public class AddStockInApplyActivity extends BaseActivity implements StockApplyG
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_stock_in_apply);
+        setContentView(R.layout.activity_add_stock_out_apply);
         ButterKnife.bind(this);
         mVolleyUtil = VolleyUtil.getInstance(this);
         initView();
@@ -193,9 +151,9 @@ public class AddStockInApplyActivity extends BaseActivity implements StockApplyG
         initListener();
     }
 
-    @OnClick({R.id.iv_back, R.id.rl_goods, R.id.rl_order, R.id.ll_related_company,
+    @OnClick({R.id.iv_back, R.id.rl_goods,
             R.id.ll_auditor, R.id.ll_copy, R.id.ll_goods_content, R.id.iv_delete_goods,
-            R.id.ll_order_content, R.id.iv_delete_order, R.id.tv_draft, R.id.tv_scan,
+            R.id.tv_draft, R.id.tv_scan,
             R.id.tv_submit})
     public void onClick(View v) {
         Intent intent;
@@ -208,7 +166,7 @@ public class AddStockInApplyActivity extends BaseActivity implements StockApplyG
                 // 物品
                 if (TextUtils.isEmpty(mGoodsId)) {
                     // 未选择物品
-                    intent = new Intent(AddStockInApplyActivity.this, SelectGoodsActivity.class);
+                    intent = new Intent(AddStockOutApplyActivity.this, SelectGoodsActivity.class);
                     startActivityForResult(intent, REQUEST_CODE_GOODS);
                 } else {
                     // 选择物品
@@ -221,41 +179,14 @@ public class AddStockInApplyActivity extends BaseActivity implements StockApplyG
                     }
                 }
                 break;
-            case R.id.rl_order:
-                // 订单
-                if (TextUtils.isEmpty(mOrderId)) {
-                    // 未选择订单
-                    intent = new Intent(AddStockInApplyActivity.this, SelectOrderActivity.class);
-                    intent.putExtra("request", REQUEST_ADD_STOCK_IN_APPLY);
-                    if (!TextUtils.isEmpty(mGoodsId)) {
-                        intent.putExtra("goodsId", mGoodsId);
-                    }
-                    startActivityForResult(intent, REQUEST_CODE_ORDER);
-                } else {
-                    // 选择订单
-                    if (mOrderContentLl.getVisibility() == View.GONE) {
-                        mOrderContentLl.setVisibility(View.VISIBLE);
-                        mSelectOrderIv.setVisibility(View.GONE);
-                        mDeleteOrderIv.setVisibility(View.VISIBLE);
-                    } else {
-                        mOrderContentLl.setVisibility(View.GONE);
-                    }
-                }
-
-                break;
-            case R.id.ll_related_company:
-                // 往来单位
-                intent = new Intent(AddStockInApplyActivity.this, SelectRelatedCompanyActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_RELATED_COMPANY);
-                break;
             case R.id.ll_auditor:
                 // 审核人
-                intent = new Intent(AddStockInApplyActivity.this, SelectSingleUserActivity.class);
+                intent = new Intent(AddStockOutApplyActivity.this, SelectSingleUserActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_AUDITOR);
                 break;
             case R.id.ll_copy:
                 // 抄送人
-                intent = new Intent(AddStockInApplyActivity.this, SelectSingleUserActivity.class);
+                intent = new Intent(AddStockOutApplyActivity.this, SelectSingleUserActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_COPY);
                 break;
             case R.id.ll_goods_content:
@@ -281,7 +212,7 @@ public class AddStockInApplyActivity extends BaseActivity implements StockApplyG
                         mGoodsContentLl.setVisibility(View.GONE);
                         mGoodsId = "";
                         mGoodsNameTv.setText("请选择入库物品");
-                        mGoodsNameTv.setTextColor(ContextCompat.getColor(AddStockInApplyActivity.this, R.color.colorB2));
+                        mGoodsNameTv.setTextColor(ContextCompat.getColor(AddStockOutApplyActivity.this, R.color.colorB2));
 
                         // 重置
                         mGoodsSpecRv.setAdapter(null);
@@ -298,51 +229,28 @@ public class AddStockInApplyActivity extends BaseActivity implements StockApplyG
                 mConfirmDialog.setCancelable(false);
                 mConfirmDialog.show();
                 break;
-
-            case R.id.iv_delete_order:
-                mConfirmDialog = new ConfirmDialog(this, "确认取消",
-                        "是否取消已选订单",
-                        "是", "否");
-                mConfirmDialog.setOnDialogClickListener(new ConfirmDialog.OnDialogClickListener() {
-                    @Override
-                    public void onOkClick() {
-                        mSelectOrderIv.setVisibility(View.VISIBLE);
-                        mDeleteOrderIv.setVisibility(View.GONE);
-                        mOrderContentLl.setVisibility(View.GONE);
-                        mOrderId = "";
-                        mOrderTv.setText("请选择相关订单");
-                        mOrderTv.setTextColor(ContextCompat.getColor(AddStockInApplyActivity.this, R.color.colorB2));
-                    }
-
-                    @Override
-                    public void onCancelClick() {
-                        mConfirmDialog.dismiss();
-                    }
-                });
-                // 点击空白处消失
-                mConfirmDialog.setCancelable(false);
-                mConfirmDialog.show();
-                break;
             case R.id.tv_draft:
-                addStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus());
+                addStockOutApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus());
                 break;
             case R.id.tv_scan:
                 startScanActivity();
                 break;
             case R.id.tv_submit:
-                addStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_UNCONFIRMED.getStatus());
+                addStockOutApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_UNCONFIRMED.getStatus());
                 break;
         }
     }
 
     private void startScanActivity() {
-        Intent intent = new Intent(AddStockInApplyActivity.this, CaptureActivity2.class);
+        Intent intent = new Intent(AddStockOutApplyActivity.this, CaptureActivity2.class);
         intent.putExtra(CaptureActivity2.USE_DEFUALT_ISBN_ACTIVITY, true);
         startActivityForResult(intent, REQUEST_CODE_SCAN);
     }
 
-
     private void initView() {
+        mGoodsNameTitleTv.setText("出库物品");
+        mGoodsNameTv.setText("请选择出库物品");
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         mImageRv.setLayoutManager(gridLayoutManager);
         mImagePickerAdapter = new ImagePickerAdapter(this);
@@ -373,7 +281,7 @@ public class AddStockInApplyActivity extends BaseActivity implements StockApplyG
             }
             if (position == imageEntityList.size() - 1) {
                 try {
-                    EasyPhotos.createAlbum(AddStockInApplyActivity.this, true, GlideEngine.getInstance())
+                    EasyPhotos.createAlbum(AddStockOutApplyActivity.this, true, GlideEngine.getInstance())
                             .setFileProviderAuthority("com.wd.winddots.fileprovider")
                             .start(REQUEST_CODE_IMAGE_PICKER);
                 } catch (Exception e) {
@@ -395,23 +303,6 @@ public class AddStockInApplyActivity extends BaseActivity implements StockApplyG
                     if (null != data) {
                         Goods goods = (Goods) data.getSerializableExtra("goods");
                         renderGoodsView(goods);
-                    }
-                    break;
-                case REQUEST_CODE_ORDER:
-                    // 订单
-                    if (null != data) {
-                        Order order = (Order) data.getSerializableExtra("order");
-                        renderOrderView(order);
-                    }
-                    break;
-                case REQUEST_CODE_RELATED_COMPANY:
-                    // 往来单位
-                    if (null != data) {
-                        String relatedCompanyId = data.getStringExtra("relatedCompanyId");
-                        String relatedCompanyName = data.getStringExtra("relatedCompanyName");
-                        mRelatedCompanyId = relatedCompanyId;
-                        mRelatedCompanyTv.setText(relatedCompanyName);
-                        mRelatedCompanyTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
                     }
                     break;
                 case REQUEST_CODE_AUDITOR:
@@ -520,34 +411,6 @@ public class AddStockInApplyActivity extends BaseActivity implements StockApplyG
 
     }
 
-    private void renderOrderView(Order order) {
-        mOrderId = order.getOrderId();
-        mOrderTv.setText("#" + order.getOrderNo());
-        mOrderTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
-
-        mOrderContentLl.setVisibility(View.VISIBLE);
-        mSelectOrderIv.setVisibility(View.GONE);
-        mDeleteOrderIv.setVisibility(View.VISIBLE);
-
-        mOrderRelatedCompanyTv.setText(order.getRelatedCompanyShortName());
-
-        String goodsInfo = order.getGoodsName() + "(" + order.getGoodsNo() + ")";
-        mOrderGoodsInfoTv.setText(goodsInfo);
-        mOrderNoTv.setText(order.getOrderNo());
-        mOrderThemeTv.setText(order.getOrderTheme());
-        String goodsPhoto = CommonUtil.getFirstPhotoFromJsonList(order.getGoodsPhotos());
-        if (!TextUtils.isEmpty(goodsPhoto)) {
-            mOrderGoodsPhotoSdv.setImageURI(Uri.parse(goodsPhoto));
-        } else {
-            mOrderGoodsPhotoSdv.setImageResource(R.mipmap.icon_default_goods);
-        }
-
-        // 同时渲染往来单位
-        mRelatedCompanyId = order.getRelatedCompanyId();
-        mRelatedCompanyTv.setText(order.getRelatedCompanyName());
-        mRelatedCompanyTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
-    }
-
     @Override
     public void stockInNumChange() {
         List<GoodsSpec> goodsSpecList = mStockApplyGoodsSpecAdapter.getList();
@@ -561,20 +424,16 @@ public class AddStockInApplyActivity extends BaseActivity implements StockApplyG
         mTotalNumTv.setText(nf.format(total));
     }
 
-    private void addStockInApply(String applyStatus) {
+    /**
+     * 新增出库申请
+     *
+     * @param applyStatus 申请状态
+     */
+    private void addStockOutApply(String applyStatus) {
 
         if (TextUtils.isEmpty(mGoodsId)) {
             showToast("请选择入库物品");
             return;
-        }
-
-        if (TextUtils.isEmpty(mOrderId)) {
-            showToast("请选择相关订单");
-            return;
-        }
-
-        if (TextUtils.isEmpty(mRelatedCompanyId)) {
-            showToast("请选择往来单位");
         }
 
         if (TextUtils.isEmpty(mAuditorId)) {
@@ -595,15 +454,14 @@ public class AddStockInApplyActivity extends BaseActivity implements StockApplyG
         paramMap.put("createUserId", SpHelper.getInstance(this).getUserId());
         paramMap.put("enterpriseId", SpHelper.getInstance(this).getEnterpriseId());
         paramMap.put("specNums", specNums);
-        paramMap.put("orderId", mOrderId);
-        paramMap.put("stockType", Constant.STOCK_TYPE_IN);
-        paramMap.put("bizType", Constant.STOCK_BIZ_TYPE_PURCHASE_IN);
-        paramMap.put("relatedCompanyId", mRelatedCompanyId);
+        paramMap.put("stockType", Constant.STOCK_TYPE_OUT);
+        paramMap.put("bizType", StockBizTypeEnum.STOCK_BIZ_TYPE_OFFICE_SUPPLIES_OUT.getType());
         paramMap.put("remark", remark);
         paramMap.put("applyStatus", applyStatus);
         paramMap.put("images", "[\"http://erp-cfpu-com.oss-cn-hangzhou.aliyuncs.com/329b0751292445df8500aa98a1180936.png\"]");
         paramMap.put("auditorId", mAuditorId);
         paramMap.put("copyId", mCopyId);
+        System.out.println(JSON.toJSONString(paramMap));
 
         mVolleyUtil.httpPostRequest(url, paramMap, response -> {
             if (applyStatus.equals(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus())) {
@@ -611,13 +469,13 @@ public class AddStockInApplyActivity extends BaseActivity implements StockApplyG
                 showToast("成功保存至草稿");
             } else {
                 // 提交入库单
-                showToast("入库单提交成功");
+                showToast("出库单提交成功");
             }
             hideLoadingDialog();
             finish();
         }, volleyError -> {
             hideLoadingDialog();
-            mVolleyUtil.handleCommonErrorResponse(AddStockInApplyActivity.this, volleyError);
+            mVolleyUtil.handleCommonErrorResponse(AddStockOutApplyActivity.this, volleyError);
         });
     }
 
@@ -637,8 +495,7 @@ public class AddStockInApplyActivity extends BaseActivity implements StockApplyG
             }
         }, volleyError -> {
             hideLoadingDialog();
-            mVolleyUtil.handleCommonErrorResponse(AddStockInApplyActivity.this, volleyError);
+            mVolleyUtil.handleCommonErrorResponse(AddStockOutApplyActivity.this, volleyError);
         });
     }
-
 }
