@@ -143,7 +143,7 @@ public class AddOfficeSuppliesInActivity extends BaseActivity implements StockAp
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_office_supplies_in);
+        setContentView(R.layout.activity_add_office_supplies_in_apply);
         ButterKnife.bind(this);
         mVolleyUtil = VolleyUtil.getInstance(this);
         initView();

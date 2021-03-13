@@ -19,10 +19,9 @@ import com.huantansheng.easyphotos.models.album.entity.Photo;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.select.SelectGoodsActivity;
-import com.wd.winddots.activity.select.SelectSingleUserActivity;
 import com.wd.winddots.activity.work.GlideEngine;
 import com.wd.winddots.adapter.image.ImagePickerAdapter;
-import com.wd.winddots.adapter.stock.in.StockApplyGoodsSpecAdapter;
+import com.wd.winddots.adapter.stock.in.StockGoodsSpecAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Goods;
 import com.wd.winddots.entity.GoodsSpec;
@@ -53,24 +52,22 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 办公用品入库单详情
- * (申请人控制台)
+ * 办公用品入库详情
+ * (操作人控制台)
  *
  * @author zhou
  */
-public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements StockApplyGoodsSpecAdapter.TextChangeListener {
+public class OfficeSuppliesInDetailActivity extends BaseActivity implements StockGoodsSpecAdapter.TextChangeListener {
 
     private static final int REQUEST_CODE_GOODS = 2;
     private static final int REQUEST_CODE_AUDITOR = 4;
-    private static final int REQUEST_CODE_COPY = 5;
     private static final int REQUEST_CODE_IMAGE_PICKER = 6;
     private static final int REQUEST_CODE_SCAN = 7;
 
+    private static final String SPACE_SEPARATOR = "   ";
+
     @BindView(R.id.rl_goods)
     RelativeLayout mGoodsRl;
-
-    @BindView(R.id.tv_goods_name)
-    TextView mGoodsNameTv;
 
     @BindView(R.id.et_remark)
     EditText mRemarkEt;
@@ -78,21 +75,12 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
     @BindView(R.id.tv_auditor)
     TextView mAuditorTv;
 
-    @BindView(R.id.tv_copy)
-    TextView mCopyTv;
-
     @BindView(R.id.rv_image)
     RecyclerView mImageRv;
 
     // 物品
     @BindView(R.id.ll_goods_content)
     LinearLayout mGoodsContentLl;
-
-    @BindView(R.id.iv_select_goods)
-    ImageView mSelectGoodsIv;
-
-    @BindView(R.id.iv_delete_goods)
-    ImageView mDeleteGoodsIv;
 
     @BindView(R.id.tv_goods_info)
     TextView mGoodsInfoTv;
@@ -127,26 +115,18 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
     @BindView(R.id.tv_place_holder)
     TextView mPlaceHolderTv;
 
-    @BindView(R.id.tv_total_num)
-    TextView mTotalNumTv;
-
-    @BindView(R.id.ll_auditor)
-    LinearLayout mAuditorLl;
-
-    @BindView(R.id.ll_copy)
-    LinearLayout mCopyLl;
-
     @BindView(R.id.ll_operate)
     LinearLayout mOperateLl;
 
+    @BindView(R.id.tv_create_user)
+    TextView mCreateUserTv;
+
     ImagePickerAdapter mImagePickerAdapter;
-    StockApplyGoodsSpecAdapter mStockApplyGoodsSpecAdapter;
+    StockGoodsSpecAdapter mStockGoodsSpecAdapter;
 
     String mGoodsId;
     // 审核人用户ID
     String mAuditorId;
-    // 抄送人
-    String mCopyId;
 
     List<ImageEntity> mImageEntityList = new ArrayList<>();
 
@@ -156,7 +136,7 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_office_supplies_in_apply);
+        setContentView(R.layout.activity_office_supplies_in_detail);
         ButterKnife.bind(this);
         mVolleyUtil = VolleyUtil.getInstance(this);
         initView();
@@ -164,8 +144,8 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
         initListener();
     }
 
-    @OnClick({R.id.iv_back, R.id.rl_goods, R.id.ll_auditor, R.id.ll_copy,
-            R.id.ll_goods_content, R.id.iv_delete_goods, R.id.tv_draft, R.id.tv_scan,
+    @OnClick({R.id.iv_back, R.id.rl_goods,
+            R.id.ll_goods_content, R.id.tv_save, R.id.tv_scan,
             R.id.tv_submit})
     public void onClick(View v) {
         Intent intent;
@@ -178,28 +158,16 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
                 // 物品
                 if (TextUtils.isEmpty(mGoodsId)) {
                     // 未选择物品
-                    intent = new Intent(OfficeSuppliesInApplyDetailActivity.this, SelectGoodsActivity.class);
+                    intent = new Intent(OfficeSuppliesInDetailActivity.this, SelectGoodsActivity.class);
                     startActivityForResult(intent, REQUEST_CODE_GOODS);
                 } else {
                     // 选择物品
                     if (mGoodsContentLl.getVisibility() == View.GONE) {
                         mGoodsContentLl.setVisibility(View.VISIBLE);
-                        mSelectGoodsIv.setVisibility(View.GONE);
-                        mDeleteGoodsIv.setVisibility(View.VISIBLE);
                     } else {
                         mGoodsContentLl.setVisibility(View.GONE);
                     }
                 }
-                break;
-            case R.id.ll_auditor:
-                // 审核人
-                intent = new Intent(OfficeSuppliesInApplyDetailActivity.this, SelectSingleUserActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_AUDITOR);
-                break;
-            case R.id.ll_copy:
-                // 抄送人
-                intent = new Intent(OfficeSuppliesInApplyDetailActivity.this, SelectSingleUserActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_COPY);
                 break;
             case R.id.ll_goods_content:
                 if (mGoodsSpecLl.getVisibility() == View.GONE) {
@@ -212,37 +180,7 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
                     mGoodsSpecLl.setVisibility(View.GONE);
                 }
                 break;
-            case R.id.iv_delete_goods:
-                mConfirmDialog = new ConfirmDialog(this, "确认取消",
-                        "是否取消已选物品",
-                        "是", "否");
-                mConfirmDialog.setOnDialogClickListener(new ConfirmDialog.OnDialogClickListener() {
-                    @Override
-                    public void onOkClick() {
-                        mSelectGoodsIv.setVisibility(View.VISIBLE);
-                        mDeleteGoodsIv.setVisibility(View.GONE);
-                        mGoodsContentLl.setVisibility(View.GONE);
-                        mGoodsId = "";
-                        mGoodsNameTv.setText("请选择入库物品");
-                        mGoodsNameTv.setTextColor(ContextCompat.getColor(OfficeSuppliesInApplyDetailActivity.this, R.color.colorB2));
-
-                        // 重置
-                        mGoodsSpecRv.setAdapter(null);
-                        mGoodsSpecRv.setAdapter(mStockApplyGoodsSpecAdapter);
-                        mTotalNumTv.setText("0");
-                    }
-
-                    @Override
-                    public void onCancelClick() {
-                        mConfirmDialog.dismiss();
-                    }
-                });
-                // 点击空白处消失
-                mConfirmDialog.setCancelable(false);
-                mConfirmDialog.show();
-                break;
-
-            case R.id.tv_draft:
+            case R.id.tv_save:
                 updateStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus());
                 break;
             case R.id.tv_scan:
@@ -255,7 +193,7 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
     }
 
     private void startScanActivity() {
-        Intent intent = new Intent(OfficeSuppliesInApplyDetailActivity.this, CaptureActivity2.class);
+        Intent intent = new Intent(OfficeSuppliesInDetailActivity.this, CaptureActivity2.class);
         intent.putExtra(CaptureActivity2.USE_DEFUALT_ISBN_ACTIVITY, true);
         startActivityForResult(intent, REQUEST_CODE_SCAN);
     }
@@ -272,8 +210,8 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
         LinearLayoutManager goodsSpecLinearLayoutManager = new LinearLayoutManager(this);
         mGoodsSpecRv.setLayoutManager(goodsSpecLinearLayoutManager);
         mGoodsSpecRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mStockApplyGoodsSpecAdapter = new StockApplyGoodsSpecAdapter(this);
-        mGoodsSpecRv.setAdapter(mStockApplyGoodsSpecAdapter);
+        mStockGoodsSpecAdapter = new StockGoodsSpecAdapter(this);
+        mGoodsSpecRv.setAdapter(mStockGoodsSpecAdapter);
 
         getStockInApplyById(mStockInApplyId);
     }
@@ -285,7 +223,7 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
         mImagePickerAdapter.setList(mImageEntityList);
 
         List<GoodsSpec> goodsSpecList = new ArrayList<>();
-        mStockApplyGoodsSpecAdapter.setList(goodsSpecList);
+        mStockGoodsSpecAdapter.setList(goodsSpecList);
     }
 
     private void initListener() {
@@ -296,7 +234,7 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
             }
             if (position == imageEntityList.size() - 1) {
                 try {
-                    EasyPhotos.createAlbum(OfficeSuppliesInApplyDetailActivity.this, true, GlideEngine.getInstance())
+                    EasyPhotos.createAlbum(OfficeSuppliesInDetailActivity.this, true, GlideEngine.getInstance())
                             .setFileProviderAuthority("com.wd.winddots.fileprovider")
                             .start(REQUEST_CODE_IMAGE_PICKER);
                 } catch (Exception e) {
@@ -305,7 +243,7 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
             }
         });
 
-        mStockApplyGoodsSpecAdapter.setTextChangeListener(this);
+        mStockGoodsSpecAdapter.setTextChangeListener(this);
     }
 
     @Override
@@ -328,16 +266,6 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
                         mAuditorId = userId;
                         mAuditorTv.setText(userName);
                         mAuditorTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
-                    }
-                    break;
-                case REQUEST_CODE_COPY:
-                    // 抄送人
-                    if (null != data) {
-                        String userId = data.getStringExtra("userId");
-                        String userName = data.getStringExtra("userName");
-                        mCopyId = userId;
-                        mCopyTv.setText(userName);
-                        mCopyTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
                     }
                     break;
                 case REQUEST_CODE_IMAGE_PICKER:
@@ -374,12 +302,8 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
      */
     private void renderGoodsView(Goods goods) {
         mGoodsId = goods.getId();
-        mGoodsNameTv.setText(goods.getGoodsName());
-        mGoodsNameTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
 
         mGoodsContentLl.setVisibility(View.VISIBLE);
-        mSelectGoodsIv.setVisibility(View.GONE);
-        mDeleteGoodsIv.setVisibility(View.VISIBLE);
 
         String goodsInfo = goods.getGoodsName() + "(" + goods.getGoodsNo() + ")";
         String stockInfo = goods.getStockNum() + goods.getGoodsUnit();
@@ -411,7 +335,7 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
         }
 
         List<GoodsSpec> goodsSpecList = goods.getGoodsSpecList();
-        mStockApplyGoodsSpecAdapter.setList(goodsSpecList);
+        mStockGoodsSpecAdapter.setList(goodsSpecList);
 
         if (TextUtils.isEmpty(goods.getY())) {
             mGoodsSpecYTv.setVisibility(View.GONE);
@@ -434,20 +358,11 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
             mGoodsSpecLl.setVisibility(View.GONE);
         }
 
-        float total = 0;
-        NumberFormat nf = NumberFormat.getNumberInstance();
-        for (GoodsSpec goodsSpec : goodsSpecList) {
-            nf.setMaximumFractionDigits(2);
-            float totalStockInNum = Float.parseFloat(Utils.numberNullOrEmpty(goodsSpec.getApplyNum()));
-            total = totalStockInNum + total;
-        }
-        mTotalNumTv.setText(nf.format(total));
-
     }
 
     @Override
     public void stockInNumChange() {
-        List<GoodsSpec> goodsSpecList = mStockApplyGoodsSpecAdapter.getList();
+        List<GoodsSpec> goodsSpecList = mStockGoodsSpecAdapter.getList();
         float total = 0;
         NumberFormat nf = NumberFormat.getNumberInstance();
         for (GoodsSpec goodsSpec : goodsSpecList) {
@@ -455,7 +370,6 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
             float totalStockInNum = Float.parseFloat(Utils.numberNullOrEmpty(goodsSpec.getNum()));
             total = totalStockInNum + total;
         }
-        mTotalNumTv.setText(nf.format(total));
     }
 
     private void updateStockInApply(String applyStatus) {
@@ -469,12 +383,8 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
             showToast("请选择审核人");
         }
 
-        if (TextUtils.isEmpty(mCopyId)) {
-            showToast("请选择抄送人");
-        }
-
         showLoadingDialog();
-        List<GoodsSpec> goodsSpecList = mStockApplyGoodsSpecAdapter.getList();
+        List<GoodsSpec> goodsSpecList = mStockGoodsSpecAdapter.getList();
         String specNums = JSON.toJSONString(goodsSpecList);
         String remark = mRemarkEt.getText().toString().trim();
 
@@ -490,7 +400,6 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
         paramMap.put("applyStatus", applyStatus);
         paramMap.put("images", "[\"http://erp-cfpu-com.oss-cn-hangzhou.aliyuncs.com/329b0751292445df8500aa98a1180936.png\"]");
         paramMap.put("auditorId", mAuditorId);
-        paramMap.put("copyId", mCopyId);
 
         mVolleyUtil.httpPutRequest(url, paramMap, response -> {
             if (applyStatus.equals(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus())) {
@@ -504,7 +413,7 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
             finish();
         }, volleyError -> {
             hideLoadingDialog();
-            mVolleyUtil.handleCommonErrorResponse(OfficeSuppliesInApplyDetailActivity.this, volleyError);
+            mVolleyUtil.handleCommonErrorResponse(OfficeSuppliesInDetailActivity.this, volleyError);
         });
     }
 
@@ -524,7 +433,7 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
             }
         }, volleyError -> {
             hideLoadingDialog();
-            mVolleyUtil.handleCommonErrorResponse(OfficeSuppliesInApplyDetailActivity.this, volleyError);
+            mVolleyUtil.handleCommonErrorResponse(OfficeSuppliesInDetailActivity.this, volleyError);
         });
     }
 
@@ -543,33 +452,15 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
             }
             mGoodsId = stockInApply.getStockGoodsId();
             mAuditorId = stockInApply.getAuditUserId();
-            mCopyId = stockInApply.getCopyUserId();
             mRemarkEt.setText(stockInApply.getRemark());
             mAuditorTv.setText(stockInApply.getAuditUserName());
             mAuditorTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
 
-            mCopyTv.setText(stockInApply.getCopyUserName());
-            mCopyTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
-
-            if (StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus().equals(stockInApply.getApplyStatus())) {
-                // 草稿单
-                mOperateLl.setVisibility(View.VISIBLE);
-            } else {
-                mOperateLl.setVisibility(View.GONE);
-
-                mGoodsRl.setClickable(false);
-                mGoodsContentLl.setClickable(false);
-                mRemarkEt.setEnabled(false);
-                mRemarkEt.setTextColor(ContextCompat.getColor(this, R.color.color32));
-                mAuditorLl.setClickable(false);
-                mCopyLl.setClickable(false);
-                mDeleteGoodsIv.setVisibility(View.GONE);
-
-            }
+            mCreateUserTv.setText(stockInApply.getCreateUserName() + SPACE_SEPARATOR + stockInApply.getCreateTime());
 
             hideLoadingDialog();
         }, volleyError -> {
-            mVolleyUtil.handleCommonErrorResponse(OfficeSuppliesInApplyDetailActivity.this, volleyError);
+            mVolleyUtil.handleCommonErrorResponse(OfficeSuppliesInDetailActivity.this, volleyError);
 
             hideLoadingDialog();
         });

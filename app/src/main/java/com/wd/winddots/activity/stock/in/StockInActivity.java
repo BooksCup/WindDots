@@ -143,9 +143,8 @@ public class StockInActivity extends BaseActivity
         StockInApply stockInApply = mStockInApplyList.get(position);
         if (StockBizTypeEnum.STOCK_BIZ_TYPE_OFFICE_SUPPLIES_IN.getType().equals(stockInApply.getBizType())) {
             // 办公用品入库
-            Intent intent = new Intent(StockInActivity.this, OfficeSuppliesInApplyDetailActivity.class);
+            Intent intent = new Intent(StockInActivity.this, OfficeSuppliesInDetailActivity.class);
             intent.putExtra("stockInApplyId", stockInApply.getId());
-            intent.putExtra("requestRole", Constant.REQUEST_ROLE_CONFIRM);
             startActivity(intent);
         }
     }
