@@ -124,6 +124,9 @@ public class AddOfficeSuppliesInActivity extends BaseActivity implements StockAp
     @BindView(R.id.tv_total_num)
     TextView mTotalNumTv;
 
+    @BindView(R.id.ll_operate)
+    LinearLayout mOperateLl;
+
     ImagePickerAdapter mImagePickerAdapter;
     StockApplyGoodsSpecAdapter mStockApplyGoodsSpecAdapter;
 
@@ -246,6 +249,8 @@ public class AddOfficeSuppliesInActivity extends BaseActivity implements StockAp
 
 
     private void initView() {
+        mOperateLl.setVisibility(View.VISIBLE);
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         mImageRv.setLayoutManager(gridLayoutManager);
         mImagePickerAdapter = new ImagePickerAdapter(this);
