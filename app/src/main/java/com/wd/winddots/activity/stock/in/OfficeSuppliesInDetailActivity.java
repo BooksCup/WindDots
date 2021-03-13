@@ -1,5 +1,6 @@
 package com.wd.winddots.activity.stock.in;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,22 +15,22 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.zxing.client.android.CaptureActivity2;
-import com.huantansheng.easyphotos.EasyPhotos;
-import com.huantansheng.easyphotos.models.album.entity.Photo;
+import com.kevin.photo_browse.PhotoBrowse;
+import com.kevin.photo_browse.ShowType;
+import com.kevin.photo_browse.callabck.ClickCallback;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.select.SelectGoodsActivity;
-import com.wd.winddots.activity.work.GlideEngine;
-import com.wd.winddots.adapter.image.ImagePickerAdapter;
+import com.wd.winddots.adapter.image.ImageBrowserAdapter;
 import com.wd.winddots.adapter.stock.in.StockGoodsSpecAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Goods;
 import com.wd.winddots.entity.GoodsSpec;
-import com.wd.winddots.entity.ImageEntity;
 import com.wd.winddots.entity.StockInApply;
 import com.wd.winddots.enums.StockApplyStatusEnum;
 import com.wd.winddots.enums.StockBizTypeEnum;
 import com.wd.winddots.utils.BigDecimalUtil;
+import com.wd.winddots.utils.CollectionUtil;
 import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.Utils;
@@ -129,14 +130,14 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
     @BindView(R.id.tv_confirm_num)
     TextView mConfirmNumTv;
 
-    ImagePickerAdapter mImagePickerAdapter;
+    ImageBrowserAdapter mImageBrowserAdapter;
     StockGoodsSpecAdapter mStockGoodsSpecAdapter;
 
     String mGoodsId;
     // 审核人用户ID
     String mAuditorId;
 
-    List<ImageEntity> mImageEntityList = new ArrayList<>();
+    List<String> mImageList = new ArrayList<>();
 
     VolleyUtil mVolleyUtil;
     String mStockInApplyId;
@@ -212,8 +213,8 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         mImageRv.setLayoutManager(gridLayoutManager);
-        mImagePickerAdapter = new ImagePickerAdapter(this);
-        mImageRv.setAdapter(mImagePickerAdapter);
+        mImageBrowserAdapter = new ImageBrowserAdapter(this);
+        mImageRv.setAdapter(mImageBrowserAdapter);
 
         LinearLayoutManager goodsSpecLinearLayoutManager = new LinearLayoutManager(this);
         mGoodsSpecRv.setLayoutManager(goodsSpecLinearLayoutManager);
@@ -225,29 +226,37 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
     }
 
     private void initData() {
-        mImageEntityList = new ArrayList<>();
-        ImageEntity imageEntity = new ImageEntity();
-        mImageEntityList.add(imageEntity);
-        mImagePickerAdapter.setList(mImageEntityList);
+        mImageList = new ArrayList<>();
+        mImageBrowserAdapter.setList(mImageList);
 
         List<GoodsSpec> goodsSpecList = new ArrayList<>();
         mStockGoodsSpecAdapter.setList(goodsSpecList);
     }
 
     private void initListener() {
-        mImagePickerAdapter.setOnRecyclerItemClickListener(position -> {
-            List<ImageEntity> imageEntityList = mImagePickerAdapter.getList();
-            if (null == imageEntityList) {
-                imageEntityList = new ArrayList<>();
+        mImageBrowserAdapter.setOnRecyclerItemClickListener(position -> {
+            List<String> imageList = mImageBrowserAdapter.getList();
+            if (null == imageList) {
+                imageList = new ArrayList<>();
             }
-            if (position == imageEntityList.size() - 1) {
-                try {
-                    EasyPhotos.createAlbum(OfficeSuppliesInDetailActivity.this, true, GlideEngine.getInstance())
-                            .setFileProviderAuthority("com.wd.winddots.fileprovider")
-                            .start(REQUEST_CODE_IMAGE_PICKER);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            if (!CollectionUtil.isEmpty(imageList)) {
+                PhotoBrowse.with(this)
+                        .showType(ShowType.MULTIPLE_URL)
+                        .url(imageList)
+                        .title("")
+                        .position(position)
+                        .callback(new ClickCallback() {
+                            @Override
+                            public void onClick(Activity activity, String url, int position) {
+                                super.onClick(activity, url, position);
+                            }
+
+                            @Override
+                            public void onLongClick(Activity activity, String url, int position) {
+                                super.onLongClick(activity, url, position);
+                            }
+                        })
+                        .show();
             }
         });
 
@@ -274,19 +283,6 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
                         mAuditorId = userId;
                         mAuditorTv.setText(userName);
                         mAuditorTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
-                    }
-                    break;
-                case REQUEST_CODE_IMAGE_PICKER:
-                    // 图片选择
-                    ArrayList<Photo> resultPhotos = data.getParcelableArrayListExtra(EasyPhotos.RESULT_PHOTOS);
-                    if (null != resultPhotos) {
-                        for (int i = 0; i < resultPhotos.size(); i++) {
-                            ImageEntity imageEntity = new ImageEntity();
-                            imageEntity.setPath(resultPhotos.get(i).path);
-                            imageEntity.setId(String.valueOf(i));
-                            mImageEntityList.add(0, imageEntity);
-                        }
-                        mImagePickerAdapter.setList(mImageEntityList);
                     }
                     break;
                 case REQUEST_CODE_SCAN:
@@ -462,6 +458,18 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
             mAuditorTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
 
             mCreateUserTv.setText(stockInApply.getCreateUserName() + SPACE_SEPARATOR + stockInApply.getCreateTime());
+
+            try {
+                mImageList = JSON.parseArray(stockInApply.getStockImg(), String.class);
+            } catch (Exception e) {
+                mImageList = new ArrayList<>();
+            }
+            if (CollectionUtil.isEmpty(mImageList)) {
+                mImageRv.setVisibility(View.GONE);
+            } else {
+                mImageRv.setVisibility(View.VISIBLE);
+                mImageBrowserAdapter.setList(mImageList);
+            }
 
             hideLoadingDialog();
         }, volleyError -> {
