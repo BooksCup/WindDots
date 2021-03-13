@@ -29,12 +29,14 @@ import com.wd.winddots.entity.ImageEntity;
 import com.wd.winddots.entity.StockInApply;
 import com.wd.winddots.enums.StockApplyStatusEnum;
 import com.wd.winddots.enums.StockBizTypeEnum;
+import com.wd.winddots.utils.BigDecimalUtil;
 import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.Utils;
 import com.wd.winddots.utils.VolleyUtil;
 import com.wd.winddots.view.dialog.ConfirmDialog;
 
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -120,6 +122,12 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
 
     @BindView(R.id.tv_create_user)
     TextView mCreateUserTv;
+
+    @BindView(R.id.tv_apply_num)
+    TextView mApplyNumTv;
+
+    @BindView(R.id.tv_confirm_num)
+    TextView mConfirmNumTv;
 
     ImagePickerAdapter mImagePickerAdapter;
     StockGoodsSpecAdapter mStockGoodsSpecAdapter;
@@ -348,15 +356,11 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
             mGoodsSpecYTv.setText(goods.getY());
         }
 
-        if (mGoodsSpecLl.getVisibility() == View.GONE) {
-            // 展开
-            mGoodsExpandIv.setBackgroundResource(R.mipmap.icon_up);
-            mGoodsSpecLl.setVisibility(View.VISIBLE);
-        } else {
-            // 关闭
-            mGoodsExpandIv.setBackgroundResource(R.mipmap.icon_down);
-            mGoodsSpecLl.setVisibility(View.GONE);
+        BigDecimal applyNum = new BigDecimal(0);
+        for (GoodsSpec goodsSpec : goodsSpecList) {
+            applyNum = BigDecimalUtil.add(applyNum, goodsSpec.getApplyNum());
         }
+        mApplyNumTv.setText(String.valueOf(applyNum.intValue()));
 
     }
 
@@ -370,6 +374,7 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
             float totalStockInNum = Float.parseFloat(Utils.numberNullOrEmpty(goodsSpec.getNum()));
             total = totalStockInNum + total;
         }
+        mConfirmNumTv.setText(nf.format(total));
     }
 
     private void updateStockInApply(String applyStatus) {
