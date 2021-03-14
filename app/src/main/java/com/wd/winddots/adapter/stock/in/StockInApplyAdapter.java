@@ -96,6 +96,14 @@ public class StockInApplyAdapter extends BaseQuickAdapter<StockInApply, BaseView
             mApplyStatusTv.setTextColor(mContext.getResources().getColor(R.color.tag_orange));
             mApplyStatusTv.setBackgroundResource(R.drawable.bg_tag_orange);
 
+        } else if (StockApplyStatusEnum.STOCK_APPLY_STATUS_REJECT.getStatus().equals(item.getApplyStatus())) {
+
+            // 未通过
+            mApplyStatusTv.setVisibility(View.VISIBLE);
+            mApplyStatusTv.setText("未通过");
+            mApplyStatusTv.setTextColor(mContext.getResources().getColor(R.color.tag_red));
+            mApplyStatusTv.setBackgroundResource(R.drawable.bg_tag_red);
+
         } else {
 
             // 未知

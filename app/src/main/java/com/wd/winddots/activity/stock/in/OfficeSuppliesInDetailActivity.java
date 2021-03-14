@@ -150,6 +150,7 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
 
     VolleyUtil mVolleyUtil;
     String mStockInApplyId;
+    boolean mIsSkuEditable = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -163,7 +164,7 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
     }
 
     @OnClick({R.id.iv_back, R.id.rl_goods, R.id.ll_goods_content,
-            R.id.ll_ware_house, R.id.tv_submit, R.id.tv_scan,
+            R.id.ll_ware_house, R.id.tv_reject, R.id.tv_scan,
             R.id.tv_confirm})
     public void onClick(View v) {
         Intent intent;
@@ -202,8 +203,8 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
                 intent = new Intent(OfficeSuppliesInDetailActivity.this, SelectWareHouseActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_WARE_HOUSE);
                 break;
-            case R.id.tv_submit:
-                updateStockApplication(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus());
+            case R.id.tv_reject:
+                updateStockApplication(StockApplyStatusEnum.STOCK_APPLY_STATUS_REJECT.getStatus());
                 break;
             case R.id.tv_scan:
                 startScanActivity();
@@ -361,6 +362,7 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
         }
 
         List<GoodsSpec> goodsSpecList = goods.getGoodsSpecList();
+        mStockGoodsSpecAdapter.setEditable(mIsSkuEditable);
         mStockGoodsSpecAdapter.setList(goodsSpecList);
 
         if (TextUtils.isEmpty(goods.getY())) {
@@ -375,10 +377,15 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
         }
 
         BigDecimal applyNum = new BigDecimal(0);
+        BigDecimal confirmNum = new BigDecimal(0);
         for (GoodsSpec goodsSpec : goodsSpecList) {
             applyNum = BigDecimalUtil.add(applyNum, goodsSpec.getApplyNum());
+            confirmNum = BigDecimalUtil.add(confirmNum, goodsSpec.getNum());
         }
         mApplyNumTv.setText(String.valueOf(applyNum.intValue()));
+        if (!mIsSkuEditable) {
+            mConfirmNumTv.setText(String.valueOf(confirmNum.intValue()));
+        }
 
     }
 
@@ -397,29 +404,15 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
 
     private void updateStockApplication(String applyStatus) {
 
-        if (TextUtils.isEmpty(mWareHouseId)) {
-            showToast("请选择入库仓库");
-            return;
-        }
-
         List<GoodsSpec> goodsSpecList = mStockGoodsSpecAdapter.getList();
         List<StockApplicationInRecord> stockApplicationInRecordList = new ArrayList<>();
-        if (StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus().equals(applyStatus)) {
-            // 提交至草稿
-            for (GoodsSpec goodsSpec : goodsSpecList) {
-                if (TextUtils.isEmpty(goodsSpec.getNum())) {
-                    showToast("请完整填写确认数量");
-                    return;
-                }
-                StockApplicationInRecord in = new StockApplicationInRecord();
-                in.setGoodsSpecId(goodsSpec.getId());
-                in.setStockApplicationId(mStockInApplyId);
-                in.setWareHouseId(mWareHouseId);
-                in.setCount(goodsSpec.getNum());
-                in.setResidualNumber(goodsSpec.getNum());
-                stockApplicationInRecordList.add(in);
+        if (!StockApplyStatusEnum.STOCK_APPLY_STATUS_REJECT.getStatus().equals(applyStatus)) {
+
+            if (TextUtils.isEmpty(mWareHouseId)) {
+                showToast("请选择入库仓库");
+                return;
             }
-        } else {
+
             // 确认
             for (GoodsSpec goodsSpec : goodsSpecList) {
                 StockApplicationInRecord in = new StockApplicationInRecord();
@@ -444,11 +437,11 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
         paramMap.put("stockApplicationJson", JSON.toJSONString(stockInApply));
 
         mVolleyUtil.httpPutRequest(url, paramMap, response -> {
-            if (applyStatus.equals(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus())) {
-                // 打回草稿
-                showToast("提交成功");
+            if (applyStatus.equals(StockApplyStatusEnum.STOCK_APPLY_STATUS_REJECT.getStatus())) {
+                // 驳回
+                showToast("驳回成功");
             } else {
-                // 一键确认
+                // 确认
                 showToast("确认成功");
             }
             hideLoadingDialog();
@@ -493,7 +486,8 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
             if (StockApplyStatusEnum.STOCK_APPLY_STATUS_CONFIRMED.getStatus().equals(stockInApply.getApplyStatus())) {
                 mOperateLl.setVisibility(View.GONE);
                 mWareHouseLl.setClickable(false);
-                mGoodsRl.setFocusable(false);
+                mGoodsRl.setClickable(false);
+                mGoodsContentLl.setClickable(false);
 
                 List<StockApplicationInRecord> inList = stockInApply.getStockApplicationInRecordList();
                 if (!CollectionUtil.isEmpty(inList)) {
@@ -501,17 +495,23 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
                     mWareHouseTv.setText(wareHouseName);
                     mWareHouseTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
                 }
+                mIsSkuEditable = false;
 
             } else {
                 mOperateLl.setVisibility(View.VISIBLE);
+                mIsSkuEditable = true;
             }
 
             if (null != stockInApply) {
                 renderGoodsView(CommonUtil.getGoodsFromStockInApply(stockInApply));
             }
             mGoodsId = stockInApply.getStockGoodsId();
-            mAuditorId = stockInApply.getAuditUserId();
+
+            mRemarkEt.setEnabled(false);
             mRemarkEt.setText(stockInApply.getRemark());
+            mRemarkEt.setTextColor(ContextCompat.getColor(this, R.color.color32));
+
+            mAuditorId = stockInApply.getAuditUserId();
             mAuditorTv.setText(stockInApply.getAuditUserName());
             mAuditorTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
 

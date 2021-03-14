@@ -10,6 +10,7 @@ public enum StockApplyStatusEnum {
     STOCK_APPLY_STATUS_DRAFT("0", "草稿"),
     STOCK_APPLY_STATUS_UNCONFIRMED("1", "未确认"),
     STOCK_APPLY_STATUS_CONFIRMED("2", "已确认"),
+    STOCK_APPLY_STATUS_REJECT("3", "驳回"),
     ;
 
     StockApplyStatusEnum(String status, String value) {

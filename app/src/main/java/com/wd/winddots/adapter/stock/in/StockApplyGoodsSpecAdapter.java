@@ -78,7 +78,7 @@ public class StockApplyGoodsSpecAdapter extends RecyclerView.Adapter<StockApplyG
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                goodsSpec.setNum(holder.mNumEt.getText().toString().trim());
+                goodsSpec.setApplyNum(holder.mNumEt.getText().toString().trim());
                 if (null != mTextChangeListener) {
                     mTextChangeListener.stockInNumChange();
                 }

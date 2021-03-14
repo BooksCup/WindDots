@@ -188,7 +188,8 @@
                         android:gravity="center"
                         android:text="确认数量(件)"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -238,7 +239,8 @@
                         android:gravity="center"
                         android:text="0"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

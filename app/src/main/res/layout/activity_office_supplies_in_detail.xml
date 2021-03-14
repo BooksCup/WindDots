@@ -225,17 +225,17 @@
         android:layout_height="46dp"
         android:layout_marginHorizontal="3dp"
         android:orientation="horizontal"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
-            android:id="@+id/tv_submit"
+            android:id="@+id/tv_reject"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="2dp"
             android:layout_weight="1"
-            android:background="@drawable/shape_bg_green"
+            android:background="@drawable/shape_bg_red"
             android:gravity="center"
-            android:text="提交"
+            android:text="驳回"
             android:textColor="@color/white"
             android:textSize="15sp" />
 
@@ -261,9 +261,9 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="2dp"
             android:layout_weight="1"
-            android:background="@drawable/shape_bg_red"
+            android:background="@drawable/shape_bg_green"
             android:gravity="center"
-            android:text="一键确认"
+            android:text="确认"
             android:textColor="@color/white"
             android:textSize="15sp" />
 

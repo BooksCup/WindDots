@@ -92,4 +92,5 @@
     <color name="tag_grey">#999999</color>
     <color name="tag_green">#27B148</color>
     <color name="tag_orange">#FF9800</color>
+    <color name="tag_red">#D22B34</color>
 </resources>

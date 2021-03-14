@@ -17,6 +17,16 @@ public class BigDecimalUtil {
 
     }
 
+    public static BigDecimal getIntegerValue(Object value){
+        BigDecimal b;
+        try {
+            b = new BigDecimal(String.valueOf(value));
+        } catch (Exception e) {
+            b = new BigDecimal("0.00");
+        }
+        return b.setScale(0, BigDecimal.ROUND_HALF_UP);
+    }
+
     /**
      * 精确加法
      *

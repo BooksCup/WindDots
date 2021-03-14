@@ -44,6 +44,7 @@
         android:gravity="center"
         android:hint="输入数量"
         android:inputType="numberDecimal"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:visibility="gone" />
 
 </LinearLayout>

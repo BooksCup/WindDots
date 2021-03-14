@@ -15,7 +15,7 @@ public class StockUtil {
             goodsSpec.setX(stockApplicationInRecord.getX());
             goodsSpec.setY(stockApplicationInRecord.getY());
             goodsSpec.setApplyNum(stockApplicationInRecord.getApplyNumber());
-//            goodsSpec.setNum(stockApplicationInRecord.getApplyNumber());
+            goodsSpec.setNum(stockApplicationInRecord.getCount());
             goodsSpecList.add(goodsSpec);
         }
         return goodsSpecList;

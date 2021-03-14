@@ -6,8 +6,8 @@ package com.wd.winddots.cons;
 public class Constant {
     //public static final String APP_BASE_URL = "http://192.168.8.123:8085/";
 
-    public static final String APP_BASE_URL = "http://172.168.0.145:8085/";// "http://115.159.201.120:8085/";
-
+//    public static final String APP_BASE_URL = "http://172.168.0.93:8085/";// "http://115.159.201.120:8085/";
+    public static final String APP_BASE_URL = "http://172.168.0.145:8085/";
     public static final String APP_BASE_URL_ELSE = "http://42.192.134.170/";
 
     //public static final String APP_BASE_URL = "http://115.159.201.120:8085/";

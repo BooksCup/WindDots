@@ -452,7 +452,7 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
         NumberFormat nf = NumberFormat.getNumberInstance();
         for (GoodsSpec goodsSpec : goodsSpecList) {
             nf.setMaximumFractionDigits(2);
-            float totalStockInNum = Float.parseFloat(Utils.numberNullOrEmpty(goodsSpec.getNum()));
+            float totalStockInNum = Float.parseFloat(Utils.numberNullOrEmpty(goodsSpec.getApplyNum()));
             total = totalStockInNum + total;
         }
         mTotalNumTv.setText(nf.format(total));
@@ -551,8 +551,10 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
             mCopyTv.setText(stockInApply.getCopyUserName());
             mCopyTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
 
-            if (StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus().equals(stockInApply.getApplyStatus())) {
+            if (StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus().equals(stockInApply.getApplyStatus())
+                    || StockApplyStatusEnum.STOCK_APPLY_STATUS_REJECT.getStatus().equals(stockInApply.getApplyStatus())) {
                 // 草稿单
+                // 未通过
                 mOperateLl.setVisibility(View.VISIBLE);
             } else {
                 mOperateLl.setVisibility(View.GONE);

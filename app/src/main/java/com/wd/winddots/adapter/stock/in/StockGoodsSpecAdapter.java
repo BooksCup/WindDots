@@ -12,10 +12,13 @@ import android.widget.TextView;
 
 import com.wd.winddots.R;
 import com.wd.winddots.entity.GoodsSpec;
+import com.wd.winddots.utils.BigDecimalUtil;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +33,7 @@ public class StockGoodsSpecAdapter extends RecyclerView.Adapter<StockGoodsSpecAd
     private Context mContext;
     private List<GoodsSpec> mGoodsSpecList;
     public TextChangeListener mTextChangeListener;
+    private boolean isEditable = true;
 
     public void setTextChangeListener(TextChangeListener textChangeListener) {
         this.mTextChangeListener = textChangeListener;
@@ -42,6 +46,10 @@ public class StockGoodsSpecAdapter extends RecyclerView.Adapter<StockGoodsSpecAd
     public void setList(List<GoodsSpec> goodsSpecList) {
         this.mGoodsSpecList = goodsSpecList;
         notifyDataSetChanged();
+    }
+
+    public void setEditable(boolean editable) {
+        this.isEditable = editable;
     }
 
     public List<GoodsSpec> getList() {
@@ -68,25 +76,31 @@ public class StockGoodsSpecAdapter extends RecyclerView.Adapter<StockGoodsSpecAd
 
         holder.mApplyNumTv.setText(goodsSpec.getApplyNum());
 
-        holder.mNumEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                goodsSpec.setNum(holder.mNumEt.getText().toString().trim());
-                if (null != mTextChangeListener) {
-                    mTextChangeListener.stockInNumChange();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+//        if (isEditable) {
+//            holder.mNumEt.addTextChangedListener(new TextWatcher() {
+//                @Override
+//                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//                }
+//
+//                @Override
+//                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                    goodsSpec.setNum(holder.mNumEt.getText().toString().trim());
+//                    if (null != mTextChangeListener) {
+//                        mTextChangeListener.stockInNumChange();
+//                    }
+//                }
+//
+//                @Override
+//                public void afterTextChanged(Editable editable) {
+//
+//                }
+//            });
+//        } else {
+//            holder.mNumEt.setEnabled(false);
+//            holder.mNumEt.setText(BigDecimalUtil.getIntegerValue(goodsSpec.getNum()).toString());
+//            holder.mNumEt.setTextColor(ContextCompat.getColor(mContext, R.color.color32));
+//        }
     }
 
     @Override
