@@ -21,18 +21,19 @@ import com.kevin.photo_browse.callabck.ClickCallback;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.select.SelectGoodsActivity;
+import com.wd.winddots.activity.select.SelectWareHouseActivity;
 import com.wd.winddots.adapter.image.ImageBrowserAdapter;
 import com.wd.winddots.adapter.stock.in.StockGoodsSpecAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Goods;
 import com.wd.winddots.entity.GoodsSpec;
+import com.wd.winddots.entity.StockApplicationInRecord;
 import com.wd.winddots.entity.StockInApply;
+import com.wd.winddots.entity.WareHouse;
 import com.wd.winddots.enums.StockApplyStatusEnum;
-import com.wd.winddots.enums.StockBizTypeEnum;
 import com.wd.winddots.utils.BigDecimalUtil;
 import com.wd.winddots.utils.CollectionUtil;
 import com.wd.winddots.utils.CommonUtil;
-import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.Utils;
 import com.wd.winddots.utils.VolleyUtil;
 import com.wd.winddots.view.dialog.ConfirmDialog;
@@ -63,6 +64,7 @@ import butterknife.OnClick;
 public class OfficeSuppliesInDetailActivity extends BaseActivity implements StockGoodsSpecAdapter.TextChangeListener {
 
     private static final int REQUEST_CODE_GOODS = 2;
+    private static final int REQUEST_CODE_WARE_HOUSE = 1;
     private static final int REQUEST_CODE_AUDITOR = 4;
     private static final int REQUEST_CODE_IMAGE_PICKER = 6;
     private static final int REQUEST_CODE_SCAN = 7;
@@ -118,6 +120,12 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
     @BindView(R.id.tv_place_holder)
     TextView mPlaceHolderTv;
 
+    @BindView(R.id.ll_ware_house)
+    LinearLayout mWareHouseLl;
+
+    @BindView(R.id.tv_ware_house)
+    TextView mWareHouseTv;
+
     @BindView(R.id.ll_operate)
     LinearLayout mOperateLl;
 
@@ -134,6 +142,7 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
     StockGoodsSpecAdapter mStockGoodsSpecAdapter;
 
     String mGoodsId;
+    String mWareHouseId;
     // 审核人用户ID
     String mAuditorId;
 
@@ -153,9 +162,9 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
         initListener();
     }
 
-    @OnClick({R.id.iv_back, R.id.rl_goods,
-            R.id.ll_goods_content, R.id.tv_save, R.id.tv_scan,
-            R.id.tv_submit})
+    @OnClick({R.id.iv_back, R.id.rl_goods, R.id.ll_goods_content,
+            R.id.ll_ware_house, R.id.tv_submit, R.id.tv_scan,
+            R.id.tv_confirm})
     public void onClick(View v) {
         Intent intent;
         final ConfirmDialog mConfirmDialog;
@@ -189,14 +198,18 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
                     mGoodsSpecLl.setVisibility(View.GONE);
                 }
                 break;
-            case R.id.tv_save:
-                updateStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus());
+            case R.id.ll_ware_house:
+                intent = new Intent(OfficeSuppliesInDetailActivity.this, SelectWareHouseActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_WARE_HOUSE);
+                break;
+            case R.id.tv_submit:
+                updateStockApplication(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus());
                 break;
             case R.id.tv_scan:
                 startScanActivity();
                 break;
-            case R.id.tv_submit:
-                updateStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_UNCONFIRMED.getStatus());
+            case R.id.tv_confirm:
+                updateStockApplication(StockApplyStatusEnum.STOCK_APPLY_STATUS_CONFIRMED.getStatus());
                 break;
         }
     }
@@ -295,6 +308,15 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
                         }
                     }
                     break;
+                case REQUEST_CODE_WARE_HOUSE:
+                    // 仓库
+                    if (null != data) {
+                        WareHouse wareHouse = (WareHouse) data.getSerializableExtra("wareHouse");
+                        mWareHouseId = wareHouse.getId();
+                        mWareHouseTv.setText(wareHouse.getName());
+                        mWareHouseTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
+                    }
+                    break;
             }
         }
     }
@@ -373,42 +395,61 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
         mConfirmNumTv.setText(nf.format(total));
     }
 
-    private void updateStockInApply(String applyStatus) {
+    private void updateStockApplication(String applyStatus) {
 
-        if (TextUtils.isEmpty(mGoodsId)) {
-            showToast("请选择入库物品");
+        if (TextUtils.isEmpty(mWareHouseId)) {
+            showToast("请选择入库仓库");
             return;
         }
 
-        if (TextUtils.isEmpty(mAuditorId)) {
-            showToast("请选择审核人");
+        List<GoodsSpec> goodsSpecList = mStockGoodsSpecAdapter.getList();
+        List<StockApplicationInRecord> stockApplicationInRecordList = new ArrayList<>();
+        if (StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus().equals(applyStatus)) {
+            // 提交至草稿
+            for (GoodsSpec goodsSpec : goodsSpecList) {
+                if (TextUtils.isEmpty(goodsSpec.getNum())) {
+                    showToast("请完整填写确认数量");
+                    return;
+                }
+                StockApplicationInRecord in = new StockApplicationInRecord();
+                in.setGoodsSpecId(goodsSpec.getId());
+                in.setStockApplicationId(mStockInApplyId);
+                in.setWareHouseId(mWareHouseId);
+                in.setCount(goodsSpec.getNum());
+                in.setResidualNumber(goodsSpec.getNum());
+                stockApplicationInRecordList.add(in);
+            }
+        } else {
+            // 确认
+            for (GoodsSpec goodsSpec : goodsSpecList) {
+                StockApplicationInRecord in = new StockApplicationInRecord();
+                in.setGoodsSpecId(goodsSpec.getId());
+                in.setStockApplicationId(mStockInApplyId);
+                in.setWareHouseId(mWareHouseId);
+                in.setCount(goodsSpec.getApplyNum());
+                in.setResidualNumber(goodsSpec.getApplyNum());
+                stockApplicationInRecordList.add(in);
+            }
         }
 
         showLoadingDialog();
-        List<GoodsSpec> goodsSpecList = mStockGoodsSpecAdapter.getList();
-        String specNums = JSON.toJSONString(goodsSpecList);
-        String remark = mRemarkEt.getText().toString().trim();
 
-        String url = Constant.APP_BASE_URL + "stockApply/" + mStockInApplyId;
+        StockInApply stockInApply = new StockInApply();
+        stockInApply.setApplyStatus(applyStatus);
+        stockInApply.setStockApplicationInRecordList(stockApplicationInRecordList);
+
+
+        String url = Constant.APP_BASE_URL + "stockApplication/" + mStockInApplyId;
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("goodsId", mGoodsId);
-        paramMap.put("createUserId", SpHelper.getInstance(this).getUserId());
-        paramMap.put("enterpriseId", SpHelper.getInstance(this).getEnterpriseId());
-        paramMap.put("specNums", specNums);
-        paramMap.put("stockType", Constant.STOCK_TYPE_IN);
-        paramMap.put("bizType", StockBizTypeEnum.STOCK_BIZ_TYPE_OFFICE_SUPPLIES_IN.getType());
-        paramMap.put("remark", remark);
-        paramMap.put("applyStatus", applyStatus);
-        paramMap.put("images", "[\"http://erp-cfpu-com.oss-cn-hangzhou.aliyuncs.com/329b0751292445df8500aa98a1180936.png\"]");
-        paramMap.put("auditorId", mAuditorId);
+        paramMap.put("stockApplicationJson", JSON.toJSONString(stockInApply));
 
         mVolleyUtil.httpPutRequest(url, paramMap, response -> {
             if (applyStatus.equals(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus())) {
-                // 保存至草稿
-                showToast("成功保存至草稿");
+                // 打回草稿
+                showToast("提交成功");
             } else {
-                // 提交入库单
-                showToast("入库单提交成功");
+                // 一键确认
+                showToast("确认成功");
             }
             hideLoadingDialog();
             finish();
@@ -448,6 +489,23 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
             } catch (Exception e) {
                 stockInApply = null;
             }
+
+            if (StockApplyStatusEnum.STOCK_APPLY_STATUS_CONFIRMED.getStatus().equals(stockInApply.getApplyStatus())) {
+                mOperateLl.setVisibility(View.GONE);
+                mWareHouseLl.setClickable(false);
+                mGoodsRl.setFocusable(false);
+
+                List<StockApplicationInRecord> inList = stockInApply.getStockApplicationInRecordList();
+                if (!CollectionUtil.isEmpty(inList)) {
+                    String wareHouseName = inList.get(0).getWareHouseName();
+                    mWareHouseTv.setText(wareHouseName);
+                    mWareHouseTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
+                }
+
+            } else {
+                mOperateLl.setVisibility(View.VISIBLE);
+            }
+
             if (null != stockInApply) {
                 renderGoodsView(CommonUtil.getGoodsFromStockInApply(stockInApply));
             }

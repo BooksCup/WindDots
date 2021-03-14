@@ -16,6 +16,8 @@ public class StockApplicationInRecord implements Serializable {
      */
     private String wareHouseId;
 
+    private String wareHouseName;
+
     /**
      * 物品ID
      */
@@ -98,6 +100,14 @@ public class StockApplicationInRecord implements Serializable {
 
     public void setWareHouseId(String wareHouseId) {
         this.wareHouseId = wareHouseId;
+    }
+
+    public String getWareHouseName() {
+        return wareHouseName;
+    }
+
+    public void setWareHouseName(String wareHouseName) {
+        this.wareHouseName = wareHouseName;
     }
 
     public String getGoodsId() {
