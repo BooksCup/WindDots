@@ -28,7 +28,6 @@ import butterknife.OnClick;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
 
-
 /**
  * 登录
  *
@@ -100,6 +99,8 @@ public class LoginActivity extends BaseActivity {
                             SpHelper.getInstance(LoginActivity.this).setString("avatar", user.getAvatar());
                             SpHelper.getInstance(LoginActivity.this).setInt("userIsSuperAdmin", user.getIsSuperAdmin());
                             SpHelper.getInstance(LoginActivity.this).setString("isFabricCheckAdmin", user.getIsFabricCheckAdmin());
+                            SpHelper.getInstance(LoginActivity.this).setUser(user);
+
                             MyApplication.USER_ID = user.getId();
                             MyApplication.ENTERPRISE_ID = user.getEnterpriseId();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -112,7 +113,7 @@ public class LoginActivity extends BaseActivity {
             }, volleyError -> {
                 hideLoadingDialog();
                 mVolleyUtil.handleCommonErrorResponse(LoginActivity.this, volleyError);
-               // int errorCode = volleyError.networkResponse.statusCode;
+                // int errorCode = volleyError.networkResponse.statusCode;
             });
         }
     }

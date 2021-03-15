@@ -3,7 +3,9 @@ package com.wd.winddots.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.alibaba.fastjson.JSON;
 import com.wd.winddots.cons.Constant;
+import com.wd.winddots.entity.User;
 
 /**
  * sharepreference工具类
@@ -12,7 +14,7 @@ import com.wd.winddots.cons.Constant;
  */
 public class SpHelper {
 
-
+    public static final String USER_KEY = "user";
     public static final String userIdKey = "id";
     public static final String enterpriseIdKey = "enterpriseId";
     public static final String avatarKey = "avatar";
@@ -89,6 +91,23 @@ public class SpHelper {
         } else {
             return false;
         }
+    }
+
+    public void setUser(User user) {
+        sp.edit().putString(USER_KEY, JSON.toJSONString(user)).apply();
+    }
+
+    public User getUser() {
+        User user;
+        try {
+            user = JSON.parseObject(sp.getString(USER_KEY, ""), User.class);
+            if (null == user) {
+                user = new User();
+            }
+        } catch (Exception e) {
+            user = new User();
+        }
+        return user;
     }
 
 }

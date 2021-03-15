@@ -1,5 +1,6 @@
 package com.wd.winddots.adapter.stock.in;
 
+import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.wd.winddots.entity.StockInApply;
 import com.wd.winddots.enums.StockApplyStatusEnum;
 import com.wd.winddots.enums.StockBizTypeEnum;
 import com.wd.winddots.utils.CommonUtil;
+import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.TimeUtil;
 
 import java.util.List;
@@ -28,8 +30,9 @@ public class StockInApplyAdapter extends BaseQuickAdapter<StockInApply, BaseView
 
     private String mKeyword;
 
-    public StockInApplyAdapter(int layoutResId, @Nullable List<StockInApply> data) {
+    public StockInApplyAdapter(Context context, int layoutResId, @Nullable List<StockInApply> data) {
         super(layoutResId, data);
+        mContext = context;
     }
 
     public void setKeyword(String keyword) {
@@ -46,8 +49,18 @@ public class StockInApplyAdapter extends BaseQuickAdapter<StockInApply, BaseView
         String goodsInfo = item.getGoodsName() + "(" + item.getGoodsNo() + ")";
         helper.setText(R.id.tv_goods_info, goodsInfo)
                 .setText(R.id.tv_create_user_name, item.getCreateUserName())
-                .setText(R.id.tv_related_company, item.getExchangeEnterpriseName())
                 .setText(R.id.tv_create_date, date);
+
+        if (StockBizTypeEnum.STOCK_BIZ_TYPE_OFFICE_SUPPLIES_IN.getType().equals(item.getBizType())) {
+            String enterpriseName = SpHelper.getInstance(mContext).getUser().getEnterpriseName();
+            if (!TextUtils.isEmpty(enterpriseName)) {
+                helper.setText(R.id.tv_related_company, enterpriseName);
+            } else {
+                helper.setText(R.id.tv_related_company, "");
+            }
+        } else {
+            helper.setText(R.id.tv_related_company, item.getExchangeEnterpriseName());
+        }
 
         SimpleDraweeView mGoodsPhotoSdv = helper.getView(R.id.sdv_goods_photo);
         String goodsPhoto = CommonUtil.getFirstPhotoFromJsonList(item.getGoodsPhotos());

@@ -115,7 +115,7 @@ public class StockInApplyActivity extends BaseActivity
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mStockInApplyRv.setLayoutManager(layoutManager);
         mStockInApplyRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mAdapter = new StockInApplyAdapter(R.layout.item_stock_in_apply, mStockInApplyList);
+        mAdapter = new StockInApplyAdapter(this, R.layout.item_stock_in_apply, mStockInApplyList);
         mStockInApplyRv.setAdapter(mAdapter);
         getData();
     }

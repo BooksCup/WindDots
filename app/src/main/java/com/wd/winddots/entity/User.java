@@ -11,6 +11,8 @@ public class User implements Serializable {
 
     private String id;
     private String enterpriseId;
+    private String enterpriseName;
+    private String enterpriseShortName;
     private String imPassword;
     /**
      * 是否是超级管理员 0:否 1:是
@@ -42,6 +44,22 @@ public class User implements Serializable {
 
     public void setEnterpriseId(String enterpriseId) {
         this.enterpriseId = enterpriseId;
+    }
+
+    public String getEnterpriseName() {
+        return enterpriseName;
+    }
+
+    public void setEnterpriseName(String enterpriseName) {
+        this.enterpriseName = enterpriseName;
+    }
+
+    public String getEnterpriseShortName() {
+        return enterpriseShortName;
+    }
+
+    public void setEnterpriseShortName(String enterpriseShortName) {
+        this.enterpriseShortName = enterpriseShortName;
     }
 
     public String getImPassword() {
