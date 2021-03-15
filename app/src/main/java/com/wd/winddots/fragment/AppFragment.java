@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -81,6 +82,9 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     @BindView(R.id.srl_app)
     SwipeRefreshLayout mAppSrl;
 
+    @BindView(R.id.tv_enterprise_name)
+    TextView mEnterpriseNameTv;
+
     @BindView(R.id.view_bottom_search_bar)
     BottomSearchBarView mBottomSearchBarView;
 
@@ -107,7 +111,6 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         mAppRv.setLayoutManager(manager);
         mAppRv.setAdapter(mAppAdapter);
 
-
         mFastAppAdapter = new AppAdapter(R.layout.item_fast_app, mFastAppList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -116,6 +119,9 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
         mAppSrl.setOnRefreshListener(this);
         mAppSrl.setRefreshing(true);
+
+        mEnterpriseNameTv.setText(SpHelper.getInstance(getContext()).getUser().getEnterpriseShortName());
+
         getAppList();
     }
 
