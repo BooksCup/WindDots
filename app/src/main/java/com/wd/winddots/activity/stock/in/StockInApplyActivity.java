@@ -18,6 +18,7 @@ import com.wd.winddots.adapter.stock.in.StockInApplyAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.PageInfo;
 import com.wd.winddots.entity.StockInApply;
+import com.wd.winddots.enums.StockBizTypeEnum;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.VolleyUtil;
 
@@ -158,6 +159,14 @@ public class StockInApplyActivity extends BaseActivity
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        StockInApply stockInApply = mStockInApplyList.get(position);
+        if (StockBizTypeEnum.STOCK_BIZ_TYPE_OFFICE_SUPPLIES_IN.getType().equals(stockInApply.getBizType())) {
+            // 办公用品入库
+            Intent intent = new Intent(StockInApplyActivity.this, OfficeSuppliesInDetailActivity.class);
+            intent.putExtra("stockInApplyId", stockInApply.getId());
+            intent.putExtra("requestRole", Constant.REQUEST_ROLE_APPLY);
+            startActivity(intent);
+        }
 
     }
 

@@ -7,11 +7,11 @@ public class Constant {
     //public static final String APP_BASE_URL = "http://192.168.8.123:8085/";
 //    public static final String APP_BASE_URL = "http://172.168.0.109:8085/";
 //    public static final String APP_BASE_URL = "http://172.168.0.109:8085/";
-//    public static final String APP_BASE_URL = "http://172.168.0.145:8085/";
+    public static final String APP_BASE_URL = "http://172.168.0.145:8085/";
     public static final String APP_BASE_URL_ELSE = "http://42.192.134.170/";
 
     //测试
-    public static final String APP_BASE_URL = "http://115.159.201.120:8085/";
+//    public static final String APP_BASE_URL = "http://115.159.201.120:8085/";
     // 企业状态
     /**
      * 注销
@@ -71,5 +71,8 @@ public class Constant {
      * 内部仓库
      */
     public static final String WAREHOUSE_IS_OWN = "1";
+
+    public static final String REQUEST_ROLE_APPLY = "0";
+    public static final String REQUEST_ROLE_CONFIRM = "1";
 
 }
