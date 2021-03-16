@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -63,6 +64,9 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
     private static final int REQUEST_CODE_COPY = 5;
     private static final int REQUEST_CODE_IMAGE_PICKER = 6;
     private static final int REQUEST_CODE_SCAN = 7;
+
+    @BindView(R.id.rl_goods)
+    RelativeLayout mGoodsRl;
 
     @BindView(R.id.tv_goods_name)
     TextView mGoodsNameTv;
@@ -124,6 +128,15 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
 
     @BindView(R.id.tv_total_num)
     TextView mTotalNumTv;
+
+    @BindView(R.id.ll_auditor)
+    LinearLayout mAuditorLl;
+
+    @BindView(R.id.ll_copy)
+    LinearLayout mCopyLl;
+
+    @BindView(R.id.ll_operate)
+    LinearLayout mOperateLl;
 
     ImagePickerAdapter mImagePickerAdapter;
     StockApplyGoodsSpecAdapter mStockApplyGoodsSpecAdapter;
@@ -515,6 +528,7 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
     }
 
     private void getStockInApplyById(String applyId) {
+        showLoadingDialog();
         String url = Constant.APP_BASE_URL + "stockApplication/" + applyId;
         mVolleyUtil.httpGetRequest(url, response -> {
             StockInApply stockInApply;
@@ -536,8 +550,27 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
             mCopyTv.setText(stockInApply.getCopyUserName());
             mCopyTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
 
+            if (StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus().equals(stockInApply.getApplyStatus())) {
+                // 草稿单
+                mOperateLl.setVisibility(View.VISIBLE);
+            } else {
+                mOperateLl.setVisibility(View.GONE);
+
+                mGoodsRl.setClickable(false);
+                mGoodsContentLl.setClickable(false);
+                mRemarkEt.setEnabled(false);
+                mRemarkEt.setTextColor(ContextCompat.getColor(this, R.color.color32));
+                mAuditorLl.setClickable(false);
+                mCopyLl.setClickable(false);
+                mDeleteGoodsIv.setVisibility(View.GONE);
+
+            }
+
+            hideLoadingDialog();
         }, volleyError -> {
             mVolleyUtil.handleCommonErrorResponse(OfficeSuppliesInApplyDetailActivity.this, volleyError);
+
+            hideLoadingDialog();
         });
     }
 
