@@ -11,6 +11,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Attr;
+import com.wd.winddots.entity.Goods;
+import com.wd.winddots.entity.StockInApply;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -166,4 +168,17 @@ public class CommonUtil {
         return attrList;
     }
 
+    public static Goods getGoodsFromStockInApply(StockInApply stockInApply) {
+        Goods goods = new Goods();
+        goods.setGoodsName(stockInApply.getGoodsName());
+        goods.setGoodsNo(stockInApply.getGoodsNo());
+        goods.setStockNum(stockInApply.getApplyNumber());
+        goods.setGoodsUnit(stockInApply.getGoodsUnit());
+        goods.setAttrList(stockInApply.getAttrList());
+        goods.setGoodsPhotos(stockInApply.getGoodsPhotos());
+        goods.setGoodsSpecList(StockUtil.getGoodsSpecListFromStockRecordList(stockInApply.getStockApplicationInRecordList()));
+        goods.setX(stockInApply.getX());
+        goods.setY(stockInApply.getY());
+        return goods;
+    }
 }

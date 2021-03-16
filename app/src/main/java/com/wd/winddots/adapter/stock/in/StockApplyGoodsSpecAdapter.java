@@ -66,6 +66,10 @@ public class StockApplyGoodsSpecAdapter extends RecyclerView.Adapter<StockApplyG
             holder.mYTv.setText(goodsSpec.getY());
         }
 
+        if (null != goodsSpec.getApplyNum()) {
+            holder.mNumEt.setText(goodsSpec.getApplyNum());
+        }
+
         holder.mNumEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

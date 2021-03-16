@@ -470,7 +470,7 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".activity.stock.in.OfficeSuppliesInDetailActivity"
+            android:name=".activity.stock.in.OfficeSuppliesInApplyDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
