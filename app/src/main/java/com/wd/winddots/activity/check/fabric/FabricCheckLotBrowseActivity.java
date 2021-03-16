@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -17,18 +16,14 @@ import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.adapter.check.fabric.FabricCheckLotBrowseImageAdapter;
 import com.wd.winddots.adapter.check.fabric.FabricCheckTaskLotBrowseAdapter;
-import com.wd.winddots.adapter.check.fabric.FabricCheckTaskLotProcessAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.FabricCheckTaskLot;
-import com.wd.winddots.entity.FabricCheckTaskRecord;
 import com.wd.winddots.entity.ProblemImage;
 import com.wd.winddots.utils.Utils;
 import com.wd.winddots.utils.VolleyUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,7 +31,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jmessage.support.qiniu.android.utils.StringUtils;
 
 /**
  * FileName: FabricCheckLotBrowseActivity
@@ -119,16 +113,28 @@ public class FabricCheckLotBrowseActivity extends BaseActivity implements BaseQu
         String url = Constant.APP_BASE_URL + "fabricCheckRecord/searchAll?checkLotInfoId=" + mId;
         Log.e("net666",url);
         mVolleyUtil.httpGetRequest(url, response -> {
-            Log.e("net666",response);
             if (null == response){
                 return;
             }
+            Log.e("net666",response);
             FabricCheckLot fabricCheckLot = JSON.parseObject(response,FabricCheckLot.class);
             List<FabricCheckTaskLot> list = fabricCheckLot.getFabricQcRecordAllByCheckLIIdVoList();
             mDataSource.addAll(list);
             mAdapter.notifyDataSetChanged();
 
-            mProblemImageList.addAll(fabricCheckLot.getProblemImageClassifyList());
+
+            List<ProblemImage> problemImageList = fabricCheckLot.getProblemImageClassifyList();
+            if (problemImageList == null || problemImageList.size() == 0){
+                return;
+            }
+            List<ProblemImage> newProblemList = new ArrayList<>();
+            for (int i = 0;i < problemImageList.size();i++){
+                String images = problemImageList.get(i).getImages();
+                if (images != null && images.length() > 2){
+                    newProblemList.add(problemImageList.get(i));
+                }
+            }
+            mProblemImageList.addAll(newProblemList);
             mImageAdapter.notifyDataSetChanged();
 
         }, volleyError -> {

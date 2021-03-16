@@ -31,7 +31,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jmessage.support.qiniu.android.utils.StringUtils;
 
 /**
  * 面料盘点任务处理(按卷盘点)
@@ -57,6 +56,8 @@ public class FabricCheckLotProcessActivity extends BaseActivity implements Fabri
     private String mGoodsNo;
     private String mStatus;
     private String mFabricCheckTaskId;
+
+    private List<String> mProblemStringList = new ArrayList<>();
 
 
     @Override
@@ -93,7 +94,7 @@ public class FabricCheckLotProcessActivity extends BaseActivity implements Fabri
                 finish();
                 break;
             case R.id.tv_save:
-                onSaveDidClick();
+                onSaveDidClick(true);
                 break;
             case R.id.tv_finish:
                 onFinishDidClick();
@@ -115,13 +116,23 @@ public class FabricCheckLotProcessActivity extends BaseActivity implements Fabri
             mDataSource.clear();
             mDataSource.addAll(list);
             mAdapter.notifyDataSetChanged();
+
+            List<ProblemImage> problemImageList = fabricCheckLot.getProblemImageClassifyList();
+            if (problemImageList == null || problemImageList.size() == 0){
+                return;
+            }
+            mProblemStringList.clear();
+            for (int i = 0;i < problemImageList.size();i++){
+                mProblemStringList.add(problemImageList.get(i).getTag());
+            }
+
         }, volleyError -> {
             Log.e("net666", String.valueOf(volleyError));
             mVolleyUtil.handleCommonErrorResponse(this, volleyError);
         });
     }
 
-    private void onSaveDidClick() {
+    private void onSaveDidClick(boolean showToast) {
 
         if ("1".equals(mStatus)){
             showToast("该盘点已完成,不能再次更改");
@@ -153,7 +164,9 @@ public class FabricCheckLotProcessActivity extends BaseActivity implements Fabri
         Map<String, String> params = new HashMap<>();
         params.put("fabricCheckRecords", paramsJson);
         mVolleyUtil.httpPostRequest(url, params, response -> {
-            Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show();
+           if (showToast){
+               Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show();
+           }
         }, volleyError -> {
             mVolleyUtil.handleCommonErrorResponse(this, volleyError);
             Log.e("net666", String.valueOf(volleyError));
@@ -199,12 +212,15 @@ public class FabricCheckLotProcessActivity extends BaseActivity implements Fabri
 
     @Override
     public void onSubItemDidClickListener(int position, FabricCheckTaskRecord subItem) {
+
+        onSaveDidClick(false);
         Intent intent = new Intent(this, FabricCheckProblemActivity.class);
         intent.putExtra("recordId", subItem.getId());
         intent.putExtra("goodsName", mGoodsName);
         intent.putExtra("goodsNo", mGoodsNo);
         intent.putExtra("date",mDataSource.get(position).getDeliveryDate());
         intent.putExtra("position",(position + 1) + "");
+        intent.putExtra("problemString",JSON.toJSONString(mProblemStringList));
         startActivityForResult(intent,10001);
     }
 

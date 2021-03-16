@@ -38,7 +38,7 @@ import butterknife.OnClick;
  * Date: 2021/3/8 3:24 PM
  * Description:
  */
-public class FabricCheckOrderTaskActivity extends FragmentActivity implements BottomSearchBarView.BottomSearchBarViewClickListener {
+public class FabricCheckOrderTaskActivity extends FragmentActivity implements CheckInfoAdapter.OnSubItemDidClickListener, BottomSearchBarView.BottomSearchBarViewClickListener {
 
 
     private VolleyUtil mVolleyUtil;
@@ -89,10 +89,11 @@ public class FabricCheckOrderTaskActivity extends FragmentActivity implements Bo
         Intent intent = getIntent();
         String data = intent.getStringExtra("data");
         mFabricCheckTask = JSON.parseObject(data,FabricCheckTask.class);
-        String goodsInfo = mFabricCheckTask.getGoodsName() + "(" + mFabricCheckTask.getGoodsNo() + ")";
+        String goodsInfo = Utils.nullOrEmpty(mFabricCheckTask.getGoodsName()) + "(" + Utils.nullOrEmpty(mFabricCheckTask.getGoodsNo()) + ")";
         mGoodsInfoTv.setText(goodsInfo);
-        mOrderNoTv.setText("#" + mFabricCheckTask.getOrderNo());
-        mThemeTv.setText(mFabricCheckTask.getOrderTheme());
+        mOrderNoTv.setText("#" + Utils.nullOrEmpty(mFabricCheckTask.getOrderNo()));
+        mThemeTv.setText(Utils.nullOrEmpty(mFabricCheckTask.getOrderTheme()));
+        mRCompanyTv.setText(Utils.nullOrEmpty(mFabricCheckTask.getRelatedCompanyShortName()));
         String goodsPhoto = CommonUtil.getFirstPhotoFromJsonList(mFabricCheckTask.getGoodsPhotos());
         if (!TextUtils.isEmpty(goodsPhoto)) {
             GlideApp.with(this).load(goodsPhoto + Utils.OSSImageSize(200)).into(mGoodsIv);
@@ -108,7 +109,7 @@ public class FabricCheckOrderTaskActivity extends FragmentActivity implements Bo
         mCheckRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mCheckRv.setLayoutManager(layoutManager);
         mCheckRv.setAdapter(mAdapter);
-
+        mAdapter.setOnSubItemDidClickListener(this);
         mBottomSearchBarView.setOnIconClickListener(this);
     }
 
@@ -147,6 +148,24 @@ public class FabricCheckOrderTaskActivity extends FragmentActivity implements Bo
     @Override
     public void onSearchIconDidClick() {
 
+    }
+
+
+    @Override
+    public void onSubItemDidClick(int position) {
+        FabricCheckLotInfo item = mAdapter.getData().get(position);
+        Intent intent;
+        if ("1".equals(item.getStatus())) {
+            intent = new Intent(this, FabricCheckLotBrowseActivity.class);
+        } else {
+            intent = new Intent(this, FabricCheckLotTaskActivity.class);
+        }
+        intent.putExtra("data", item.getId());
+        intent.putExtra("goodsName", mFabricCheckTask.getGoodsName());
+        intent.putExtra("goodsNo", item.getLotNo());
+        intent.putExtra("status", item.getStatus());
+        intent.putExtra("fabricCheckTaskId", item.getFabricCheckTaskId());
+        startActivityForResult(intent,100);
     }
 
     @Override

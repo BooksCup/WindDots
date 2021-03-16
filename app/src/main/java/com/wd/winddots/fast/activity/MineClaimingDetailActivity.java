@@ -168,6 +168,7 @@ public class MineClaimingDetailActivity extends CommonActivity
     private void getData(){
         String url = Constant.APP_BASE_URL_ELSE + "cloud-app/apply/getById/" + id + "?userId=" + SpHelper.getInstance(mContext).getEnterpriseId()+"&parentId=0";
         mVolleyUtil.httpGetRequest(url, response -> {
+            Log.e("net666",response);
             ApplyDetailBean bean = JSON.parseObject(response,ApplyDetailBean.class);
             mDataBean = bean;
             mUsers.clear();

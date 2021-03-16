@@ -2,20 +2,14 @@ package com.wd.winddots.adapter.check.fabric;
 
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.kevin.photo_browse.PhotoBrowse;
-import com.kevin.photo_browse.ShowType;
 import com.wd.winddots.GlideApp;
 import com.wd.winddots.R;
-import com.wd.winddots.desktop.list.check.view.SpinnerView;
 import com.wd.winddots.entity.FabricCheckProblem;
 import com.wd.winddots.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;

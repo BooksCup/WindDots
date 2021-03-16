@@ -2,7 +2,6 @@ package com.wd.winddots.adapter.check.fabric;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

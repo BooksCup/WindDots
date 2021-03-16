@@ -232,10 +232,14 @@ public class MineClaimingAddDetailActivity extends CommonActivity<MineClaimingAd
                     selectBean.setName(bean1.getName());
                     selectBean.setValue(bean1.getId());
                     selectBeanList.add(selectBean);
+                    if (mData != null && null != mData.getDeptName() && mData.getDeptName().equals(bean1.getName())){
+                        selectIndex = i;
+                    }
                 }
             }
             mDepartmentSlector.setSelectList(selectBeanList);
             mDepartmentList = selectBeanList;
+            mDepartmentSlector.setDefaultPosition(selectIndex);
         }, volleyError -> {
 
         });

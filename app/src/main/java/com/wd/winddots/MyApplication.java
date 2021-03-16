@@ -5,7 +5,6 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.ImageView;
 
-import androidx.room.Room;
 
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;

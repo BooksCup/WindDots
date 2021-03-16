@@ -19,7 +19,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.zxing.client.android.CaptureActivity2;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.app.AppStoreActivity;
-import com.wd.winddots.activity.check.fabric.FabricCheckTaskActivity;
+import com.wd.winddots.activity.check.fabric.FabricCheckProcessActivity;
 import com.wd.winddots.activity.employee.EmployeeActivity;
 import com.wd.winddots.activity.order.OrderActivity;
 import com.wd.winddots.activity.stock.in.StockInActivity;
@@ -239,9 +239,9 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
             case "WorkExamine":
                 // 盘点 FabricCheckProcessActivity  FabricCheckTaskActivity
                 if (SpHelper.getInstance(getActivity()).isFabricCheckAdmin()) {
-                    intent = new Intent(getActivity(), FabricCheckTaskActivity.class);
+                    intent = new Intent(getActivity(), FabricCheckProcessActivity.class);
                 } else {
-                    intent = new Intent(getActivity(), FabricCheckTaskActivity.class);
+                    intent = new Intent(getActivity(), FabricCheckProcessActivity.class);
                 }
                 startActivity(intent);
                 break;

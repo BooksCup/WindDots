@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.wd.winddots.GlideApp;
 import com.wd.winddots.R;
-import com.wd.winddots.adapter.check.fabric.CheckInfoAdapter;
 import com.wd.winddots.adapter.check.fabric.CheckTaskInfoAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.FabricCheckLotInfo;
@@ -39,7 +38,7 @@ import butterknife.OnClick;
  * Date: 2021/3/8 3:24 PM
  * Description:
  */
-public class FabricCheckOrderProcessActivity extends FragmentActivity  {
+public class FabricCheckOrderProcessActivity extends FragmentActivity implements CheckTaskInfoAdapter.OnSubItemDidClickListener {
 
 
     private VolleyUtil mVolleyUtil;
@@ -90,10 +89,11 @@ public class FabricCheckOrderProcessActivity extends FragmentActivity  {
         Intent intent = getIntent();
         String data = intent.getStringExtra("data");
         mFabricCheckTask = JSON.parseObject(data,FabricCheckTask.class);
-        String goodsInfo = mFabricCheckTask.getGoodsName() + "(" + mFabricCheckTask.getGoodsNo() + ")";
+        String goodsInfo = Utils.nullOrEmpty(mFabricCheckTask.getGoodsName()) + "(" + Utils.nullOrEmpty(mFabricCheckTask.getGoodsNo()) + ")";
         mGoodsInfoTv.setText(goodsInfo);
-        mOrderNoTv.setText("#" + mFabricCheckTask.getOrderNo());
-        mThemeTv.setText(mFabricCheckTask.getOrderTheme());
+        mOrderNoTv.setText("#" + Utils.nullOrEmpty(mFabricCheckTask.getOrderNo()));
+        mThemeTv.setText(Utils.nullOrEmpty(mFabricCheckTask.getOrderTheme()));
+        mRCompanyTv.setText(Utils.nullOrEmpty(mFabricCheckTask.getRelatedCompanyShortName()));
         String goodsPhoto = CommonUtil.getFirstPhotoFromJsonList(mFabricCheckTask.getGoodsPhotos());
         if (!TextUtils.isEmpty(goodsPhoto)) {
             GlideApp.with(this).load(goodsPhoto + Utils.OSSImageSize(200)).into(mGoodsIv);
@@ -110,6 +110,7 @@ public class FabricCheckOrderProcessActivity extends FragmentActivity  {
         mCheckRv.setLayoutManager(layoutManager);
         mCheckRv.setAdapter(mAdapter);
         mBottomSearchBarView.setVisibility(View.GONE);
+        mAdapter.setOnSubItemDidClickListener(this);
     }
 
     @OnClick({R.id.iv_back})
@@ -139,5 +140,28 @@ public class FabricCheckOrderProcessActivity extends FragmentActivity  {
             Log.e("net666", String.valueOf(volleyError));
             mVolleyUtil.handleCommonErrorResponse(this, volleyError);
         });
+    }
+
+    @Override
+    public void onSubItemDidClick(int position) {
+        FabricCheckLotInfo item = mAdapter.getData().get(position);
+        Intent intent;
+        if ("1".equals(item.getStatus())) {
+            intent = new Intent(this, FabricCheckLotBrowseActivity.class);
+        } else {
+            intent = new Intent(this, FabricCheckLotProcessActivity.class);
+        }
+        intent.putExtra("data", item.getId());
+        intent.putExtra("goodsName", mFabricCheckTask.getGoodsName());
+        intent.putExtra("goodsNo", item.getLotNo());
+        intent.putExtra("status", item.getStatus());
+        intent.putExtra("fabricCheckTaskId", item.getFabricCheckTaskId());
+        startActivityForResult(intent,100);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getData();
     }
 }

@@ -2,6 +2,7 @@ package com.wd.winddots.activity.select;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -112,6 +113,8 @@ public class SelectRelatedCompanyActivity extends BaseActivity implements SwipeR
                     + "&pageNum=" + mPage + "&pageSize=" + mPageSize +
                     "&keyword=" + mKeyword;
         }
+
+        Log.e("net666",url);
 
         mVolleyUtil.httpGetRequest(url, response -> {
             hideLoadingDialog();

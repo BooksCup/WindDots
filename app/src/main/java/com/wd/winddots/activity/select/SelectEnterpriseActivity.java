@@ -105,6 +105,7 @@ public class SelectEnterpriseActivity extends BaseActivity implements BaseQuickA
             url = Constant.APP_BASE_URL + "enterprise/search?keyword=" + keyword;
         }
 
+        Log.e("net666",url);
         mVolleyUtil.httpGetRequest(url, response -> {
             mLoadingDialog.hide();
             Log.d(TAG, "server response: " + response);

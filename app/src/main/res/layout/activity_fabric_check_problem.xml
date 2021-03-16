@@ -33,6 +33,97 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:orientation="horizontal"
+        android:background="@color/colorF0">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="门幅(头)"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp"
+                />
+            <EditText
+                android:id="@+id/et_width_top"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="13sp"
+                android:hint="输入门幅"
+                android:inputType="numberDecimal"
+                android:layout_toRightOf="@+id/tv_position"
+                android:background="@null"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="门幅(中)"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp"
+                />
+            <EditText
+                android:id="@+id/et_width_middle"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="13sp"
+                android:hint="输入门幅"
+                android:inputType="numberDecimal"
+                android:layout_toRightOf="@+id/tv_position"
+                android:background="@null"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="1dp"
+        android:background="@color/colorF0">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="门幅(尾)"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp"
+                />
+            <EditText
+                android:id="@+id/et_width_bottom"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="13sp"
+                android:hint="输入门幅"
+                android:inputType="numberDecimal"
+                android:layout_toRightOf="@+id/tv_position"
+                android:background="@null"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

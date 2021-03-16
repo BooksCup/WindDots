@@ -1,36 +1,22 @@
 package com.wd.winddots.adapter.check.fabric;
 
-import android.content.Context;
-import android.content.Intent;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
+import android.text.TextUtils;
+import android.widget.ImageView;
+
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wd.winddots.GlideApp;
 import com.wd.winddots.R;
-import com.wd.winddots.activity.check.fabric.FabricCheckOrderProcessActivity;
-import com.wd.winddots.activity.check.fabric.FabricCheckOrderTaskActivity;
-import com.wd.winddots.desktop.list.check.bean.CheckGoodsBean;
-import com.wd.winddots.desktop.view.PinnedHeaderRecyclerView.ExpandGroupItemEntity;
-import com.wd.winddots.desktop.view.PinnedHeaderRecyclerView.RecyclerExpandBaseAdapter;
-import com.wd.winddots.entity.FabricCheckLotInfo;
 import com.wd.winddots.entity.FabricCheckTask;
 import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.Utils;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import androidx.annotation.Nullable;
+
+
 import java.util.List;
 
 /**

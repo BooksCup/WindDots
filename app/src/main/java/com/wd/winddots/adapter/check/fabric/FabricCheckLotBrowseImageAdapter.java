@@ -1,6 +1,5 @@
 package com.wd.winddots.adapter.check.fabric;
 
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -10,7 +9,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.wd.winddots.GlideApp;
 import com.wd.winddots.R;
 import com.wd.winddots.entity.ProblemImage;
-import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.Utils;
 
 import java.util.List;
@@ -62,7 +60,8 @@ public class FabricCheckLotBrowseImageAdapter extends BaseQuickAdapter<ProblemIm
         } else {
             icon.setImageResource(R.mipmap.icon_default_goods);
         }
-        helper.setText(R.id.tv_count,length + "");
+        helper.setText(R.id.tv_count,length + "")
+        .setText(R.id.tv_problem,Utils.nullOrEmpty(item.getTag()));
 
     }
 }

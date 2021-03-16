@@ -1,46 +1,30 @@
 package com.wd.winddots.adapter.check.fabric;
 
-import android.content.Context;
-import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wd.winddots.R;
-import com.wd.winddots.activity.check.fabric.FabricCheckLotBrowseActivity;
-import com.wd.winddots.activity.check.fabric.FabricCheckLotProcessActivity;
-import com.wd.winddots.activity.check.fabric.FabricCheckLotTaskActivity;
-import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.FabricCheckLotInfo;
 import com.wd.winddots.utils.Utils;
-import com.wd.winddots.utils.VolleyUtil;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class CheckTaskInfoAdapter extends BaseQuickAdapter<FabricCheckLotInfo, BaseViewHolder> {
+
+
+    private OnSubItemDidClickListener onSubItemDidClickListener;
 
     public String fabricCheckTaskId;
     public String goodsName;
 
+    public void setOnSubItemDidClickListener(OnSubItemDidClickListener onSubItemDidClickListener) {
+        this.onSubItemDidClickListener = onSubItemDidClickListener;
+    }
 
     public CheckTaskInfoAdapter(int layoutResId, @Nullable List<FabricCheckLotInfo> data) {
         super(layoutResId, data);
@@ -79,22 +63,20 @@ public class CheckTaskInfoAdapter extends BaseQuickAdapter<FabricCheckLotInfo, B
         llBody.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent;
-                if ("1".equals(item.getStatus())) {
-                    intent = new Intent(mContext, FabricCheckLotBrowseActivity.class);
-                } else {
-                    intent = new Intent(mContext, FabricCheckLotProcessActivity.class);
+
+                if (null != onSubItemDidClickListener){
+                    onSubItemDidClickListener.onSubItemDidClick(helper.getPosition());
                 }
-                intent.putExtra("data", item.getId());
-                intent.putExtra("goodsName", goodsName);
-                intent.putExtra("goodsNo", item.getLotNo());
-                intent.putExtra("status", item.getStatus());
-                intent.putExtra("fabricCheckTaskId", item.getFabricCheckTaskId());
-                mContext.startActivity(intent);
+
+
             }
         });
     }
 
+
+    public interface OnSubItemDidClickListener{
+        void onSubItemDidClick(int position);
+    }
 }
 
 

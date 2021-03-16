@@ -1,13 +1,12 @@
 package com.wd.winddots.adapter.check.fabric;
 
-import android.content.Intent;
+
 import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wd.winddots.R;
-import com.wd.winddots.activity.check.fabric.FabricCheckProblemActivity;
 import com.wd.winddots.entity.FabricCheckTaskLot;
 import com.wd.winddots.entity.FabricCheckTaskRecord;
 

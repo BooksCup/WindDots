@@ -13,7 +13,6 @@ import com.wd.winddots.desktop.list.check.view.SpinnerView;
 import com.wd.winddots.entity.FabricCheckProblem;
 import com.wd.winddots.entity.ImageEntity;
 import com.wd.winddots.utils.Utils;
-import com.wd.winddots.view.selector.SelectBean;
 
 import java.util.ArrayList;
 import java.util.List;

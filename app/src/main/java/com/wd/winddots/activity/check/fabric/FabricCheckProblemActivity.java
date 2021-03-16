@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
@@ -63,6 +64,15 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
     @BindView(R.id.et_position)
     EditText mPositionEt;
 
+    @BindView(R.id.et_width_top)
+    EditText mTopWidthEt;
+
+    @BindView(R.id.et_width_middle)
+    EditText mMiddleWidthEt;
+
+    @BindView(R.id.et_width_bottom)
+    EditText mBottomWidthEt;
+
     @BindView(R.id.rv_check)
     RecyclerView mCheckRv;
     private FabricCheckProblemAdapter mAdapter;
@@ -75,6 +85,8 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
     private int mCurrentPhotoIndex = -1;
 
     private String mRecordId;
+
+    private List<String> mProblemList = new ArrayList<>();
 
 
     private Handler mhandler = new Handler() {
@@ -112,6 +124,8 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
         String goodsNo = intent.getStringExtra("goodsNo");
         String date = intent.getStringExtra("date");
         String position = intent.getStringExtra("position");
+        String problemString = intent.getStringExtra("problemString");
+        mProblemList.addAll(Objects.requireNonNull(JSON.parseArray(problemString, String.class)));
 
         assert date != null;
         if (date.length() == 10) {
@@ -163,6 +177,13 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
             Log.e("net666", response);
             FabricCheckProblemBean bean = JSON.parseObject(response, FabricCheckProblemBean.class);
 
+            FabricCheckProblemBean.FabricCheckWidth fabricCheckWidth = bean.getFabricCheckRecord();
+            if (null != fabricCheckWidth){
+                mTopWidthEt.setText(Utils.nullOrEmpty(fabricCheckWidth.getWidthTop()));
+                mMiddleWidthEt.setText(Utils.nullOrEmpty(fabricCheckWidth.getWidthMiddle()));
+                mBottomWidthEt.setText(Utils.nullOrEmpty(fabricCheckWidth.getWidthBottom()));
+            }
+
 
             List<FabricCheckProblemSelect> problemSelects = bean.getFabricCheckProblemConfigList();
             List<SpinnerView.SpinnerBean> problems = new ArrayList<>();
@@ -185,7 +206,15 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
             if (fabricCheckProblemConfigList == null || fabricCheckProblemConfigList.size() == 0) {
                 FabricCheckTaskRecordPosition position = new FabricCheckTaskRecordPosition();
                 List<FabricCheckProblem> fabricCheckProblems = new ArrayList<>();
-                fabricCheckProblems.add(new FabricCheckProblem());
+                if (mProblemList.size() > 0){
+                    for (int i = 0;i < mProblemList.size();i++){
+                        FabricCheckProblem problem = new FabricCheckProblem();
+                        problem.setTag(mProblemList.get(i));
+                        fabricCheckProblems.add(problem);
+                    }
+                }else {
+                    fabricCheckProblems.add(new FabricCheckProblem());
+                }
                 position.setFabricCheckRecordProblemList(fabricCheckProblems);
                 mPisitionList.add(position);
                 mCurrentPosition = mPisitionList.get(0);
@@ -248,7 +277,12 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
 
     private void onSave(int viewId) {
         String problemPosition = mPositionEt.getText().toString().trim();
+
         if (StringUtils.isNullOrEmpty(problemPosition)) {
+            if (R.id.tv_previous == viewId){
+                toPreviousPosition();
+                return;
+            }
             showToast("请先输入问题位置");
             return;
         }
@@ -259,6 +293,10 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
         if (!StringUtils.isNullOrEmpty(mCurrentPosition.getId())) {
             params.put("id", mCurrentPosition.getId());
         }
+
+        params.put("widthTop",Utils.nullOrEmpty(mTopWidthEt.getText().toString().trim()));
+        params.put("widthMiddle",Utils.nullOrEmpty(mMiddleWidthEt.getText().toString().trim()));
+        params.put("widthBottom",Utils.nullOrEmpty(mBottomWidthEt.getText().toString().trim()));
 
 
         List<FabricCheckProblem> problemList = mAdapter.getData();
@@ -371,6 +409,7 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
                     problemStringList.add(problemList.get(n).getTag());
                 }
             }
+            problemStringList.addAll(mProblemList);
             Set<String> set = new LinkedHashSet<>(problemStringList);
             problemStringList.clear();
             problemStringList.addAll(set);
