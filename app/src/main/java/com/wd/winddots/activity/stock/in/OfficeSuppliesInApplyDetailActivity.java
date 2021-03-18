@@ -139,6 +139,12 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
     @BindView(R.id.ll_operate)
     LinearLayout mOperateLl;
 
+    @BindView(R.id.iv_auditor)
+    ImageView mAuditorIv;
+
+    @BindView(R.id.iv_copy)
+    ImageView mCopyIv;
+
     ImagePickerAdapter mImagePickerAdapter;
     StockApplyGoodsSpecAdapter mStockApplyGoodsSpecAdapter;
 
@@ -152,6 +158,7 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
 
     VolleyUtil mVolleyUtil;
     String mStockInApplyId;
+    boolean mIsSkuEditable = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -411,6 +418,7 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
         }
 
         List<GoodsSpec> goodsSpecList = goods.getGoodsSpecList();
+        mStockApplyGoodsSpecAdapter.setEditable(mIsSkuEditable);
         mStockApplyGoodsSpecAdapter.setList(goodsSpecList);
 
         if (TextUtils.isEmpty(goods.getY())) {
@@ -538,6 +546,31 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
             } catch (Exception e) {
                 stockInApply = null;
             }
+
+            if (StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus().equals(stockInApply.getApplyStatus())
+                    || StockApplyStatusEnum.STOCK_APPLY_STATUS_REJECT.getStatus().equals(stockInApply.getApplyStatus())) {
+                // 草稿单
+                // 未通过
+                mOperateLl.setVisibility(View.VISIBLE);
+
+                mIsSkuEditable = true;
+            } else {
+                mOperateLl.setVisibility(View.GONE);
+
+                mGoodsRl.setClickable(false);
+                mGoodsContentLl.setClickable(false);
+                mRemarkEt.setEnabled(false);
+                mRemarkEt.setTextColor(ContextCompat.getColor(this, R.color.color32));
+                mAuditorLl.setClickable(false);
+                mCopyLl.setClickable(false);
+                mDeleteGoodsIv.setVisibility(View.GONE);
+
+                mAuditorIv.setVisibility(View.GONE);
+                mCopyIv.setVisibility(View.GONE);
+
+                mIsSkuEditable = false;
+            }
+
             if (null != stockInApply) {
                 renderGoodsView(CommonUtil.getGoodsFromStockInApply(stockInApply));
             }
@@ -550,24 +583,6 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
 
             mCopyTv.setText(stockInApply.getCopyUserName());
             mCopyTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
-
-            if (StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus().equals(stockInApply.getApplyStatus())
-                    || StockApplyStatusEnum.STOCK_APPLY_STATUS_REJECT.getStatus().equals(stockInApply.getApplyStatus())) {
-                // 草稿单
-                // 未通过
-                mOperateLl.setVisibility(View.VISIBLE);
-            } else {
-                mOperateLl.setVisibility(View.GONE);
-
-                mGoodsRl.setClickable(false);
-                mGoodsContentLl.setClickable(false);
-                mRemarkEt.setEnabled(false);
-                mRemarkEt.setTextColor(ContextCompat.getColor(this, R.color.color32));
-                mAuditorLl.setClickable(false);
-                mCopyLl.setClickable(false);
-                mDeleteGoodsIv.setVisibility(View.GONE);
-
-            }
 
             hideLoadingDialog();
         }, volleyError -> {

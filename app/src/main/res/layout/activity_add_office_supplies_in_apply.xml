@@ -132,6 +132,7 @@
                     android:textSize="@dimen/form_text_size" />
 
                 <ImageView
+                    android:id="@+id/iv_auditor"
                     android:layout_width="10dp"
                     android:layout_height="17dp"
                     android:layout_gravity="center_vertical"
@@ -176,6 +177,7 @@
                     android:textSize="@dimen/form_text_size" />
 
                 <ImageView
+                    android:id="@+id/iv_copy"
                     android:layout_width="10dp"
                     android:layout_height="17dp"
                     android:layout_gravity="center_vertical"

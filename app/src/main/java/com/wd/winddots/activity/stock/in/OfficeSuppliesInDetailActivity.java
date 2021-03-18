@@ -126,6 +126,9 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
     @BindView(R.id.tv_ware_house)
     TextView mWareHouseTv;
 
+    @BindView(R.id.iv_ware_house)
+    ImageView mWareHouseIv;
+
     @BindView(R.id.ll_operate)
     LinearLayout mOperateLl;
 
@@ -494,6 +497,7 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
                     String wareHouseName = inList.get(0).getWareHouseName();
                     mWareHouseTv.setText(wareHouseName);
                     mWareHouseTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
+                    mWareHouseIv.setVisibility(View.GONE);
                 }
                 mIsSkuEditable = false;
 

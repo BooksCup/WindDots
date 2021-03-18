@@ -16,6 +16,7 @@ import com.wd.winddots.entity.GoodsSpec;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +31,7 @@ public class StockApplyGoodsSpecAdapter extends RecyclerView.Adapter<StockApplyG
     private Context mContext;
     private List<GoodsSpec> mGoodsSpecList;
     public TextChangeListener mTextChangeListener;
+    private boolean isEditable = true;
 
     public void setTextChangeListener(TextChangeListener textChangeListener) {
         this.mTextChangeListener = textChangeListener;
@@ -42,6 +44,10 @@ public class StockApplyGoodsSpecAdapter extends RecyclerView.Adapter<StockApplyG
     public void setList(List<GoodsSpec> goodsSpecList) {
         this.mGoodsSpecList = goodsSpecList;
         notifyDataSetChanged();
+    }
+
+    public void setEditable(boolean editable) {
+        this.isEditable = editable;
     }
 
     public List<GoodsSpec> getList() {
@@ -69,26 +75,30 @@ public class StockApplyGoodsSpecAdapter extends RecyclerView.Adapter<StockApplyG
         if (null != goodsSpec.getApplyNum()) {
             holder.mNumEt.setText(goodsSpec.getApplyNum());
         }
+        if (isEditable) {
+            holder.mNumEt.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        holder.mNumEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                goodsSpec.setApplyNum(holder.mNumEt.getText().toString().trim());
-                if (null != mTextChangeListener) {
-                    mTextChangeListener.stockInNumChange();
                 }
-            }
 
-            @Override
-            public void afterTextChanged(Editable editable) {
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    goodsSpec.setApplyNum(holder.mNumEt.getText().toString().trim());
+                    if (null != mTextChangeListener) {
+                        mTextChangeListener.stockInNumChange();
+                    }
+                }
 
-            }
-        });
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
+        } else {
+            holder.mNumEt.setEnabled(false);
+            holder.mNumEt.setTextColor(ContextCompat.getColor(mContext, R.color.color32));
+        }
     }
 
     @Override
