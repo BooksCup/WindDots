@@ -124,6 +124,9 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
     @BindView(R.id.tv_goods_spec_y)
     TextView mGoodsSpecYTv;
 
+    @BindView(R.id.tv_apply_num_header)
+    TextView mApplyNumHeaderTv;
+
     @BindView(R.id.tv_place_holder)
     TextView mPlaceHolderTv;
 
@@ -411,7 +414,14 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
         mDeleteGoodsIv.setVisibility(View.VISIBLE);
 
         String goodsInfo = goods.getGoodsName() + "(" + goods.getGoodsNo() + ")";
-        String stockInfo = goods.getStockNum() + goods.getGoodsUnit();
+        String stockInfo;
+        if (!TextUtils.isEmpty(goods.getGoodsUnit())) {
+            stockInfo = goods.getStockNum() + goods.getGoodsUnit();
+            mApplyNumHeaderTv.setText("入库数量(" + goods.getGoodsUnit() + ")");
+        } else {
+            stockInfo = goods.getStockNum();
+            mApplyNumHeaderTv.setText("入库数量");
+        }
         mGoodsInfoTv.setText(goodsInfo);
         mStockNumTv.setText(stockInfo);
 
