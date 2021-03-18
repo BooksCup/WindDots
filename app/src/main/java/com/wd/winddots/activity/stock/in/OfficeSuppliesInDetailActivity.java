@@ -66,7 +66,6 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
     private static final int REQUEST_CODE_GOODS = 2;
     private static final int REQUEST_CODE_WARE_HOUSE = 1;
     private static final int REQUEST_CODE_AUDITOR = 4;
-    private static final int REQUEST_CODE_IMAGE_PICKER = 6;
     private static final int REQUEST_CODE_SCAN = 7;
 
     private static final String SPACE_SEPARATOR = "   ";
@@ -116,6 +115,9 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
 
     @BindView(R.id.tv_goods_spec_y)
     TextView mGoodsSpecYTv;
+
+    @BindView(R.id.tv_apply_num_header)
+    TextView mApplyNumHeaderTv;
 
     @BindView(R.id.tv_place_holder)
     TextView mPlaceHolderTv;
@@ -207,13 +209,51 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
                 startActivityForResult(intent, REQUEST_CODE_WARE_HOUSE);
                 break;
             case R.id.tv_reject:
-                updateStockApplication(StockApplyStatusEnum.STOCK_APPLY_STATUS_REJECT.getStatus());
+                mConfirmDialog = new ConfirmDialog(this, "确认驳回",
+                        "是否确认驳回入库单？",
+                        "是", "否");
+                mConfirmDialog.setOnDialogClickListener(new ConfirmDialog.OnDialogClickListener() {
+                    @Override
+                    public void onOkClick() {
+                        updateStockApplication(StockApplyStatusEnum.STOCK_APPLY_STATUS_REJECT.getStatus());
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+                        mConfirmDialog.dismiss();
+                    }
+                });
+                // 点击空白处消失
+                mConfirmDialog.setCancelable(false);
+                mConfirmDialog.show();
+
                 break;
             case R.id.tv_scan:
                 startScanActivity();
                 break;
             case R.id.tv_confirm:
-                updateStockApplication(StockApplyStatusEnum.STOCK_APPLY_STATUS_CONFIRMED.getStatus());
+                if (TextUtils.isEmpty(mWareHouseId)) {
+                    showToast("请选择入库仓库");
+                    return;
+                }
+                mConfirmDialog = new ConfirmDialog(this, "确认",
+                        "是否确认入库单？",
+                        "是", "否");
+                mConfirmDialog.setOnDialogClickListener(new ConfirmDialog.OnDialogClickListener() {
+                    @Override
+                    public void onOkClick() {
+                        updateStockApplication(StockApplyStatusEnum.STOCK_APPLY_STATUS_CONFIRMED.getStatus());
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+                        mConfirmDialog.dismiss();
+                    }
+                });
+                // 点击空白处消失
+                mConfirmDialog.setCancelable(false);
+                mConfirmDialog.show();
+
                 break;
         }
     }
@@ -336,7 +376,17 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
         mGoodsContentLl.setVisibility(View.VISIBLE);
 
         String goodsInfo = goods.getGoodsName() + "(" + goods.getGoodsNo() + ")";
-        String stockInfo = goods.getStockNum() + goods.getGoodsUnit();
+//        String stockInfo = goods.getStockNum() + goods.getGoodsUnit();
+
+        String stockInfo;
+        if (!TextUtils.isEmpty(goods.getGoodsUnit())) {
+            stockInfo = goods.getStockNum() + goods.getGoodsUnit();
+            mApplyNumHeaderTv.setText("入库数量(" + goods.getGoodsUnit() + ")");
+        } else {
+            stockInfo = goods.getStockNum();
+            mApplyNumHeaderTv.setText("入库数量");
+        }
+
         mGoodsInfoTv.setText(goodsInfo);
         mStockNumTv.setText(stockInfo);
 
@@ -410,12 +460,6 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
         List<GoodsSpec> goodsSpecList = mStockGoodsSpecAdapter.getList();
         List<StockApplicationInRecord> stockApplicationInRecordList = new ArrayList<>();
         if (!StockApplyStatusEnum.STOCK_APPLY_STATUS_REJECT.getStatus().equals(applyStatus)) {
-
-            if (TextUtils.isEmpty(mWareHouseId)) {
-                showToast("请选择入库仓库");
-                return;
-            }
-
             // 确认
             for (GoodsSpec goodsSpec : goodsSpecList) {
                 StockApplicationInRecord in = new StockApplicationInRecord();

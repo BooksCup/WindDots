@@ -281,7 +281,24 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
                     return;
                 }
 
-                updateStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_UNCONFIRMED.getStatus());
+                mConfirmDialog = new ConfirmDialog(this, "确认提交",
+                        "是否确认提交入库单？",
+                        "是", "否");
+                mConfirmDialog.setOnDialogClickListener(new ConfirmDialog.OnDialogClickListener() {
+                    @Override
+                    public void onOkClick() {
+                        updateStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_UNCONFIRMED.getStatus());
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+                        mConfirmDialog.dismiss();
+                    }
+                });
+                // 点击空白处消失
+                mConfirmDialog.setCancelable(false);
+                mConfirmDialog.show();
+
                 break;
         }
     }
