@@ -230,12 +230,33 @@ public class AddOfficeSuppliesInActivity extends BaseActivity implements StockAp
                 break;
 
             case R.id.tv_draft:
+
+                if (TextUtils.isEmpty(mGoodsId)) {
+                    showToast("请选择入库物品");
+                    return;
+                }
+
                 addStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus());
                 break;
             case R.id.tv_scan:
                 startScanActivity();
                 break;
             case R.id.tv_submit:
+
+                if (TextUtils.isEmpty(mGoodsId)) {
+                    showToast("请选择入库物品");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(mAuditorId)) {
+                    showToast("请选择审核人");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(mCopyId)) {
+                    showToast("请选择抄送人");
+                    return;
+                }
                 addStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_UNCONFIRMED.getStatus());
                 break;
         }
@@ -418,7 +439,7 @@ public class AddOfficeSuppliesInActivity extends BaseActivity implements StockAp
         NumberFormat nf = NumberFormat.getNumberInstance();
         for (GoodsSpec goodsSpec : goodsSpecList) {
             nf.setMaximumFractionDigits(2);
-            float totalStockInNum = Float.parseFloat(Utils.numberNullOrEmpty(goodsSpec.getNum()));
+            float totalStockInNum = Float.parseFloat(Utils.numberNullOrEmpty(goodsSpec.getApplyNum()));
             total = totalStockInNum + total;
         }
         mTotalNumTv.setText(nf.format(total));
@@ -426,18 +447,6 @@ public class AddOfficeSuppliesInActivity extends BaseActivity implements StockAp
 
     private void addStockInApply(String applyStatus) {
 
-        if (TextUtils.isEmpty(mGoodsId)) {
-            showToast("请选择入库物品");
-            return;
-        }
-
-        if (TextUtils.isEmpty(mAuditorId)) {
-            showToast("请选择审核人");
-        }
-
-        if (TextUtils.isEmpty(mCopyId)) {
-            showToast("请选择抄送人");
-        }
         showLoadingDialog();
         List<GoodsSpec> goodsSpecList = mStockApplyGoodsSpecAdapter.getList();
         String specNums = JSON.toJSONString(goodsSpecList);
@@ -454,8 +463,8 @@ public class AddOfficeSuppliesInActivity extends BaseActivity implements StockAp
         paramMap.put("remark", remark);
         paramMap.put("applyStatus", applyStatus);
         paramMap.put("images", "[\"http://erp-cfpu-com.oss-cn-hangzhou.aliyuncs.com/329b0751292445df8500aa98a1180936.png\"]");
-        paramMap.put("auditorId", mAuditorId);
-        paramMap.put("copyId", mCopyId);
+        paramMap.put("auditorId", mAuditorId == null ? "" : mAuditorId);
+        paramMap.put("copyId", mCopyId == null ? "" : mCopyId);
 
         mVolleyUtil.httpPostRequest(url, paramMap, response -> {
             if (applyStatus.equals(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus())) {

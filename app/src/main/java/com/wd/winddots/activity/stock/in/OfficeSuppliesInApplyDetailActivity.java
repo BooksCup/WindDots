@@ -250,12 +250,34 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
                 break;
 
             case R.id.tv_draft:
+                // 保存至草稿
+                if (TextUtils.isEmpty(mGoodsId)) {
+                    showToast("请选择入库物品");
+                    return;
+                }
+
                 updateStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus());
                 break;
             case R.id.tv_scan:
                 startScanActivity();
                 break;
             case R.id.tv_submit:
+                // 提交
+                if (TextUtils.isEmpty(mGoodsId)) {
+                    showToast("请选择入库物品");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(mAuditorId)) {
+                    showToast("请选择审核人");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(mCopyId)) {
+                    showToast("请选择抄送人");
+                    return;
+                }
+
                 updateStockInApply(StockApplyStatusEnum.STOCK_APPLY_STATUS_UNCONFIRMED.getStatus());
                 break;
         }
@@ -467,19 +489,6 @@ public class OfficeSuppliesInApplyDetailActivity extends BaseActivity implements
     }
 
     private void updateStockInApply(String applyStatus) {
-
-        if (TextUtils.isEmpty(mGoodsId)) {
-            showToast("请选择入库物品");
-            return;
-        }
-
-        if (TextUtils.isEmpty(mAuditorId)) {
-            showToast("请选择审核人");
-        }
-
-        if (TextUtils.isEmpty(mCopyId)) {
-            showToast("请选择抄送人");
-        }
 
         showLoadingDialog();
         List<GoodsSpec> goodsSpecList = mStockApplyGoodsSpecAdapter.getList();
