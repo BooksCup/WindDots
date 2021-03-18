@@ -73,8 +73,14 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
     @BindView(R.id.rl_goods)
     RelativeLayout mGoodsRl;
 
+    @BindView(R.id.ll_remark)
+    LinearLayout mRemarkLl;
+
     @BindView(R.id.et_remark)
     EditText mRemarkEt;
+
+    @BindView(R.id.view_remark_divider)
+    View mRemarkDividerView;
 
     @BindView(R.id.tv_auditor)
     TextView mAuditorTv;
@@ -376,7 +382,6 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
         mGoodsContentLl.setVisibility(View.VISIBLE);
 
         String goodsInfo = goods.getGoodsName() + "(" + goods.getGoodsNo() + ")";
-//        String stockInfo = goods.getStockNum() + goods.getGoodsUnit();
 
         String stockInfo;
         if (!TextUtils.isEmpty(goods.getGoodsUnit())) {
@@ -556,9 +561,14 @@ public class OfficeSuppliesInDetailActivity extends BaseActivity implements Stoc
             mGoodsId = stockInApply.getStockGoodsId();
 
             mRemarkEt.setEnabled(false);
-            mRemarkEt.setText(stockInApply.getRemark());
-            mRemarkEt.setTextColor(ContextCompat.getColor(this, R.color.color32));
-
+            if (!TextUtils.isEmpty(stockInApply.getRemark())) {
+                mRemarkEt.setText(stockInApply.getRemark());
+                mRemarkEt.setTextColor(ContextCompat.getColor(this, R.color.color32));
+            } else {
+//                mRemarkEt.setText(" ");
+                mRemarkLl.setVisibility(View.GONE);
+                mRemarkDividerView.setVisibility(View.GONE);
+            }
             mAuditorId = stockInApply.getAuditUserId();
             mAuditorTv.setText(stockInApply.getAuditUserName());
             mAuditorTv.setTextColor(ContextCompat.getColor(this, R.color.color32));

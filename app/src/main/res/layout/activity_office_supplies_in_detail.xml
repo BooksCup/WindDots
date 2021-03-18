@@ -96,6 +96,7 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_remark"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:background="@color/colorWhite"
@@ -122,6 +123,7 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/view_remark_divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/alpha_05_black" />
