@@ -95,7 +95,7 @@ public class StockOutActivity extends BaseActivity
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mStockOutApplyRv.setLayoutManager(layoutManager);
         mStockOutApplyRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mAdapter = new StockOutApplyAdapter(R.layout.item_stock_out_apply, mStockOutApplyList);
+//        mAdapter = new StockOutApplyAdapter(R.layout.item_stock_out_apply, mStockOutApplyList);
         mStockOutApplyRv.setAdapter(mAdapter);
         getData();
     }
