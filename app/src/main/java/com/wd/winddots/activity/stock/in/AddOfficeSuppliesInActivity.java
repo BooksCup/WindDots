@@ -26,8 +26,12 @@ import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Goods;
 import com.wd.winddots.entity.GoodsSpec;
 import com.wd.winddots.entity.ImageEntity;
+import com.wd.winddots.entity.SystemRoleConfig;
+import com.wd.winddots.entity.User;
+import com.wd.winddots.enums.ModuleEnum;
 import com.wd.winddots.enums.StockApplyStatusEnum;
 import com.wd.winddots.enums.StockBizTypeEnum;
+import com.wd.winddots.utils.CollectionUtil;
 import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.Utils;
@@ -298,6 +302,8 @@ public class AddOfficeSuppliesInActivity extends BaseActivity implements StockAp
         mGoodsSpecRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mStockApplyGoodsSpecAdapter = new StockApplyGoodsSpecAdapter(this);
         mGoodsSpecRv.setAdapter(mStockApplyGoodsSpecAdapter);
+
+        getSystemRoleConfig();
     }
 
     private void initData() {
@@ -515,6 +521,45 @@ public class AddOfficeSuppliesInActivity extends BaseActivity implements StockAp
         }, volleyError -> {
             hideLoadingDialog();
             mVolleyUtil.handleCommonErrorResponse(AddOfficeSuppliesInActivity.this, volleyError);
+        });
+    }
+
+    /**
+     * 获取系统角色配置
+     */
+    private void getSystemRoleConfig() {
+        showLoadingDialog();
+        String url = Constant.APP_BASE_URL
+                + "systemRoleConfig?enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId()
+                + "&module=" + ModuleEnum.STOCK_IN.getCode();
+        mVolleyUtil.httpGetRequest(url, response -> {
+            hideLoadingDialog();
+            SystemRoleConfig systemRoleConfig;
+            try {
+                systemRoleConfig = JSON.parseObject(response, SystemRoleConfig.class);
+            } catch (Exception e) {
+                systemRoleConfig = null;
+            }
+            if (null != systemRoleConfig) {
+                List<User> auditorList = systemRoleConfig.getAuditorList();
+                List<User> copyList = systemRoleConfig.getCopyList();
+                if (!CollectionUtil.isEmpty(auditorList)) {
+                    User auditor = auditorList.get(0);
+                    mAuditorId = auditor.getId();
+                    mAuditorTv.setText(auditor.getName());
+                    mAuditorTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
+                }
+
+                if (!CollectionUtil.isEmpty(copyList)) {
+                    User copy = copyList.get(0);
+                    mCopyId = copy.getId();
+                    mCopyTv.setText(copy.getName());
+                    mCopyTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
+                }
+
+            }
+        }, volleyError -> {
+            hideLoadingDialog();
         });
     }
 
