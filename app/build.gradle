@@ -100,8 +100,8 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation files('libs/BaiduLBS-Android.jar')
     implementation "me.leolin:ShortcutBadger:1.1.22@aar"
-    implementation 'cn.jiguang.sdk:jpush:3.7.0'  // 此处以JPush 3.7.0 版本为例。
-    implementation 'cn.jiguang.sdk:jcore:2.4.2'
+    implementation 'cn.jiguang.sdk:jpush:3.3.4'
+    implementation 'cn.jiguang.sdk:jcore:2.1.2'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     // 图片选择器

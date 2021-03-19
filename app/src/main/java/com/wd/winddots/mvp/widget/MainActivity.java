@@ -7,7 +7,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.NinePatch;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -36,7 +35,6 @@ import com.wd.winddots.R;
 import com.wd.winddots.base.BaseMvpActivity;
 import com.wd.winddots.bean.resp.UpgradeBean;
 import com.wd.winddots.confifg.Const;
-import com.wd.winddots.desktop.fragment.WorkFragment;
 import com.wd.winddots.desktop.list.invoice.activity.InvoiceDetailActivity;
 import com.wd.winddots.desktop.list.invoice.bean.InvoiceDetailBean;
 import com.wd.winddots.fast.activity.MeAttendanceActivity;
@@ -46,7 +44,6 @@ import com.wd.winddots.mvp.listener.MainActivityDispatchEventListener;
 import com.wd.winddots.mvp.presenter.MainPresenter;
 import com.wd.winddots.mvp.view.MainView;
 import com.wd.winddots.mvp.widget.fragment.BusinessFragment;
-import com.wd.winddots.mvp.widget.fragment.DesktopFragment;
 import com.wd.winddots.mvp.widget.fragment.MessageFragment;
 import com.wd.winddots.mvp.widget.fragment.MineFragment;
 import com.wd.winddots.mvp.widget.fragment.ScheduleFragment;
@@ -61,11 +58,9 @@ import com.wd.winddots.view.dialog.ConfirmDialog;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import cn.jmessage.support.qiniu.android.utils.StringUtils;
 import cn.jpush.android.api.JPushInterface;
-import cn.jpush.android.api.TagAliasCallback;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
 import rx.Observer;
@@ -81,9 +76,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
 
     private static final int REQUEST_CODE_SCAN = 10086;
 
-
     private MainActivityDispatchEventListener dispatchEventListener;
-
 
     /**
      * 快捷
@@ -204,7 +197,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
 
         Log.e("tag",spHelper.getUserId() + "------setAlias");
 
-        JPushInterface.setAlias(mContext, 0, "1111111");
+        JPushInterface.setAlias(mContext, 0, spHelper.getUser().getId());
         Log.e("tag",JPushInterface.getRegistrationID(mContext) + "------getRegistrationID");
 //        JPushInterface.setAlias(MainActivity.this, spHelper.getUserId(), new TagAliasCallback() {
 //            @Override
@@ -212,8 +205,6 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
 //                Log.e("net666","3333333333333");
 //            }
 //        });
-
-
 
     }
 
