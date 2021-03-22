@@ -51,7 +51,7 @@ public class StockOutApplyAdapter extends BaseQuickAdapter<StockOutApply, BaseVi
                 .setText(R.id.tv_create_user_name, item.getCreateUserName())
                 .setText(R.id.tv_create_date, date);
 
-        if (StockBizTypeEnum.STOCK_BIZ_TYPE_OFFICE_SUPPLIES_IN.getType().equals(item.getBizType())) {
+        if (StockBizTypeEnum.STOCK_BIZ_TYPE_OFFICE_SUPPLIES_OUT.getType().equals(item.getBizType())) {
             String enterpriseName = SpHelper.getInstance(mContext).getUser().getEnterpriseName();
             if (!TextUtils.isEmpty(enterpriseName)) {
                 helper.setText(R.id.tv_related_company, enterpriseName);

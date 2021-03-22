@@ -22,7 +22,7 @@ public enum StockBizTypeEnum {
     // out
     STOCK_BIZ_TYPE_SELL_OUT("1", "销售出库"),
     STOCK_BIZ_TYPE_PRODUCTION_RECIPIENTS("5", "生产领用"),
-    STOCK_BIZ_TYPE_OFFICE_SUPPLIES_OUT(" ", "办公用品领用"),
+    STOCK_BIZ_TYPE_OFFICE_SUPPLIES_OUT("10", "办公用品领用"),
     STOCK_BIZ_TYPE_TRANSFER_OUT("14", "调拨出库"),
     STOCK_BIZ_TYPE_OUTSOURCING_PICKING("15", "委外领料出库"),
     STOCK_BIZ_TYPE_DUAL_DISTRIBUTION_OUT("16", "双经销出库"),

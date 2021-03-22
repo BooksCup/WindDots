@@ -13,6 +13,7 @@ import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Attr;
 import com.wd.winddots.entity.Goods;
 import com.wd.winddots.entity.StockInApply;
+import com.wd.winddots.entity.StockOutApply;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -179,6 +180,20 @@ public class CommonUtil {
         goods.setGoodsSpecList(StockUtil.getGoodsSpecListFromStockRecordList(stockInApply.getStockApplicationInRecordList()));
         goods.setX(stockInApply.getX());
         goods.setY(stockInApply.getY());
+        return goods;
+    }
+
+    public static Goods getGoodsFromStockOutApply(StockOutApply stockOutApply) {
+        Goods goods = new Goods();
+        goods.setGoodsName(stockOutApply.getGoodsName());
+        goods.setGoodsNo(stockOutApply.getGoodsNo());
+        goods.setStockNum(stockOutApply.getApplyNumber());
+        goods.setGoodsUnit(stockOutApply.getGoodsUnit());
+        goods.setAttrList(stockOutApply.getAttrList());
+        goods.setGoodsPhotos(stockOutApply.getGoodsPhotos());
+        goods.setGoodsSpecList(StockUtil.getGoodsSpecListFromStockRecordList(stockOutApply.getStockApplicationInRecordList()));
+        goods.setX(stockOutApply.getX());
+        goods.setY(stockOutApply.getY());
         return goods;
     }
 }

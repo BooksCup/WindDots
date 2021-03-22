@@ -15,6 +15,7 @@ public class StockOutApply implements Serializable {
      */
     private String id;
 
+    private String stockGoodsId;
     private String goodsName;
     private String goodsNo;
     private String goodsPhotos;
@@ -27,7 +28,10 @@ public class StockOutApply implements Serializable {
     private String applyStatus;
 
     private String goodsUnit;
+    private String auditUserId;
     private String auditUserName;
+    private String copyUserId;
+    private String copyUserName;
     private String attrList;
     private String x;
     private String y;
@@ -55,6 +59,14 @@ public class StockOutApply implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getStockGoodsId() {
+        return stockGoodsId;
+    }
+
+    public void setStockGoodsId(String stockGoodsId) {
+        this.stockGoodsId = stockGoodsId;
     }
 
     public String getGoodsName() {
@@ -129,12 +141,36 @@ public class StockOutApply implements Serializable {
         this.goodsUnit = goodsUnit;
     }
 
+    public String getAuditUserId() {
+        return auditUserId;
+    }
+
+    public void setAuditUserId(String auditUserId) {
+        this.auditUserId = auditUserId;
+    }
+
     public String getAuditUserName() {
         return auditUserName;
     }
 
     public void setAuditUserName(String auditUserName) {
         this.auditUserName = auditUserName;
+    }
+
+    public String getCopyUserId() {
+        return copyUserId;
+    }
+
+    public void setCopyUserId(String copyUserId) {
+        this.copyUserId = copyUserId;
+    }
+
+    public String getCopyUserName() {
+        return copyUserName;
+    }
+
+    public void setCopyUserName(String copyUserName) {
+        this.copyUserName = copyUserName;
     }
 
     public String getAttrList() {

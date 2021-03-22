@@ -160,11 +160,11 @@ public class StockOutApplyActivity extends BaseActivity
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         StockOutApply stockOutApply = mStockOutApplyList.get(position);
-        if (StockBizTypeEnum.STOCK_BIZ_TYPE_OFFICE_SUPPLIES_IN.getType().equals(stockOutApply.getBizType())) {
+        if (StockBizTypeEnum.STOCK_BIZ_TYPE_OFFICE_SUPPLIES_OUT.getType().equals(stockOutApply.getBizType())) {
             // 办公用品领用
-//            Intent intent = new Intent(StockOutApplyActivity.this, OfficeSuppliesInApplyDetailActivity.class);
-//            intent.putExtra("stockInApplyId", stockOutApply.getId());
-//            startActivity(intent);
+            Intent intent = new Intent(StockOutApplyActivity.this, OfficeSuppliesOutApplyDetailActivity.class);
+            intent.putExtra("stockOutApplyId", stockOutApply.getId());
+            startActivity(intent);
         }
 
     }
