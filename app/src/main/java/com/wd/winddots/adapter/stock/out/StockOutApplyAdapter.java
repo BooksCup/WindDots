@@ -35,6 +35,10 @@ public class StockOutApplyAdapter extends BaseQuickAdapter<StockOutApply, BaseVi
         mContext = context;
     }
 
+    public StockOutApplyAdapter(int item_stock_out_apply, List<StockOutApply> mStockOutApplyList) {
+        super(item_stock_out_apply, mStockOutApplyList);
+    }
+
     public void setKeyword(String keyword) {
         this.mKeyword = keyword;
     }

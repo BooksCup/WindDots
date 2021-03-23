@@ -20,6 +20,7 @@ import com.google.zxing.client.android.CaptureActivity2;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.app.AppStoreActivity;
 import com.wd.winddots.activity.check.fabric.FabricCheckProcessActivity;
+import com.wd.winddots.activity.contract.ContractActivity;
 import com.wd.winddots.activity.employee.EmployeeActivity;
 import com.wd.winddots.activity.order.OrderActivity;
 import com.wd.winddots.activity.stock.in.StockInActivity;
@@ -200,8 +201,8 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 startActivity(intent);
                 break;
             case "GoodsListPage"://物品
-                intent = new Intent(getActivity(), GoodsListActivity.class);
-                startActivity(intent);
+//                intent = new Intent(getActivity(), GoodsActivity.class);
+//                startActivity(intent);
                 break;
             case "WarehouseList"://仓库
                 intent = new Intent(getActivity(), WarehouseListActivity.class);
@@ -232,8 +233,10 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 intent = new Intent(getActivity(), RequirementActivity.class);
                 startActivity(intent);
                 break;
-            case "ContractList"://合同
-                intent = new Intent(getActivity(), ContactListActivity.class);
+            case "Contract":
+                // 合同
+//                intent = new Intent(getActivity(), ContactListActivity.class);
+                intent = new Intent(getActivity(), ContractActivity.class);
                 startActivity(intent);
                 break;
             case "WorkExamine":

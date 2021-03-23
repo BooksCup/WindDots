@@ -1,6 +1,5 @@
-package com.wd.winddots.activity.stock.out;
+package com.wd.winddots.activity.contract;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -9,13 +8,10 @@ import com.alibaba.fastjson.TypeReference;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
-import com.wd.winddots.activity.stock.in.StockInDetailActivity;
-import com.wd.winddots.adapter.stock.out.StockOutApplyAdapter;
+import com.wd.winddots.adapter.contract.ContractAdapter;
 import com.wd.winddots.cons.Constant;
+import com.wd.winddots.entity.Contract;
 import com.wd.winddots.entity.PageInfo;
-import com.wd.winddots.entity.StockOutApply;
-import com.wd.winddots.enums.RoleEnum;
-import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.VolleyUtil;
 
 import java.util.ArrayList;
@@ -31,33 +27,33 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 出库
+ * 合同
  *
  * @author zhou
  */
-public class StockOutActivity extends BaseActivity
+public class ContractActivity extends BaseActivity
         implements SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.RequestLoadMoreListener,
         BaseQuickAdapter.OnItemClickListener {
 
-    @BindView(R.id.rv_stock_out_apply)
-    RecyclerView mStockOutApplyRv;
+    @BindView(R.id.rv_contract)
+    RecyclerView mContractRv;
 
-    @BindView(R.id.srl_stock_out_apply)
-    SwipeRefreshLayout mStockOutApplySrl;
+    @BindView(R.id.srl_contract)
+    SwipeRefreshLayout mContractSrl;
 
-    StockOutApplyAdapter mAdapter;
+    ContractAdapter mAdapter;
 
     VolleyUtil mVolleyUtil;
 
     int mPage = 1;
     int mPageSize = 10;
-    List<StockOutApply> mStockOutApplyList = new ArrayList<>();
+    List<Contract> mContractList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stock_out);
+        setContentView(R.layout.activity_contract);
         ButterKnife.bind(this);
         mVolleyUtil = VolleyUtil.getInstance(this);
         initView();
@@ -75,7 +71,7 @@ public class StockOutActivity extends BaseActivity
 
     @Override
     public void onRefresh() {
-        mStockOutApplySrl.setRefreshing(true);
+        mContractSrl.setRefreshing(true);
         mAdapter.setEnableLoadMore(true);
         mPage = 1;
         getData();
@@ -83,7 +79,7 @@ public class StockOutActivity extends BaseActivity
 
     @Override
     public void onLoadMoreRequested() {
-        if (mStockOutApplySrl.isRefreshing()) {
+        if (mContractSrl.isRefreshing()) {
             return;
         }
         mPage += 1;
@@ -93,58 +89,53 @@ public class StockOutActivity extends BaseActivity
     public void initView() {
         ButterKnife.bind(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mStockOutApplyRv.setLayoutManager(layoutManager);
-        mStockOutApplyRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mAdapter = new StockOutApplyAdapter(R.layout.item_stock_out_apply, mStockOutApplyList);
-        mStockOutApplyRv.setAdapter(mAdapter);
+        mContractRv.setLayoutManager(layoutManager);
+        mContractRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        mAdapter = new ContractAdapter(this, R.layout.item_contract, mContractList);
+        mContractRv.setAdapter(mAdapter);
         getData();
     }
 
     public void initListener() {
-        mStockOutApplySrl.setOnRefreshListener(this);
-        mAdapter.setOnLoadMoreListener(StockOutActivity.this, mStockOutApplyRv);
+        mContractSrl.setOnRefreshListener(this);
+        mAdapter.setOnLoadMoreListener(this, mContractRv);
         mAdapter.setOnItemClickListener(this);
     }
 
-
     private void getData() {
-        String url = Constant.APP_BASE_URL + "stockApplication?enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId() +
-                "&stockType=" + Constant.STOCK_TYPE_OUT +
-                "&role=" + RoleEnum.ROLE_WAREHOUSE_KEEPER.getCode() +
+        String url = Constant.APP_BASE_URL +
+//                "contract?enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId() +
+                "contract/search?enterpriseId=" + "1" +
                 "&pageNum=" + mPage +
                 "&pageSize=" + mPageSize;
 
         mVolleyUtil.httpGetRequest(url, response -> {
             hideLoadingDialog();
-            mStockOutApplySrl.setRefreshing(false);
-            PageInfo<StockOutApply> stockOutApplyPageInfo = JSON.parseObject(response, new TypeReference<PageInfo<StockOutApply>>() {
+            mContractSrl.setRefreshing(false);
+            PageInfo<Contract> contractPageInfo = JSON.parseObject(response, new TypeReference<PageInfo<Contract>>() {
             });
-            List<StockOutApply> stockOutApplyList = stockOutApplyPageInfo.getList();
+            List<Contract> contractList = contractPageInfo.getList();
 
             if (mPage == 1) {
-                mStockOutApplyList.clear();
+                mContractList.clear();
             }
-            mStockOutApplyList.addAll(stockOutApplyList);
+            mContractList.addAll(contractList);
             mAdapter.notifyDataSetChanged();
             mAdapter.loadMoreComplete();
-            if (mStockOutApplyList.size() >= stockOutApplyPageInfo.getTotal()) {
+            if (mContractList.size() >= contractPageInfo.getTotal()) {
                 mAdapter.setEnableLoadMore(false);
             }
 
         }, volleyError -> {
             hideLoadingDialog();
-            mStockOutApplySrl.setRefreshing(false);
+            mContractSrl.setRefreshing(false);
             mAdapter.loadMoreComplete();
-            mVolleyUtil.handleCommonErrorResponse(StockOutActivity.this, volleyError);
+            mVolleyUtil.handleCommonErrorResponse(ContractActivity.this, volleyError);
         });
     }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        StockOutApply stockOutApply = mStockOutApplyList.get(position);
-        Intent intent = new Intent(StockOutActivity.this, StockInDetailActivity.class);
-        intent.putExtra("stockInApplyId", stockOutApply.getId());
-        startActivity(intent);
     }
 
     @Override
