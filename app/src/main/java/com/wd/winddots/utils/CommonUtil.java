@@ -191,7 +191,7 @@ public class CommonUtil {
         goods.setGoodsUnit(stockOutApply.getGoodsUnit());
         goods.setAttrList(stockOutApply.getAttrList());
         goods.setGoodsPhotos(stockOutApply.getGoodsPhotos());
-        goods.setGoodsSpecList(StockUtil.getGoodsSpecListFromStockRecordList(stockOutApply.getStockApplicationInRecordList()));
+        goods.setGoodsSpecList(StockUtil.getGoodsSpecListFromStockOutRecordList(stockOutApply.getStockApplicationOutRecordList()));
         goods.setX(stockOutApply.getX());
         goods.setY(stockOutApply.getY());
         return goods;

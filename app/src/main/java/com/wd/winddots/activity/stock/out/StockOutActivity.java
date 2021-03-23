@@ -142,8 +142,8 @@ public class StockOutActivity extends BaseActivity
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         StockOutApply stockOutApply = mStockOutApplyList.get(position);
-        Intent intent = new Intent(StockOutActivity.this, StockInDetailActivity.class);
-        intent.putExtra("stockInApplyId", stockOutApply.getId());
+        Intent intent = new Intent(StockOutActivity.this, OfficeSuppliesOutDetailActivity.class);
+        intent.putExtra("stockOutApplyId", stockOutApply.getId());
         startActivity(intent);
     }
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,7 +28,6 @@ import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Goods;
 import com.wd.winddots.entity.GoodsSpec;
 import com.wd.winddots.entity.ImageEntity;
-import com.wd.winddots.entity.StockInApply;
 import com.wd.winddots.entity.StockOutApply;
 import com.wd.winddots.enums.StockApplyStatusEnum;
 import com.wd.winddots.enums.StockBizTypeEnum;
@@ -423,6 +423,7 @@ public class OfficeSuppliesOutApplyDetailActivity extends BaseActivity implement
      * @param goods 物品
      */
     private void renderGoodsView(Goods goods) {
+        Log.e("goods", String.valueOf(goods));
         mGoodsId = goods.getId();
         mGoodsNameTv.setText(goods.getGoodsName());
         mGoodsNameTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
@@ -582,7 +583,6 @@ public class OfficeSuppliesOutApplyDetailActivity extends BaseActivity implement
             } catch (Exception e) {
                 stockOutApply = null;
             }
-
             if (StockApplyStatusEnum.STOCK_APPLY_STATUS_DRAFT.getStatus().equals(stockOutApply.getApplyStatus())
                     || StockApplyStatusEnum.STOCK_APPLY_STATUS_REJECT.getStatus().equals(stockOutApply.getApplyStatus())) {
                 // 草稿单
