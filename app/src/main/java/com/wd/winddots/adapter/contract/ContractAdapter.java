@@ -11,6 +11,7 @@ import com.wd.winddots.R;
 import com.wd.winddots.entity.Contract;
 import com.wd.winddots.enums.ContactTypeEnum;
 import com.wd.winddots.enums.CurrencyEnum;
+import com.wd.winddots.enums.SendStatusEnum;
 import com.wd.winddots.utils.TimeUtil;
 
 import java.util.List;
@@ -77,6 +78,32 @@ public class ContractAdapter extends BaseQuickAdapter<Contract, BaseViewHolder> 
 
         } else {
             mContactTypeTv.setVisibility(View.GONE);
+        }
+
+        TextView mSendStatusTv = helper.getView(R.id.tv_send_status);
+
+        // 发送状态
+        if (SendStatusEnum.UN_SENT.getCode().equals(item.getSendStatus())) {
+            // 未发送
+            mSendStatusTv.setVisibility(View.VISIBLE);
+            mSendStatusTv.setText(SendStatusEnum.UN_SENT.getName());
+            mSendStatusTv.setTextColor(mContext.getResources().getColor(R.color.tag_grey));
+            mSendStatusTv.setBackgroundResource(R.drawable.bg_tag_grey);
+        } else if (SendStatusEnum.SENTED.getCode().equals(item.getSendStatus())) {
+            // 未确认
+            mSendStatusTv.setVisibility(View.VISIBLE);
+            mSendStatusTv.setText(SendStatusEnum.SENTED.getName());
+            mSendStatusTv.setTextColor(mContext.getResources().getColor(R.color.tag_green));
+            mSendStatusTv.setBackgroundResource(R.drawable.bg_tag_green);
+        } else if (SendStatusEnum.CONFIRMED.getCode().equals(item.getSendStatus())) {
+            // 已确认
+            mSendStatusTv.setVisibility(View.VISIBLE);
+            mSendStatusTv.setText(SendStatusEnum.CONFIRMED.getName());
+            mSendStatusTv.setTextColor(mContext.getResources().getColor(R.color.tag_orange));
+            mSendStatusTv.setBackgroundResource(R.drawable.bg_tag_orange);
+        } else {
+            // 未知
+            mSendStatusTv.setVisibility(View.GONE);
         }
 
     }

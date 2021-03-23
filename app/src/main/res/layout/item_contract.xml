@@ -58,7 +58,7 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/tv_apply_status"
+                android:id="@+id/tv_send_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -66,7 +66,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/bg_tag_grey"
                 android:padding="4dp"
-                android:text="未确认"
+                android:text="未发送"
                 android:textColor="@color/operate_agree"
                 android:textSize="12sp" />
 
