@@ -34,6 +34,13 @@
                 android:textSize="@dimen/title_text_size"
                 android:textStyle="bold" />
 
+            <ImageView
+                android:id="@+id/iv_add"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:padding="15dp"
+                android:src="@mipmap/icon_add_red" />
         </RelativeLayout>
 
         <LinearLayout

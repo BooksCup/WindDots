@@ -177,7 +177,7 @@ public class StockInApplyActivity extends BaseActivity
     }
 
     /**
-     * 初始化首页弹出框
+     * 初始化弹出框
      */
     private void initPopupWindow() {
 
