@@ -45,6 +45,7 @@ public class ContractAdapter extends BaseQuickAdapter<Contract, BaseViewHolder> 
         }
 
         helper.setText(R.id.tv_goods_info, item.getGoodsNamesStr())
+                .setText(R.id.tv_related_company, item.getToEnterpriseName())
                 .setText(R.id.tv_sign_date, TimeUtil.formatTimeToDate(item.getCreateTime()));
         String currency = CurrencyEnum.getSymbol(item.getExchangeRateType());
         if (TextUtils.isEmpty(currency)) {
@@ -62,7 +63,6 @@ public class ContractAdapter extends BaseQuickAdapter<Contract, BaseViewHolder> 
             mContactTypeTv.setText("销售");
             mContactTypeTv.setBackgroundResource(R.drawable.bg_label_green);
 
-
         } else if (ContactTypeEnum.PURCHASE.getCode().equals(item.getContractType())) {
             // 采购合同
             mContactTypeTv.setVisibility(View.VISIBLE);
@@ -74,6 +74,7 @@ public class ContractAdapter extends BaseQuickAdapter<Contract, BaseViewHolder> 
             mContactTypeTv.setVisibility(View.VISIBLE);
             mContactTypeTv.setText("加工");
             mContactTypeTv.setBackgroundResource(R.drawable.bg_label_red);
+
         } else {
             mContactTypeTv.setVisibility(View.GONE);
         }
