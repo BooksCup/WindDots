@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.android.cache.Sp;
 
 /**
  * 实名认证
@@ -60,7 +61,7 @@ public class RealNameCertActivity extends BaseActivity {
         mPhoneEt.setText(mUser.getPhone());
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_verify_code})
+    @OnClick({R.id.iv_back, R.id.tv_verify_code, R.id.tv_submit})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
@@ -68,6 +69,9 @@ public class RealNameCertActivity extends BaseActivity {
                 break;
             case R.id.tv_verify_code:
                 realNameCert();
+                break;
+            case R.id.tv_submit:
+                checkVerifyCode();
                 break;
         }
     }
@@ -111,6 +115,55 @@ public class RealNameCertActivity extends BaseActivity {
             if (EContractApiResultEnum.SUCCESS.getCode() == eContractApiResult.getCode()) {
                 showToast("验证码已发送");
             } else {
+                showToast(eContractApiResult.getMessage());
+            }
+        }, volleyError -> {
+            hideLoadingDialog();
+            mVolleyUtil.handleCommonErrorResponse(RealNameCertActivity.this, volleyError);
+        });
+    }
+
+    /**
+     * 检查验证码
+     */
+    private void checkVerifyCode() {
+
+        String name = mNameEt.getText().toString().trim();
+        String idNumber = mIdNumberEt.getText().toString().trim();
+        String phone = mPhoneEt.getText().toString().trim();
+        String verifyCode = mVerifyCodeEt.getText().toString().trim();
+
+        if (TextUtils.isEmpty(name)) {
+            showToast("请输入真实姓名");
+            return;
+        }
+
+        if (TextUtils.isEmpty(idNumber)) {
+            showToast("请输入你的身份证号");
+            return;
+        }
+
+        if (TextUtils.isEmpty(phone)) {
+            showToast("请输入你的手机号");
+            return;
+        }
+
+        if (TextUtils.isEmpty(verifyCode)) {
+            showToast("请输入验证码");
+            return;
+        }
+
+        showLoadingDialog();
+
+        String url = Constant.APP_BASE_URL + "realNameCert/check?userId=" + mUser.getId() + "&code=" + verifyCode;
+
+        mVolleyUtil.httpGetRequest(url, response -> {
+            hideLoadingDialog();
+            EContractApiResult eContractApiResult = JSON.parseObject(response, EContractApiResult.class);
+            if (EContractApiResultEnum.SUCCESS.getCode() == eContractApiResult.getCode()) {
+                // 实名认证成功
+            } else {
+                // 实名认证失败
                 showToast(eContractApiResult.getMessage());
             }
         }, volleyError -> {

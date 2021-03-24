@@ -193,12 +193,22 @@ public class ContractActivity extends BaseActivity
         // 设置SelectPicPopupWindow弹出窗体动画效果
         mPopupWindow.setAnimationStyle(R.style.AnimationPreview);
 
+        // 发起合同
+        RelativeLayout mSendContractRl = mPopupView.findViewById(R.id.rl_send_contract);
+        mSendContractRl.setOnClickListener(v -> {
+            mPopupWindow.dismiss();
+            Intent intent = new Intent(ContractActivity.this, RealNameCertFinishActivity.class);
+            startActivity(intent);
+        });
+
         // 实名认证
         RelativeLayout mRealNameCertRl = mPopupView.findViewById(R.id.rl_real_name_cert);
         mRealNameCertRl.setOnClickListener(v -> {
+            mPopupWindow.dismiss();
             Intent intent = new Intent(ContractActivity.this, RealNameCertActivity.class);
             startActivity(intent);
         });
+
     }
 
 }
