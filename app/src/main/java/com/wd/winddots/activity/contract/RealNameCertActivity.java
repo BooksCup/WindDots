@@ -1,5 +1,6 @@
 package com.wd.winddots.activity.contract;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,7 +23,6 @@ import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jpush.android.cache.Sp;
 
 /**
  * 实名认证
@@ -162,6 +162,8 @@ public class RealNameCertActivity extends BaseActivity {
             EContractApiResult eContractApiResult = JSON.parseObject(response, EContractApiResult.class);
             if (EContractApiResultEnum.SUCCESS.getCode() == eContractApiResult.getCode()) {
                 // 实名认证成功
+                startActivity(new Intent(RealNameCertActivity.this, RealNameCertFinishActivity.class));
+                finish();
             } else {
                 // 实名认证失败
                 showToast(eContractApiResult.getMessage());
