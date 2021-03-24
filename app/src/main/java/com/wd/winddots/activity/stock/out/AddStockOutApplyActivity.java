@@ -211,7 +211,7 @@ public class AddStockOutApplyActivity extends BaseActivity implements StockApply
                         mDeleteGoodsIv.setVisibility(View.GONE);
                         mGoodsContentLl.setVisibility(View.GONE);
                         mGoodsId = "";
-                        mGoodsNameTv.setText("请选择入库物品");
+                        mGoodsNameTv.setText("请选择出库物品");
                         mGoodsNameTv.setTextColor(ContextCompat.getColor(AddStockOutApplyActivity.this, R.color.colorB2));
 
                         // 重置
@@ -432,7 +432,7 @@ public class AddStockOutApplyActivity extends BaseActivity implements StockApply
     private void addStockOutApply(String applyStatus) {
 
         if (TextUtils.isEmpty(mGoodsId)) {
-            showToast("请选择入库物品");
+            showToast("请选择出库物品");
             return;
         }
 
@@ -468,7 +468,7 @@ public class AddStockOutApplyActivity extends BaseActivity implements StockApply
                 // 保存至草稿
                 showToast("成功保存至草稿");
             } else {
-                // 提交入库单
+                // 提交出库单
                 showToast("出库单提交成功");
             }
             hideLoadingDialog();

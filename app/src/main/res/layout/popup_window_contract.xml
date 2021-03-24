@@ -73,6 +73,7 @@
             android:background="#191B1C" />
 
         <RelativeLayout
+            android:id="@+id/rl_real_name_cert"
             android:layout_width="match_parent"
             android:layout_height="48dp">
 

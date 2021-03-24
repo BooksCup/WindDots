@@ -53,6 +53,8 @@ public class StockInApply implements Serializable {
      */
     private List<StockApplicationInRecord> stockApplicationInRecordList;
 
+    private List<StockApplicationOutRecord> stockApplicationOutRecordList;
+
     public String getId() {
         return id;
     }
@@ -227,5 +229,9 @@ public class StockInApply implements Serializable {
 
     public void setStockApplicationInRecordList(List<StockApplicationInRecord> stockApplicationInRecordList) {
         this.stockApplicationInRecordList = stockApplicationInRecordList;
+    }
+
+    public void setStockApplicationOutRecordList(List<StockApplicationOutRecord> stockApplicationOutRecordList) {
+        this.stockApplicationOutRecordList = stockApplicationOutRecordList;
     }
 }

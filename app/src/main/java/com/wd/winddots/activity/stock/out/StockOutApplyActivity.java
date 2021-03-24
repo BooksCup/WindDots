@@ -61,7 +61,7 @@ public class StockOutApplyActivity extends BaseActivity
     int mPageSize = 10;
     List<StockOutApply> mStockOutApplyList = new ArrayList<>();
 
-    // 入库类型选择框
+    // 出库类型选择框
     private PopupWindow mPopupWindow;
     private View mPopupView;
 
@@ -202,7 +202,7 @@ public class StockOutApplyActivity extends BaseActivity
         // 设置SelectPicPopupWindow弹出窗体动画效果
         mPopupWindow.setAnimationStyle(R.style.AnimationPreview);
 
-        // 办公用品入库
+        // 办公用品出库
         RelativeLayout mOfficeSuppliesRl = mPopupView.findViewById(R.id.rl_office_supplies);
         mOfficeSuppliesRl.setOnClickListener(new View.OnClickListener() {
             @Override

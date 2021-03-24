@@ -1,11 +1,13 @@
 package com.wd.winddots.activity.contract;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -192,7 +194,11 @@ public class ContractActivity extends BaseActivity
         mPopupWindow.setAnimationStyle(R.style.AnimationPreview);
 
         // 实名认证
-
+        RelativeLayout mRealNameCertRl = mPopupView.findViewById(R.id.rl_real_name_cert);
+        mRealNameCertRl.setOnClickListener(v -> {
+            Intent intent = new Intent(ContractActivity.this, RealNameCertActivity.class);
+            startActivity(intent);
+        });
     }
 
 }

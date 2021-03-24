@@ -67,6 +67,9 @@ public class OfficeSuppliesOutApplyDetailActivity extends BaseActivity implement
     private static final int REQUEST_CODE_IMAGE_PICKER = 6;
     private static final int REQUEST_CODE_SCAN = 7;
 
+    @BindView(R.id.tv_goods_name_title)
+    TextView mGoodsNameTitleTv;
+
     @BindView(R.id.rl_goods)
     RelativeLayout mGoodsRl;
 
@@ -312,6 +315,9 @@ public class OfficeSuppliesOutApplyDetailActivity extends BaseActivity implement
 
 
     private void initView() {
+
+        mGoodsNameTitleTv.setText("出库物品");
+
         mStockOutApplyId = getIntent().getStringExtra("stockOutApplyId");
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
@@ -542,7 +548,7 @@ public class OfficeSuppliesOutApplyDetailActivity extends BaseActivity implement
                 // 保存至草稿
                 showToast("成功保存至草稿");
             } else {
-                // 提交入库单
+                // 提交出库单
                 showToast("出库单提交成功");
             }
             hideLoadingDialog();

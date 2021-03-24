@@ -35,8 +35,9 @@ import com.wd.winddots.adapter.stock.in.StockGoodsSpecAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Goods;
 import com.wd.winddots.entity.GoodsSpec;
-import com.wd.winddots.entity.StockApplicationInRecord;
+import com.wd.winddots.entity.StockApplicationOutRecord;
 import com.wd.winddots.entity.StockInApply;
+import com.wd.winddots.entity.StockOutApply;
 import com.wd.winddots.entity.WareHouse;
 import com.wd.winddots.enums.StockApplyStatusEnum;
 import com.wd.winddots.utils.BigDecimalUtil;
@@ -58,7 +59,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 办公用品入库详情
+ * 办公用品出库详情
  * (操作人控制台)
  *
  * @author zhou
@@ -218,7 +219,7 @@ public class OfficeSuppliesOutDetailActivity extends BaseActivity implements Sto
                 break;
             case R.id.tv_reject:
                 mConfirmDialog = new ConfirmDialog(this, "确认驳回",
-                        "是否确认驳回入库单？",
+                        "是否确认驳回出库单？",
                         "是", "否");
                 mConfirmDialog.setOnDialogClickListener(new ConfirmDialog.OnDialogClickListener() {
                     @Override
@@ -241,11 +242,11 @@ public class OfficeSuppliesOutDetailActivity extends BaseActivity implements Sto
                 break;
             case R.id.tv_confirm:
                 if (TextUtils.isEmpty(mWareHouseId)) {
-                    showToast("请选择入库仓库");
+                    showToast("请选择出库仓库");
                     return;
                 }
                 mConfirmDialog = new ConfirmDialog(this, "确认",
-                        "是否确认入库单？",
+                        "是否确认出库单？",
                         "是", "否");
                 mConfirmDialog.setOnDialogClickListener(new ConfirmDialog.OnDialogClickListener() {
                     @Override
@@ -388,10 +389,10 @@ public class OfficeSuppliesOutDetailActivity extends BaseActivity implements Sto
         String stockInfo;
         if (!TextUtils.isEmpty(goods.getGoodsUnit())) {
             stockInfo = goods.getStockNum() + goods.getGoodsUnit();
-            mApplyNumHeaderTv.setText("入库数量(" + goods.getGoodsUnit() + ")");
+            mApplyNumHeaderTv.setText("出库数量(" + goods.getGoodsUnit() + ")");
         } else {
             stockInfo = goods.getStockNum();
-            mApplyNumHeaderTv.setText("入库数量");
+            mApplyNumHeaderTv.setText("出库数量");
         }
 
         mGoodsInfoTv.setText(goodsInfo);
@@ -465,17 +466,17 @@ public class OfficeSuppliesOutDetailActivity extends BaseActivity implements Sto
     private void updateStockApplication(String applyStatus) {
 
         List<GoodsSpec> goodsSpecList = mStockGoodsSpecAdapter.getList();
-        List<StockApplicationInRecord> stockApplicationInRecordList = new ArrayList<>();
+        List<StockApplicationOutRecord> stockApplicationOutRecordList = new ArrayList<>();
         if (!StockApplyStatusEnum.STOCK_APPLY_STATUS_REJECT.getStatus().equals(applyStatus)) {
             // 确认
             for (GoodsSpec goodsSpec : goodsSpecList) {
-                StockApplicationInRecord in = new StockApplicationInRecord();
-                in.setGoodsSpecId(goodsSpec.getId());
-                in.setStockApplicationId(mStockInApplyId);
-                in.setWareHouseId(mWareHouseId);
-                in.setCount(goodsSpec.getApplyNum());
-                in.setResidualNumber(goodsSpec.getApplyNum());
-                stockApplicationInRecordList.add(in);
+                StockApplicationOutRecord out = new StockApplicationOutRecord();
+                out.setGoodsSpecId(goodsSpec.getId());
+                out.setStockApplicationId(mStockInApplyId);
+                out.setWareHouseId(mWareHouseId);
+                out.setCount(goodsSpec.getApplyNum());
+                out.setResidualNumber(goodsSpec.getApplyNum());
+                stockApplicationOutRecordList.add(out);
             }
         }
 
@@ -483,7 +484,7 @@ public class OfficeSuppliesOutDetailActivity extends BaseActivity implements Sto
 
         StockInApply stockInApply = new StockInApply();
         stockInApply.setApplyStatus(applyStatus);
-        stockInApply.setStockApplicationInRecordList(stockApplicationInRecordList);
+        stockInApply.setStockApplicationOutRecordList(stockApplicationOutRecordList);
 
 
         String url = Constant.APP_BASE_URL + "stockApplication/" + mStockInApplyId;
@@ -532,20 +533,20 @@ public class OfficeSuppliesOutDetailActivity extends BaseActivity implements Sto
         String url = Constant.APP_BASE_URL + "stockApplication/" + applyId;
         Log.e("console",url);
         mVolleyUtil.httpGetRequest(url, response -> {
-            StockInApply stockInApply;
+            StockOutApply stockOutApply;
             try {
-                stockInApply = JSON.parseObject(response, StockInApply.class);
+                stockOutApply = JSON.parseObject(response, StockOutApply.class);
             } catch (Exception e) {
-                stockInApply = null;
+                stockOutApply = null;
             }
-            Log.e("stockInApply", String.valueOf(stockInApply));
-            if (StockApplyStatusEnum.STOCK_APPLY_STATUS_CONFIRMED.getStatus().equals(stockInApply.getApplyStatus())) {
+            Log.e("stockInApply", String.valueOf(stockOutApply));
+            if (StockApplyStatusEnum.STOCK_APPLY_STATUS_CONFIRMED.getStatus().equals(stockOutApply.getApplyStatus())) {
                 mOperateLl.setVisibility(View.GONE);
                 mWareHouseLl.setClickable(false);
                 mGoodsRl.setClickable(false);
                 mGoodsContentLl.setClickable(false);
 
-                List<StockApplicationInRecord> inList = stockInApply.getStockApplicationInRecordList();
+                List<StockApplicationOutRecord> inList = stockOutApply.getStockApplicationOutRecordList();
                 if (!CollectionUtil.isEmpty(inList)) {
                     String wareHouseName = inList.get(0).getWareHouseName();
                     mWareHouseTv.setText(wareHouseName);
@@ -559,28 +560,28 @@ public class OfficeSuppliesOutDetailActivity extends BaseActivity implements Sto
                 mIsSkuEditable = true;
             }
 
-            if (null != stockInApply) {
-                renderGoodsView(CommonUtil.getGoodsFromStockInApply(stockInApply));
+            if (null != stockOutApply) {
+                renderGoodsView(CommonUtil.getGoodsFromStockOutApply(stockOutApply));
             }
-            mGoodsId = stockInApply.getStockGoodsId();
+            mGoodsId = stockOutApply.getStockGoodsId();
 
             mRemarkEt.setEnabled(false);
-            if (!TextUtils.isEmpty(stockInApply.getRemark())) {
-                mRemarkEt.setText(stockInApply.getRemark());
+            if (!TextUtils.isEmpty(stockOutApply.getRemark())) {
+                mRemarkEt.setText(stockOutApply.getRemark());
                 mRemarkEt.setTextColor(ContextCompat.getColor(this, R.color.color32));
             } else {
 //                mRemarkEt.setText(" ");
                 mRemarkLl.setVisibility(View.GONE);
                 mRemarkDividerView.setVisibility(View.GONE);
             }
-            mAuditorId = stockInApply.getAuditUserId();
-            mAuditorTv.setText(stockInApply.getAuditUserName());
+            mAuditorId = stockOutApply.getAuditUserId();
+            mAuditorTv.setText(stockOutApply.getAuditUserName());
             mAuditorTv.setTextColor(ContextCompat.getColor(this, R.color.color32));
 
-            mCreateUserTv.setText(stockInApply.getCreateUserName() + SPACE_SEPARATOR + stockInApply.getCreateTime());
+            mCreateUserTv.setText(stockOutApply.getCreateUserName() + SPACE_SEPARATOR + stockOutApply.getCreateTime());
 
             try {
-                mImageList = JSON.parseArray(stockInApply.getStockImg(), String.class);
+                mImageList = JSON.parseArray(stockOutApply.getStockImg(), String.class);
             } catch (Exception e) {
                 mImageList = new ArrayList<>();
             }
