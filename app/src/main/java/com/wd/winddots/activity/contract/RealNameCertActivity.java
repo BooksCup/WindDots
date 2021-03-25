@@ -162,6 +162,9 @@ public class RealNameCertActivity extends BaseActivity {
             EContractApiResult eContractApiResult = JSON.parseObject(response, EContractApiResult.class);
             if (EContractApiResultEnum.SUCCESS.getCode() == eContractApiResult.getCode()) {
                 // 实名认证成功
+                mUser.setIdNumber(idNumber);
+                mUser.setRealNameCertType(Constant.REAL_NAME_CERT_SUCCESS);
+                SpHelper.getInstance(this).setUser(mUser);
                 startActivity(new Intent(RealNameCertActivity.this, RealNameCertFinishActivity.class));
                 finish();
             } else {

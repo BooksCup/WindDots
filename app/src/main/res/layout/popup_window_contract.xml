@@ -84,9 +84,10 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:src="@mipmap/icon_popupwindow_real_name_cert" />
+                android:background="@mipmap/icon_popupwindow_real_name_cert" />
 
             <TextView
+                android:id="@+id/tv_real_name_cert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

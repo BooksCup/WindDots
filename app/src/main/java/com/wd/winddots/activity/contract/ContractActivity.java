@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -18,6 +19,8 @@ import com.wd.winddots.adapter.contract.ContractAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Contract;
 import com.wd.winddots.entity.PageInfo;
+import com.wd.winddots.entity.User;
+import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.VolleyUtil;
 
 import java.util.ArrayList;
@@ -60,8 +63,9 @@ public class ContractActivity extends BaseActivity
     List<Contract> mContractList = new ArrayList<>();
 
     // 入库类型选择框
-    private PopupWindow mPopupWindow;
-    private View mPopupView;
+    PopupWindow mPopupWindow;
+    View mPopupView;
+    User mUser;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +73,7 @@ public class ContractActivity extends BaseActivity
         setContentView(R.layout.activity_contract);
         ButterKnife.bind(this);
         mVolleyUtil = VolleyUtil.getInstance(this);
+        mUser = SpHelper.getInstance(this).getUser();
         initView();
         initListener();
     }
@@ -165,6 +170,8 @@ public class ContractActivity extends BaseActivity
         super.onResume();
         mPage = 1;
         getData();
+
+        mUser = SpHelper.getInstance(this).getUser();
     }
 
     /**
@@ -202,11 +209,27 @@ public class ContractActivity extends BaseActivity
         });
 
         // 实名认证
+        TextView mRealNameCertTv = mPopupView.findViewById(R.id.tv_real_name_cert);
+        if (Constant.REAL_NAME_CERT_SUCCESS.equals(mUser.getRealNameCertType())) {
+            // 已实名
+            mRealNameCertTv.setText("已实名");
+        } else {
+            // 未实名
+            mRealNameCertTv.setText("实名认证");
+        }
+
         RelativeLayout mRealNameCertRl = mPopupView.findViewById(R.id.rl_real_name_cert);
         mRealNameCertRl.setOnClickListener(v -> {
             mPopupWindow.dismiss();
-            Intent intent = new Intent(ContractActivity.this, RealNameCertActivity.class);
-            startActivity(intent);
+            if (Constant.REAL_NAME_CERT_SUCCESS.equals(mUser.getRealNameCertType())) {
+                // 已实名
+                Intent intent = new Intent(ContractActivity.this, RealNameCertSuccessActivity.class);
+                startActivity(intent);
+            } else {
+                // 未实名
+                Intent intent = new Intent(ContractActivity.this, RealNameCertActivity.class);
+                startActivity(intent);
+            }
         });
 
     }

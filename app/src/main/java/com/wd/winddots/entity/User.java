@@ -30,6 +30,13 @@ public class User implements Serializable {
     private boolean isDisable = false;
     private boolean select = false;
 
+    /**
+     * 电子合同平台的账号id
+     */
+    private String accountId;
+    private String realNameCertType;
+    private String idNumber;
+
     public String getId() {
         return id;
     }
@@ -140,6 +147,30 @@ public class User implements Serializable {
 
     public void setIsFabricCheckAdmin(String isFabricCheckAdmin) {
         this.isFabricCheckAdmin = isFabricCheckAdmin;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getRealNameCertType() {
+        return realNameCertType;
+    }
+
+    public void setRealNameCertType(String realNameCertType) {
+        this.realNameCertType = realNameCertType;
+    }
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
     }
 
     @Override
