@@ -170,14 +170,13 @@ public class ContractActivity extends BaseActivity
         super.onResume();
         mPage = 1;
         getData();
-
-        mUser = SpHelper.getInstance(this).getUser();
     }
 
     /**
      * 初始化弹出框
      */
     private void initPopupWindow() {
+        mUser = SpHelper.getInstance(this).getUser();
 
         mPopupView = View.inflate(this, R.layout.popup_window_contract, null);
         mPopupWindow = new PopupWindow();

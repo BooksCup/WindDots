@@ -39,14 +39,14 @@ public class WebViewActivity extends CommonActivity {
         mWebView = findViewById(R.id.webview);
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
-        if (!StringUtils.isNullOrEmpty(title)){
+        if (!StringUtils.isNullOrEmpty(title)) {
             setTitleText(title);
-        }else {
+        } else {
             setTitleText("网页");
         }
         String webUrl = intent.getStringExtra(Const.WEB_ACTIVITY_URL_INTENT);
-        if (webUrl.length() > 4){
-            if (!"http".equals(webUrl.substring(0,4))){
+        if (webUrl.length() > 4) {
+            if (!"http".equals(webUrl.substring(0, 4))) {
                 webUrl = "http://" + webUrl;
             }
         }
@@ -87,15 +87,10 @@ public class WebViewActivity extends CommonActivity {
         });
 
 
-
-
         if (intent != null) {
             String url = intent.getStringExtra("data");
 
         }
-
-
-
 
 
     }
