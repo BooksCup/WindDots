@@ -203,7 +203,7 @@ public class ContractActivity extends BaseActivity
         RelativeLayout mSendContractRl = mPopupView.findViewById(R.id.rl_send_contract);
         mSendContractRl.setOnClickListener(v -> {
             mPopupWindow.dismiss();
-            Intent intent = new Intent(ContractActivity.this, RealNameCertFinishActivity.class);
+            Intent intent = new Intent(ContractActivity.this, SendContractActivity.class);
             startActivity(intent);
         });
 

@@ -52,6 +52,7 @@ import com.wd.winddots.R;
 import com.wd.winddots.base.CommonActivity;
 import com.wd.winddots.components.users.UserInfoActivity;
 import com.wd.winddots.confifg.Const;
+import com.wd.winddots.cons.Constant;
 import com.wd.winddots.message.adapter.GroupChatBottomIconAdapter;
 import com.wd.winddots.message.bean.ChatBottomBean;
 import com.wd.winddots.message.bean.GroupChatHistoryBean;
@@ -65,7 +66,7 @@ import com.wd.winddots.message.record.RecordVoicePopWindow;
 import com.wd.winddots.message.record.audio.AudioPlayManager;
 import com.wd.winddots.message.record.audio.AudioRecordManager;
 import com.wd.winddots.message.record.audio.IAudioRecordListener;
-import com.wd.winddots.mvp.widget.WebViewActivity;
+import com.wd.winddots.activity.web.WebViewActivity;
 import com.wd.winddots.utils.CommonUtil;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.Utils;
@@ -745,14 +746,14 @@ public class GroupChatActivity extends CommonActivity<GroupChatView, GroupChatPr
         if (!TextUtils.isEmpty(sendText)) {
 
             List<Map> messageUserGroupDTOs = new ArrayList<>();
-            for (int i = 0;i < atList.size();i++){
+            for (int i = 0; i < atList.size(); i++) {
                 Map map = new HashMap();
                 GroupChatHistoryBean.AvatarMapBean avatarMapBean = atList.get(i);
-                map.put("userId",avatarMapBean.getId());
+                map.put("userId", avatarMapBean.getId());
                 messageUserGroupDTOs.add(map);
             }
             RequestBody body = Utils.list2requestBody(messageUserGroupDTOs);
-            presenter.atMembers(SpHelper.getInstance(mContext).getUserId(),mGroupId,body);
+            presenter.atMembers(SpHelper.getInstance(mContext).getUserId(), mGroupId, body);
             presenter.postText(SpHelper.getInstance(mContext).getUserId(), mGroupId, sendText, "group", "text");
             mEdtMessage.setText("");
             GroupChatHistoryBean.MessageListBean messageListBean = new GroupChatHistoryBean.MessageListBean();
@@ -798,29 +799,33 @@ public class GroupChatActivity extends CommonActivity<GroupChatView, GroupChatPr
     @Override
     public void postMessageSuccess() {
     }
+
     @Override
     public void postMessageError() {
     }
+
     @Override
     public void postMessageComplete() {
     }
 
     /*
-    * 发送语音
-    * */
+     * 发送语音
+     * */
     @Override
     public void postVoiceSuccess(String data) {
     }
+
     @Override
     public void postVoiceError(String errMsg) {
     }
 
     /*
-    * 发送图片
-    * */
+     * 发送图片
+     * */
     @Override
     public void postImageSuccess(String data) {
     }
+
     @Override
     public void postImageError(String errMsg) {
     }
@@ -1171,7 +1176,7 @@ public class GroupChatActivity extends CommonActivity<GroupChatView, GroupChatPr
                 Gson gson = new Gson();
                 GroupChatMsgModeBean.CustomMessageBean customMessageBean = gson.fromJson(body, GroupChatMsgModeBean.CustomMessageBean.class);
                 Intent intent = new Intent(mContext, WebViewActivity.class);
-                intent.putExtra(Const.WEB_ACTIVITY_URL_INTENT, customMessageBean.getExtras().getUrl());
+                intent.putExtra(Constant.WEB_ACTIVITY_URL_INTENT, customMessageBean.getExtras().getUrl());
                 intent.putExtra("title", customMessageBean.getText());
                 startActivity(intent);
             }
@@ -1368,7 +1373,6 @@ public class GroupChatActivity extends CommonActivity<GroupChatView, GroupChatPr
     }
 
 
-
     /**
      * 初始化音频播放管理对象
      */
@@ -1431,13 +1435,13 @@ public class GroupChatActivity extends CommonActivity<GroupChatView, GroupChatPr
                         meidaPlayer.setDataSource(file.getPath());
                         meidaPlayer.prepare();
                         long time = meidaPlayer.getDuration();
-                        long seconds = time % 60000 ;
-                        int second = Math.round((float)seconds/1000);
+                        long seconds = time % 60000;
+                        int second = Math.round((float) seconds / 1000);
                         messageListBean.setAudioLength(second);
                         // showToast(second + "");
                         mAdapter.addData(messageListBean);
                         mRecyclerView.scrollToPosition(messageList.size());
-                        presenter.postVoice(body,SpHelper.getInstance(mContext).getUserId(),mGroupId,second);
+                        presenter.postVoice(body, SpHelper.getInstance(mContext).getUserId(), mGroupId, second);
                     } catch (Exception e) {
 
                     }
@@ -1511,7 +1515,6 @@ public class GroupChatActivity extends CommonActivity<GroupChatView, GroupChatPr
     public void stopRecord() {
         AudioRecordManager.getInstance(mContext).stopRecord();
     }
-
 
 
     private static class BottomItemAdapter extends BaseQuickAdapter<ChatBottomBean.ChatBottomItem, BaseViewHolder> {

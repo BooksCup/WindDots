@@ -329,7 +329,7 @@
 <!--            android:textSize="15sp" />-->
 
         <TextView
-            android:id="@+id/tv_submit"
+            android:id="@+id/tv_send_contract"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="2dp"

@@ -187,7 +187,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".mvp.widget.WebViewActivity"
+            android:name=".activity.web.WebViewActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
@@ -353,6 +353,11 @@
 
         <activity
             android:name=".activity.contract.RealNameCertActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".activity.contract.SendContractActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 

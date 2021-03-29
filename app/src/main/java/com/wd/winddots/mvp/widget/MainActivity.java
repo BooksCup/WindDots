@@ -32,9 +32,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.zxing.client.android.CaptureActivity;
 import com.wd.winddots.R;
+import com.wd.winddots.activity.web.WebViewActivity;
 import com.wd.winddots.base.BaseMvpActivity;
 import com.wd.winddots.bean.resp.UpgradeBean;
-import com.wd.winddots.confifg.Const;
+import com.wd.winddots.cons.Constant;
 import com.wd.winddots.desktop.list.invoice.activity.InvoiceDetailActivity;
 import com.wd.winddots.desktop.list.invoice.bean.InvoiceDetailBean;
 import com.wd.winddots.fast.activity.MeAttendanceActivity;
@@ -553,7 +554,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
 
         if (resultStr.length() > 4 && "http".equals(resultStr.substring(0, 4))) {
             Intent intent = new Intent(mContext, WebViewActivity.class);
-            intent.putExtra(Const.WEB_ACTIVITY_URL_INTENT, resultStr);
+            intent.putExtra(Constant.WEB_ACTIVITY_URL_INTENT, resultStr);
             startActivity(intent);
         } else {
 

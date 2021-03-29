@@ -30,6 +30,7 @@ import com.wd.winddots.activity.work.DeliveryActivity;
 import com.wd.winddots.base.BaseFragment;
 
 import com.wd.winddots.confifg.Const;
+import com.wd.winddots.cons.Constant;
 import com.wd.winddots.desktop.activity.StoreActivity;
 import com.wd.winddots.desktop.bean.DesktopListBean;
 import com.wd.winddots.desktop.adapter.WorkAdapter;
@@ -52,7 +53,7 @@ import com.wd.winddots.fast.activity.MeAttendanceActivity;
 import com.wd.winddots.fast.activity.MineClaimingActivity;
 import com.wd.winddots.mvp.listener.MainActivityDispatchEventListener;
 import com.wd.winddots.mvp.widget.MainActivity;
-import com.wd.winddots.mvp.widget.WebViewActivity;
+import com.wd.winddots.activity.web.WebViewActivity;
 import com.wd.winddots.net.ElseDataManager;
 import com.wd.winddots.net.msg.MsgDataManager;
 import com.wd.winddots.utils.SpHelper;
@@ -960,7 +961,6 @@ public class WorkFragment extends BaseFragment<WorkView, WorkPresenterImpl>
             onRefresh();
         }
 
-
         if (data == null) {
             return;
         }
@@ -972,7 +972,7 @@ public class WorkFragment extends BaseFragment<WorkView, WorkPresenterImpl>
         if (requestCode == REQUEST_CODE_SCAN){
             if (resultStr.length() > 4 && "http".equals(resultStr.substring(0, 4))) {
                 Intent intent = new Intent(mContext, WebViewActivity.class);
-                intent.putExtra(Const.WEB_ACTIVITY_URL_INTENT, resultStr);
+                intent.putExtra(Constant.WEB_ACTIVITY_URL_INTENT, resultStr);
                 startActivity(intent);
             } else {
 

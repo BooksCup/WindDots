@@ -33,10 +33,4 @@ public interface Const {
     String COLOR_BLUE = "#33B3EA";
     String COLOR_ACCENT = "#D22B34";
 
-    /*
-    * 网页链接 intent 传值
-    * */
-    String WEB_ACTIVITY_URL_INTENT = "WEB_ACTIVITY_URL_INTENT";
-
-
 }
