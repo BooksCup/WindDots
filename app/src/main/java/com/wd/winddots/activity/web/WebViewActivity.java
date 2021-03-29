@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -18,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * webview
@@ -41,6 +43,15 @@ public class WebViewActivity extends BaseActivity {
         setContentView(R.layout.activity_webview);
         ButterKnife.bind(this);
         initView();
+    }
+
+    @OnClick({R.id.iv_back})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
