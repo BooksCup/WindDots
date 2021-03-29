@@ -15,6 +15,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
+import com.wd.winddots.activity.web.WebViewActivity;
 import com.wd.winddots.adapter.contract.ContractAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Contract;
@@ -163,6 +164,11 @@ public class ContractActivity extends BaseActivity
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        Contract contract = mContractList.get(position);
+        Intent intent = new Intent(this, WebViewActivity.class);
+        intent.putExtra(Constant.WEB_ACTIVITY_URL_INTENT, Constant.WEB_VIEW_BASE_URL + "contract/" + contract.getId());
+        intent.putExtra("title", contract.getContractNo());
+        startActivity(intent);
     }
 
     @Override

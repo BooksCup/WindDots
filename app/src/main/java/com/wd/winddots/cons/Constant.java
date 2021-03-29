@@ -14,6 +14,8 @@ public class Constant {
 //        public static final String APP_BASE_URL = "http://115.159.201.120:8085/";
     public static final String APP_BASE_URL_ELSE = "http://42.192.134.170/";
 
+    public static final String WEB_VIEW_BASE_URL = "http://42.192.167.215/";
+
     /**
      * 网页链接intent传值
      */

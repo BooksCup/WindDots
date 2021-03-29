@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
@@ -24,8 +26,14 @@ import butterknife.ButterKnife;
  */
 public class WebViewActivity extends BaseActivity {
 
+    @BindView(R.id.tv_title)
+    TextView mTitleTv;
+
     @BindView(R.id.wv_content)
     WebView mContentWv;
+
+    String mUrl;
+    String mTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,21 +46,29 @@ public class WebViewActivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void initView() {
         Intent intent = getIntent();
-        String webUrl = intent.getStringExtra(Constant.WEB_ACTIVITY_URL_INTENT);
-        if (!webUrl.startsWith(Constant.HTTP_PROTOCOL_PREFIX)){
-            webUrl = "http://" + webUrl;
+        mTitle = intent.getStringExtra("title");
+        mUrl = intent.getStringExtra(Constant.WEB_ACTIVITY_URL_INTENT);
+
+        if (TextUtils.isEmpty(mTitle)) {
+            mTitleTv.setText("网页");
+        } else {
+            mTitleTv.setText(mTitle);
+        }
+
+        if (!mUrl.startsWith(Constant.HTTP_PROTOCOL_PREFIX)) {
+            mUrl = "http://" + mUrl;
         }
 
         WebSettings settings = mContentWv.getSettings();
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
-        settings.setSupportZoom(true);
-        settings.setBuiltInZoomControls(true);
+        settings.setSupportZoom(false);
+        settings.setBuiltInZoomControls(false);
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setAllowFileAccessFromFileURLs(true);
 
-        mContentWv.loadUrl(webUrl);
+        mContentWv.loadUrl(mUrl);
         // 系统默认会通过手机浏览器打开网页，为了能够直接通过WebView显示网页，则必须设置
         mContentWv.setWebViewClient(new WebViewClient() {
 
@@ -78,8 +94,5 @@ public class WebViewActivity extends BaseActivity {
 
         });
 
-        if (intent != null) {
-            String url = intent.getStringExtra("data");
-        }
     }
 }
