@@ -46,7 +46,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.goods.GoodsActivity"></activity>
+        <activity android:name=".activity.goods.GoodsActivity" />
         <activity android:name=".activity.order.OrderActivity" />
 
         <uses-library
@@ -336,7 +336,6 @@
             android:name=".desktop.list.check.activity.CheckDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-
         <activity
             android:name=".desktop.list.check.activity.CheckQuestionActivity"
             android:screenOrientation="portrait"
@@ -345,19 +344,20 @@
             android:name=".desktop.list.check.activity.EditQuestionActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".activity.contract.ContractActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-
         <activity
             android:name=".activity.contract.RealNameCertActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".activity.contract.SendContractActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.select.SelectContractActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
@@ -365,12 +365,10 @@
             android:name=".activity.contract.RealNameCertFinishActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-
         <activity
             android:name=".activity.contract.RealNameCertSuccessActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-
         <activity
             android:name=".activity.select.SelectRelatedCompanyActivity"
             android:screenOrientation="portrait"
@@ -464,22 +462,18 @@
             android:name=".activity.stock.in.AddStockInApplyActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".activity.stock.in.AddOfficeSuppliesInActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".activity.stock.in.OfficeSuppliesInApplyDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".activity.stock.in.OfficeSuppliesInDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".activity.stock.in.StockInDetailActivity"
             android:screenOrientation="portrait"
@@ -500,17 +494,14 @@
             android:name=".activity.stock.out.AddOfficeSuppliesOutActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".activity.stock.out.OfficeSuppliesOutApplyDetailActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <!--        // mars-->
+            android:windowSoftInputMode="adjustPan" /> <!-- // mars -->
         <activity
             android:name=".activity.stock.out.OfficeSuppliesOutDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".activity.work.QueryGoodsActivity"
             android:screenOrientation="portrait"
@@ -582,45 +573,41 @@
         <service
             android:name="cn.jpush.android.service.PushService"
             android:process=":multiprocess"
-            tools:node="replace"></service>
-
-        <!--极光推送接收消息-->
+            tools:node="replace" /> <!-- 极光推送接收消息 -->
         <receiver
-            android:name="com.wd.winddots.jpush.NotifyReceiver"
+            android:name=".jpush.NotifyReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
-                <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <category android:name="com.cfp.wading" />
             </intent-filter>
-        </receiver>
-        <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调-->
-        <receiver android:name="com.wd.winddots.jpush.JPushMessageReceiver">
+        </receiver> <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调 -->
+        <receiver android:name=".jpush.JPushMessageReceiver">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
-                <category android:name="com.cfp.wading"></category>
+
+                <category android:name="com.cfp.wading" />
             </intent-filter>
-        </receiver>
-        <!-- 这个Service要继承JCommonService -->
+        </receiver> <!-- 这个Service要继承JCommonService -->
         <service
-            android:name="com.wd.winddots.service.JPushService"
+            android:name=".service.JPushService"
             android:process=":pushcore">
             <intent-filter>
                 <action android:name="cn.jiguang.user.service.action" />
             </intent-filter>
-        </service>
-
-        <!-- Required SDK核心功能-->
+        </service> <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter android:priority="1000">
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+
                 <category android:name="com.cfp.wading" />
             </intent-filter>
             <intent-filter>
@@ -634,13 +621,10 @@
 
                 <data android:scheme="package" />
             </intent-filter>
-        </receiver>
-
-        <!-- Required SDK核心功能-->
+        </receiver> <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.AlarmReceiver"
-            android:exported="false" />
-        <!-- Required SDK核心功能-->
+            android:exported="false" /> <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.im.android.helpers.IMReceiver"
             android:enabled="true"
@@ -652,7 +636,6 @@
                 <category android:name="com.cfp.wading" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

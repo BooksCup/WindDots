@@ -16,6 +16,7 @@ import com.wd.winddots.entity.User;
 import com.wd.winddots.enums.ResponseMsgEnum;
 import com.wd.winddots.mvp.widget.MainActivity;
 import com.wd.winddots.utils.MD5Util;
+import com.wd.winddots.utils.RegexUtil;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.VolleyUtil;
 
@@ -67,11 +68,17 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 进入注册页
+     */
     private void register() {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * 登录
+     */
     private void login() {
         String phone = mPhoneEt.getText().toString().trim();
         String password = mPasswordEt.getText().toString().trim();
@@ -79,6 +86,11 @@ public class LoginActivity extends BaseActivity {
         if (TextUtils.isEmpty(phone) || TextUtils.isEmpty(password)) {
             showToast("手机号或密码不能为空!");
         } else {
+            if (!RegexUtil.validateMobilePhone(phone)) {
+                showToast("手机号格式错误");
+                return;
+            }
+
             showLoadingDialog();
             String url = Constant.APP_BASE_URL + "user/login";
             Map<String, String> paramMap = new HashMap<>();

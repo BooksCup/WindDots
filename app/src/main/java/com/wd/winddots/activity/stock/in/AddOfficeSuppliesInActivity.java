@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.zxing.client.android.CaptureActivity2;
 import com.huantansheng.easyphotos.EasyPhotos;
@@ -24,7 +23,6 @@ import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.select.SelectGoodsActivity;
 import com.wd.winddots.activity.select.SelectSingleUserActivity;
 import com.wd.winddots.activity.work.GlideEngine;
-import com.wd.winddots.adapter.check.fabric.FabricCheckProblemAdapter;
 import com.wd.winddots.adapter.image.ImagePickerAdapter;
 import com.wd.winddots.adapter.stock.in.StockApplyGoodsSpecAdapter;
 import com.wd.winddots.cons.Constant;
@@ -74,7 +72,6 @@ public class AddOfficeSuppliesInActivity extends BaseActivity implements StockAp
     private static final int REQUEST_CODE_COPY = 5;
     private static final int REQUEST_CODE_IMAGE_PICKER = 6;
     private static final int REQUEST_CODE_SCAN = 7;
-
 
     @BindView(R.id.tv_goods_name)
     TextView mGoodsNameTv;

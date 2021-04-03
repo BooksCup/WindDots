@@ -167,7 +167,8 @@ public class ContractActivity extends BaseActivity
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Contract contract = mContractList.get(position);
         Intent intent = new Intent(this, WebViewActivity.class);
-        intent.putExtra(Constant.WEB_ACTIVITY_URL_INTENT, Constant.WEB_VIEW_BASE_URL + "contract/" + contract.getId());
+        intent.putExtra(Constant.WEB_ACTIVITY_URL_INTENT,
+                Constant.WEB_VIEW_BASE_URL + "econtract/#/" + contract.getId() + "?enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId());
         intent.putExtra("title", contract.getContractNo());
         startActivity(intent);
     }
