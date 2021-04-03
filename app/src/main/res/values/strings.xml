@@ -390,4 +390,7 @@
     <string name="login_phone_hint">请输入手机号</string>
     <string name="login_pwd_hint">请输入密码</string>
 
+    <!--  linkman -->
+    <string name="add_linkman_success">添加联系人成功</string>
+
 </resources>

@@ -95,4 +95,7 @@
     <color name="tag_orange">#FF9800</color>
     <color name="tag_red">#D22B34</color>
 
+    <color name="title_start">#54A3F7</color>
+    <color name="title_end">#4671F7</color>
+
 </resources>

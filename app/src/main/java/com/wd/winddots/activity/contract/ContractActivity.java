@@ -215,6 +215,14 @@ public class ContractActivity extends BaseActivity
             startActivity(intent);
         });
 
+        //联系人管理
+        RelativeLayout mContactManagementRl = mPopupView.findViewById(R.id.rl_contact_management);
+        mContactManagementRl.setOnClickListener(v -> {
+            mPopupWindow.dismiss();
+            Intent intent = new Intent(ContractActivity.this, LinkmanActivity.class);
+            startActivity(intent);
+        });
+
         // 实名认证
         TextView mRealNameCertTv = mPopupView.findViewById(R.id.tv_real_name_cert);
         if (Constant.REAL_NAME_CERT_SUCCESS.equals(mUser.getRealNameCertType())) {
