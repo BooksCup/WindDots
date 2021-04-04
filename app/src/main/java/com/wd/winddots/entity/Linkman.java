@@ -10,7 +10,7 @@ public class Linkman implements Serializable {
     String name;
     String phone;
     String email;
-    String company;
+    String companyName;
     String remark;
 
     public String getName() {
@@ -37,12 +37,12 @@ public class Linkman implements Serializable {
         this.email = email;
     }
 
-    public String getCompany() {
-        return company;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public String getRemark() {
@@ -59,7 +59,7 @@ public class Linkman implements Serializable {
                 "name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
-                ", company='" + company + '\'' +
+                ", companyName='" + companyName + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

@@ -2,8 +2,6 @@ package com.wd.winddots.activity.select;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -11,7 +9,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
-import com.wd.winddots.adapter.contract.SignContractAdapter;
+import com.wd.winddots.adapter.select.SelectContractAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Contract;
 import com.wd.winddots.entity.PageInfo;
@@ -37,7 +35,7 @@ import butterknife.OnClick;
  */
 public class SelectContractActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.RequestLoadMoreListener {
 
-    static String TAG = "SignContractActivity";
+    static String TAG = "SelectContractActivity";
     @BindView(R.id.rv_contract)
     RecyclerView mContractRv;
 
@@ -48,7 +46,7 @@ public class SelectContractActivity extends BaseActivity implements SwipeRefresh
     int mPage = 1;
     int mPageSize = 10;
     VolleyUtil mVolleyUtil;
-    SignContractAdapter mAdapter;
+    SelectContractAdapter mAdapter;
     List<Contract> mContractList = new ArrayList<>();
 
     @Override
@@ -66,7 +64,7 @@ public class SelectContractActivity extends BaseActivity implements SwipeRefresh
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mContractRv.setLayoutManager(layoutManager);
         mContractRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mAdapter = new SignContractAdapter(this, R.layout.item_select_contract, mContractList);
+        mAdapter = new SelectContractAdapter(this, R.layout.item_select_contract, mContractList);
         mContractRv.setAdapter(mAdapter);
         getData();
     }
@@ -148,7 +146,6 @@ public class SelectContractActivity extends BaseActivity implements SwipeRefresh
     @Override
     protected void onResume() {
         super.onResume();
-        getData();
     }
 
     @Override

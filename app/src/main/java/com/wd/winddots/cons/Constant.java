@@ -9,8 +9,8 @@ public interface Constant {
 
     //172.168.0.93:8086
     //http://115.159.201.120:8085/
-    String APP_BASE_URL = "http://115.159.201.120:8085/";
-//    public static final String APP_BASE_URL =  "http://172.168.0.145:8085/";
+//    String APP_BASE_URL = "http://115.159.201.120:8085/";
+    public static final String APP_BASE_URL =  "http://172.168.0.145:8085/";
 
     //        public static final String APP_BASE_URL = "http://115.159.201.120:8085/";
     String APP_BASE_URL_ELSE = "http://42.192.134.170/";

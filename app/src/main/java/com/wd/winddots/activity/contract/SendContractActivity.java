@@ -3,6 +3,7 @@ package com.wd.winddots.activity.contract;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -10,13 +11,15 @@ import android.widget.TextView;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.select.SelectContractActivity;
-import com.wd.winddots.activity.web.WebViewActivity;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Contract;
+import com.wd.winddots.utils.VolleyUtil;
 
 import androidx.annotation.Nullable;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +38,9 @@ public class SendContractActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView mTitleTv;
 
+    @BindView(R.id.tv_select_contract)
+    TextView mSelectContractTv;
+
     // 签署方
     @BindView(R.id.tv_signer)
     TextView mSignerTv;
@@ -51,11 +57,15 @@ public class SendContractActivity extends BaseActivity {
     @BindView(R.id.tv_contract_validity)
     TextView mContractValidityTv;
 
+    String mContractId;
+    VolleyUtil mVolleyUtil;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_contract);
         ButterKnife.bind(this);
+        mVolleyUtil = VolleyUtil.getInstance(this);
     }
 
     @OnClick({R.id.iv_back, R.id.ll_select_contract, R.id.ll_signer,
@@ -83,9 +93,7 @@ public class SendContractActivity extends BaseActivity {
                 break;
             case R.id.tv_send_contract:
                 // 发起合同
-                intent = new Intent(SendContractActivity.this, WebViewActivity.class);
-                intent.putExtra(Constant.WEB_ACTIVITY_URL_INTENT, "www.baidu.com");
-                startActivity(intent);
+                sendContract();
                 break;
         }
     }
@@ -107,7 +115,11 @@ public class SendContractActivity extends BaseActivity {
                     // 物品
                     if (null != data) {
                         Contract contract = (Contract) data.getSerializableExtra("contract");
-                        mTitleTv.setText(contract.getContractNo());
+                        mSelectContractTv.setText(contract.getContractNo());
+                        if (!TextUtils.isEmpty(contract.getThemeTitleStr())){
+                            mSubjectEt.setText(contract.getThemeTitleStr());
+                        }
+                        mContractId = contract.getId();
                     }
                     break;
             }
@@ -128,4 +140,34 @@ public class SendContractActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+    private void sendContract() {
+        String subject = mSubjectEt.getText().toString().trim();
+        if (TextUtils.isEmpty(mContractId)) {
+            showToast("请选择签署合同");
+            return;
+        }
+
+        if (TextUtils.isEmpty(subject)) {
+            showToast("请选择文件主题");
+            return;
+        }
+        showLoadingDialog();
+
+        String url = Constant.APP_BASE_URL + "electronicContract/signFlow";
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("subject", subject);
+        paramMap.put("contractId", mContractId);
+        paramMap.put("signerPhone", "13770519290");
+        paramMap.put("sealId", "123");
+
+        mVolleyUtil.httpPostRequest(url, paramMap, response -> {
+            hideLoadingDialog();
+            showToast("合同发送成功");
+        }, volleyError -> {
+            hideLoadingDialog();
+            mVolleyUtil.handleCommonErrorResponse(SendContractActivity.this, volleyError);
+        });
+    }
+
 }

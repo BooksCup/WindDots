@@ -18,7 +18,6 @@ import com.wd.winddots.adapter.contract.LinkmanAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Linkman;
 import com.wd.winddots.entity.PageInfo;
-import com.wd.winddots.entity.User;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.VolleyUtil;
 
@@ -63,7 +62,7 @@ public class LinkmanActivity extends BaseActivity implements
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mLinkmanRv.setLayoutManager(layoutManager);
         mLinkmanRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mAdapter = new LinkmanAdapter(this, R.layout.item_list_linkman, mLinkmanList);
+        mAdapter = new LinkmanAdapter(this, R.layout.item_linkman, mLinkmanList);
         mLinkmanRv.setAdapter(mAdapter);
         getData();
     }
@@ -141,7 +140,7 @@ public class LinkmanActivity extends BaseActivity implements
     }
 
     @Override
-    public void onLoadMoreRequested() throws InterruptedException {
+    public void onLoadMoreRequested() {
         if (mLinkmanSrl.isRefreshing()) {
             return;
         }

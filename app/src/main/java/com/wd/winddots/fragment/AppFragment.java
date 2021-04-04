@@ -32,8 +32,6 @@ import com.wd.winddots.activity.work.DeliveryActivity;
 import com.wd.winddots.adapter.work.AppAdapter;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.desktop.list.card.activity.FriendListActivity;
-import com.wd.winddots.desktop.list.contact.activity.ContactListActivity;
-import com.wd.winddots.desktop.list.goods.activity.GoodsListActivity;
 import com.wd.winddots.desktop.list.invoice.activity.InvoiceListActivity;
 import com.wd.winddots.desktop.list.quote.activity.QuoteListActivity;
 import com.wd.winddots.desktop.list.requirement.activity.RequirementActivity;
@@ -236,7 +234,6 @@ public class AppFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 break;
             case "Contract":
                 // 合同
-//                intent = new Intent(getActivity(), ContactListActivity.class);
                 intent = new Intent(getActivity(), ContractActivity.class);
                 startActivity(intent);
                 break;

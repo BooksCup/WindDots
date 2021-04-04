@@ -1,6 +1,5 @@
 package com.wd.winddots.adapter.select;
 
-
 import android.net.Uri;
 import android.text.TextUtils;
 

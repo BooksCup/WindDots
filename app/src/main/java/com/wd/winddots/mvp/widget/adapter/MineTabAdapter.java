@@ -4,9 +4,6 @@ import android.view.ViewGroup;
 
 import com.wd.winddots.base.BaseFragment;
 import com.wd.winddots.desktop.fragment.MineInfoFragment;
-import com.wd.winddots.message.fragment.ExamineApproveTabFragment;
-import com.wd.winddots.message.fragment.GroupChatTabFragment;
-import com.wd.winddots.message.fragment.PrivateChatTabFragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -14,14 +11,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 /**
- * FileName: MineTabAdapter
- * Author: 郑
- * Date: 2020/9/3 11:17 AM
- * Description:
+ * 我
+ *
+ * @author zhou
  */
 public class MineTabAdapter extends FragmentPagerAdapter {
 
-    private String[] homeTitles = new String[]{"我系"};
+    private String[] homeTitles = new String[]{"我"};
 
     private BaseFragment[] mBaseFragments = new BaseFragment[homeTitles.length];
 
@@ -51,7 +47,6 @@ public class MineTabAdapter extends FragmentPagerAdapter {
         return homeTitles[position];
     }
 
-    // TODO: 2020/04/07  删除父类方法 防止销毁之前的pager
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
 

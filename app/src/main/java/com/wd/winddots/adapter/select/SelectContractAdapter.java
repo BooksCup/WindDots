@@ -1,11 +1,9 @@
-package com.wd.winddots.adapter.contract;
+package com.wd.winddots.adapter.select;
 
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -13,12 +11,16 @@ import com.wd.winddots.R;
 import com.wd.winddots.entity.Contract;
 import com.wd.winddots.enums.ContactTypeEnum;
 import com.wd.winddots.enums.CurrencyEnum;
-import com.wd.winddots.enums.SendStatusEnum;
 import com.wd.winddots.utils.TimeUtil;
 
 import java.util.List;
 
-public class SignContractAdapter extends BaseQuickAdapter<Contract, BaseViewHolder> {
+import androidx.annotation.Nullable;
+
+/**
+ * 选择合同
+ */
+public class SelectContractAdapter extends BaseQuickAdapter<Contract, BaseViewHolder> {
 
     private String mKeyword;
 
@@ -26,7 +28,7 @@ public class SignContractAdapter extends BaseQuickAdapter<Contract, BaseViewHold
         this.mKeyword = keyword;
     }
 
-    public SignContractAdapter(Context context, int layoutResId, @Nullable List<Contract> data) {
+    public SelectContractAdapter(Context context, int layoutResId, @Nullable List<Contract> data) {
         super(layoutResId, data);
         mContext = context;
     }
@@ -54,7 +56,7 @@ public class SignContractAdapter extends BaseQuickAdapter<Contract, BaseViewHold
         mContactTypeTv.setVisibility(View.GONE);//合同类型
         TextView mSendStatusTv = helper.getView(R.id.tv_send_status);
         mSendStatusTv.setVisibility(View.GONE);//发送状态
-        /*if (ContactTypeEnum.SELL.getCode().equals(item.getContractType())) {
+        if (ContactTypeEnum.SELL.getCode().equals(item.getContractType())) {
             // 销售合同
             mContactTypeTv.setVisibility(View.VISIBLE);
             mContactTypeTv.setText("销售");
@@ -74,7 +76,7 @@ public class SignContractAdapter extends BaseQuickAdapter<Contract, BaseViewHold
 
         } else {
             mContactTypeTv.setVisibility(View.GONE);
-        }*/
+        }
 
         // 发送状态
        /* if (SendStatusEnum.UN_SENT.getCode().equals(item.getSendStatus())) {
