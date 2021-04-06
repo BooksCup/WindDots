@@ -70,7 +70,9 @@ public class FabricCheckTaskLotBrowseAdapter extends BaseQuickAdapter<FabricChec
                 + Utils.numberNullOrEmpty(item.getLengthAfterTotal()) + "/"
                 + Utils.numberNullOrEmpty(item.getLengthBeforeTotal());
         helper.setText(R.id.tv_date,Utils.nullOrEmpty(item.getDeliveryDate()))
-        .setText(R.id.tv_total,total);
+        .setText(R.id.tv_total,total)
+        .setText(R.id.tv_machine,Utils.nullOrEmpty(item.getMachineNumber()))
+        .setText(R.id.tv_number,Utils.nullOrEmpty(item.getPalletNumber()));
 
 
     }

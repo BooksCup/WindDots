@@ -45,6 +45,19 @@ public class FabricCheckProblemBrowseActivity extends BaseActivity implements Fa
     @BindView(R.id.tv_title)
     TextView mTitleTv;
 
+    @BindView(R.id.tv_width_top)
+    TextView mTopWidthTv;
+
+    @BindView(R.id.tv_width_middle)
+    TextView mMiddleWidthTv;
+
+    @BindView(R.id.tv_width_bottom)
+    TextView mBottomWidthTv;
+
+    @BindView(R.id.tv_remark)
+    TextView mRemarkTv;
+
+
     @BindView(R.id.et_position)
     TextView mPositionEt;
 
@@ -123,6 +136,12 @@ public class FabricCheckProblemBrowseActivity extends BaseActivity implements Fa
             Log.e("net666", response);
             FabricCheckProblemBean bean = JSON.parseObject(response,FabricCheckProblemBean.class);
 
+            FabricCheckProblemBean.FabricCheckWidth fabricCheckWidth = bean.getFabricCheckRecord();
+            if (null != fabricCheckWidth){
+                mTopWidthTv.setText(Utils.nullOrEmpty(fabricCheckWidth.getWidthTop()));
+                mMiddleWidthTv.setText(Utils.nullOrEmpty(fabricCheckWidth.getWidthMiddle()));
+                mBottomWidthTv.setText(Utils.nullOrEmpty(fabricCheckWidth.getWidthBottom()));
+            }
 
             List<FabricCheckTaskRecordPosition> problemVoList = bean.getFabricCheckRecordProblemPositionList();
             if (problemVoList == null || problemVoList.size() == 0){
@@ -161,6 +180,7 @@ public class FabricCheckProblemBrowseActivity extends BaseActivity implements Fa
                 mCurrentPosition = mPisitionList.get(0);
                 mDataSource.addAll(mCurrentPosition.getFabricCheckRecordProblemList());
                 mPositionEt.setText(Utils.nullOrEmpty(mCurrentPosition.getProblemPosition()));
+                mRemarkTv.setText("备注信息:" + Utils.nullOrEmpty(mCurrentPosition.getRemark()));
                 mAdapter.notifyDataSetChanged();
             }
         }, volleyError -> {
@@ -184,6 +204,7 @@ public class FabricCheckProblemBrowseActivity extends BaseActivity implements Fa
         mCurrentPosition = mPisitionList.get(index);
         mAdapter.setNewData(mCurrentPosition.getFabricCheckRecordProblemList());
         mPositionEt.setText(mCurrentPosition.getProblemPosition());
+        mRemarkTv.setText("备注信息:" + Utils.nullOrEmpty(mCurrentPosition.getRemark()));
     }
 
     /*
@@ -200,6 +221,7 @@ public class FabricCheckProblemBrowseActivity extends BaseActivity implements Fa
         mCurrentPosition = mPisitionList.get(index);
         mAdapter.setNewData(mCurrentPosition.getFabricCheckRecordProblemList());
         mPositionEt.setText(mCurrentPosition.getProblemPosition());
+        mRemarkTv.setText("备注信息:" + Utils.nullOrEmpty(mCurrentPosition.getRemark()));
     }
 
     @Override

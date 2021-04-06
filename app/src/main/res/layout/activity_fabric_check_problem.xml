@@ -49,15 +49,14 @@
                 android:layout_height="40dp"
                 android:text="门幅(头)"
                 android:gravity="center_vertical"
-                android:paddingHorizontal="10dp"
                 />
             <EditText
                 android:id="@+id/et_width_top"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:gravity="center"
                 android:textSize="13sp"
-                android:hint="输入门幅"
+                android:hint="输入布头"
                 android:inputType="numberDecimal"
                 android:layout_toRightOf="@+id/tv_position"
                 android:background="@null"
@@ -74,28 +73,20 @@
                 android:layout_height="40dp"
                 android:text="门幅(中)"
                 android:gravity="center_vertical"
-                android:paddingHorizontal="10dp"
                 />
             <EditText
                 android:id="@+id/et_width_middle"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:gravity="center"
                 android:textSize="13sp"
-                android:hint="输入门幅"
+                android:hint="输入布中"
                 android:inputType="numberDecimal"
                 android:layout_toRightOf="@+id/tv_position"
                 android:background="@null"
                 />
         </LinearLayout>
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:orientation="horizontal"
-        android:layout_marginBottom="1dp"
-        android:background="@color/colorF0">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -107,22 +98,29 @@
                 android:layout_height="40dp"
                 android:text="门幅(尾)"
                 android:gravity="center_vertical"
-                android:paddingHorizontal="10dp"
                 />
             <EditText
                 android:id="@+id/et_width_bottom"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:gravity="center"
                 android:textSize="13sp"
-                android:hint="输入门幅"
+                android:hint="输入布尾"
                 android:inputType="numberDecimal"
                 android:layout_toRightOf="@+id/tv_position"
                 android:background="@null"
                 />
         </LinearLayout>
-
     </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="45dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_marginBottom="1dp"-->
+<!--        android:background="@color/colorF0">-->
+<!--        -->
+
+<!--    </LinearLayout>-->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -224,6 +222,19 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/colorWhite" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/alpha_05_black" />
+    <EditText
+        android:id="@+id/et_remark"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/colorWhite"
+        android:hint="输入备注"
+        android:textSize="13sp"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"

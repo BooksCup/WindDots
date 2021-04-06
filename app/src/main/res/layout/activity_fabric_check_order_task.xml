@@ -161,6 +161,14 @@
                     android:paddingLeft="10dp"
                     android:text="缸号"
                     android:textSize="14sp" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:paddingVertical="8dp"
+                    android:text="胚布号"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -196,6 +204,12 @@
                     android:paddingVertical="8dp"
                     android:text=""
                     android:textSize="14sp" />
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10dp"
+                    />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

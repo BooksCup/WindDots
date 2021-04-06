@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,9 +42,8 @@ public class FabricCheckTaskLotAdapter extends BaseQuickAdapter<FabricCheckTaskL
         ImageView deleteIv = helper.getView(R.id.iv_delete);
         ImageView addIv = helper.getView(R.id.iv_add);
         ImageView minusIv = helper.getView(R.id.iv_minus);
-
-
-
+        ImageView confirmIv = helper.getView(R.id.iv_confirm);
+        confirmIv.setVisibility(View.GONE);
 
 
         if (helper.getPosition() == 0){
@@ -75,40 +75,85 @@ public class FabricCheckTaskLotAdapter extends BaseQuickAdapter<FabricCheckTaskL
             numberEt.setText("");
         }
 
-        numberEt.addTextChangedListener(new TextWatcher() {
+        confirmIv.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
+            public void onClick(View view) {
+                String numberS = numberEt.getText().toString().trim();
+                if (StringUtils.isNullOrEmpty(numberS)){
+                    return;
+                }
+                int lenght = Integer.parseInt(numberS);
+                if (lenght == 0){
+                    adapter.setNewData(new ArrayList<>());
+                    return;
+                }
+                int size = adapter.getData().size();
+                List<FabricCheckTaskRecord> newList = new ArrayList<>();
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-               String numberS = numberEt.getText().toString().trim();
-               if (StringUtils.isNullOrEmpty(numberS)){
-                   return;
-               }
-               int lenght = Integer.parseInt(numberS);
-               if (lenght == 0){
-                   adapter.setNewData(new ArrayList<>());
-                   return;
-               }
-               int size = adapter.getData().size();
-               List<FabricCheckTaskRecord> newList = new ArrayList<>();
-
-               if (size < lenght){
-                   for (int m = 0;m < lenght  - size;m++){
-                       newList.add(new FabricCheckTaskRecord());
-                   }
-                   adapter.addData(newList);
-               }else if (size > lenght){
-                   List<FabricCheckTaskRecord> lotList1 = adapter.getData();
-                   adapter.setNewData(lotList1.subList(0,lenght));
-               }
-               item.setFabricCheckRecords(adapter.getData());
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
+                if (size < lenght){
+                    for (int m = 0;m < lenght  - size;m++){
+                        newList.add(new FabricCheckTaskRecord());
+                    }
+                    adapter.addData(newList);
+                }else if (size > lenght){
+                    List<FabricCheckTaskRecord> lotList1 = adapter.getData();
+                    adapter.setNewData(lotList1.subList(0,lenght));
+                }
+                item.setFabricCheckRecords(adapter.getData());
+                numberEt.clearFocus();
+                InputMethodManager imm = (InputMethodManager) view.getContext()
+                        .getSystemService(mContext.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+                }
             }
         });
+
+        numberEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b){
+                    confirmIv.setVisibility(View.VISIBLE);
+                }else {
+                    confirmIv.setVisibility(View.GONE);
+                }
+            }
+        });
+
+//        numberEt.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//               String numberS = numberEt.getText().toString().trim();
+//               if (StringUtils.isNullOrEmpty(numberS)){
+//                   return;
+//               }
+//               int lenght = Integer.parseInt(numberS);
+//               if (lenght == 0){
+//                   adapter.setNewData(new ArrayList<>());
+//                   return;
+//               }
+//               int size = adapter.getData().size();
+//               List<FabricCheckTaskRecord> newList = new ArrayList<>();
+//
+//               if (size < lenght){
+//                   for (int m = 0;m < lenght  - size;m++){
+//                       newList.add(new FabricCheckTaskRecord());
+//                   }
+//                   adapter.addData(newList);
+//               }else if (size > lenght){
+//                   List<FabricCheckTaskRecord> lotList1 = adapter.getData();
+//                   adapter.setNewData(lotList1.subList(0,lenght));
+//               }
+//               item.setFabricCheckRecords(adapter.getData());
+//            }
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//            }
+//        });
 
 
         addIv.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +161,7 @@ public class FabricCheckTaskLotAdapter extends BaseQuickAdapter<FabricCheckTaskL
             public void onClick(View view) {
                 adapter.addData(new FabricCheckTaskRecord());
                 numberEt.setText(adapter.getData().size() + "");
+                item.setFabricCheckRecords(adapter.getData());
             }
         });
 
@@ -130,6 +176,7 @@ public class FabricCheckTaskLotAdapter extends BaseQuickAdapter<FabricCheckTaskL
                     return;
                 }
                 adapter.remove(adapter.getData().size()-1);
+                item.setFabricCheckRecords(adapter.getData());
                 numberEt.setText(adapter.getData().size() + "");
             }
         });

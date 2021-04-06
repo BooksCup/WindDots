@@ -73,6 +73,9 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
     @BindView(R.id.et_width_bottom)
     EditText mBottomWidthEt;
 
+    @BindView(R.id.et_remark)
+    EditText mRemarkEt;
+
     @BindView(R.id.rv_check)
     RecyclerView mCheckRv;
     private FabricCheckProblemAdapter mAdapter;
@@ -220,6 +223,7 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
                 mCurrentPosition = mPisitionList.get(0);
                 mDataSource.addAll(mCurrentPosition.getFabricCheckRecordProblemList());
                 mPositionEt.setText(Utils.nullOrEmpty(mCurrentPosition.getProblemPosition()));
+                mRemarkEt.setText(Utils.nullOrEmpty(mCurrentPosition.getRemark()));
                 mAdapter.notifyDataSetChanged();
             } else {
                 for (int i = 0; i < fabricCheckProblemConfigList.size(); i++) {
@@ -253,6 +257,7 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
                 mCurrentPosition = mPisitionList.get(0);
                 mDataSource.addAll(mCurrentPosition.getFabricCheckRecordProblemList());
                 mPositionEt.setText(Utils.nullOrEmpty(mCurrentPosition.getProblemPosition()));
+                mRemarkEt.setText(Utils.nullOrEmpty(mCurrentPosition.getRemark()));
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -277,19 +282,22 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
 
     private void onSave(int viewId) {
         String problemPosition = mPositionEt.getText().toString().trim();
+        String remark = mRemarkEt.getText().toString().trim();
 
         if (StringUtils.isNullOrEmpty(problemPosition)) {
             if (R.id.tv_previous == viewId){
                 toPreviousPosition();
                 return;
             }
-            showToast("请先输入问题位置");
-            return;
+//            showToast("请先输入问题位置");
+//            return;
         }
+
 
         Map<Object, Object> params = new HashMap<>();
         params.put("recordId", mRecordId);
         params.put("problemPosition", problemPosition);
+        params.put("remark",Utils.nullOrEmpty(remark));
         if (!StringUtils.isNullOrEmpty(mCurrentPosition.getId())) {
             params.put("id", mCurrentPosition.getId());
         }
@@ -299,44 +307,45 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
         params.put("widthBottom",Utils.nullOrEmpty(mBottomWidthEt.getText().toString().trim()));
 
 
-        List<FabricCheckProblem> problemList = mAdapter.getData();
-
         List<Map<String, String>> fabricCheckRecordProblemList = new ArrayList<>();
-        for (int i = 0; i < problemList.size(); i++) {
-            FabricCheckProblem problem = problemList.get(i);
-            Map<String, String> problemMap = new HashMap<>();
-            problemMap.put("recordId", mRecordId);
-            if (!StringUtils.isNullOrEmpty(mCurrentPosition.getId())) {
-                problemMap.put("id", mCurrentPosition.getId());
-            }
-            problemMap.put("problemPosition", problemPosition);
-            problemMap.put("tag", problem.getTag());
-            if ("A".equals(problem.getLevel())) {
-                problemMap.put("tagATimes", "1");
-            } else if ("B".equals(problem.getLevel())) {
-                problemMap.put("tagBTimes", "1");
-            } else if ("C".equals(problem.getLevel())) {
-                problemMap.put("tagCTimes", "1");
-            } else if ("D".equals(problem.getLevel())) {
-                problemMap.put("tagDTimes", "1");
-            } else {
-                continue;
-            }
-            List<String> imageList = new ArrayList<>();
-            List<ImageEntity> imageEntityList = problem.getImageEntities();
-            if (imageEntityList != null && imageEntityList.size() > 0) {
-                for (int m = 0; m < imageEntityList.size(); m++) {
-                    imageList.add(imageEntityList.get(m).getUrl());
+        List<FabricCheckProblem> problemList = mAdapter.getData();
+        if (!StringUtils.isNullOrEmpty(problemPosition)){
+            for (int i = 0; i < problemList.size(); i++) {
+                FabricCheckProblem problem = problemList.get(i);
+                Map<String, String> problemMap = new HashMap<>();
+                problemMap.put("recordId", mRecordId);
+                if (!StringUtils.isNullOrEmpty(mCurrentPosition.getId())) {
+                    problemMap.put("id", mCurrentPosition.getId());
                 }
+                problemMap.put("problemPosition", problemPosition);
+                problemMap.put("tag", problem.getTag());
+                if ("A".equals(problem.getLevel())) {
+                    problemMap.put("tagATimes", "1");
+                } else if ("B".equals(problem.getLevel())) {
+                    problemMap.put("tagBTimes", "1");
+                } else if ("C".equals(problem.getLevel())) {
+                    problemMap.put("tagCTimes", "1");
+                } else if ("D".equals(problem.getLevel())) {
+                    problemMap.put("tagDTimes", "1");
+                } else {
+                    continue;
+                }
+                List<String> imageList = new ArrayList<>();
+                List<ImageEntity> imageEntityList = problem.getImageEntities();
+                if (imageEntityList != null && imageEntityList.size() > 0) {
+                    for (int m = 0; m < imageEntityList.size(); m++) {
+                        imageList.add(imageEntityList.get(m).getUrl());
+                    }
+                }
+                problemMap.put("image", JSON.toJSONString(imageList));
+                fabricCheckRecordProblemList.add(problemMap);
             }
-            problemMap.put("image", JSON.toJSONString(imageList));
-            fabricCheckRecordProblemList.add(problemMap);
         }
         Log.e("net666", JSON.toJSONString(fabricCheckRecordProblemList));
-        if (fabricCheckRecordProblemList.size() == 0) {
-            Toast.makeText(this, "请先添加问题", Toast.LENGTH_LONG).show();
-            return;
-        }
+//        if (fabricCheckRecordProblemList.size() == 0) {
+//            Toast.makeText(this, "请先添加问题", Toast.LENGTH_LONG).show();
+//            return;
+//        }
 
 
         String url = Constant.APP_BASE_URL + "fabricCheckRecordProblem?&problemPosition=" + problemPosition;
@@ -355,17 +364,24 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
                 return;
             }
             Log.e("net666", response);
-            FabricCheckTaskRecordPosition position = JSON.parseObject(response, FabricCheckTaskRecordPosition.class);
-            if (position == null || StringUtils.isNullOrEmpty(position.getId())) {
-                showToast("保存失败,请稍后重试");
-                return;
+
+            if (StringUtils.isNullOrEmpty(problemPosition) && fabricCheckRecordProblemList.size() == 0){
+                showToast("保存成功");
+            }else {
+                FabricCheckTaskRecordPosition position = JSON.parseObject(response, FabricCheckTaskRecordPosition.class);
+                if (position == null || StringUtils.isNullOrEmpty(position.getId())) {
+                    showToast("保存失败,请稍后重试");
+                    return;
+                }
+                mCurrentPosition.setId(position.getId());
+                if (viewId == R.id.tv_next) {
+                    toNextPosition();
+                } else {
+                    toPreviousPosition();
+                }
             }
-            mCurrentPosition.setId(position.getId());
-            if (viewId == R.id.tv_next) {
-                toNextPosition();
-            } else {
-                toPreviousPosition();
-            }
+
+
         }, volleyError -> {
             hideLoadingDialog();
             Log.e("net666", String.valueOf(volleyError));
@@ -380,12 +396,15 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
             showToast("已经是第一条了");
             return;
         }
+
         mCurrentPosition.setFabricCheckRecordProblemList(mAdapter.getData());
         mCurrentPosition.setProblemPosition(mPositionEt.getText().toString().trim());
+        mCurrentPosition.setRemark(mRemarkEt.getText().toString().trim());
         index -= 1;
         mCurrentPosition = mPisitionList.get(index);
         mAdapter.setNewData(mCurrentPosition.getFabricCheckRecordProblemList());
         mPositionEt.setText(Utils.nullOrEmpty(mCurrentPosition.getProblemPosition()));
+        mRemarkEt.setText(Utils.nullOrEmpty(mCurrentPosition.getRemark()));
     }
 
     private void toNextPosition() {
@@ -396,8 +415,6 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
 //
 //        }
 //
-
-
         int index = mPisitionList.indexOf(mCurrentPosition);
         if (index == mPisitionList.size() - 1) {
             FabricCheckTaskRecordPosition position = new FabricCheckTaskRecordPosition();
@@ -424,10 +441,12 @@ public class FabricCheckProblemActivity extends BaseActivity implements FabricCh
         }
         mCurrentPosition.setProblemPosition(mPositionEt.getText().toString().trim());
         mCurrentPosition.setFabricCheckRecordProblemList(mAdapter.getData());
+        mCurrentPosition.setRemark(mRemarkEt.getText().toString().trim());
         index += 1;
         mCurrentPosition = mPisitionList.get(index);
         mAdapter.setNewData(mCurrentPosition.getFabricCheckRecordProblemList());
         mPositionEt.setText(Utils.nullOrEmpty(mCurrentPosition.getProblemPosition()));
+        mRemarkEt.setText(Utils.nullOrEmpty(mCurrentPosition.getRemark()));
     }
 
     /*

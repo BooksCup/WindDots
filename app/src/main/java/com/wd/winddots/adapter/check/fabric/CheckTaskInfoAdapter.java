@@ -36,12 +36,14 @@ public class CheckTaskInfoAdapter extends BaseQuickAdapter<FabricCheckLotInfo, B
         LinearLayout llBody = helper.getView(R.id.ll_body);
         LinearLayout llEdit = helper.getView(R.id.ll_edit);
         TextView tvLotNo = helper.getView(R.id.tv_lot_no);
+        TextView tvPb = helper.getView(R.id.tv_fa);
         TextView tvNum = helper.getView(R.id.tv_num);
         TextView tvWeight = helper.getView(R.id.tv_weight);
         TextView tvLength = helper.getView(R.id.tv_length);
         TextView tvStatus = helper.getView(R.id.tv_status);
         llEdit.setVisibility(View.GONE);
         tvLotNo.setText(item.getLotNo());
+        tvPb.setText(Utils.nullOrEmpty(item.getFabricNumber()));
         String status = "";
         if ("1".equals(item.getStatus())) {
             status = "已完成";

@@ -12,6 +12,7 @@ public class FabricCheckTaskRecordPosition {
 
     private String id;
     private String problemPosition;
+    private String remark;
     private List<FabricCheckProblem> fabricCheckRecordProblemList;
 
     public String getId() {
@@ -26,6 +27,14 @@ public class FabricCheckTaskRecordPosition {
         return problemPosition;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     public void setProblemPosition(String problemPosition) {
         this.problemPosition = problemPosition;
     }
@@ -37,4 +46,6 @@ public class FabricCheckTaskRecordPosition {
     public void setFabricCheckRecordProblemList(List<FabricCheckProblem> fabricCheckRecordProblemList) {
         this.fabricCheckRecordProblemList = fabricCheckRecordProblemList;
     }
+
+
 }

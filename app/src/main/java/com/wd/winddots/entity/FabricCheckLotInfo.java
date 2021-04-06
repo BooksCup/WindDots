@@ -12,6 +12,12 @@ public class FabricCheckLotInfo {
      */
     private String lotNo;
 
+    /*
+    * 胚布号
+    * */
+    private String fabricNumber;
+
+
     /**
      * 卷数
      */
@@ -44,6 +50,15 @@ public class FabricCheckLotInfo {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+
+    public String getFabricNumber() {
+        return fabricNumber;
+    }
+
+    public void setFabricNumber(String fabricNumber) {
+        this.fabricNumber = fabricNumber;
     }
 
     public FabricCheckLotInfo() {
@@ -164,6 +179,8 @@ public class FabricCheckLotInfo {
         public void setWeightAfterTotal(String weightAfterTotal) {
             this.weightAfterTotal = weightAfterTotal;
         }
+
+
 
 
     }

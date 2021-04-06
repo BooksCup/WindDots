@@ -1,11 +1,14 @@
 package com.wd.winddots.activity.check.fabric;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -24,6 +27,7 @@ import com.wd.winddots.utils.VolleyUtil;
 import com.wd.winddots.view.LoadingDialog;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +48,10 @@ import static com.wd.winddots.activity.select.SelectOrderActivity.REQUEST_FABRIC
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class FabricCheckTaskActivity extends FragmentActivity
         implements SwipeRefreshLayout.OnRefreshListener,
-        ListBottomBar.ListBottomBarActionListener, CheckFilter.CheckFilterOnCommitClickListener, BaseQuickAdapter.OnItemClickListener {
+        ListBottomBar.ListBottomBarActionListener,
+        CheckFilter.CheckFilterOnCommitClickListener,
+        BaseQuickAdapter.OnItemClickListener,
+        BaseQuickAdapter.OnItemLongClickListener {
 
     private VolleyUtil mVolleyUtil;
 
@@ -98,6 +105,7 @@ public class FabricCheckTaskActivity extends FragmentActivity
         mGoodsRv.addItemDecoration(new PinnedHeaderItemDecoration());
         mAdapter = new FabricCheckTaskAdapter(R.layout.item_fabric_check_task, mDataSource);
         mAdapter.setOnItemClickListener(this);
+        mAdapter.setOnItemLongClickListener(this);
         mGoodsRv.setAdapter(mAdapter);
     }
 
@@ -169,7 +177,7 @@ public class FabricCheckTaskActivity extends FragmentActivity
     public void onAddIconDidClick() {
         Intent intent = new Intent(this, SelectOrderActivity.class);
         intent.putExtra("request", REQUEST_FABRIC_CHECK_TASK);
-        startActivity(intent);
+        startActivityForResult(intent,100);
     }
 
     /**
@@ -198,5 +206,53 @@ public class FabricCheckTaskActivity extends FragmentActivity
         Intent intent = new Intent(this, FabricCheckOrderTaskActivity.class);
         intent.putExtra("data", JSON.toJSONString(mAdapter.getData().get(position)));
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+
+        FabricCheckTask item = mAdapter.getItem(position);
+
+        if (item.getFabricCheckLotInfoList() != null && item.getFabricCheckLotInfoList().size() > 0){
+            return true;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("确定要删除该任务吗?");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String url = Constant.APP_BASE_URL + "fabricCheckTask";
+                Map<String,String> params = new HashMap<>();
+                params.put("isDelete","1");
+                params.put("id",item.getId());
+                Map<String,String> data = new HashMap<>();
+                data.put("fabricCheckTaskStr",JSON.toJSONString(params));
+                mVolleyUtil.httpPutRequest(url, data, response -> {
+                    Toast.makeText(FabricCheckTaskActivity.this, "删除成功", Toast.LENGTH_LONG).show();
+                    onRefresh();
+                }, volleyError -> {
+                    mVolleyUtil.handleCommonErrorResponse( FabricCheckTaskActivity.this, volleyError);
+                });
+            }
+        });
+
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.show();
+
+        return true;
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        onRefresh();
     }
 }

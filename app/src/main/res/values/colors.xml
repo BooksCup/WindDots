@@ -3,6 +3,7 @@
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorAccent">#D22B34</color>
+    <color name="colorInputBlue">#3F51B5</color>
 
     <color name="colorStyle">#D22B34</color>
     <color name="colorStyleG">#2C992D</color>

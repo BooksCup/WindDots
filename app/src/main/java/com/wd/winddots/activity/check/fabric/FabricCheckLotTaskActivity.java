@@ -86,7 +86,7 @@ public class FabricCheckLotTaskActivity extends FragmentActivity {
         mCheckRv.setAdapter(mAdapter);
     }
 
-    @OnClick({R.id.iv_back, R.id.ll_save,R.id.tv_delete,R.id.tv_add})
+    @OnClick({R.id.iv_back, R.id.ll_save,R.id.tv_delete,R.id.tv_add,R.id.tv_browse})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -100,6 +100,9 @@ public class FabricCheckLotTaskActivity extends FragmentActivity {
                 break;
             case R.id.tv_add:
                 onAddDidClick();
+                break;
+            case R.id.tv_browse:
+                onBrowseClick();
                 break;
         }
     }
@@ -152,7 +155,7 @@ public class FabricCheckLotTaskActivity extends FragmentActivity {
                 FabricCheckTaskRecord fabricCheckTaskRecord = recordList.get(m);
                 Map<String, String> map = new HashMap<>();
                 map.put("deliveryDate", lotItem.getDeliveryDate());
-                map.put("sno", m + "");
+                map.put("sno", (m + 1) + "");
                 map.put("weightBefore", Utils.nullOrEmpty(fabricCheckTaskRecord.getWeightBefore()));
                 map.put("lengthBefore", Utils.nullOrEmpty(fabricCheckTaskRecord.getLengthBefore()));
                 map.put("checkLotInfoId", mId);
@@ -171,7 +174,7 @@ public class FabricCheckLotTaskActivity extends FragmentActivity {
         params.put("fabricCheckRecords", paramsJson);
         mVolleyUtil.httpPostRequest(url, params, response -> {
             Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show();
-            finish();
+            //finish();
         }, volleyError -> {
             mVolleyUtil.handleCommonErrorResponse(this, volleyError);
             Log.e("net666", String.valueOf(volleyError));
@@ -217,6 +220,18 @@ public class FabricCheckLotTaskActivity extends FragmentActivity {
     * */
     private void onAddDidClick(){
         mAdapter.addData(new FabricCheckTaskLot());
+    }
+
+
+
+    private void onBrowseClick(){
+        Intent intent = new Intent(this, FabricCheckLotBrowseActivity.class);
+        intent.putExtra("data", mId);
+        intent.putExtra("goodsName",mGoodsName);
+        intent.putExtra("goodsNo", mGoodsNo);
+        intent.putExtra("status", mStatus);
+        intent.putExtra("fabricCheckTaskId", mFabricCheckTaskId);
+        startActivityForResult(intent,100);
     }
 
 

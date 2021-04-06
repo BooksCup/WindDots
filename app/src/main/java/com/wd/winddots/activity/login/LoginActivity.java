@@ -13,6 +13,7 @@ import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.User;
+import com.wd.winddots.enums.ResponseMsgEnum;
 import com.wd.winddots.mvp.widget.MainActivity;
 import com.wd.winddots.utils.MD5Util;
 import com.wd.winddots.utils.SpHelper;
@@ -112,8 +113,19 @@ public class LoginActivity extends BaseActivity {
                 });
             }, volleyError -> {
                 hideLoadingDialog();
-                mVolleyUtil.handleCommonErrorResponse(LoginActivity.this, volleyError);
-                // int errorCode = volleyError.networkResponse.statusCode;
+                int errorCode = volleyError.networkResponse.statusCode;
+                switch (errorCode) {
+                    case 400:
+                        Map<String, String> headers = volleyError.networkResponse.headers;
+                        String responseCode = headers.get("responseCode");
+                        if (ResponseMsgEnum.USER_NOT_EXIST.getResponseCode().equals(responseCode)) {
+                            showToast("用户名或者密码错误");
+                        } else {
+                            showToast("网络繁忙");
+                        }
+                        break;
+                }
+
             });
         }
     }

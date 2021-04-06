@@ -134,6 +134,7 @@ public class ContractActivity extends BaseActivity
         String url = Constant.APP_BASE_URL +
 //                "contract?enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId() +
                 "contract/search?enterpriseId=" + "1" +
+                "&phone=" + mUser.getPhone() +
                 "&pageNum=" + mPage +
                 "&pageSize=" + mPageSize;
 

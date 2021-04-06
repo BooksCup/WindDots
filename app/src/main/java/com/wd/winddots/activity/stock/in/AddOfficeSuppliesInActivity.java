@@ -3,7 +3,10 @@ package com.wd.winddots.activity.stock.in;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.zxing.client.android.CaptureActivity2;
 import com.huantansheng.easyphotos.EasyPhotos;
@@ -20,6 +24,7 @@ import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.select.SelectGoodsActivity;
 import com.wd.winddots.activity.select.SelectSingleUserActivity;
 import com.wd.winddots.activity.work.GlideEngine;
+import com.wd.winddots.adapter.check.fabric.FabricCheckProblemAdapter;
 import com.wd.winddots.adapter.image.ImagePickerAdapter;
 import com.wd.winddots.adapter.stock.in.StockApplyGoodsSpecAdapter;
 import com.wd.winddots.cons.Constant;
@@ -33,6 +38,7 @@ import com.wd.winddots.enums.StockApplyStatusEnum;
 import com.wd.winddots.enums.StockBizTypeEnum;
 import com.wd.winddots.utils.CollectionUtil;
 import com.wd.winddots.utils.CommonUtil;
+import com.wd.winddots.utils.OSSUploadHelper;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.Utils;
 import com.wd.winddots.utils.VolleyUtil;
@@ -44,6 +50,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -53,6 +60,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jmessage.support.qiniu.android.utils.StringUtils;
 
 /**
  * 提交入库单(办公用品)
@@ -66,6 +74,7 @@ public class AddOfficeSuppliesInActivity extends BaseActivity implements StockAp
     private static final int REQUEST_CODE_COPY = 5;
     private static final int REQUEST_CODE_IMAGE_PICKER = 6;
     private static final int REQUEST_CODE_SCAN = 7;
+
 
     @BindView(R.id.tv_goods_name)
     TextView mGoodsNameTv;
@@ -133,6 +142,8 @@ public class AddOfficeSuppliesInActivity extends BaseActivity implements StockAp
 
     ImagePickerAdapter mImagePickerAdapter;
     StockApplyGoodsSpecAdapter mStockApplyGoodsSpecAdapter;
+
+
 
     String mGoodsId;
     // 审核人用户ID
@@ -370,16 +381,47 @@ public class AddOfficeSuppliesInActivity extends BaseActivity implements StockAp
                     break;
                 case REQUEST_CODE_IMAGE_PICKER:
                     // 图片选择
-                    ArrayList<Photo> resultPhotos = data.getParcelableArrayListExtra(EasyPhotos.RESULT_PHOTOS);
+                     ArrayList<Photo> resultPhotos = data.getParcelableArrayListExtra(EasyPhotos.RESULT_PHOTOS);
                     if (null != resultPhotos) {
+                        List<ImageEntity> picBeans = new ArrayList<>();
                         for (int i = 0; i < resultPhotos.size(); i++) {
                             ImageEntity imageEntity = new ImageEntity();
                             imageEntity.setPath(resultPhotos.get(i).path);
-                            imageEntity.setId(String.valueOf(i));
+                            imageEntity.setId(i + "");
                             mImageEntityList.add(0, imageEntity);
+                            picBeans.add(imageEntity);
                         }
+
                         mImagePickerAdapter.setList(mImageEntityList);
+                        //picsAdapter.setList(picBeans);
+
+                        showLoadingDialog();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (int t = 0; t < picBeans.size(); t++) {
+                                    ImageEntity imageEntity = picBeans.get(t);
+                                    if (!StringUtils.isNullOrEmpty(imageEntity.getPath())) {
+                                        String imagePath = imageEntity.getPath();//Utils.uri2File(this, imageEntity.getUrl());
+                                        String imageUrl = OSSUploadHelper.uploadImage(imagePath);
+                                        if (imageUrl != null) {
+                                            Log.e("net666", imageUrl);
+                                            imageEntity.setUrl(imageUrl);
+                                        } else {
+                                            Message msg = new Message();
+                                            msg.what = 10087;
+                                            mhandler.sendMessage(msg);
+                                            return;
+                                        }
+                                    }
+                                }
+                                Message msg = new Message();
+                                msg.what = 10086;
+                                mhandler.sendMessage(msg);
+                            }
+                        }).start();
                     }
+
                     break;
                 case REQUEST_CODE_SCAN:
                     // 扫码
@@ -484,7 +526,8 @@ public class AddOfficeSuppliesInActivity extends BaseActivity implements StockAp
         paramMap.put("bizType", StockBizTypeEnum.STOCK_BIZ_TYPE_OFFICE_SUPPLIES_IN.getType());
         paramMap.put("remark", remark);
         paramMap.put("applyStatus", applyStatus);
-        paramMap.put("images", "[\"http://erp-cfpu-com.oss-cn-hangzhou.aliyuncs.com/329b0751292445df8500aa98a1180936.png\"]");
+//        paramMap.put("images", "[\"http://erp-cfpu-com.oss-cn-hangzhou.aliyuncs.com/329b0751292445df8500aa98a1180936.png\"]");
+        paramMap.put("images", JSON.toJSONString(mImageEntityList));
         paramMap.put("auditorId", mAuditorId == null ? "" : mAuditorId);
         paramMap.put("copyId", mCopyId == null ? "" : mCopyId);
 
@@ -562,5 +605,24 @@ public class AddOfficeSuppliesInActivity extends BaseActivity implements StockAp
             hideLoadingDialog();
         });
     }
+
+
+
+
+
+    // 监听上传是否成功
+    private Handler mhandler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 10086) {
+                hideLoadingDialog();
+            } else if (msg.what == 10087) {
+                hideLoadingDialog();
+                showToast("上传图片失败,请稍后重试");
+                return;
+            }
+        }
+    };
 
 }

@@ -9,6 +9,7 @@ package com.wd.winddots.entity;
 public class FabricCheckTaskRecord {
 
     private String id;
+    private String sno;
     private String lengthBefore;
     private String weightBefore;
     private String checkLotInfoId;
@@ -88,5 +89,13 @@ public class FabricCheckTaskRecord {
 
     public void setWeightBefore(String weightBefore) {
         this.weightBefore = weightBefore;
+    }
+
+    public String getSno() {
+        return sno;
+    }
+
+    public void setSno(String sno) {
+        this.sno = sno;
     }
 }

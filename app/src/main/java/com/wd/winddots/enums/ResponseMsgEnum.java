@@ -8,6 +8,7 @@ package com.wd.winddots.enums;
 public enum ResponseMsgEnum {
 
     VERIFY_CODE_EXPIRE("VERIFY_CODE_EXPIRE", "验证码失效"),
+    USER_NOT_EXIST("USER_NOT_EXIST", "用户不存在"),
     ;
 
     ResponseMsgEnum(String responseCode, String responseMessage) {

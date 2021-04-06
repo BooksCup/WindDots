@@ -51,7 +51,7 @@ public class FabricCheckTaskRecordBrowseAdapter extends BaseQuickAdapter<FabricC
 
         }
 
-        helper.setText(R.id.tv_number, (helper.getPosition() + 1) + "")
+        helper.setText(R.id.tv_number, item.getSno())
                 .setText(R.id.et_weight, Utils.numberNullOrEmpty(item.getWeightAfter()) + "/" + Utils.numberNullOrEmpty(item.getWeightBefore()))
                 .setText(R.id.et_length, Utils.numberNullOrEmpty(item.getLengthAfter()) + "/" + Utils.numberNullOrEmpty(item.getLengthBefore()))
                 .setText(R.id.tv_count, Utils.nullOrEmpty(item.getProblemCount()))

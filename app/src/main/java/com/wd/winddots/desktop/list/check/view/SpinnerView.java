@@ -1,6 +1,7 @@
 package com.wd.winddots.desktop.list.check.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,15 @@ public class SpinnerView extends LinearLayout {
 
     private OnselectListener listener;
 
+    private int textColor = -1;
+
+    public int getTextColor() {
+        return textColor;
+    }
+
+    public void setTextColor(int textColor) {
+        this.textColor = textColor;
+    }
 
     public SpinnerView(Context context) {
         super(context);
@@ -84,15 +94,15 @@ public class SpinnerView extends LinearLayout {
     public void setSelectList(@NonNull final List<SpinnerBean> list) {
         mDataSource = list;
         SelectorAdapter adapter = new SelectorAdapter();
+        adapter.textColor = textColor;
         mSpinner.setAdapter(adapter);
         mSpinner.setSelection(0);
-
-
     }
 
 
     private class SelectorAdapter extends BaseAdapter {
 
+        int textColor = -1;
 
         @Override
         public int getCount() {
@@ -114,6 +124,9 @@ public class SpinnerView extends LinearLayout {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_selector, null);
             if (view != null) {
                 TextView _TextView1 = view.findViewById(R.id.item_selector_text);
+                if (textColor != -1){
+                    _TextView1.setTextColor(textColor);
+                }
                 _TextView1.setText(mDataSource.get(i).getName());
             }
             return view;

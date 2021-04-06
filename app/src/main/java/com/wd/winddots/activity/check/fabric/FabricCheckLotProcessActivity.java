@@ -82,12 +82,14 @@ public class FabricCheckLotProcessActivity extends BaseActivity implements Fabri
         mTitleTv.setText(Utils.nullOrEmpty(mGoodsNo) + "(" + Utils.nullOrEmpty(mGoodsName) + ")");
         mAdapter = new FabricCheckTaskLotProcessAdapter(R.layout.item_fabric_check_task_lot_process, mDataSource);
         mAdapter.setSubItemDidClickListener(this);
+        mAdapter.mCheckLotInfoId = mId;
+        mAdapter.mFabricCheckTaskId = mFabricCheckTaskId;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mCheckRv.setLayoutManager(layoutManager);
         mCheckRv.setAdapter(mAdapter);
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_save, R.id.tv_finish})
+    @OnClick({R.id.iv_back, R.id.tv_save, R.id.tv_finish,R.id.tv_browse})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -98,6 +100,9 @@ public class FabricCheckLotProcessActivity extends BaseActivity implements Fabri
                 break;
             case R.id.tv_finish:
                 onFinishDidClick();
+                break;
+            case R.id.tv_browse:
+                onBrowseClick();
                 break;
         }
     }
@@ -152,6 +157,8 @@ public class FabricCheckLotProcessActivity extends BaseActivity implements Fabri
                 map.put("id", fabricCheckTaskRecord.getId());
                 map.put("modifyTime","modifyTimeExamine");
                 map.put("fabricCheckTaskId",mFabricCheckTaskId);
+                map.put("machineNumber",Utils.nullOrEmpty(lotItem.getMachineNumber()));
+                map.put("palletNumber",Utils.nullOrEmpty(lotItem.getPalletNumber()));
                 paramsMaps.add(map);
             }
         }
@@ -207,6 +214,17 @@ public class FabricCheckLotProcessActivity extends BaseActivity implements Fabri
         builder.show();
 
 
+    }
+
+
+    private void onBrowseClick(){
+        Intent intent = new Intent(this, FabricCheckLotBrowseActivity.class);
+        intent.putExtra("data", mId);
+        intent.putExtra("goodsName",mGoodsName);
+        intent.putExtra("goodsNo", mGoodsNo);
+        intent.putExtra("status", mStatus);
+        intent.putExtra("fabricCheckTaskId", mFabricCheckTaskId);
+        startActivityForResult(intent,100);
     }
 
 

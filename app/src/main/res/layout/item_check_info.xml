@@ -17,7 +17,17 @@
             android:gravity="center"
             android:paddingVertical="8dp"
             android:paddingLeft="10dp"
-            android:text="240324033"
+            android:text="2403240"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_fa"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:paddingVertical="8dp"
+            android:text="2403240"
             android:textSize="12sp" />
 
         <TextView
@@ -83,7 +93,15 @@
             android:background="@null"
             android:gravity="center"
             android:hint="输入缸号"
-            android:inputType="numberDecimal"
+            android:textSize="12sp" />
+        <EditText
+            android:id="@+id/et_fa"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="3"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="输入胚布号"
             android:textSize="12sp" />
 
         <EditText

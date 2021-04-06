@@ -16,6 +16,8 @@ public class FabricCheckTaskLot {
    private String lengthAfterTotal;
    private String weightBeforeTotal;
    private String weightAfterTotal;
+   private String machineNumber;
+   private String palletNumber;
    private List<FabricCheckTaskRecord> fabricCheckRecords;
 
 
@@ -73,5 +75,21 @@ public class FabricCheckTaskLot {
 
     public void setWeightAfterTotal(String weightAfterTotal) {
         this.weightAfterTotal = weightAfterTotal;
+    }
+
+    public String getMachineNumber() {
+        return machineNumber;
+    }
+
+    public void setMachineNumber(String machineNumber) {
+        this.machineNumber = machineNumber;
+    }
+
+    public String getPalletNumber() {
+        return palletNumber;
+    }
+
+    public void setPalletNumber(String palletNumber) {
+        this.palletNumber = palletNumber;
     }
 }
