@@ -30,6 +30,8 @@ import butterknife.OnClick;
 
 /**
  * 联系人管理
+ *
+ * @author zhou
  */
 public class LinkmanActivity extends BaseActivity implements
         SwipeRefreshLayout.OnRefreshListener,

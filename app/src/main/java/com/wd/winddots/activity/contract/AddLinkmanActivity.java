@@ -20,6 +20,8 @@ import butterknife.OnClick;
 
 /**
  * 新建联系人
+ *
+ * @author zhou
  */
 public class AddLinkmanActivity extends BaseActivity {
 
@@ -68,26 +70,14 @@ public class AddLinkmanActivity extends BaseActivity {
         String company = mCompanyNameEt.getText().toString().trim();
         String remark = mRemarkEt.getText().toString().trim();
         if (TextUtils.isEmpty(name)) {
-            showToast("请输入联系人的姓名");
+            showToast("请输入姓名");
             return;
         }
         if (TextUtils.isEmpty(phone)) {
-            showToast("请输入联系人的电话");
+            showToast("请输入手机号");
             return;
         }
-        if (TextUtils.isEmpty(email)) {
-            showToast("请输入联系人的邮箱");
-            return;
-        }
-        if (TextUtils.isEmpty(company)) {
-            showToast("请输入联系人的所属企业");
-            return;
-        }
-        if (TextUtils.isEmpty(remark)) {
-            showToast("请输入备注");
-            return;
-        }
-        saveLinkmanData(name, phone, email, company, remark);
+        saveLinkman(name, phone, email, company, remark);
     }
 
     /**
@@ -101,7 +91,8 @@ public class AddLinkmanActivity extends BaseActivity {
         mRemarkEt.getText().toString();
     }
 
-    private void saveLinkmanData(String name, String phone, String email, String company, String remark) {
+    private void saveLinkman(String name, String phone, String email, String companyName, String remark) {
+        showLoadingDialog();
         String url = Constant.APP_BASE_URL + "linkman";
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("userId", SpHelper.getInstance(this).getUserId());
@@ -109,7 +100,7 @@ public class AddLinkmanActivity extends BaseActivity {
         paramMap.put("name", name);
         paramMap.put("phone", phone);
         paramMap.put("email", email);
-        paramMap.put("companyName", company);
+        paramMap.put("companyName", companyName);
         paramMap.put("remark", remark);
 
         mVolleyUtil.httpPostRequest(url, paramMap, response -> {
