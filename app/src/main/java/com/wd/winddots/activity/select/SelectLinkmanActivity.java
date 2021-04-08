@@ -9,11 +9,11 @@ import com.alibaba.fastjson.TypeReference;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
-import com.wd.winddots.adapter.select.SelectContractAdapter;
+import com.wd.winddots.activity.contract.AddLinkmanActivity;
+import com.wd.winddots.adapter.contract.LinkmanAdapter;
 import com.wd.winddots.cons.Constant;
-import com.wd.winddots.entity.Contract;
+import com.wd.winddots.entity.Linkman;
 import com.wd.winddots.entity.PageInfo;
-import com.wd.winddots.entity.User;
 import com.wd.winddots.utils.SpHelper;
 import com.wd.winddots.utils.VolleyUtil;
 
@@ -29,100 +29,113 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 选择合同
+ * 选择合同联系人
  *
  * @author zhou
  */
-public class SelectContractActivity extends BaseActivity implements
+public class SelectLinkmanActivity extends BaseActivity implements
         SwipeRefreshLayout.OnRefreshListener,
-        BaseQuickAdapter.OnItemClickListener,
-        BaseQuickAdapter.RequestLoadMoreListener {
+        BaseQuickAdapter.RequestLoadMoreListener,
+        BaseQuickAdapter.OnItemClickListener {
 
-    static String TAG = "SelectContractActivity";
-    @BindView(R.id.rv_contract)
-    RecyclerView mContractRv;
+    @BindView(R.id.rv_linkman)
+    RecyclerView mLinkmanRv;
 
-    @BindView(R.id.srl_contract)
-    SwipeRefreshLayout mContractSrl;
+    @BindView(R.id.srl_linkman)
+    SwipeRefreshLayout mLinkmanSrl;
 
-    User mUser;
     int mPage = 1;
     int mPageSize = 10;
     VolleyUtil mVolleyUtil;
-    SelectContractAdapter mAdapter;
-    List<Contract> mContractList = new ArrayList<>();
+    LinkmanAdapter mAdapter;
+    List<Linkman> mLinkmanList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_contract);
+        setContentView(R.layout.activity_select_linkman);
         ButterKnife.bind(this);
         mVolleyUtil = VolleyUtil.getInstance(this);
-        mUser = SpHelper.getInstance(this).getUser();
         initView();
         initListener();
     }
 
     private void initView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mContractRv.setLayoutManager(layoutManager);
-        mContractRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mAdapter = new SelectContractAdapter(this, R.layout.item_select_contract, mContractList);
-        mContractRv.setAdapter(mAdapter);
+        mLinkmanRv.setLayoutManager(layoutManager);
+        mLinkmanRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        mAdapter = new LinkmanAdapter(this, R.layout.item_linkman, mLinkmanList);
+        mLinkmanRv.setAdapter(mAdapter);
         getData();
     }
 
     private void getData() {
-        String url = Constant.APP_BASE_URL +
-                "contract/search?enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId() +
-                "&phone=" + mUser.getPhone() +
-                "&pageNum=" + mPage +
-                "&pageSize=" + mPageSize;
+        String url = null;
+        try {
+            url = Constant.APP_BASE_URL +
+                    "linkman?enterpriseId=" + SpHelper.getInstance(this).getEnterpriseId() +
+                    "&pageNum=" + mPage +
+                    "&pageSize=" + mPageSize;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         mVolleyUtil.httpGetRequest(url, response -> {
             hideLoadingDialog();
-            mContractSrl.setRefreshing(false);
-            PageInfo<Contract> contractPageInfo = JSON.parseObject(response, new TypeReference<PageInfo<Contract>>() {
+            mLinkmanSrl.setRefreshing(false);
+            PageInfo<Linkman> linkmanPageInfo = JSON.parseObject(response, new TypeReference<PageInfo<Linkman>>() {
             });
-            List<Contract> contractList = contractPageInfo.getList();
+            List<Linkman> linkmanList = linkmanPageInfo.getList();
 
             if (mPage == 1) {
-                mContractList.clear();
+                mLinkmanList.clear();
             }
-            mContractList.addAll(contractList);
+            mLinkmanList.addAll(linkmanList);
             mAdapter.notifyDataSetChanged();
             mAdapter.loadMoreComplete();
-            if (mContractList.size() >= contractPageInfo.getTotal()) {
+            if (mLinkmanList.size() >= linkmanPageInfo.getTotal()) {
                 mAdapter.setEnableLoadMore(false);
             }
 
         }, volleyError -> {
             hideLoadingDialog();
-            mContractSrl.setRefreshing(false);
+            mLinkmanSrl.setRefreshing(false);
             mAdapter.loadMoreComplete();
-            mVolleyUtil.handleCommonErrorResponse(SelectContractActivity.this, volleyError);
+            mVolleyUtil.handleCommonErrorResponse(this, volleyError);
         });
 
     }
 
     private void initListener() {
-        mContractSrl.setOnRefreshListener(this);
-        mAdapter.setOnLoadMoreListener(this, mContractRv);
+        mLinkmanSrl.setOnRefreshListener(this);
+        mAdapter.setOnLoadMoreListener(this, mLinkmanRv);
         mAdapter.setOnItemClickListener(this);
-
     }
 
-    @OnClick({R.id.iv_back})
+    @OnClick({R.id.iv_back, R.id.iv_add})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
+            case R.id.iv_add:
+                // 新建联系人
+                Intent intent = new Intent(this, AddLinkmanActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mPage = 1;
+        getData();
+    }
+
+    @Override
     public void onRefresh() {
-        mContractSrl.setRefreshing(true);
+        mLinkmanSrl.setRefreshing(true);
         mAdapter.setEnableLoadMore(true);
         mPage = 1;
         getData();
@@ -130,16 +143,16 @@ public class SelectContractActivity extends BaseActivity implements
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        Contract contract = mContractList.get(position);
+        Linkman linkman = mLinkmanList.get(position);
         Intent intent = new Intent();
-        intent.putExtra("contract", contract);
+        intent.putExtra("linkman", linkman);
         setResult(RESULT_OK, intent);
         finish();
     }
 
     @Override
     public void onLoadMoreRequested() {
-        if (mContractSrl.isRefreshing()) {
+        if (mLinkmanSrl.isRefreshing()) {
             return;
         }
         mPage += 1;
@@ -147,12 +160,8 @@ public class SelectContractActivity extends BaseActivity implements
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
     }
+
 }

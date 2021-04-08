@@ -68,7 +68,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:ellipsize="end"
-                    android:hint="请输入联系人的姓名"
+                    android:hint="请输入姓名"
                     android:inputType="text"
                     android:lines="1"
                     android:textColor="@color/color32"
@@ -107,7 +107,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:ellipsize="end"
-                    android:hint="请输入联系人的手机号"
+                    android:hint="请输入手机号"
                     android:inputType="phone"
                     android:lines="1"
                     android:textColor="@color/color32"
@@ -145,7 +145,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:ellipsize="end"
-                    android:hint="请输入联系人的邮箱"
+                    android:hint="请输入邮箱"
                     android:inputType="textEmailAddress"
                     android:lines="1"
                     android:textColor="@color/color32"
@@ -183,7 +183,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:ellipsize="end"
-                    android:hint="请输入联系人的所属企业"
+                    android:hint="请输入所属企业"
                     android:lines="1"
                     android:textColor="@color/color32"
                     android:textColorHint="@color/colorB2"
@@ -253,6 +253,5 @@
             android:textColor="@color/white"
             android:textSize="15sp" />
     </LinearLayout>
-
 
 </LinearLayout>

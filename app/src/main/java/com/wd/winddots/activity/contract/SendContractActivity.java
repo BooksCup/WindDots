@@ -11,8 +11,10 @@ import android.widget.TextView;
 import com.wd.winddots.R;
 import com.wd.winddots.activity.base.BaseActivity;
 import com.wd.winddots.activity.select.SelectContractActivity;
+import com.wd.winddots.activity.select.SelectLinkmanActivity;
 import com.wd.winddots.cons.Constant;
 import com.wd.winddots.entity.Contract;
+import com.wd.winddots.entity.Linkman;
 import com.wd.winddots.utils.VolleyUtil;
 
 import androidx.annotation.Nullable;
@@ -31,9 +33,9 @@ import butterknife.OnClick;
  * @author zhou
  */
 public class SendContractActivity extends BaseActivity {
-    private static final int REQUEST_CODE_CONTRACT = 1;
 
-    static String TAG = "SendContractActivity";
+    private static final int REQUEST_CODE_CONTRACT = 1;
+    private static final int REQUEST_CODE_LINKMAN = 2;
 
     @BindView(R.id.tv_title)
     TextView mTitleTv;
@@ -58,6 +60,7 @@ public class SendContractActivity extends BaseActivity {
     TextView mContractValidityTv;
 
     String mContractId;
+    String mSignerPhone;
     VolleyUtil mVolleyUtil;
 
     @Override
@@ -83,6 +86,8 @@ public class SendContractActivity extends BaseActivity {
                 break;
             case R.id.ll_signer:
                 // 签署方
+                intent = new Intent(SendContractActivity.this, SelectLinkmanActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_LINKMAN);
                 break;
             case R.id.ll_sign_validity:
                 // 签署截止日期
@@ -112,14 +117,21 @@ public class SendContractActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_CONTRACT:
-                    // 物品
+                    // 合同
                     if (null != data) {
                         Contract contract = (Contract) data.getSerializableExtra("contract");
                         mSelectContractTv.setText(contract.getContractNo());
-                        if (!TextUtils.isEmpty(contract.getThemeTitleStr())){
+                        if (!TextUtils.isEmpty(contract.getThemeTitleStr())) {
                             mSubjectEt.setText(contract.getThemeTitleStr());
                         }
                         mContractId = contract.getId();
+                    }
+                    break;
+                case REQUEST_CODE_LINKMAN:
+                    if (null != data) {
+                        Linkman linkman = (Linkman) data.getSerializableExtra("linkman");
+                        mSignerTv.setText(linkman.getName());
+                        mSignerPhone = linkman.getPhone();
                     }
                     break;
             }
@@ -152,13 +164,19 @@ public class SendContractActivity extends BaseActivity {
             showToast("请选择文件主题");
             return;
         }
+
+        if (TextUtils.isEmpty(mSignerPhone)) {
+            showToast("请选择签署方");
+            return;
+        }
+
         showLoadingDialog();
 
         String url = Constant.APP_BASE_URL + "electronicContract/signFlow";
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("subject", subject);
         paramMap.put("contractId", mContractId);
-        paramMap.put("signerPhone", "13770519290");
+        paramMap.put("signerPhone", mSignerPhone);
         paramMap.put("sealId", "123");
 
         mVolleyUtil.httpPostRequest(url, paramMap, response -> {

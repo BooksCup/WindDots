@@ -398,6 +398,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
+            android:name=".activity.select.SelectLinkmanActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
             android:name=".activity.check.fabric.AddSimpleOrderActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
